@@ -5,6 +5,19 @@ namespace ET.Server
 {
     public static class ItemHelper
     {
+        public static Item GetItem(Unit unit, long itemId, ItemContainerType itemContainerType)
+        {
+            switch (itemContainerType)
+            {
+                case ItemContainerType.Bag:
+                    return unit.GetComponent<BagComponent>().GetItem(itemId);
+                case ItemContainerType.Role:
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
+            }
+        }
+
         /// <summary>
         /// 注意！！！将Item从一个容器转移到另一个容器时，先新容器AddItem，再旧容器RemoveItem
         /// </summary>
