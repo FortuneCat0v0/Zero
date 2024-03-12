@@ -26,7 +26,7 @@
 
         public static void FromMessage(this Item self, ItemInfo itemInfo)
         {
-            self.ItemConfigId = self.ItemConfigId;
+            self.ItemConfigId = itemInfo.ItemConfigId;
         }
     }
 }
