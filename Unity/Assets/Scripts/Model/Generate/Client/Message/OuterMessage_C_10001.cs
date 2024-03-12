@@ -1083,6 +1083,39 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.M2C_NoticeUnitNumeric)]
+    public partial class M2C_NoticeUnitNumeric : MessageObject, IMessage
+    {
+        public static M2C_NoticeUnitNumeric Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_NoticeUnitNumeric), isFromPool) as M2C_NoticeUnitNumeric;
+        }
+
+        [MemoryPackOrder(0)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int NumericType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long NewValue { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.UnitId = default;
+            this.NumericType = default;
+            this.NewValue = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.ItemInfo)]
     public partial class ItemInfo : MessageObject
     {
@@ -1106,6 +1139,76 @@ namespace ET
 
             this.Id = default;
             this.ItemConfigId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_AllItems)]
+    public partial class M2C_AllItems : MessageObject, IMessage
+    {
+        public static M2C_AllItems Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_AllItems), isFromPool) as M2C_AllItems;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int ItemContainerType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public List<ItemInfo> ItemInfos { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.ItemContainerType = default;
+            this.ItemInfos.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_ItemUpdateOp)]
+    public partial class M2C_ItemUpdateOp : MessageObject, IMessage
+    {
+        public static M2C_ItemUpdateOp Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_ItemUpdateOp), isFromPool) as M2C_ItemUpdateOp;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public ItemInfo ItemInfo { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int ItemOpType { get; set; }
+
+        [MemoryPackOrder(3)]
+        public int ItemContainerType { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.ItemInfo = default;
+            this.ItemOpType = default;
+            this.ItemContainerType = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -1147,6 +1250,9 @@ namespace ET
         public const ushort M2C_TransferMap = 10033;
         public const ushort C2G_Benchmark = 10034;
         public const ushort G2C_Benchmark = 10035;
-        public const ushort ItemInfo = 10036;
+        public const ushort M2C_NoticeUnitNumeric = 10036;
+        public const ushort ItemInfo = 10037;
+        public const ushort M2C_AllItems = 10038;
+        public const ushort M2C_ItemUpdateOp = 10039;
     }
 }

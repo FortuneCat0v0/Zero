@@ -234,8 +234,30 @@ message G2C_Benchmark // ISessionResponse
 	string Message = 3;
 }
 
+message M2C_NoticeUnitNumeric // IMessage
+{
+	int64 UnitId = 1;
+	int32 NumericType = 2;
+	int64 NewValue = 3;
+}
+
 message ItemInfo
 {
 	int64 Id = 1;
 	int32 ItemConfigId = 2;
+}
+
+message M2C_AllItems // IMessage
+{
+	int32 RpcId = 1;
+	int32 ItemContainerType = 2;
+	repeated ItemInfo ItemInfos = 3;
+}
+
+message M2C_ItemUpdateOp // IMessage
+{
+	int32 RpcId = 1;
+	ItemInfo ItemInfo = 2;
+	int32 ItemOpType = 3;
+	int32 ItemContainerType = 4;
 }

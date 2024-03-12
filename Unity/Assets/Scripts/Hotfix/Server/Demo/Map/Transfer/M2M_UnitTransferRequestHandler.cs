@@ -4,7 +4,7 @@ using Unity.Mathematics;
 namespace ET.Server
 {
     [MessageHandler(SceneType.Map)]
-    public class M2M_UnitTransferRequestHandler: MessageHandler<Scene, M2M_UnitTransferRequest, M2M_UnitTransferResponse>
+    public class M2M_UnitTransferRequestHandler : MessageHandler<Scene, M2M_UnitTransferRequest, M2M_UnitTransferResponse>
     {
         protected override async ETTask Run(Scene scene, M2M_UnitTransferRequest request, M2M_UnitTransferResponse response)
         {
@@ -36,6 +36,9 @@ namespace ET.Server
             M2C_CreateMyUnit m2CCreateUnits = M2C_CreateMyUnit.Create();
             m2CCreateUnits.Unit = UnitHelper.CreateUnitInfo(unit);
             MapMessageHelper.SendToClient(unit, m2CCreateUnits);
+
+            // 通知客户端同步背包信息
+            ItemHelper.SyncAllItems(unit, ItemContainerType.Bag);
 
             // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);

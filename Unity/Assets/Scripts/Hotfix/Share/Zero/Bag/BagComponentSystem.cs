@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ET.Server;
 
 namespace ET
 {
@@ -43,7 +44,7 @@ namespace ET
             }
 
             Item item = self.GetChild<Item>(id);
-            item.Dispose();
+            item?.Dispose();
             self.ItemIds.Remove(id);
             return true;
         }
@@ -63,6 +64,17 @@ namespace ET
         public static List<Item> GetAllItems(this BagComponent self)
         {
             return self.Children.Values.Select(entity => entity as Item).ToList();
+        }
+
+        public static void RemoveAllItems(this BagComponent self)
+        {
+            foreach (long id in self.ItemIds)
+            {
+                Item item = self.GetChild<Item>(id);
+                item.Dispose();
+            }
+
+            self.ItemIds.Clear();
         }
     }
 }

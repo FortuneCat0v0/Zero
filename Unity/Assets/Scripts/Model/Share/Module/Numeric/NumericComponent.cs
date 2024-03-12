@@ -22,19 +22,22 @@ namespace ET
             return self.GetByKey(numericType);
         }
 
-        public static void Set(this NumericComponent self, int nt, float value)
+        public static void Set(this NumericComponent self, int nt, float value, bool isForcedUpdate = false, bool isBroadcast = false)
         {
-            self[nt] = (long)(value * 10000);
+            // self[nt] = (long)(value * 10000);
+            self.Insert(nt, (long)(value * 10000), true, isForcedUpdate, isBroadcast);
         }
 
-        public static void Set(this NumericComponent self, int nt, int value)
+        public static void Set(this NumericComponent self, int nt, int value, bool isForcedUpdate = false, bool isBroadcast = false)
         {
-            self[nt] = value;
+            // self[nt] = value;
+            self.Insert(nt, value, true, isForcedUpdate, isBroadcast);
         }
 
-        public static void Set(this NumericComponent self, int nt, long value)
+        public static void Set(this NumericComponent self, int nt, long value, bool isForcedUpdate = false, bool isBroadcast = false)
         {
-            self[nt] = value;
+            // self[nt] = value;
+            self.Insert(nt, value, true, isForcedUpdate, isBroadcast);
         }
 
         public static void SetNoEvent(this NumericComponent self, int numericType, long value)
@@ -42,10 +45,11 @@ namespace ET
             self.Insert(numericType, value, false);
         }
 
-        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent = true)
+        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent = true, bool isForcedUpdate = false,
+        bool isBroadcast = false)
         {
             long oldValue = self.GetByKey(numericType);
-            if (oldValue == value)
+            if (!isForcedUpdate && oldValue == value)
             {
                 return;
             }
@@ -54,14 +58,15 @@ namespace ET
 
             if (numericType >= NumericType.Max)
             {
-                self.Update(numericType, isPublicEvent);
+                self.Update(numericType, isPublicEvent, isForcedUpdate, isBroadcast);
                 return;
             }
 
             if (isPublicEvent)
             {
                 EventSystem.Instance.Publish(self.Scene(),
-                    new NumbericChange() { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
+                    new NumbericChange()
+                            { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType, IsBroadcast = isBroadcast });
             }
         }
 
@@ -72,7 +77,8 @@ namespace ET
             return value;
         }
 
-        public static void Update(this NumericComponent self, int numericType, bool isPublicEvent)
+        public static void Update(this NumericComponent self, int numericType, bool isPublicEvent, bool isForcedUpdate = false,
+        bool isBroadcast = false)
         {
             int final = (int)numericType / 10;
             int bas = final * 10 + 1;
@@ -85,7 +91,7 @@ namespace ET
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
             long result = (long)(((self.GetByKey(bas) + self.GetByKey(add)) * (100 + self.GetAsFloat(pct)) / 100f + self.GetByKey(finalAdd)) *
                 (100 + self.GetAsFloat(finalPct)) / 100f);
-            self.Insert(final, result, isPublicEvent);
+            self.Insert(final, result, isPublicEvent, isForcedUpdate, isBroadcast);
         }
     }
     
@@ -95,6 +101,7 @@ namespace ET
         public int NumericType;
         public long Old;
         public long New;
+        public bool IsBroadcast;
     }
 
     [ComponentOf(typeof (Unit))]

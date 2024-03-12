@@ -23,6 +23,7 @@ namespace ET.Server
                     unitComponent.Add(unit);
                     // 加入aoi
                     unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+                    unit.AddComponent<BagComponent>();
                     return unit;
                 }
                 default:
