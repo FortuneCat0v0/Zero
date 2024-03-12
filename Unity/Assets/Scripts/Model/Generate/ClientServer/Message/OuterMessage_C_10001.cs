@@ -1083,6 +1083,80 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.AttributeEntryInfo)]
+    public partial class AttributeEntryInfo : MessageObject
+    {
+        public static AttributeEntryInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(AttributeEntryInfo), isFromPool) as AttributeEntryInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long Id { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Key { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long Value { get; set; }
+
+        [MemoryPackOrder(3)]
+        public int EntryType { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Id = default;
+            this.Key = default;
+            this.Value = default;
+            this.EntryType = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.ItemInfo)]
+    public partial class ItemInfo : MessageObject
+    {
+        public static ItemInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(ItemInfo), isFromPool) as ItemInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long Id { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int ConfigId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int Quality { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<AttributeEntryInfo> AttributeEntryInfos { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Id = default;
+            this.ConfigId = default;
+            this.Quality = default;
+            this.AttributeEntryInfos.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.M2C_NoticeUnitNumeric)]
     public partial class M2C_NoticeUnitNumeric : MessageObject, IMessage
     {
@@ -1110,35 +1184,6 @@ namespace ET
             this.UnitId = default;
             this.NumericType = default;
             this.NewValue = default;
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.ItemInfo)]
-    public partial class ItemInfo : MessageObject
-    {
-        public static ItemInfo Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(ItemInfo), isFromPool) as ItemInfo;
-        }
-
-        [MemoryPackOrder(0)]
-        public long Id { get; set; }
-
-        [MemoryPackOrder(1)]
-        public int ItemConfigId { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.Id = default;
-            this.ItemConfigId = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -1250,9 +1295,10 @@ namespace ET
         public const ushort M2C_TransferMap = 10033;
         public const ushort C2G_Benchmark = 10034;
         public const ushort G2C_Benchmark = 10035;
-        public const ushort M2C_NoticeUnitNumeric = 10036;
+        public const ushort AttributeEntryInfo = 10036;
         public const ushort ItemInfo = 10037;
-        public const ushort M2C_AllItems = 10038;
-        public const ushort M2C_ItemUpdateOp = 10039;
+        public const ushort M2C_NoticeUnitNumeric = 10038;
+        public const ushort M2C_AllItems = 10039;
+        public const ushort M2C_ItemUpdateOp = 10040;
     }
 }
