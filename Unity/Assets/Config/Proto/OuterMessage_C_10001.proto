@@ -233,3 +233,9 @@ message G2C_Benchmark // ISessionResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+message ItemInfo
+{
+	int64 Id = 1;
+	int32 ItemConfigId = 2;
+}
