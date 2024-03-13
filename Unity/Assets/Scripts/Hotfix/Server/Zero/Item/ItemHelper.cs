@@ -19,7 +19,7 @@ namespace ET.Server
         }
 
         /// <summary>
-        /// 注意！！！将Item从一个容器转移到另一个容器时，先新容器AddItem，再旧容器RemoveItem
+        /// 注意！！！将Item从一个容器转移到另一个容器时，先新容器AddItem，再旧容器RemoveItemNoDispose
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="item"></param>

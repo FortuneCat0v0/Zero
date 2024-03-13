@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
     [ComponentOf]
     public class BagComponent : Entity, IAwake, IDeserialize, ITransfer
     {
-        public List<long> ItemIds = new();
+        [BsonIgnore]
+        public Dictionary<long, EntityRef<Item>> ItemsDict = new();
     }
 }

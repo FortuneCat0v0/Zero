@@ -9,7 +9,7 @@ namespace ET.Client
             switch (itemContainerType)
             {
                 case ItemContainerType.Bag:
-                    root.GetComponent<BagComponent>().RemoveAllItems();
+                    root.GetComponent<BagComponent>().Clear();
                     break;
                 case ItemContainerType.Role:
                     break;

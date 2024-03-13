@@ -15,64 +15,78 @@ namespace ET
         [EntitySystem]
         private static void Deserialize(this BagComponent self)
         {
-            // foreach (Entity entity in self.Children.Values)
-            // {
-            //     
-            // }
+            foreach (Entity entity in self.Children.Values)
+            {
+                self.ItemsDict.Add(entity.Id, entity as Item);
+            }
         }
 
         public static bool AddItem(this BagComponent self, Item item)
         {
-            if (self.ItemIds.Contains(item.Id))
+            if (self.ItemsDict.ContainsKey(item.Id))
             {
-                Log.Error($"BagComponent.ItemIds 已存在相同 Id:{item.Id}");
                 return false;
             }
 
-            self.ItemIds.Add(item.Id);
+            self.ItemsDict.Add(item.Id, item);
             self.AddChild(item);
             return true;
         }
 
         public static bool RemoveItem(this BagComponent self, long id)
         {
-            if (!self.ItemIds.Contains(id))
+            if (!self.ItemsDict.ContainsKey(id))
             {
-                Log.Error($"BagComponent.ItemIds 不存在 Id:{id}");
                 return false;
             }
 
-            Item item = self.GetChild<Item>(id);
-            item?.Dispose();
-            self.ItemIds.Remove(id);
+            Item item = self.ItemsDict[id];
+            item.Dispose();
+            self.ItemsDict.Remove(id);
             return true;
+        }
+
+        public static Item RemoveItemNoDispose(this BagComponent self, long id)
+        {
+            if (!self.ItemsDict.ContainsKey(id))
+            {
+                return null;
+            }
+
+            Item item = self.ItemsDict[id];
+            self.ItemsDict.Remove(id);
+            return item;
         }
 
         public static Item GetItem(this BagComponent self, long id)
         {
-            if (!self.ItemIds.Contains(id))
+            if (!self.ItemsDict.ContainsKey(id))
             {
-                Log.Error($"BagComponent.ItemIds 不存在 Id:{id}");
                 return null;
             }
 
-            return self.GetChild<Item>(id);
+            return self.ItemsDict[id];
         }
 
         public static List<Item> GetAllItems(this BagComponent self)
         {
-            return self.Children.Values.Select(entity => entity as Item).ToList();
+            List<Item> items = new List<Item>();
+            foreach (Item item in self.ItemsDict.Values)
+            {
+                items.Add(item);
+            }
+
+            return items;
         }
 
-        public static void RemoveAllItems(this BagComponent self)
+        public static void Clear(this BagComponent self)
         {
-            foreach (long id in self.ItemIds)
+            foreach (Item item in self.ItemsDict.Values)
             {
-                Item item = self.GetChild<Item>(id);
                 item.Dispose();
             }
 
-            self.ItemIds.Clear();
+            self.ItemsDict.Clear();
         }
     }
 }
