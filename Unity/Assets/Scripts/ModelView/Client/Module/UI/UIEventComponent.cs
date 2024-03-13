@@ -9,6 +9,7 @@ namespace ET.Client
 	[Code]
 	public class UIEventComponent: Singleton<UIEventComponent>, ISingletonAwake
 	{
+		public bool IsClicked { get; set; }
 		public Dictionary<string, AUIEvent> UIEvents { get; } = new();
 		
         public void Awake()
