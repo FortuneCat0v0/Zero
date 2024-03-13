@@ -15,6 +15,9 @@ namespace ET.Client
             root.AddComponent<ResourcesLoaderComponent>();
             root.AddComponent<PlayerComponent>();
             root.AddComponent<CurrentScenesComponent>();
+            root.AddComponent<AccountComponent>();
+            root.AddComponent<ServerComponent>();
+            root.AddComponent<RoleComponent>();
             root.AddComponent<BagComponent>();
             
             // 根据配置修改掉Main Fiber的SceneType

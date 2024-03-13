@@ -20,7 +20,7 @@ namespace ET.Server
             session.RemoveComponent<SessionAcceptTimeoutComponent>();
 
             PlayerComponent playerComponent = root.GetComponent<PlayerComponent>();
-            Player player = playerComponent.GetByAccount(account);
+            Player player = playerComponent.Get(123);
             if (player == null)
             {
                 player = playerComponent.AddChild<Player, string>(account);

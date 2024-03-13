@@ -1,5 +1,24 @@
 ﻿namespace ET
 {
+    public enum RoleState
+    {
+        Normal = 0,
+        Freeze,
+    }
+
+    public enum ServerStatus
+    {
+        Normal = 0,
+        Stop = 1,
+    }
+
+    public enum PlayerState
+    {
+        Disconnect,
+        Gate,
+        Game,
+    }
+
     public enum ItemOpType
     {
         Add,

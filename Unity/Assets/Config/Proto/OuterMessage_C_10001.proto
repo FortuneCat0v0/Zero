@@ -5,6 +5,7 @@ message HttpGetRouterResponse
 {
 	repeated string Realms = 1;
 	repeated string Routers = 2;
+	string Account = 3;
 }
 
 message RouterSync
@@ -234,6 +235,190 @@ message G2C_Benchmark // ISessionResponse
 	string Message = 3;
 }
 
+
+//ResponseType A2C_LoginAccount
+message C2A_LoginAccount // ISessionRequest
+{
+	int32 RpcId = 1;
+	string Account = 2;
+	string Password = 3;
+}
+
+
+message A2C_LoginAccount // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string Token = 4;
+	int64  AccountId = 5;
+}
+
+message A2C_Disconnect // IMessage
+{
+	int32 Error = 1;
+}
+
+message ServerInfo
+{
+	int64 Id = 1;
+	int32 Status = 2;
+	string ServerName = 3;
+}
+
+//ResponseType A2C_GetServers
+message C2A_GetServers // ISessionRequest
+{
+	int32 RpcId = 1;
+	string Token = 2;
+	int64 AccountId = 3;
+}
+
+
+
+message A2C_GetServers // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated ServerInfo ServerInfos = 4;
+}
+
+
+message RoleInfo
+{
+	int64 Id = 1;
+	string Name = 2;
+	int32 State = 3;
+	int64 AccountId = 4;
+	int64 LastLoginTime = 5;
+	int64 CreateTime = 6;
+	int32 ServerId = 7;
+}
+
+//ResponseType A2C_CreateRole
+message C2A_CreateRole // ISessionRequest
+{
+	int32 RpcId = 1;
+	string Token = 2;
+	int64 AccountId = 3;
+	string Name = 4;
+	int32 ServerId = 5;
+}
+
+
+message A2C_CreateRole // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	RoleInfo RoleInfo = 4;
+}
+
+
+//ResponseType A2C_GetRoles
+message C2A_GetRoles // ISessionRequest
+{
+	int32  RpcId = 1;
+	string Token = 2;
+	int64  AccountId = 3;
+	int32  ServerId = 4;
+}
+
+message A2C_GetRoles // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated RoleInfo RoleInfos = 4;
+}
+
+//ResponseType A2C_DeleteRole
+message C2A_DeleteRole // ISessionRequest
+{
+	int32  RpcId      = 1;
+	string Token      = 2;
+	int64  AccountId  = 3;
+	int64  RoleId = 4;
+	int32  ServerId   = 5;
+}
+
+message A2C_DeleteRole // ISessionResponse
+{
+	int32 RpcId    = 1;
+	int32 Error    = 2;
+	string Message = 3;
+	int64  DeletedRoleId = 4;
+}
+
+//ResponseType A2C_GetRealmKey
+message C2A_GetRealmKey // ISessionRequest
+{
+	int32   RpcId = 1;
+	string  Token = 2;
+	int32   ServerId = 3;
+	int64  AccountId = 4;
+}
+
+message A2C_GetRealmKey // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string RealmKey = 4;
+	string RealmAddress = 5;
+}
+
+/ResponseType R2C_LoginRealm
+message C2R_LoginRealm // ISessionRequest
+{
+	int32 RpcId = 1;
+	int64 AccountId = 2;
+	string RealmTokenKey = 3;	
+}
+
+message R2C_LoginRealm // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string GateSessionKey = 4;
+	string GateAddress = 5;
+}
+
+//ResponseType G2C_LoginGameGate
+message C2G_LoginGameGate // ISessionRequest
+{
+	int32 RpcId = 1;
+	string Key = 2;	
+	int64 RoleId = 3;
+	int64 AccountId = 4;
+}
+
+message G2C_LoginGameGate // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+//ResponseType G2C_EnterGame
+message C2G_EnterGame // ISessionRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_EnterGame // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	// 自己unitId
+	int64 MyId = 4;
+}
+
+
+
 message AttributeEntryInfo
 {
 	int64 Id = 1;
@@ -271,4 +456,6 @@ message M2C_ItemUpdateOp // IMessage
 	int32 ItemOpType = 3;
 	int32 ItemContainerType = 4;
 }
+
+
 

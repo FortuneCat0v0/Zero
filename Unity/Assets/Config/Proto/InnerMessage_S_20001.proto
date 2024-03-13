@@ -175,3 +175,177 @@ message M2M_UnitTransferResponse // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+//ResponseType L2A_LoginAccountResponse
+message A2L_LoginAccountRequest // IRequest
+{
+	int32 RpcId = 1;
+	int64 AccountId = 2;
+}
+
+message L2A_LoginAccountResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+
+//ResponseType G2L_DisconnectGateUnit
+message L2G_DisconnectGateUnit // IRequest
+{
+	int32 RpcId = 1;
+	int64 AccountId = 2;
+}
+
+
+message G2L_DisconnectGateUnit // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+
+
+//ResponseType R2A_GetRealmKey
+message A2R_GetRealmKey // IRequest
+{
+    int32 RpcId       = 1;
+    int64 AccountId   = 2;
+}
+
+
+message R2A_GetRealmKey // IResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+
+    string RealmKey = 4;
+}
+
+
+//ResponseType G2R_GetLoginGateKey
+message R2G_GetLoginGateKey // IRequest
+{
+	int32 RpcId = 1;
+	int64 AccountId = 2;
+}
+
+message G2R_GetLoginGateKey // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	string GateSessionKey = 4;
+}
+
+
+//ResponseType L2G_AddLoginRecord
+message G2L_AddLoginRecord // IRequest
+{
+    int32 RpcId = 1;
+    int64 AccountId = 2;
+	int32 ServerId = 3;
+}
+
+message L2G_AddLoginRecord // IResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}
+
+
+//ResponseType M2G_RequestEnterGameState
+message G2M_RequestEnterGameState // ILocationRequest
+{
+    int32 RpcId = 1;
+}
+
+
+message M2G_RequestEnterGameState // ILocationResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}
+
+
+message G2M_RequestExitGame // ILocationMessage
+{
+    int32 RpcId = 1;
+}
+
+
+//ResponseType L2G_RemoveLoginRecord
+message G2L_RemoveLoginRecord // IRequest
+{
+    int32 RpcId = 90;
+    int64 AccountId = 1;
+	int ServerId = 2;
+}
+
+message L2G_RemoveLoginRecord // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
+}
+
+//----------玩家缓存相关----------------
+
+//增加或者更新Unit缓存
+//ResponseType UnitCache2Other_AddOrUpdateUnit
+message Other2UnitCache_AddOrUpdateUnit //IRequest
+{
+    int32 RpcId = 1;
+
+    int64 UnitId = 2;				  // 需要缓存的UnitId
+    repeated string EntityTypes = 3;  //实体类型
+    repeated bytes EntityBytes = 4;   //实体序列化后的bytes
+}
+
+message UnitCache2Other_AddOrUpdateUnit //IResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}
+
+//获取Unit缓存
+//ResponseType UnitCache2Other_GetUnit
+message Other2UnitCache_GetUnit //IRequest
+{
+    int32 RpcId = 1;
+
+    int64 UnitId = 2;
+    repeated string ComponentNameList = 3; //需要获取的组件名
+}
+
+message UnitCache2Other_GetUnit //IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+
+	repeated bytes EntityList = 4;
+	repeated string ComponentNameList = 5;
+}
+
+//删除Unit缓存
+//ResponseType UnitCache2Other_DeleteUnit
+message Other2UnitCache_DeleteUnit // IRequest
+{
+   int32 RpcId = 1;
+
+   int64 UnitId = 2;    
+}
+
+message UnitCache2Other_DeleteUnit // IResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}

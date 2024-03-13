@@ -20,6 +20,7 @@ namespace ET.Server
             {
                 response.Routers.Add($"{startSceneConfig.StartProcessConfig.OuterIP}:{startSceneConfig.Port}");
             }
+            response.Account = StartSceneConfigCategory.Instance.Account.InnerIPPort.ToString();
             HttpHelper.Response(context, response);
             await ETTask.CompletedTask;
         }

@@ -7,18 +7,18 @@ namespace ET.Server
     {
         public static void Add(this PlayerComponent self, Player player)
         {
-            self.dictionary.Add(player.Account, player);
+            self.dictionary.Add(player.AccountId, player);
         }
-        
+
         public static void Remove(this PlayerComponent self, Player player)
         {
-            self.dictionary.Remove(player.Account);
+            self.dictionary.Remove(player.AccountId);
             player.Dispose();
         }
-        
-        public static Player GetByAccount(this PlayerComponent self,  string account)
+
+        public static Player Get(this PlayerComponent self, long accountId)
         {
-            self.dictionary.TryGetValue(account, out EntityRef<Player> player);
+            self.dictionary.TryGetValue(accountId, out EntityRef<Player> player);
             return player;
         }
     }

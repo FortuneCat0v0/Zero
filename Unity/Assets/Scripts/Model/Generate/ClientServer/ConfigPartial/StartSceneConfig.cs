@@ -20,6 +20,15 @@ namespace ET
         
         public List<StartSceneConfig> Maps = new();
 
+        public StartSceneConfig Account;
+        
+        public StartSceneConfig LoginCenter;
+        
+        public StartSceneConfig UnitCache;
+
+        //每个区一个缓存服
+        public Dictionary<int, StartSceneConfig> UnitCaches = new();
+        
         public StartSceneConfig Match;
         
         public StartSceneConfig Benchmark;
@@ -68,6 +77,15 @@ namespace ET
                         break;
                     case SceneType.BenchmarkServer:
                         this.Benchmark = startSceneConfig;
+                        break;
+                    case SceneType.Account:
+                        this.Account = startSceneConfig;
+                        break;
+                    case SceneType.LoginCenter:
+                        this.LoginCenter = startSceneConfig;
+                        break;
+                    case SceneType.UnitCache:
+                        this.UnitCaches.Add(startSceneConfig.Zone, startSceneConfig);
                         break;
                 }
             }

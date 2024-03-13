@@ -1,6 +1,6 @@
 namespace ET.Client
 {
-    public static class LoginHelper
+    public static partial class LoginHelper
     {
         public static async ETTask Login(Scene root, string account, string password)
         {

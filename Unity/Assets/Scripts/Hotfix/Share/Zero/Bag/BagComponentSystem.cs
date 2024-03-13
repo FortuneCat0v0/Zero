@@ -57,8 +57,7 @@ namespace ET
                 return null;
             }
 
-            Item item = self.GetChild<Item>(id);
-            return item;
+            return self.GetChild<Item>(id);
         }
 
         public static List<Item> GetAllItems(this BagComponent self)

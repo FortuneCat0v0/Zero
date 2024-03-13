@@ -15,5 +15,10 @@
         public const int SessionAcceptTimeout = 203;
         
         public const int RoomUpdate = 301;
+        public const int JoystickTimer = 302;
+        public const int AccountSessionCheckOutTime = 303;
+        public const int PlayerOfflineOutTime = 304;
+        public const int NoticeUnitNumericTime = 305;
+        public const int SaveChangeDBData = 306;
     }
 }

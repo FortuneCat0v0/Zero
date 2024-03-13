@@ -9,9 +9,8 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this ClientSenderComponent self)
         {
-
         }
-        
+
         [EntitySystem]
         private static void Destroy(this ClientSenderComponent self)
         {
@@ -36,6 +35,35 @@ namespace ET.Client
             self.Dispose();
         }
 
+        public static async ETTask ConnectAccountAsync(this ClientSenderComponent self, string account, string password)
+        {
+            self.fiberId = await FiberManager.Instance.Create(SchedulerType.ThreadPool, 0, SceneType.NetClient, "");
+            self.netClientActorId = new ActorId(self.Fiber().Process, self.fiberId);
+
+            Main2NetClient_ConnectAccount request = Main2NetClient_ConnectAccount.Create();
+            request.OwnerFiberId = self.Fiber().Id;
+            request.Account = account;
+            request.Password = password;
+            await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, request);
+        }
+
+        public static async ETTask<long> EnterGameAsync(this ClientSenderComponent self, long accountId, string realmKey, string realmAddress,
+        long roleId, string account, string password)
+        {
+            Main2NetClient_EnterGame main2NetClientEnterGame = Main2NetClient_EnterGame.Create();
+            main2NetClientEnterGame.OwnerFiberId = self.Fiber().Id;
+            main2NetClientEnterGame.AccountId = accountId;
+            main2NetClientEnterGame.RealmKey = realmKey;
+            main2NetClientEnterGame.RealmAddress = realmAddress;
+            main2NetClientEnterGame.RoleId = roleId;
+            main2NetClientEnterGame.Account = account;
+            main2NetClientEnterGame.Password = password;
+            NetClient2Main_EnterGame response =
+                    await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientEnterGame) as
+                            NetClient2Main_EnterGame;
+            return response.MyId;
+        }
+
         public static async ETTask<long> LoginAsync(this ClientSenderComponent self, string account, string password)
         {
             self.fiberId = await FiberManager.Instance.Create(SchedulerType.ThreadPool, 0, SceneType.NetClient, "");
@@ -45,7 +73,8 @@ namespace ET.Client
             main2NetClientLogin.OwnerFiberId = self.Fiber().Id;
             main2NetClientLogin.Account = account;
             main2NetClientLogin.Password = password;
-            NetClient2Main_Login response = await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login;
+            NetClient2Main_Login response =
+                    await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login;
             return response.PlayerId;
         }
 
@@ -60,9 +89,10 @@ namespace ET.Client
         {
             A2NetClient_Request a2NetClientRequest = A2NetClient_Request.Create();
             a2NetClientRequest.MessageObject = request;
-            using A2NetClient_Response a2NetClientResponse = await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, a2NetClientRequest) as A2NetClient_Response;
+            using A2NetClient_Response a2NetClientResponse =
+                    await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, a2NetClientRequest) as A2NetClient_Response;
             IResponse response = a2NetClientResponse.MessageObject;
-                        
+
             if (response.Error == ErrorCore.ERR_MessageTimeout)
             {
                 throw new RpcException(response.Error, $"Rpc error: request, 注意Actor消息超时，请注意查看是否死锁或者没有reply: {request}, response: {response}");
@@ -72,8 +102,8 @@ namespace ET.Client
             {
                 throw new RpcException(response.Error, $"Rpc error: {request}, response: {response}");
             }
+
             return response;
         }
-
     }
 }
