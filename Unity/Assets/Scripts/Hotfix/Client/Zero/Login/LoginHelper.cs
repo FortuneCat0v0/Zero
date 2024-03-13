@@ -10,6 +10,7 @@
                 await clientSenderComponent.DisposeAsync();
             }
 
+            clientSenderComponent = root.AddComponent<ClientSenderComponent>();
             await clientSenderComponent.ConnectAccountAsync(account, password);
 
             C2A_LoginAccount request = C2A_LoginAccount.Create();

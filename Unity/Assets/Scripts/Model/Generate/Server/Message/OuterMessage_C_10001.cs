@@ -1653,6 +1653,7 @@ namespace ET
 
     [MemoryPackable]
     [Message(OuterMessage.C2R_LoginRealm)]
+    [ResponseType(nameof(R2C_LoginRealm))]
     public partial class C2R_LoginRealm : MessageObject, ISessionRequest
     {
         public static C2R_LoginRealm Create(bool isFromPool = false)
