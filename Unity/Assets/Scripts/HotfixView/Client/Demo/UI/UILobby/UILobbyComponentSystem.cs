@@ -20,7 +20,7 @@ namespace ET.Client
         {
             Scene root = self.Root();
             await EnterMapHelper.EnterMapAsync(root);
-            await UIHelper.Remove(root, UIType.UILobby);
+            UIHelper.Remove(root, UIType.UILobby);
         }
     }
 }

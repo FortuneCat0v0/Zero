@@ -35,7 +35,6 @@ namespace ET.Client
                 return;
             }
 
-            // 保存账号密码到本地
             PlayerPrefs.SetString("Zero_Account", accountName);
             PlayerPrefs.SetString("Zero_Password", password);
 
@@ -46,7 +45,7 @@ namespace ET.Client
             }
 
             UIHelper.Create(self.Scene(), UIType.UIServer, UILayer.Mid).Coroutine();
-            UIHelper.Remove(self.Scene(), UIType.UILogin).Coroutine();
+            UIHelper.Remove(self.Scene(), UIType.UILogin);
         }
     }
 }

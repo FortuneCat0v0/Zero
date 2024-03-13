@@ -41,7 +41,7 @@ namespace ET.Client
             }
 
             UIHelper.Create(self.Scene(), UIType.UIRole, UILayer.Mid).Coroutine();
-            UIHelper.Remove(self.Scene(), UIType.UIServer).Coroutine();
+            UIHelper.Remove(self.Scene(), UIType.UIServer);
         }
 
         private static async ETTask ShowServerList(this UIServerComponent self)

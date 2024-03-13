@@ -15,10 +15,9 @@ namespace ET.Client
         }
 
         [EnableAccessEntiyChild]
-        public static async ETTask Remove(Entity scene, string uiType)
+        public static void Remove(Entity scene, string uiType)
         {
             scene.GetComponent<UIComponent>().Remove(uiType);
-            await ETTask.CompletedTask;
         }
 
         # region 点击注册

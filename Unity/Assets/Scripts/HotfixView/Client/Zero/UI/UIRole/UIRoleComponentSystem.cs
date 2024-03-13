@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
-    [FriendOf(typeof (RoleComponent))]
-    [FriendOf(typeof (UIRoleItemComponent))]
-    [FriendOf(typeof (UIRoleComponent))]
-    [EntitySystemOf(typeof (UIRoleComponent))]
+    [FriendOf(typeof(RoleComponent))]
+    [FriendOf(typeof(UIRoleItemComponent))]
+    [FriendOf(typeof(UIRoleComponent))]
+    [EntitySystemOf(typeof(UIRoleComponent))]
     public static partial class UIRoleComponentSystem
     {
         [EntitySystem]
@@ -92,7 +92,7 @@ namespace ET.Client
                 return;
             }
 
-            UIHelper.Remove(self.Scene(), UIType.UIRole).Coroutine();
+            UIHelper.Remove(self.Scene(), UIType.UIRole);
             await ETTask.CompletedTask;
         }
 

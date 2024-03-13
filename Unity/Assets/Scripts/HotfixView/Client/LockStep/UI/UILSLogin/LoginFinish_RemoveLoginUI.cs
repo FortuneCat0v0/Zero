@@ -5,7 +5,8 @@
 	{
 		protected override async ETTask Run(Scene scene, LoginFinish args)
 		{
-			await UIHelper.Remove(scene, UIType.UILSLogin);
+			UIHelper.Remove(scene, UIType.UILSLogin);
+			await ETTask.CompletedTask;
 		}
 	}
 }
