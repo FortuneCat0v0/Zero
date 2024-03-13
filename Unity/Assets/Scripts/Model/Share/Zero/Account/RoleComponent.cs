@@ -5,7 +5,7 @@ namespace ET
     [ComponentOf(typeof(Scene))]
     public class RoleComponent : Entity, IAwake
     {
-        public List<long> RoleIds { get; set; } = new();
-        public long CurrentRoleId { get; set; }
+        public List<EntityRef<Role>> Roles = new();
+        public long CurrentRoleId;
     }
 }

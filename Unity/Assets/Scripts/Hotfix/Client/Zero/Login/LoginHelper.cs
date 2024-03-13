@@ -1,5 +1,7 @@
 ﻿namespace ET.Client
 {
+    [FriendOf(typeof(RoleComponent))]
+    [FriendOf(typeof(ServerComponent))]
     public static partial class LoginHelper
     {
         public static async ETTask<int> LoginAccount(Scene root, string account, string password)
@@ -44,7 +46,7 @@
             {
                 GameServer server = root.GetComponent<ServerComponent>().AddChildWithId<GameServer>(serverInfo.Id);
                 server.FromMessage(serverInfo);
-                root.GetComponent<ServerComponent>().Add(server.Id);
+                root.GetComponent<ServerComponent>().GameServers.Add(server);
             }
 
             return ErrorCode.ERR_Success;
@@ -66,7 +68,7 @@
             {
                 Role role = root.GetComponent<RoleComponent>().AddChildWithId<Role>(roleInfo.Id);
                 role.FromMessage(roleInfo);
-                root.GetComponent<RoleComponent>().Add(role.Id);
+                root.GetComponent<RoleComponent>().Roles.Add(role);
             }
 
             return ErrorCode.ERR_Success;
@@ -88,7 +90,7 @@
 
             Role newRole = root.GetComponent<RoleComponent>().AddChildWithId<Role>(a2CCreateRole.RoleInfo.Id);
             newRole.FromMessage(a2CCreateRole.RoleInfo);
-            root.GetComponent<RoleComponent>().Add(newRole.Id);
+            root.GetComponent<RoleComponent>().Roles.Add(newRole);
 
             return ErrorCode.ERR_Success;
         }

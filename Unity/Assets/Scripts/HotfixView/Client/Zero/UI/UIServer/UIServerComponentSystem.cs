@@ -46,11 +46,10 @@ namespace ET.Client
 
         private static async ETTask ShowServerList(this UIServerComponent self)
         {
-            List<GameServer> gameServers = self.Scene().GetComponent<ServerComponent>().GetAll();
             string assetsName = $"Assets/Bundles/UI/UIServer/UIServerItem.prefab";
             GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
 
-            foreach (GameServer gameServer in gameServers)
+            foreach (GameServer gameServer in self.Scene().GetComponent<ServerComponent>().GameServers)
             {
                 GameObject gameObject = UnityEngine.Object.Instantiate(bundleGameObject, self.ServerListNode.GetComponent<Transform>());
                 self.AddChild<UIServerItemComponent, GameObject, GameServer>(gameObject, gameServer);

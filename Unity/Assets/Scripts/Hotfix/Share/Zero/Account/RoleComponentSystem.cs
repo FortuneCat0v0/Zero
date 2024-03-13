@@ -12,41 +12,19 @@ namespace ET
         {
         }
 
-        public static bool Add(this RoleComponent self, long id)
-        {
-            if (self.RoleIds.Contains(id))
-            {
-                return false;
-            }
-
-            self.RoleIds.Add(id);
-            return true;
-        }
-
-        public static Role Get(this RoleComponent self, long id)
-        {
-            if (!self.RoleIds.Contains(id))
-            {
-                return null;
-            }
-
-            return self.GetChild<Role>(id);
-        }
-
-        public static List<Role> GetAll(this RoleComponent self)
-        {
-            return self.Children.Values.Select(entity => entity as Role).ToList();
-        }
-
         public static void Remove(this RoleComponent self, long id)
         {
-            if (!self.RoleIds.Contains(id))
+            for (int i = self.Roles.Count - 1; i >= 0; i--)
             {
-                return;
-            }
+                Role role = self.Roles[i];
+                if (role.Id != id)
+                {
+                    continue;
+                }
 
-            Role role = self.GetChild<Role>(id);
-            role.Dispose();
+                self.Roles.RemoveAt(i);
+                role.Dispose();
+            }
         }
     }
 }

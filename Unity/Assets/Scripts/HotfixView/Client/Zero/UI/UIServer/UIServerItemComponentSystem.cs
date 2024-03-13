@@ -18,7 +18,7 @@ namespace ET.Client
             self.NameText = rc.Get<GameObject>("NameText");
             self.Btn = rc.Get<GameObject>("Btn");
 
-            self.NameText.GetComponent<Text>().text = server.ServerName;
+            self.NameText.GetComponent<TMP_Text>().text = server.ServerName;
             self.ServerId = server.Id;
 
             self.Btn.GetComponent<Button>().onClick.AddListener(self.OnBtn);

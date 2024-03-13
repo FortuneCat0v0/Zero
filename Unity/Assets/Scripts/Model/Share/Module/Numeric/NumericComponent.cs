@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
-    [FriendOf(typeof (NumericComponent))]
+    [FriendOf(typeof(NumericComponent))]
     public static class NumericComponentSystem
     {
         public static float GetAsFloat(this NumericComponent self, int numericType)
@@ -22,31 +22,52 @@ namespace ET
             return self.GetByKey(numericType);
         }
 
-        public static void Set(this NumericComponent self, int nt, float value, bool isForcedUpdate = false, bool isBroadcast = false)
-        {
-            // self[nt] = (long)(value * 10000);
-            self.Insert(nt, (long)(value * 10000), true, isForcedUpdate, isBroadcast);
-        }
-
-        public static void Set(this NumericComponent self, int nt, int value, bool isForcedUpdate = false, bool isBroadcast = false)
-        {
-            // self[nt] = value;
-            self.Insert(nt, value, true, isForcedUpdate, isBroadcast);
-        }
-
-        public static void Set(this NumericComponent self, int nt, long value, bool isForcedUpdate = false, bool isBroadcast = false)
-        {
-            // self[nt] = value;
-            self.Insert(nt, value, true, isForcedUpdate, isBroadcast);
-        }
-
-        public static void SetNoEvent(this NumericComponent self, int numericType, long value)
-        {
-            self.Insert(numericType, value, false);
-        }
-
-        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent = true, bool isForcedUpdate = false,
+        /// <summary>
+        /// 设置数值
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="nt"></param>
+        /// <param name="value"></param>
+        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
+        /// <param name="isForcedUpdate">一定发送事件</param>
+        /// <param name="isBroadcast">发送事件时，是否会广播</param>
+        public static void Set(this NumericComponent self, int nt, float value, bool isPublicEvent = true, bool isForcedUpdate = false,
         bool isBroadcast = false)
+        {
+            self.Insert(nt, (long)(value * 10000), isPublicEvent, isForcedUpdate, isBroadcast);
+        }
+
+        /// <summary>
+        /// 设置数值
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="nt"></param>
+        /// <param name="value"></param>
+        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
+        /// <param name="isForcedUpdate">一定发送事件</param>
+        /// <param name="isBroadcast">发送事件时，是否会广播</param>
+        public static void Set(this NumericComponent self, int nt, int value, bool isPublicEvent = true, bool isForcedUpdate = false,
+        bool isBroadcast = false)
+        {
+            self.Insert(nt, value, isPublicEvent, isForcedUpdate, isBroadcast);
+        }
+
+        /// <summary>
+        /// 设置数值
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="nt"></param>
+        /// <param name="value"></param>
+        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
+        /// <param name="isForcedUpdate">一定发送事件</param>
+        /// <param name="isBroadcast">发送事件时，是否会广播</param>
+        public static void Set(this NumericComponent self, int nt, long value, bool isPublicEvent = true, bool isForcedUpdate = false,
+        bool isBroadcast = false)
+        {
+            self.Insert(nt, value, isPublicEvent, isForcedUpdate, isBroadcast);
+        }
+
+        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent, bool isForcedUpdate, bool isBroadcast)
         {
             long oldValue = self.GetByKey(numericType);
             if (!isForcedUpdate && oldValue == value)
@@ -62,7 +83,7 @@ namespace ET
                 return;
             }
 
-            if (isPublicEvent)
+            if (isForcedUpdate || isPublicEvent)
             {
                 EventSystem.Instance.Publish(self.Scene(),
                     new NumbericChange()
@@ -94,7 +115,7 @@ namespace ET
             self.Insert(final, result, isPublicEvent, isForcedUpdate, isBroadcast);
         }
     }
-    
+
     public struct NumbericChange
     {
         public Unit Unit;
@@ -104,8 +125,8 @@ namespace ET
         public bool IsBroadcast;
     }
 
-    [ComponentOf(typeof (Unit))]
-    public class NumericComponent: Entity, IAwake, ITransfer
+    [ComponentOf(typeof(Unit))]
+    public class NumericComponent : Entity, IAwake, ITransfer
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, long> NumericDic = new Dictionary<int, long>();
@@ -115,10 +136,6 @@ namespace ET
             get
             {
                 return this.GetByKey(numericType);
-            }
-            set
-            {
-                this.Insert(numericType, value);
             }
         }
     }

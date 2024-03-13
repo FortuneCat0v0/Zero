@@ -98,31 +98,34 @@ namespace ET.Client
 
         private static async ETTask UpdateRoleList(this UIRoleComponent self)
         {
-            // List<Role> rolelList = self.Scene().GetComponent<RoleComponent>().RolelList;
-            // string assetsName = $"Assets/Bundles/UI/UIRoles/UIRoleItem.prefab";
-            // GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
-            //
-            // int num = 0;
-            // for (int i = 0; i < rolelList.Count; i++)
-            // {
-            //     if (i < self.RoleList.Count)
-            //     {
-            //         self.RoleList[i].UpdateInfo(rolelList[i]);
-            //     }
-            //     else
-            //     {
-            //         GameObject gameObject = UnityEngine.Object.Instantiate(bundleGameObject, self.RoleListNode.GetComponent<Transform>());
-            //         UIRoleItemComponent uiRoleItemComponent = self.AddChild<UIRoleItemComponent, GameObject, Role>(gameObject, rolelList[i]);
-            //         self.RoleList.Add(uiRoleItemComponent);
-            //     }
-            //
-            //     num++;
-            // }
-            //
-            // for (int i = num; i < self.RoleList.Count; i++)
-            // {
-            //     self.RoleList[i].GameObject.SetActive(false);
-            // }
+            RoleComponent roleComponent = self.Root().GetComponent<RoleComponent>();
+            string assetsName = $"Assets/Bundles/UI/UIRoles/UIRoleItem.prefab";
+            GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
+
+            int num = 0;
+            for (int i = 0; i < roleComponent.Roles.Count; i++)
+            {
+                if (i < self.UIRoleItemComponents.Count)
+                {
+                    UIRoleItemComponent uiRoleItemComponent = self.UIRoleItemComponents[i];
+                    uiRoleItemComponent.UpdateInfo(self.Scene().GetComponent<RoleComponent>().Roles[i]);
+                }
+                else
+                {
+                    GameObject gameObject = UnityEngine.Object.Instantiate(bundleGameObject, self.RoleListNode.GetComponent<Transform>());
+                    UIRoleItemComponent uiRoleItemComponent =
+                            self.AddChild<UIRoleItemComponent, GameObject, Role>(gameObject, roleComponent.Roles[i]);
+                    self.UIRoleItemComponents.Add(uiRoleItemComponent);
+                }
+
+                num++;
+            }
+
+            for (int i = num; i < self.UIRoleItemComponents.Count; i++)
+            {
+                UIRoleItemComponent uiRoleItemComponent = self.UIRoleItemComponents[i];
+                uiRoleItemComponent.GameObject.SetActive(false);
+            }
 
             await ETTask.CompletedTask;
         }

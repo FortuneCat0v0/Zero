@@ -14,7 +14,7 @@ namespace ET
 
         public StartSceneConfig LocationConfig;
 
-        public List<StartSceneConfig> Realms = new();
+        public Dictionary<int, StartSceneConfig> Realms = new();
         
         public List<StartSceneConfig> Routers = new();
         
@@ -58,7 +58,7 @@ namespace ET
                 switch (startSceneConfig.Type)
                 {
                     case SceneType.Realm:
-                        this.Realms.Add(startSceneConfig);
+                        this.Realms.Add(startSceneConfig.Zone, startSceneConfig);
                         break;
                     case SceneType.Gate:
                         this.Gates.Add(startSceneConfig.Zone, startSceneConfig);

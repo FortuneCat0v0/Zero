@@ -19,7 +19,7 @@ namespace ET.Server
                 return;
             }
 
-            foreach (GameServer server in root.GetComponent<ServerComponent>().GetAll())
+            foreach (GameServer server in root.GetComponent<ServerComponent>().GameServers)
             {
                 response.ServerInfos.Add(server.ToMessage());
             }

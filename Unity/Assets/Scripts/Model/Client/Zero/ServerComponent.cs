@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace ET
+namespace ET.Client
 {
     [ComponentOf(typeof(Scene))]
     public class ServerComponent : Entity, IAwake
     {
-        public List<long> ServerIds = new();
-
+        public List<EntityRef<GameServer>> GameServers = new();
         public int CurrentServerId { get; set; }
     }
 }

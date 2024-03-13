@@ -59,20 +59,18 @@ namespace ET.Server
             gateMapComponent.Scene =
                     await GateMapFactory.Create(gateMapComponent, player.Id, IdGenerater.Instance.GenerateInstanceId(), "GateMap");
 
-            // Unit unit = await UnitCacheHelper.GetUnitCache(gateMapComponent.Scene, player.Id);
-            Unit unit = null;
+            Unit unit = await UnitCacheHelper.GetUnitCache(gateMapComponent.Scene, player.Id);
 
             bool isNewUnit = unit == null;
             if (isNewUnit)
             {
                 unit = UnitFactory.Create(gateMapComponent.Scene, player.Id, UnitType.Player);
 
-                List<Role> roleList = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone())
+                List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone())
                         .Query<Role>(d => d.Id == player.Id);
                 // unit.AddComponent(roleList[0]);
-                unit.AddChild(roleList[0]);
 
-                // UnitCacheHelper.AddOrUpdateUnitAllCache(unit);
+                UnitCacheHelper.AddOrUpdateUnitAllCache(unit);
             }
 
             return (isNewUnit, unit);

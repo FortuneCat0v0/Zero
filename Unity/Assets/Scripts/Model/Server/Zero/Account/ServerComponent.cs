@@ -5,6 +5,6 @@ namespace ET.Server
     [ComponentOf(typeof(Scene))]
     public class ServerComponent : Entity, IAwake
     {
-        public List<long> ServerIds = new();
+        public List<EntityRef<GameServer>> GameServers = new();
     }
 }
