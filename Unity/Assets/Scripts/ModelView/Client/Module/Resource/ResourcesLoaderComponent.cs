@@ -18,6 +18,7 @@ namespace ET.Client
         private static void Awake(this ResourcesLoaderComponent self, string packageName)
         {
             self.package = YooAssets.GetPackage(packageName);
+            self.PackageVersion = self.package.GetPackageVersion();
         }
 
         [EntitySystem]
@@ -44,6 +45,7 @@ namespace ET.Client
                         {
                             handle.UnloadAsync();
                         }
+
                         break;
                 }
             }
@@ -51,7 +53,8 @@ namespace ET.Client
 
         public static async ETTask<T> LoadAssetAsync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
         {
-            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
+            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>()
+                    .Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
 
             HandleBase handler;
             if (!self.handlers.TryGetValue(location, out handler))
@@ -66,9 +69,11 @@ namespace ET.Client
             return (T)((AssetHandle)handler).AssetObject;
         }
 
-        public static async ETTask<Dictionary<string, T>> LoadAllAssetsAsync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
+        public static async ETTask<Dictionary<string, T>> LoadAllAssetsAsync<T>(this ResourcesLoaderComponent self, string location)
+                where T : UnityEngine.Object
         {
-            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
+            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>()
+                    .Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
 
             HandleBase handler;
             if (!self.handlers.TryGetValue(location, out handler))
@@ -90,7 +95,8 @@ namespace ET.Client
 
         public static async ETTask LoadSceneAsync(this ResourcesLoaderComponent self, string location, LoadSceneMode loadSceneMode)
         {
-            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
+            using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>()
+                    .Wait(CoroutineLockType.ResourcesLoader, location.GetHashCode());
 
             HandleBase handler;
             if (self.handlers.TryGetValue(location, out handler))
@@ -103,6 +109,102 @@ namespace ET.Client
             await handler.Task;
             self.handlers.Add(location, handler);
         }
+
+        #region 热更相关
+
+        /// <summary>
+        /// 获取资源版本
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        public static async ETTask<int> UpdateVersionAsync(this ResourcesLoaderComponent self, int timeout = 30)
+        {
+            var operation = self.package.UpdatePackageVersionAsync();
+
+            await operation.Task;
+
+            if (operation.Status != EOperationStatus.Succeed)
+            {
+                return ErrorCode.ERR_ResourceUpdateVersionError;
+            }
+
+            Log.Info($"获取资源版本{operation.PackageVersion}");
+            self.PackageVersion = operation.PackageVersion;
+            return ErrorCode.ERR_Success;
+        }
+
+        /// <summary>
+        /// 更新资源清单
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static async ETTask<int> UpdateManifestAsync(this ResourcesLoaderComponent self)
+        {
+            var operation = self.package.UpdatePackageManifestAsync(self.PackageVersion);
+
+            await operation.Task;
+
+            if (operation.Status != EOperationStatus.Succeed)
+            {
+                return ErrorCode.ERR_ResourceUpdateManifestError;
+            }
+
+            return ErrorCode.ERR_Success;
+        }
+
+        /// <summary>
+        /// 创建下载器
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static int CreateDownloader(this ResourcesLoaderComponent self)
+        {
+            int downloadingMaxNum = 10;
+            int failedTryAgain = 3;
+            ResourceDownloaderOperation downloader = YooAssets.CreateResourceDownloader(downloadingMaxNum, failedTryAgain);
+            if (downloader.TotalDownloadCount == 0)
+            {
+                Log.Info("没有发现需要下载的资源");
+            }
+            else
+            {
+                Log.Info("一共发现了{0}个资源需要更新下载。".Fmt(downloader.TotalDownloadCount));
+                self.Downloader = downloader;
+            }
+
+            return ErrorCode.ERR_Success;
+        }
+
+        public static async ETTask<int> DonwloadWebFilesAsync(this ResourcesLoaderComponent self,
+        DownloaderOperation.OnStartDownloadFile onStartDownloadFileCallback = null,
+        DownloaderOperation.OnDownloadProgress onDownloadProgress = null,
+        DownloaderOperation.OnDownloadError onDownloadError = null,
+        DownloaderOperation.OnDownloadOver onDownloadOver = null)
+        {
+            if (self.Downloader == null)
+            {
+                return ErrorCode.ERR_Success;
+            }
+
+            // 注册下载回调
+            self.Downloader.OnStartDownloadFileCallback = onStartDownloadFileCallback;
+            self.Downloader.OnDownloadProgressCallback = onDownloadProgress;
+            self.Downloader.OnDownloadErrorCallback = onDownloadError;
+            self.Downloader.OnDownloadOverCallback = onDownloadOver;
+            self.Downloader.BeginDownload();
+            await self.Downloader.Task;
+
+            // 检测下载结果
+            if (self.Downloader.Status != EOperationStatus.Succeed)
+            {
+                return ErrorCode.ERR_ResourceUpdateDownloadError;
+            }
+
+            return ErrorCode.ERR_Success;
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -114,5 +216,7 @@ namespace ET.Client
     {
         public ResourcePackage package;
         public Dictionary<string, HandleBase> handlers = new();
+        public string PackageVersion;
+        public ResourceDownloaderOperation Downloader;
     }
 }
