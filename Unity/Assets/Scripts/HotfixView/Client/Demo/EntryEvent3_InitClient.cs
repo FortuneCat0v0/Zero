@@ -15,6 +15,7 @@ namespace ET.Client
             root.AddComponent<ResourcesLoaderComponent>();
             root.AddComponent<PlayerComponent>();
             root.AddComponent<CurrentScenesComponent>();
+            root.AddComponent<FlyTipComponent>();
             root.AddComponent<AccountComponent>();
             root.AddComponent<ServerComponent>();
             root.AddComponent<RoleComponent>();
