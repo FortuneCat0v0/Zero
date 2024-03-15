@@ -22,6 +22,8 @@ namespace ET.Client
             self.RawImg.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerDown, EventTriggerType.PointerDown);
             self.RawImg.GetComponent<EventTrigger>().AddEventTrigger(self.OnDrag, EventTriggerType.Drag);
             self.RawImg.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerUp, EventTriggerType.PointerUp);
+
+            self.SetPosition(Vector3.zero, new Vector3(0f, 70f, 150f));
         }
 
         private static void OnPointerDown(this UIModelShow self, PointerEventData pdata)
@@ -60,9 +62,19 @@ namespace ET.Client
             GameObject go = UnityEngine.Object.Instantiate(prefab, self.ModelRoot.transform, true);
             self.Model = go;
 
+            self.ChangeLayerAll(go.transform);
             go.transform.localScale = Vector3.one;
             go.transform.localPosition = Vector3.zero;
             go.transform.localEulerAngles = Vector3.zero;
+        }
+
+        private static void ChangeLayerAll(this UIModelShow self, Transform transform)
+        {
+            transform.gameObject.layer = LayerMask.NameToLayer("RenderTexture");
+            foreach (Transform trans in transform)
+            {
+                self.ChangeLayerAll(trans);
+            }
         }
 
         public static void SetShow(this UIModelShow self, bool isShow)
