@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [ChildOf(typeof(UIServerComponent))]
-    public class UIServerItemComponent : Entity, IAwake<GameObject, GameServer>
+    public class UIServerItem : Entity, IAwake<GameObject, GameServer>
     {
         public GameObject NameText;
         public GameObject Btn;

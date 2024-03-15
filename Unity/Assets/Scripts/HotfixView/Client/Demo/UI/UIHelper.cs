@@ -22,23 +22,12 @@ namespace ET.Client
 
         # region 点击注册
 
-        /// <summary>
-        /// 注册点击事件
-        /// </summary>
-        /// <param name="action"></param>
-        /// <param name="etype"></param>
-        public static void AddEventTrigger(GameObject go, Action<PointerEventData> action, EventTriggerType etype)
+        public static void AddEventTrigger(this EventTrigger eventTrigger, Action<PointerEventData> action, EventTriggerType etype)
         {
-            EventTrigger trigger = go.GetComponent<EventTrigger>();
-            if (trigger == null)
-            {
-                return;
-            }
-
             EventTrigger.Entry entry = new();
             entry.eventID = etype;
             entry.callback.AddListener(Callback);
-            trigger.triggers.Add(entry);
+            eventTrigger.triggers.Add(entry);
             return;
 
             void Callback(BaseEventData eventdata)

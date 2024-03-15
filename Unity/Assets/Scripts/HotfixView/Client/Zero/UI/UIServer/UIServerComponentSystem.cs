@@ -52,7 +52,7 @@ namespace ET.Client
             foreach (GameServer gameServer in self.Scene().GetComponent<ServerComponent>().GameServers)
             {
                 GameObject gameObject = UnityEngine.Object.Instantiate(bundleGameObject, self.ServerListNode.GetComponent<Transform>());
-                self.AddChild<UIServerItemComponent, GameObject, GameServer>(gameObject, gameServer);
+                self.AddChild<UIServerItem, GameObject, GameServer>(gameObject, gameServer);
             }
         }
     }

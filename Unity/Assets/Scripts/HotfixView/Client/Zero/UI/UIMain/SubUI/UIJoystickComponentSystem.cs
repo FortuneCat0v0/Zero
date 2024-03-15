@@ -45,17 +45,17 @@ namespace ET.Client
             self.MoveComponent = self.MyUnit.GetComponent<MoveComponent>();
             self.ClientSenderComponent = self.Root().GetComponent<ClientSenderComponent>();
 
-            UIHelper.AddEventTrigger(self.StartArea, self.OnPointerDown, EventTriggerType.PointerDown);
-            UIHelper.AddEventTrigger(self.StartArea, self.OnBeginDrag, EventTriggerType.BeginDrag);
-            UIHelper.AddEventTrigger(self.StartArea, self.OnDrag, EventTriggerType.Drag);
-            UIHelper.AddEventTrigger(self.StartArea, self.OnEndDrag, EventTriggerType.EndDrag);
-            UIHelper.AddEventTrigger(self.StartArea, self.OnEndDrag, EventTriggerType.PointerUp);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerDown, EventTriggerType.PointerDown);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnBeginDrag, EventTriggerType.BeginDrag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnDrag, EventTriggerType.Drag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.PointerUp);
 
-            UIHelper.AddEventTrigger(self.Joystick, self.OnPointerDown, EventTriggerType.PointerDown);
-            UIHelper.AddEventTrigger(self.Joystick, self.OnBeginDrag, EventTriggerType.BeginDrag);
-            UIHelper.AddEventTrigger(self.Joystick, self.OnDrag, EventTriggerType.Drag);
-            UIHelper.AddEventTrigger(self.Joystick, self.OnEndDrag, EventTriggerType.EndDrag);
-            UIHelper.AddEventTrigger(self.Joystick, self.OnEndDrag, EventTriggerType.PointerUp);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerDown, EventTriggerType.PointerDown);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnBeginDrag, EventTriggerType.BeginDrag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnDrag, EventTriggerType.Drag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.PointerUp);
 
             self.MapMask = LayerMask.GetMask("Map");
             self.OperateModel = 1;

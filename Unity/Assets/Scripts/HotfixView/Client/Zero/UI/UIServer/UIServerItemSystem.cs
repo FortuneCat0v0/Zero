@@ -6,12 +6,12 @@ namespace ET.Client
 {
     [FriendOf(typeof(GameServer))]
     [FriendOf(typeof(ServerComponent))]
-    [FriendOf(typeof(UIServerItemComponent))]
-    [EntitySystemOf(typeof(UIServerItemComponent))]
-    public static partial class UIServerItemComponentSystem
+    [FriendOf(typeof(UIServerItem))]
+    [EntitySystemOf(typeof(UIServerItem))]
+    public static partial class UIServerItemSystem
     {
         [EntitySystem]
-        private static void Awake(this UIServerItemComponent self, GameObject gameObject, GameServer server)
+        private static void Awake(this UIServerItem self, GameObject gameObject, GameServer server)
         {
             ReferenceCollector rc = gameObject.GetComponent<ReferenceCollector>();
 
@@ -24,7 +24,7 @@ namespace ET.Client
             self.Btn.GetComponent<Button>().onClick.AddListener(self.OnBtn);
         }
 
-        private static void OnBtn(this UIServerItemComponent self)
+        private static void OnBtn(this UIServerItem self)
         {
             self.Root().GetComponent<ServerComponent>().CurrentServerId = int.Parse(self.ServerId.ToString());
         }
