@@ -290,5 +290,16 @@ namespace ET
                 tcs.SetResult(ret);
             }
         }
+        
+        /// <summary>
+        /// 是否完成所有移动
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static bool IsFinished(this MoveComponent self)
+        {
+            // 如果是最后一个点
+            return self.N > self.Targets.Count - 1;
+        }
     }
 }

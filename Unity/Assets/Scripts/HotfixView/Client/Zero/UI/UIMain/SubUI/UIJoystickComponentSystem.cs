@@ -1,0 +1,213 @@
+﻿using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+namespace ET.Client
+{
+    [FriendOf(typeof(OperaComponent))]
+    [FriendOf(typeof(UIJoystickComponent))]
+    [EntitySystemOf(typeof(UIJoystickComponent))]
+    public static partial class UIJoystickComponentSystem
+    {
+        [Invoke(TimerInvokeType.JoystickTimer)]
+        public class JoystickTimer : ATimer<UIJoystickComponent>
+        {
+            protected override void Run(UIJoystickComponent self)
+            {
+                try
+                {
+                    self.SendMove();
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"move timer error: {self.Id}\n{e}");
+                }
+            }
+        }
+
+        [EntitySystem]
+        private static void Awake(this UIJoystickComponent self, GameObject gameObject)
+        {
+            self.GameObject = gameObject;
+            ReferenceCollector rc = gameObject.GetComponent<ReferenceCollector>();
+
+            self.StartArea = rc.Get<GameObject>("StartArea");
+            self.Joystick = rc.Get<GameObject>("Joystick");
+            self.JoystickBottom = rc.Get<GameObject>("JoystickBottom");
+            self.JoystickThumb = rc.Get<GameObject>("JoystickThumb");
+
+            self.JoystickBottomImg = self.JoystickBottom.GetComponent<Image>();
+            self.JoystickThumbImg = self.JoystickThumb.GetComponent<Image>();
+            self.RectTransform = self.StartArea.GetComponent<RectTransform>();
+            self.UICamera = self.Root().GetComponent<GlobalComponent>().UICamera.GetComponent<Camera>();
+            self.MyUnit = UnitHelper.GetMyUnitFromCurrentScene(self.Scene());
+            self.MoveComponent = self.MyUnit.GetComponent<MoveComponent>();
+            self.ClientSenderComponent = self.Root().GetComponent<ClientSenderComponent>();
+
+            UIHelper.AddEventTrigger(self.StartArea, self.OnPointerDown, EventTriggerType.PointerDown);
+            UIHelper.AddEventTrigger(self.StartArea, self.OnBeginDrag, EventTriggerType.BeginDrag);
+            UIHelper.AddEventTrigger(self.StartArea, self.OnDrag, EventTriggerType.Drag);
+            UIHelper.AddEventTrigger(self.StartArea, self.OnEndDrag, EventTriggerType.EndDrag);
+            UIHelper.AddEventTrigger(self.StartArea, self.OnEndDrag, EventTriggerType.PointerUp);
+
+            UIHelper.AddEventTrigger(self.Joystick, self.OnPointerDown, EventTriggerType.PointerDown);
+            UIHelper.AddEventTrigger(self.Joystick, self.OnBeginDrag, EventTriggerType.BeginDrag);
+            UIHelper.AddEventTrigger(self.Joystick, self.OnDrag, EventTriggerType.Drag);
+            UIHelper.AddEventTrigger(self.Joystick, self.OnEndDrag, EventTriggerType.EndDrag);
+            UIHelper.AddEventTrigger(self.Joystick, self.OnEndDrag, EventTriggerType.PointerUp);
+
+            self.MapMask = LayerMask.GetMask("Map");
+            self.OperateModel = 1;
+            self.Radius = 110f;
+            self.Joystick.SetActive(false);
+        }
+
+        [EntitySystem]
+        private static void Destroy(this UIJoystickComponent self)
+        {
+            self.Root().GetComponent<TimerComponent>().Remove(ref self.JoystickTimer);
+        }
+
+        private static void OnPointerDown(this UIJoystickComponent self, PointerEventData pdata)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(self.RectTransform, pdata.position, self.UICamera, out self.OldPoint);
+            self.SetAlpha(1f);
+            if (self.OperateModel == 0)
+            {
+                self.Joystick.SetActive(true);
+                self.JoystickBottom.transform.localPosition = Vector3.zero;
+                self.JoystickThumb.transform.localPosition = Vector3.zero;
+                self.OldPoint = Vector2.zero;
+            }
+            else
+            {
+                self.Joystick.SetActive(true);
+                self.JoystickBottom.transform.localPosition = new Vector3(self.OldPoint.x, self.OldPoint.y, 0f);
+                self.JoystickThumb.transform.localPosition = new Vector3(self.OldPoint.x, self.OldPoint.y, 0f);
+            }
+        }
+
+        private static void OnBeginDrag(this UIJoystickComponent self, PointerEventData pdata)
+        {
+            // 判断当前状态是否可以使用摇杆
+
+            self.SetDirection(pdata);
+            TimerComponent timerComponent = self.Root().GetComponent<TimerComponent>();
+            timerComponent.Remove(ref self.JoystickTimer);
+            self.JoystickTimer = timerComponent.NewFrameTimer(TimerInvokeType.JoystickTimer, self);
+        }
+
+        private static void OnDrag(this UIJoystickComponent self, PointerEventData pdata)
+        {
+            self.SetDirection(pdata);
+        }
+
+        private static void OnEndDrag(this UIJoystickComponent self, PointerEventData pdata)
+        {
+            if (!self.Joystick.activeSelf)
+            {
+                return;
+            }
+
+            self.Root().GetComponent<TimerComponent>()?.Remove(ref self.JoystickTimer);
+            // 松开发送停止移动
+            self.ClientSenderComponent.Send(C2M_Stop.Create());
+            self.ResetUI();
+        }
+
+        private static void SetAlpha(this UIJoystickComponent self, float value)
+        {
+            Color newColor = new(1f, 1f, 1f);
+            newColor.a = value;
+            self.JoystickBottomImg.color = newColor;
+            self.JoystickThumbImg.color = newColor;
+        }
+
+        /// <summary>
+        /// 移动摇杆按钮，并得到方向
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="pdata"></param>
+        /// <returns></returns>
+        private static void SetDirection(this UIJoystickComponent self, PointerEventData pdata)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(self.RectTransform, pdata.position, self.UICamera, out self.NewPoint);
+            Vector3 vector3 = new(self.NewPoint.x, self.NewPoint.y, 0f);
+            float maxDistance = Vector2.Distance(self.OldPoint, self.NewPoint);
+            if (maxDistance < self.Radius)
+            {
+                self.JoystickThumb.transform.localPosition = vector3;
+            }
+            else
+            {
+                self.NewPoint = self.OldPoint + (self.NewPoint - self.OldPoint).normalized * self.Radius;
+                vector3.x = self.NewPoint.x;
+                vector3.y = self.NewPoint.y;
+                self.JoystickThumb.transform.localPosition = vector3;
+            }
+
+            self.Direction = (self.NewPoint - self.OldPoint).normalized;
+            self.Direction.z = self.Direction.y;
+            self.Direction.y = 0;
+        }
+
+        private static void SendMove(this UIJoystickComponent self)
+        {
+            if (self.MyUnit == null)
+            {
+                return;
+            }
+
+            // 切换方向立刻从新寻路，保持同一方向则要完成之前的移动后
+            if (Vector3.Distance(self.Direction, self.LastDirection) < 0.6f && !self.MoveComponent.IsFinished())
+            {
+                return;
+            }
+
+            // 发出射线，检测到Collision,尽量生成直线最长路径，减少寻路次数
+            Vector3 start = self.MyUnit.Position;
+            float intveral = 1f; // 初始寻的长度
+            int maxStep = 10; // 最多寻多少次
+            Vector3 target = Vector3.zero;
+            for (int i = 1; i <= maxStep; i++)
+            {
+                RaycastHit hit;
+                intveral *= 2;
+                Physics.Raycast(start + self.Direction * (i * intveral) + new Vector3(0f, 10f, 0f), Vector3.down, out hit, 100, self.MapMask);
+
+                if (hit.collider == null && target != Vector3.zero)
+                {
+                    break;
+                }
+
+                if (hit.collider == null && target == Vector3.zero)
+                {
+                    return;
+                }
+
+                target = hit.point;
+            }
+
+            self.LastDirection = self.Direction;
+            // Debug.DrawLine(start, target, Color.red, 3);
+            C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
+            c2MPathfindingResult.Position = target;
+            self.ClientSenderComponent.Send(c2MPathfindingResult);
+        }
+
+        private static void ResetUI(this UIJoystickComponent self)
+        {
+            self.SetAlpha(0.3f);
+            if (self.OperateModel == 0)
+            {
+                self.JoystickBottom.transform.localPosition = Vector3.zero;
+                self.JoystickThumb.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                self.Joystick.SetActive(false);
+            }
+        }
+    }
+}

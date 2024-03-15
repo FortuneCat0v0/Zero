@@ -5,9 +5,12 @@ namespace ET.Client
     [ComponentOf(typeof(UI))]
     public class UIMainComponent : Entity, IAwake
     {
-        public GameObject GoldText;
-        public GameObject GMBtn;
-        public GameObject MatchBtn;
+        private EntityRef<UIJoystickComponent> uiJoystickComponent;
+
+        public UIJoystickComponent UIJoystickComponent
+        {
+            get => this.uiJoystickComponent;
+            set => this.uiJoystickComponent = value;
+        }
     }
 }
-
