@@ -50,8 +50,7 @@ namespace ET.Client
 
         private static async ETTask OnBagBtn(this UIMainComponent self)
         {
-            Log.Info("背包界面暂未开放");
-            await ETTask.CompletedTask;
+            await UIHelper.Create(self.Scene(), UIType.UIBag, UILayer.Mid);
         }
 
         private static async ETTask OnPetBtn(this UIMainComponent self)

@@ -20,7 +20,81 @@ namespace ET.Client
             scene.GetComponent<UIComponent>().Remove(uiType);
         }
 
-        # region 点击注册
+        # region Toggle相关
+
+        public static void SetToggleShow(this GameObject gameObject, bool isShow)
+        {
+            gameObject.transform.Find("Background/XuanZhong").gameObject.SetActive(isShow);
+            gameObject.transform.Find("Background/WeiXuanZhong").gameObject.SetActive(!isShow);
+        }
+
+        public static void AddListener(this ToggleGroup toggleGroup, UnityAction<int> selectEventHandler)
+        {
+            var togglesList = toggleGroup.GetComponentsInChildren<Toggle>();
+            for (int i = 0; i < togglesList.Length; i++)
+            {
+                int index = i;
+                togglesList[i].AddListener((isOn) =>
+                {
+                    if (isOn)
+                    {
+                        selectEventHandler(index);
+                    }
+                });
+            }
+        }
+
+        public static void AddListener(this Toggle toggle, UnityAction<bool> selectEventHandler)
+        {
+            toggle.onValueChanged.RemoveAllListeners();
+            toggle.onValueChanged.AddListener(selectEventHandler);
+        }
+
+        public static void SetTogglesInteractable(this ToggleGroup toggleGroup, bool isEnable)
+        {
+            var toggles = toggleGroup.transform.GetComponentsInChildren<Toggle>();
+            for (int i = 0; i < toggles.Length; i++)
+            {
+                toggles[i].interactable = isEnable;
+            }
+        }
+
+        public static (int, Toggle) GetSelectedToggle(this ToggleGroup toggleGroup)
+        {
+            var togglesList = toggleGroup.GetComponentsInChildren<Toggle>();
+            for (int i = 0; i < togglesList.Length; i++)
+            {
+                if (togglesList[i].isOn)
+                {
+                    return (i, togglesList[i]);
+                }
+            }
+
+            Log.Error("none Toggle is Selected");
+            return (-1, null);
+        }
+
+        public static void SetToggleSelected(this ToggleGroup toggleGroup, int index)
+        {
+            var togglesList = toggleGroup.GetComponentsInChildren<Toggle>();
+            for (int i = 0; i < togglesList.Length; i++)
+            {
+                if (i != index)
+                {
+                    continue;
+                }
+
+                togglesList[i].IsSelected(true);
+            }
+        }
+
+        public static void IsSelected(this Toggle toggle, bool isSelected)
+        {
+            toggle.isOn = isSelected;
+            toggle.onValueChanged?.Invoke(isSelected);
+        }
+
+        #endregion
 
         public static void AddEventTrigger(this EventTrigger eventTrigger, Action<PointerEventData> action, EventTriggerType etype)
         {
@@ -36,6 +110,8 @@ namespace ET.Client
                 action(data);
             }
         }
+
+        # region Button 相关
 
         /// <summary>
         /// 按钮注册 异步
@@ -75,6 +151,6 @@ namespace ET.Client
             button.onClick.AddListener(clickEventHandler);
         }
 
-        #endregion
+        # endregion
     }
 }

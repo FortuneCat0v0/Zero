@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using Unity.Mathematics;
+
+namespace ET.Client
 {
     public struct StartHotUpDate
     {
@@ -26,5 +28,12 @@
     public struct OnPatchDownlodOver
     {
         public bool IsSucceed;
+    }
+
+    public struct ShowItemTips
+    {
+        public Item Item;
+        public float3 InputPoint;
+        public int Occ;
     }
 }

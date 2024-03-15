@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ET.Client
 {
@@ -24,6 +25,21 @@ namespace ET.Client
             {
                 case ItemContainerType.Bag:
                     return root.GetComponent<BagComponent>().GetItem(itemId);
+                case ItemContainerType.Role:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
+            }
+
+            return null;
+        }
+
+        public static List<Item> GetAllItem(Scene root, ItemContainerType itemContainerType)
+        {
+            switch (itemContainerType)
+            {
+                case ItemContainerType.Bag:
+                    return root.GetComponent<BagComponent>().GetAllItems();
                 case ItemContainerType.Role:
                     break;
                 default:

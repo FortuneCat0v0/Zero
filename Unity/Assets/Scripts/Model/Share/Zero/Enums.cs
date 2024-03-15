@@ -19,6 +19,13 @@
         Game,
     }
 
+    public enum ItemType
+    {
+        Equipment,
+        Material,
+        Consume
+    }
+
     public enum ItemOpType
     {
         Add,

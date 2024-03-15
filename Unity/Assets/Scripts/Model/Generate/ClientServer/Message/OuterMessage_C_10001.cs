@@ -1919,6 +1919,9 @@ namespace ET
         public int Quality { get; set; }
 
         [MemoryPackOrder(3)]
+        public int Num { get; set; }
+
+        [MemoryPackOrder(4)]
         public List<AttributeEntryInfo> AttributeEntryInfos { get; set; } = new();
 
         public override void Dispose()
@@ -1931,6 +1934,7 @@ namespace ET
             this.Id = default;
             this.ConfigId = default;
             this.Quality = default;
+            this.Num = default;
             this.AttributeEntryInfos.Clear();
 
             ObjectPool.Instance.Recycle(this);

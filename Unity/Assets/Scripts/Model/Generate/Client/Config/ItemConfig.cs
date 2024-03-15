@@ -64,26 +64,12 @@ namespace ET
 		public int Type { get; set; }
 		/// <summary>装备装配部位</summary>
 		public int EquipPosition { get; set; }
-		/// <summary>UI图片</summary>
+		/// <summary>品质</summary>
+		public int Quality { get; set; }
+		/// <summary>Icon图片</summary>
 		public string Icon { get; set; }
-		/// <summary>世界图片</summary>
-		public string OnWorldSprite { get; set; }
 		/// <summary>描述</summary>
 		public string Description { get; set; }
-		/// <summary>使用半径</summary>
-		public int UseRadius { get; set; }
-		/// <summary>能否拾取</summary>
-		public int CanPickedUp { get; set; }
-		/// <summary>能否丢下</summary>
-		public int CanDropped { get; set; }
-		/// <summary>能否携带</summary>
-		public int CanCarried { get; set; }
-		/// <summary>价格</summary>
-		public int Price { get; set; }
-		/// <summary>百分率</summary>
-		public int SellPercentage { get; set; }
-		/// <summary>体积</summary>
-		public int volume { get; set; }
 
 	}
 }

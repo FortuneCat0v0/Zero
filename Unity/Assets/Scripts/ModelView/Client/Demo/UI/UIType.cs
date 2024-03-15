@@ -14,5 +14,6 @@ namespace ET.Client
         public const string UIServer = "UIServer";
         public const string UIRole = "UIRole";
         public const string UIMain = "UIMain";
+        public const string UIBag = "UIBag";
     }
 }

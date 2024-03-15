@@ -6,6 +6,9 @@ namespace ET
     public class Item : Entity, IAwake, IAwake<int>, ISerializeToEntity
     {
         public int ConfigId { get; set; }
+
+        public int Num { get; set; }
+
         public List<long> AttributeEntryIds { get; set; } = new();
     }
 }

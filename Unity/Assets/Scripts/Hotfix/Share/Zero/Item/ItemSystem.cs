@@ -20,6 +20,7 @@
             ItemInfo itemInfo = ItemInfo.Create();
             itemInfo.Id = self.Id;
             itemInfo.ConfigId = self.ConfigId;
+            itemInfo.Num = self.Num;
             foreach (long id in self.AttributeEntryIds)
             {
                 itemInfo.AttributeEntryInfos.Add(self.GetChild<AttributeEntry>(id).ToMessage());
@@ -31,6 +32,7 @@
         public static void FromMessage(this Item self, ItemInfo itemInfo)
         {
             self.ConfigId = itemInfo.ConfigId;
+            self.Num = itemInfo.Num;
             foreach (AttributeEntryInfo attributeEntryInfo in itemInfo.AttributeEntryInfos)
             {
                 AttributeEntry attributeEntry = self.AddChildWithId<AttributeEntry>(attributeEntryInfo.Id);

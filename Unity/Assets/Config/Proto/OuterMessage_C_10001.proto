@@ -432,7 +432,8 @@ message ItemInfo
 	int64 Id = 1;
 	int32 ConfigId = 2;
 	int32 Quality = 3;
-	repeated AttributeEntryInfo AttributeEntryInfos = 4;
+	int32 Num = 4;
+	repeated AttributeEntryInfo AttributeEntryInfos = 5;
 }
 
 message M2C_NoticeUnitNumeric // IMessage
