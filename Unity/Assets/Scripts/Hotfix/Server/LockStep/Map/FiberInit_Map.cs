@@ -3,7 +3,7 @@
 namespace ET.Server
 {
     [Invoke((long)SceneType.Map)]
-    public class FiberInit_Map: AInvokeHandler<FiberInit, ETTask>
+    public class FiberInit_Map : AInvokeHandler<FiberInit, ETTask>
     {
         public override async ETTask Handle(FiberInit fiberInit)
         {

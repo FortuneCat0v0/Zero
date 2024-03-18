@@ -1,6 +1,6 @@
 using Unity.Mathematics;
 
-namespace ET.Client
+namespace ET.Server
 {
     [FriendOf(typeof(XunLuoPathComponent))]
     public static partial class XunLuoPathComponentSystem

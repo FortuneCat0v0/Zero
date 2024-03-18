@@ -1,4 +1,4 @@
-namespace ET.Client
+namespace ET.Server
 {
     public class AI_Attack: AAIHandler
     {
@@ -14,16 +14,14 @@ namespace ET.Client
 
         public override async ETTask Execute(AIComponent aiComponent, AIConfig aiConfig, ETCancellationToken cancellationToken)
         {
-            Fiber fiber = aiComponent.Fiber();
-
-            Unit myUnit = UnitHelper.GetMyUnitFromClientScene(fiber.Root);
+            Unit myUnit = aiComponent.GetParent<Unit>();
             if (myUnit == null)
             {
                 return;
             }
 
             // 停在当前位置
-            fiber.Root.GetComponent<ClientSenderComponent>().Send(C2M_Stop.Create());
+            myUnit.Stop(1);
             
             Log.Debug("开始攻击");
 
@@ -32,7 +30,7 @@ namespace ET.Client
                 Log.Debug($"攻击: {i}次");
 
                 // 因为协程可能被中断，任何协程都要传入cancellationToken，判断如果是中断则要返回
-                await fiber.Root.GetComponent<TimerComponent>().WaitAsync(1000, cancellationToken);
+                await aiComponent.Root().GetComponent<TimerComponent>().WaitAsync(1000, cancellationToken);
                 if (cancellationToken.IsCancel())
                 {
                     return;

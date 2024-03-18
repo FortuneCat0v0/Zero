@@ -1,6 +1,6 @@
 using System;
 
-namespace ET
+namespace ET.Server
 {
     [EntitySystemOf(typeof(AIComponent))]
     [FriendOf(typeof(AIComponent))]
