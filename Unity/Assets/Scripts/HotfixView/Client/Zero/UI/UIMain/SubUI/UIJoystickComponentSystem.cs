@@ -160,7 +160,7 @@ namespace ET.Client
             }
 
             // 切换方向立刻从新寻路，保持同一方向则要完成之前的移动后
-            if (Vector3.Distance(self.Direction, self.LastDirection) < 0.6f && !self.MoveComponent.IsFinished())
+            if (Vector3.Distance(self.Direction, self.LastDirection) < 0.6f && !self.MoveComponent.IsArrived())
             {
                 return;
             }
@@ -173,7 +173,6 @@ namespace ET.Client
             for (int i = 1; i <= maxStep; i++)
             {
                 RaycastHit hit;
-                intveral *= 2;
                 Physics.Raycast(start + self.Direction * (i * intveral) + new Vector3(0f, 10f, 0f), Vector3.down, out hit, 100, self.MapMask);
 
                 if (hit.collider == null && target != Vector3.zero)
