@@ -73,7 +73,7 @@ namespace ET.Client
             Vector3 startPos = new(0, -100, 0);
             GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPool("FlyTipDi");
             FlyTipDiGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
-            self.FlyTips.Add(FlyTipDiGO);
+            self.FlyTipDis.Add(FlyTipDiGO);
             FlyTipDiGO.SetActive(true);
 
             RectTransform rectTransform = FlyTipDiGO.transform.GetComponent<RectTransform>();
@@ -82,7 +82,7 @@ namespace ET.Client
             rectTransform.GetComponent<RectTransform>().DOMoveY(0, 2f).SetEase(Ease.OutQuad).onComplete = () =>
             {
                 FlyTipDiGO.SetActive(false);
-                self.FlyTips.Remove(FlyTipDiGO);
+                self.FlyTipDis.Remove(FlyTipDiGO);
                 GameObjectPoolHelper.ReturnObjectToPool(FlyTipDiGO);
             };
 
