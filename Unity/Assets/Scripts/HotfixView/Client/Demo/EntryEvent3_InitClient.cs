@@ -21,6 +21,7 @@ namespace ET.Client
             root.AddComponent<ServerComponent>();
             root.AddComponent<RoleComponent>();
             root.AddComponent<BagComponent>();
+            root.AddComponent<EquipmentComponent>();
 
             // 根据配置修改掉Main Fiber的SceneType
             SceneType sceneType = EnumHelper.FromString<SceneType>(globalComponent.GlobalConfig.AppType.ToString());

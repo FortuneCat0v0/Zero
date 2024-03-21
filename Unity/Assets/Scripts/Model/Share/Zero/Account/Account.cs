@@ -1,4 +1,4 @@
-﻿namespace ET.Server
+﻿namespace ET
 {
     public enum AccountType
     {
@@ -7,8 +7,8 @@
         BlackList = 1,
     }
 
-    [ChildOf(typeof (AccountsZone))]
-    public class Account: Entity, IAwake
+    [ChildOf]
+    public class Account : Entity, IAwake
     {
         public string AccountName; //账户名
 
