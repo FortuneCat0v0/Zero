@@ -1989,6 +1989,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public int ItemContainerType { get; set; }
 
+        [MemoryPackOrder(3)]
+        public List<int> EquipPositions { get; set; } = new();
+
         [MemoryPackOrder(2)]
         public List<ItemInfo> ItemInfos { get; set; } = new();
 
@@ -2001,6 +2004,7 @@ namespace ET
 
             this.RpcId = default;
             this.ItemContainerType = default;
+            this.EquipPositions.Clear();
             this.ItemInfos.Clear();
 
             ObjectPool.Instance.Recycle(this);

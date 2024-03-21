@@ -39,24 +39,25 @@ namespace ET.Server
             MapMessageHelper.SendToClient(unit, m2CCreateUnits);
 
             // 通知客户端同步背包信息
-            List<Item> bagItems = unit.GetComponent<BagComponent>().GetAllItems();
+            List<Item> items = unit.GetComponent<BagComponent>().GetAllItems();
             M2C_AllItems m2CAllItems = M2C_AllItems.Create();
             m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
-            foreach (Item item in bagItems)
+            foreach (Item item in items)
             {
                 m2CAllItems.ItemInfos.Add(item.ToMessage());
             }
             MapMessageHelper.SendToClient(unit, m2CAllItems);
 
             // 通知客户端同步装备信息
-            // List<Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
-            // M2C_AllItems m2CAllItems = M2C_AllItems.Create();
-            // m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
-            // foreach (Item item in equipItems)
-            // {
-            //     m2CAllItems.ItemInfos.Add(item.ToMessage());
-            // }
-            // MapMessageHelper.SendToClient(unit, m2CAllItems);
+            Dictionary<int,Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
+            m2CAllItems = M2C_AllItems.Create();
+            m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
+            foreach (KeyValuePair<int,Item> keyValuePair in equipItems)
+            {
+                m2CAllItems.EquipPositions.Add(keyValuePair.Key);
+                m2CAllItems.ItemInfos.Add(keyValuePair.Value.ToMessage());
+            }
+            MapMessageHelper.SendToClient(unit, m2CAllItems);
             
             
             // 加入aoi

@@ -447,6 +447,7 @@ message M2C_AllItems // IMessage
 {
 	int32 RpcId = 1;
 	int32 ItemContainerType = 2;
+	repeated int32 EquipPositions = 4;
 	repeated ItemInfo ItemInfos = 3;
 }
 

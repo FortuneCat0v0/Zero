@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace ET
+namespace ET.Server
 {
     [FriendOf(typeof(BagComponent))]
     [EntitySystemOf(typeof(BagComponent))]
@@ -33,20 +32,13 @@ namespace ET
             return true;
         }
 
-        public static bool RemoveItem(this BagComponent self, long id)
-        {
-            if (!self.ItemsDict.ContainsKey(id))
-            {
-                return false;
-            }
-
-            Item item = self.ItemsDict[id];
-            item.Dispose();
-            self.ItemsDict.Remove(id);
-            return true;
-        }
-
-        public static Item RemoveItemNoDispose(this BagComponent self, long id)
+        /// <summary>
+        /// 注意！服务端Remove只是移除引用，并不会Dispose,请Remove后Add或Dispose!!!
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Item RemoveItem(this BagComponent self, long id)
         {
             if (!self.ItemsDict.ContainsKey(id))
             {
@@ -58,6 +50,7 @@ namespace ET
             return item;
         }
 
+        
         public static Item GetItem(this BagComponent self, long id)
         {
             if (!self.ItemsDict.ContainsKey(id))
