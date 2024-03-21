@@ -11,8 +11,8 @@ namespace ET.Server
             {
                 case ItemContainerType.Bag:
                     return unit.GetComponent<BagComponent>().GetItem(itemId);
-                case ItemContainerType.Role:
-                    return null;
+                case ItemContainerType.Equipment:
+                    return unit.GetComponent<EquipmentComponent>().GetEquipItemById(itemId);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
             }
@@ -36,7 +36,7 @@ namespace ET.Server
                     }
 
                     break;
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     return;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -62,7 +62,7 @@ namespace ET.Server
                     }
 
                     break;
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     return;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -97,7 +97,7 @@ namespace ET.Server
                     }
 
                     break;
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     return;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -107,30 +107,6 @@ namespace ET.Server
             m2CItemUpdateOp.ItemInfo = itemInfo;
             m2CItemUpdateOp.ItemOpType = (int)ItemOpType.Remove;
             m2CItemUpdateOp.ItemContainerType = (int)itemContainerType;
-        }
-
-        public static void SyncAllItems(Unit unit, ItemContainerType itemContainerType)
-        {
-            List<Item> items = null;
-            switch (itemContainerType)
-            {
-                case ItemContainerType.Bag:
-                    items = unit.GetComponent<BagComponent>().GetAllItems();
-                    break;
-                case ItemContainerType.Role:
-                    return;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
-            }
-
-            M2C_AllItems m2CAllItems = M2C_AllItems.Create();
-            m2CAllItems.ItemContainerType = (int)itemContainerType;
-            foreach (Item item in items)
-            {
-                m2CAllItems.ItemInfos.Add(item.ToMessage());
-            }
-
-            MapMessageHelper.SendToClient(unit, m2CAllItems);
         }
     }
 }

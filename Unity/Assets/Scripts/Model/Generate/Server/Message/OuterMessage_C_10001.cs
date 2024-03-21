@@ -2028,6 +2028,9 @@ namespace ET
         [MemoryPackOrder(3)]
         public int ItemContainerType { get; set; }
 
+        [MemoryPackOrder(4)]
+        public int EquipPosition { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -2039,6 +2042,7 @@ namespace ET
             this.ItemInfo = default;
             this.ItemOpType = default;
             this.ItemContainerType = default;
+            this.EquipPosition = default;
 
             ObjectPool.Instance.Recycle(this);
         }

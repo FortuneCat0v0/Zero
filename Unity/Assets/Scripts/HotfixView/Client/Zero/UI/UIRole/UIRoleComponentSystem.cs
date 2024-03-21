@@ -99,7 +99,7 @@ namespace ET.Client
         private static async ETTask UpdateRoleList(this UIRoleComponent self)
         {
             RoleComponent roleComponent = self.Root().GetComponent<RoleComponent>();
-            string assetsName = $"Assets/Bundles/UI/UIRoles/UIRoleItem.prefab";
+            string assetsName = $"Assets/Bundles/UI/UIRole/UIRoleItem.prefab";
             GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
 
             int num = 0;

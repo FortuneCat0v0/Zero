@@ -12,7 +12,7 @@ namespace ET.Client
                 case ItemContainerType.Bag:
                     root.GetComponent<BagComponent>().Clear();
                     break;
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -25,7 +25,7 @@ namespace ET.Client
             {
                 case ItemContainerType.Bag:
                     return root.GetComponent<BagComponent>().GetItem(itemId);
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -40,7 +40,7 @@ namespace ET.Client
             {
                 case ItemContainerType.Bag:
                     return root.GetComponent<BagComponent>().GetAllItems();
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -60,7 +60,7 @@ namespace ET.Client
                     }
 
                     break;
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);
@@ -74,7 +74,7 @@ namespace ET.Client
                 case ItemContainerType.Bag:
                     root.GetComponent<BagComponent>().RemoveItem(itemId);
                     break;
-                case ItemContainerType.Role:
+                case ItemContainerType.Equipment:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemContainerType), itemContainerType, null);

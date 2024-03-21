@@ -24,8 +24,8 @@ namespace ET.Client
 
         public static void SetToggleShow(this GameObject gameObject, bool isShow)
         {
-            gameObject.transform.Find("Background/XuanZhong").gameObject.SetActive(isShow);
-            gameObject.transform.Find("Background/WeiXuanZhong").gameObject.SetActive(!isShow);
+            gameObject.transform.Find("Background/Selected").gameObject.SetActive(isShow);
+            gameObject.transform.Find("Background/UnSelected").gameObject.SetActive(!isShow);
         }
 
         public static void AddListener(this ToggleGroup toggleGroup, UnityAction<int> selectEventHandler)

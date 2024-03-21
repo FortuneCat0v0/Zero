@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -38,8 +39,26 @@ namespace ET.Server
             MapMessageHelper.SendToClient(unit, m2CCreateUnits);
 
             // 通知客户端同步背包信息
-            ItemHelper.SyncAllItems(unit, ItemContainerType.Bag);
+            List<Item> bagItems = unit.GetComponent<BagComponent>().GetAllItems();
+            M2C_AllItems m2CAllItems = M2C_AllItems.Create();
+            m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
+            foreach (Item item in bagItems)
+            {
+                m2CAllItems.ItemInfos.Add(item.ToMessage());
+            }
+            MapMessageHelper.SendToClient(unit, m2CAllItems);
 
+            // 通知客户端同步装备信息
+            // List<Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
+            // M2C_AllItems m2CAllItems = M2C_AllItems.Create();
+            // m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
+            // foreach (Item item in equipItems)
+            // {
+            //     m2CAllItems.ItemInfos.Add(item.ToMessage());
+            // }
+            // MapMessageHelper.SendToClient(unit, m2CAllItems);
+            
+            
             // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
 

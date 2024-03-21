@@ -1,4 +1,4 @@
-﻿namespace ET.Client
+﻿namespace ET
 {
     public struct SceneChangeStart
     {
@@ -31,5 +31,13 @@
     public struct AfterUnitCreate
     {
         public Unit Unit;
+    }
+
+    public struct ChangeEquipItem
+    {
+        public Unit Unit;
+        public Item Item;
+        public EquipPosition EquipPosition;
+        public EquipOp EquipOp;
     }
 }
