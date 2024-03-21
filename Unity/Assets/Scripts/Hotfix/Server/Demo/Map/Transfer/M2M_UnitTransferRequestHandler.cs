@@ -51,7 +51,7 @@ namespace ET.Server
             // 通知客户端同步装备信息
             Dictionary<int,Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
             m2CAllItems = M2C_AllItems.Create();
-            m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
+            m2CAllItems.ItemContainerType = (int)ItemContainerType.Equipment;
             foreach (KeyValuePair<int,Item> keyValuePair in equipItems)
             {
                 m2CAllItems.EquipPositions.Add(keyValuePair.Key);
