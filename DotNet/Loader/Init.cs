@@ -19,6 +19,7 @@ namespace ET
 				Parser.Default.ParseArguments<Options>(System.Environment.GetCommandLineArgs())
 						.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
 						.WithParsed((o)=>World.Instance.AddSingleton(o));
+				World.Instance.AddSingleton<FixedUpdate, Action>(FixedUpdate);
 				
 				World.Instance.AddSingleton<Logger>().Log = new NLogger(Options.Instance.AppType.ToString(), Options.Instance.Process, 0);
 				
@@ -38,11 +39,17 @@ namespace ET
 		{
 			TimeInfo.Instance.Update();
 			FiberManager.Instance.Update();
+			ET.FixedUpdate.Instance.Tick();
 		}
 
 		public void LateUpdate()
 		{
 			FiberManager.Instance.LateUpdate();
+		}
+		
+		private void FixedUpdate()
+		{
+			FiberManager.Instance.FixedUpdate();
 		}
 	}
 }

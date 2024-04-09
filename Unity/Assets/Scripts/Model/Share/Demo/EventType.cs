@@ -1,17 +1,19 @@
-﻿namespace ET
+﻿using Box2DSharp.Dynamics.Contacts;
+
+namespace ET
 {
     public struct SceneChangeStart
     {
     }
-    
+
     public struct SceneChangeFinish
     {
     }
-    
+
     public struct AfterCreateClientScene
     {
     }
-    
+
     public struct AfterCreateCurrentScene
     {
     }
@@ -31,6 +33,12 @@
     public struct AfterUnitCreate
     {
         public Unit Unit;
+    }
+
+    public struct OnCollisionContact
+    {
+        public Contact contact;
+        public bool isEnd;
     }
 
     public struct ChangeEquipItem
