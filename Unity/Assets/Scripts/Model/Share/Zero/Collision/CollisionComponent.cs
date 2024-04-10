@@ -9,12 +9,6 @@ using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
-    public enum EColliderType
-    {
-        Circle = 1,
-        Box = 2,
-    }
-
     [ComponentOf(typeof(Unit))]
     public class CollisionComponent : Entity, IAwake, IFixedUpdate, IDestroy, ITransfer
     {

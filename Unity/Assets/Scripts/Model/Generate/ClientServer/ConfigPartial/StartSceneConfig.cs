@@ -4,6 +4,7 @@ using System.Net;
 
 namespace ET
 {
+    [EnableClass]
     public partial class StartSceneConfigCategory
     {
         public MultiMap<int, StartSceneConfig> Gates = new();
@@ -43,7 +44,7 @@ namespace ET
             return this.ClientScenesByName[zone][name];
         }
 
-        public override void EndInit()
+        partial void PostResolve()
         {
             foreach (StartSceneConfig startSceneConfig in this.GetAll().Values)
             {
@@ -91,7 +92,8 @@ namespace ET
             }
         }
     }
-    
+
+    [EnableClass]
     public partial class StartSceneConfig
     {
         public ActorId ActorId;
@@ -121,7 +123,7 @@ namespace ET
         {
             get
             {
-                if (innerIPPort == null)
+                if (this.innerIPPort == null)
                 {
                     this.innerIPPort = NetworkHelper.ToIPEndPoint($"{this.StartProcessConfig.InnerIP}:{this.Port}");
                 }
@@ -146,7 +148,7 @@ namespace ET
             }
         }
 
-        public override void EndInit()
+        partial void PostResolve()
         {
             this.ActorId = new ActorId(this.Process, this.Id, 1);
             this.Type = EnumHelper.FromString<SceneType>(this.SceneType);

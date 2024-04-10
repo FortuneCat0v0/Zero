@@ -43,33 +43,33 @@ namespace ET.Client
             self.UpTipImg.SetActive(false);
             self.LockCellImg.SetActive(false);
             self.ItemTipBtn.SetActive(false);
-
+            
             if (null == item)
             {
                 return;
             }
-
+            
             self.Item = item;
             ResourcesLoaderComponent resourcesLoaderComponent = self.Root().GetComponent<ResourcesLoaderComponent>();
             ItemConfig itemConfig = ItemConfigCategory.Instance.Get(item.ConfigId);
-
+            
             // self.ClickBtn.GetComponent<Button>().onClick.AddListener(() => { onClickAction?.Invoke(item); });
             self.ClickBtn.SetActive(true);
-
+            
             self.QualityImg.GetComponent<Image>().sprite =
                     await resourcesLoaderComponent.LoadAssetAsync<Sprite>(AssetPathHelper.GetItemQualityIconPath(itemConfig.Quality));
             self.QualityImg.SetActive(true);
-
+            
             self.IconImg.GetComponent<Image>().sprite =
                     await resourcesLoaderComponent.LoadAssetAsync<Sprite>(AssetPathHelper.GetItemIconPath(itemConfig.Icon));
             self.IconImg.SetActive(true);
-
+            
             self.NumText.GetComponent<TMP_Text>().text = item.Num.ToString();
             self.NumText.SetActive(true);
-
+            
             self.NameText.GetComponent<TMP_Text>().text = itemConfig.Name;
             self.NameText.SetActive(true);
-
+            
             self.ItemTipBtn.SetActive(true);
         }
 

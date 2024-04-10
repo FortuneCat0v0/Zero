@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-#if DOTNET || UNITY_STANDALONE
 using System.Threading.Tasks;
-#endif
+using Bright.Serialization;
 
 namespace ET
 {
@@ -20,45 +20,107 @@ namespace ET
             public string ConfigName;
         }
 
+        private readonly ConcurrentDictionary<Type, IConfigSingleton> allConfig = new();
+
         public void Awake()
         {
         }
 
         public async ETTask Reload(Type configType)
         {
-            GetOneConfigBytes getOneConfigBytes = new() { ConfigName = configType.Name };
-            byte[] oneConfigBytes = await EventSystem.Instance.Invoke<GetOneConfigBytes, ETTask<byte[]>>(getOneConfigBytes);
-            LoadOneConfig(configType, oneConfigBytes);
+            this.allConfig.TryGetValue(configType, out IConfigSingleton oneConfig);
+            if (oneConfig != null)
+            {
+                oneConfig.Destroy();
+            }
+
+            ByteBuf oneConfigBytes =
+                    await EventSystem.Instance.Invoke<GetOneConfigBytes, ETTask<ByteBuf>>(new GetOneConfigBytes() { ConfigName = configType.Name });
+
+            // object category = MongoHelper.Deserialize(configType, oneConfigBytes, 0, oneConfigBytes.Length);
+            // ASingleton singleton = category as ASingleton;
+
+            object category = Activator.CreateInstance(configType, oneConfigBytes);
+            IConfigSingleton singleton = category as IConfigSingleton;
+            singleton.Register();
+
+            this.allConfig[configType] = singleton;
+
+            // World.Instance.AddSingleton(singleton);
         }
 
         public async ETTask LoadAsync()
         {
-            Dictionary<Type, byte[]> configBytes = await EventSystem.Instance.Invoke<GetAllConfigBytes, ETTask<Dictionary<Type, byte[]>>>(new GetAllConfigBytes());
+            this.allConfig.Clear();
+            Dictionary<Type, ByteBuf> configBytes =
+                    await EventSystem.Instance.Invoke<GetAllConfigBytes, ETTask<Dictionary<Type, ByteBuf>>>(new GetAllConfigBytes());
 
-#if DOTNET || UNITY_STANDALONE
             using ListComponent<Task> listTasks = ListComponent<Task>.Create();
 
             foreach (Type type in configBytes.Keys)
             {
-                byte[] oneConfigBytes = configBytes[type];
-                Task task = Task.Run(() => LoadOneConfig(type, oneConfigBytes));
+                ByteBuf oneConfigBytes = configBytes[type];
+                Task task = Task.Run(() => LoadOneInThread(type, oneConfigBytes));
                 listTasks.Add(task);
             }
 
             await Task.WhenAll(listTasks.ToArray());
-#else
-            foreach (Type type in configBytes.Keys)
+            /*foreach (IConfigSingleton category in this.allConfig.Values)
             {
-                LoadOneConfig(type, configBytes[type]);
+                category.Register();
+            }*/
+
+            foreach (IConfigSingleton category in this.allConfig.Values)
+            {
+                category.Resolve(allConfig);
             }
-#endif
         }
 
-        private static void LoadOneConfig(Type configType, byte[] oneConfigBytes)
+        private void LoadOneInThread(Type configType, ByteBuf oneConfigBytes)
         {
-            object category = MongoHelper.Deserialize(configType, oneConfigBytes, 0, oneConfigBytes.Length);
-            ASingleton singleton = category as ASingleton;
-            World.Instance.AddSingleton(singleton);
+            object category = Activator.CreateInstance(configType, oneConfigBytes);
+            IConfigSingleton singleton = category as IConfigSingleton;
+            singleton.Register();
+            lock (this)
+            {
+                this.allConfig[configType] = category as IConfigSingleton;
+            }
+            /*object category = MongoHelper.Deserialize(configType, oneConfigBytes, 0, oneConfigBytes.Length);
+
+            lock (this)
+            {
+                ASingleton singleton = category as ASingleton;
+                this.allConfig[configType] = singleton;
+
+                World.Instance.AddSingleton(singleton);
+            }*/
+        }
+
+        public object LoadOneConfig(Type configType)
+        {
+            this.allConfig.TryGetValue(configType, out IConfigSingleton oneConfig);
+            if (oneConfig != null)
+            {
+                oneConfig.Destroy();
+            }
+
+            ByteBuf oneConfigBytes =
+                    EventSystem.Instance.Invoke<GetOneConfigBytes, ByteBuf>(new GetOneConfigBytes() { ConfigName = configType.Name });
+
+            object category = Activator.CreateInstance(configType, oneConfigBytes);
+            IConfigSingleton singleton = category as IConfigSingleton;
+            singleton.Register();
+
+            this.allConfig[configType] = singleton;
+            return category;
+        }
+
+        public void TranslateText(Func<string, string, string> translator)
+        {
+            foreach (IConfigSingleton category in this.allConfig.Values)
+            {
+                category.TranslateText(translator);
+            }
         }
     }
 }

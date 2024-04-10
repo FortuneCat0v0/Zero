@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 using YooAsset;
 
@@ -12,6 +13,14 @@ namespace ET
         Windows,
         MacOS,
         Linux
+    }
+
+    public enum ConfigFolder
+    {
+        Localhost,
+        Release,
+        RouterTest,
+        Benchmark
     }
 
     /// <summary>
@@ -31,6 +40,8 @@ namespace ET
     {
         private PlatformType activePlatform;
         private PlatformType platformType;
+        private ConfigFolder configFolder;
+        private bool clearFolder;
         private BuildOptions buildOptions;
 
         private GlobalConfig globalConfig;
@@ -93,7 +104,9 @@ namespace ET
 
                 if (platformType != activePlatform)
                 {
-                    switch (EditorUtility.DisplayDialogComplex("Warning!", $"current platform is {activePlatform}, if change to {platformType}, may be take a long time", "change", "cancel", "no change"))
+                    switch (EditorUtility.DisplayDialogComplex("Warning!",
+                                $"current platform is {activePlatform}, if change to {platformType}, may be take a long time", "change", "cancel",
+                                "no change"))
                     {
                         case 0:
                             activePlatform = platformType;
@@ -110,11 +123,26 @@ namespace ET
                 return;
             }
 
+            EditorGUILayout.BeginHorizontal();
+            this.configFolder = (ConfigFolder)EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
             if (GUILayout.Button("ExcelExporter"))
             {
-                ToolsEditor.ExcelExporter();
+                // ToolsEditor.ExcelExporter();
+
+                ToolsEditor.ExcelExporter(this.globalConfig.CodeMode, this.configFolder);
+
+                const string clientProtoDir = "../Unity/Assets/Bundles/Config/GameConfig";
+                if (Directory.Exists(clientProtoDir))
+                {
+                    Directory.Delete(clientProtoDir, true);
+                }
+
+                FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", clientProtoDir);
+
+                AssetDatabase.Refresh();
                 return;
             }
+            EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Proto2CS"))
             {
