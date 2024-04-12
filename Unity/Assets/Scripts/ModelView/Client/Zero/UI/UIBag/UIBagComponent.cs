@@ -13,7 +13,7 @@ namespace ET.Client
         public GameObject ConsumeToggle;
         public GameObject UICommonItemsRoot;
 
-        public List<EntityRef<UICommonItem>> UICommonItems = new();
+        public List<UICommonItem> UICommonItems { get; set; } = new();
         public int CurrentType;
     }
 }

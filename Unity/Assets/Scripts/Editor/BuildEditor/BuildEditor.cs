@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using YooAsset;
@@ -124,25 +125,31 @@ namespace ET
             }
 
             EditorGUILayout.BeginHorizontal();
-            this.configFolder = (ConfigFolder)EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
-            if (GUILayout.Button("ExcelExporter"))
+            try
             {
-                // ToolsEditor.ExcelExporter();
-
-                ToolsEditor.ExcelExporter(this.globalConfig.CodeMode, this.configFolder);
-
-                const string clientProtoDir = "../Unity/Assets/Bundles/Config/GameConfig";
-                if (Directory.Exists(clientProtoDir))
+                this.configFolder = (ConfigFolder)EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
+                if (GUILayout.Button("ExcelExporter"))
                 {
-                    Directory.Delete(clientProtoDir, true);
+                    // ToolsEditor.ExcelExporter();
+
+                    ToolsEditor.ExcelExporter(this.globalConfig.CodeMode, this.configFolder);
+
+                    const string clientProtoDir = "../Unity/Assets/Bundles/Config/GameConfig";
+                    if (Directory.Exists(clientProtoDir))
+                    {
+                        Directory.Delete(clientProtoDir, true);
+                    }
+
+                    FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", clientProtoDir);
+
+                    AssetDatabase.Refresh();
+                    return;
                 }
-
-                FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", clientProtoDir);
-
-                AssetDatabase.Refresh();
-                return;
             }
-            EditorGUILayout.EndHorizontal();
+            finally
+            {
+                EditorGUILayout.EndHorizontal();
+            }
 
             if (GUILayout.Button("Proto2CS"))
             {
