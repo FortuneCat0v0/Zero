@@ -5,24 +5,20 @@ using ET.EventType;
 namespace ET
 {
     [FriendOf(typeof(SkillComponent))]
-    [EntitySystemOf(typeof(SkillTimelineComponent))]
     [FriendOf(typeof(SkillTimelineComponent))]
     [FriendOf(typeof(ActionEvent))]
+    [EntitySystemOf(typeof(SkillTimelineComponent))]
     public static partial class SkillTimelineComponentSystem
     {
         [EntitySystem]
         private static void Awake(this SkillTimelineComponent self, int skillId, int skillLevel)
         {
             //当前测试，一个事件一个字段，可以自己换成二维数组一个字段存多条事件数据
-            self.Skillconfig = SkillConfigCategory.Instance.Get(skillId, skillLevel);
+            self.SkillConfig = SkillConfigCategory.Instance.Get(skillId, skillLevel);
         }
 
-        /// <summary>
-        /// 固定帧驱动
-        /// </summary>
-        /// <param name="self"></param>
         [EntitySystem]
-        public static void FixedUpdate(this SkillTimelineComponent self)
+        private static void FixedUpdate(this SkillTimelineComponent self)
         {
             using (ListComponent<long> list = ListComponent<long>.Create())
             {
@@ -56,9 +52,9 @@ namespace ET
         {
             try
             {
-                for (int i = 0; i < self.Skillconfig.ActionEventIds.Count; i++)
+                for (int i = 0; i < self.SkillConfig.ActionEventIds.Count; i++)
                 {
-                    int actionEventId = self.Skillconfig.ActionEventIds[i];
+                    int actionEventId = self.SkillConfig.ActionEventIds[i];
                     ActionEventConfig actionEventConfig = ActionEventConfigCategory.Instance.Get(actionEventId);
                     if (actionEventConfig == null)
                         continue;
@@ -68,13 +64,13 @@ namespace ET
                         continue;
 #endif
 
-                    int triggerTime = self.Skillconfig.ActionEventTriggerPercent[i] * self.Skillconfig.Life / 100;
+                    int triggerTime = self.SkillConfig.ActionEventTriggerPercent[i] * self.SkillConfig.Life / 100;
                     self.AddChild<ActionEvent, int, int, EActionEventSourceType>(actionEventId, triggerTime, EActionEventSourceType.Skill);
                 }
             }
             catch (Exception e)
             {
-                Log.Error($"事件id与事件触发时间百分比数量不一致， 技能id：{self.Skillconfig.Id}, lv:{self.Skillconfig.Level} \n{e}");
+                Log.Error($"事件id与事件触发时间百分比数量不一致， 技能id：{self.SkillConfig.Id}, lv:{self.SkillConfig.Level} \n{e}");
             }
         }
 

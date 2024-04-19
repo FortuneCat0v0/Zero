@@ -41,6 +41,12 @@ namespace ET
         public bool isEnd;
     }
 
+    public struct HitResult
+    {
+        public EHitResultType hitResultType;
+        public int value;
+    }
+
     public struct ChangeEquipItem
     {
         public Unit Unit;

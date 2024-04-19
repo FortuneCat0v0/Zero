@@ -3,12 +3,12 @@
 namespace ET
 {
     [ComponentOf(typeof(Skill))]
-    public class SkillTimelineComponent : Entity, IAwake<int, int>, ITransfer, IFixedUpdate
+    public class SkillTimelineComponent : Entity, IAwake<int, int>, IFixedUpdate, ITransfer
     {
         [BsonIgnore]
         public Unit Unit => this.GetParent<Skill>().Unit;
 
-        public SkillConfig Skillconfig;
+        public SkillConfig SkillConfig;
 
         /// <summary>
         /// 技能开始释放时的时间戳

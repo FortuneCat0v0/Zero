@@ -64,7 +64,7 @@ namespace ET.Server
             bool isNewUnit = unit == null;
             if (isNewUnit)
             {
-                unit = UnitFactory.Create(gateMapComponent.Scene, player.Id, EUnitType.Player);
+                unit = UnitFactory.CreatePlayer(gateMapComponent.Scene, player.Id);
 
                 List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone())
                         .Query<Role>(d => d.Id == player.Id);

@@ -7,11 +7,9 @@ namespace ET
     [FriendOf(typeof(ActionEvent))]
     public static partial class ActionEventSystem
     {
-        
         [EntitySystem]
-        public static void Awake(this ActionEvent self, int configId, int triggerTime, EActionEventSourceType sourceType)
+        private static void Awake(this ActionEvent self, int configId, int triggerTime, EActionEventSourceType sourceType)
         {
-
             //事件触发时间计算来源
             //1. 技能：技能表的触发百分比 * 技能周期 / 1000 ms
             //2. Buff：立即触发，EventTriggerTime = 0
@@ -22,14 +20,13 @@ namespace ET
             self.ConfigId = configId;
         }
 
+        [EntitySystem]
+        private static void Destroy(this ActionEvent self)
+        {
+        }
+
         public static void Transfer(this ActionEvent self)
         {
-            
-        }
-        [EntitySystem]
-        public static void Destroy(this ActionEvent self)
-        {
-            
         }
     }
 }

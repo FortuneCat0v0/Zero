@@ -1,25 +1,18 @@
 ﻿using System.Collections.Generic;
+
 namespace ET
 {
-    
     [EntitySystemOf(typeof(SkillComponent))]
     [FriendOf(typeof(SkillComponent))]
     public static partial class SkillComponentSystem
     {
         [EntitySystem]
-        public static void Awake(this SkillComponent self)
+        private static void Awake(this SkillComponent self)
         {
-            
         }
+
         [EntitySystem]
-        public static void Destroy(this SkillComponent self)
-        {
-            
-            self.IdSkillMap.Clear();
-            self.AbstractTypeSkills.Clear();
-        }
-        [EntitySystem]
-        public static void Awake(this SkillComponent self, List<int> skillIds)
+        private static void Awake(this SkillComponent self, List<int> skillIds)
         {
             // int activeSkillIndex = 0;
             foreach (int skillId in skillIds)
@@ -28,13 +21,21 @@ namespace ET
                 Skill skill = self.AddSkill(skillId);
             }
         }
+
+        [EntitySystem]
+        private static void Destroy(this SkillComponent self)
+        {
+            self.IdSkillMap.Clear();
+            self.AbstractTypeSkills.Clear();
+        }
+
         /// <summary>
         /// 添加技能
         /// </summary>
         /// <param name="self"></param>
         /// <param name="configId"></param>
         /// <returns></returns>
-        public static Skill AddSkill(this SkillComponent self,int configId, int skillLevel = 1)
+        public static Skill AddSkill(this SkillComponent self, int configId, int skillLevel = 1)
         {
             if (!self.IdSkillMap.TryGetValue(configId, out long skillId))
             {
@@ -47,19 +48,21 @@ namespace ET
                     skills = new List<long>();
                     self.AbstractTypeSkills[abstractType] = skills;
                 }
+
                 self.AbstractTypeSkills[abstractType].Add(skill.Id);
-                
             }
+
             return self.GetChild<Skill>(self.IdSkillMap[configId]);
         }
 
-        public static bool TryGetSkill(this SkillComponent self, int configId,out Skill skill)
+        public static bool TryGetSkill(this SkillComponent self, int configId, out Skill skill)
         {
             if (self.IdSkillMap.TryGetValue(configId, out long skillId))
             {
                 skill = self.GetChild<Skill>(self.IdSkillMap[configId]);
                 return true;
             }
+
             skill = null;
             return false;
         }
@@ -72,7 +75,7 @@ namespace ET
         /// <param name="index"></param>
         /// <param name="skill"></param>
         /// <returns></returns>
-        public static bool TryGetSkill(this SkillComponent self, ESkillAbstractType abstractType, int index,out Skill skill)
+        public static bool TryGetSkill(this SkillComponent self, ESkillAbstractType abstractType, int index, out Skill skill)
         {
             if (self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skillIds))
             {
@@ -82,6 +85,7 @@ namespace ET
                     return true;
                 }
             }
+
             skill = null;
             return false;
         }
@@ -94,7 +98,6 @@ namespace ET
         /// <param name="index"></param>
         public static bool SpellSkill(this SkillComponent self, ESkillAbstractType absType, int index = 0)
         {
-            //
             Log.Info($"spell skill {index}");
             Skill skill = null;
             self.TryGetSkill(absType, index, out skill);

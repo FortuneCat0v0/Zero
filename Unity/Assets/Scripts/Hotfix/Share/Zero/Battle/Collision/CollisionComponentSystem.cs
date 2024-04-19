@@ -32,6 +32,7 @@ namespace ET
         [EntitySystem]
         private static void Destroy(this CollisionComponent self)
         {
+            self.WorldComponent.AddBodyTobeDestroyed(self.Body);
         }
 
         /// <summary>

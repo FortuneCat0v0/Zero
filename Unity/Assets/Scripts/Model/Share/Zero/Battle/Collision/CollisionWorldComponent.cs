@@ -12,7 +12,7 @@ namespace ET
     {
         public Box2DSharp.Dynamics.World World;
 
-        public List<Body> BodyToDestroy = new List<Body>();
+        public List<Body> BodyToDestroy = new();
 
         public int VelocityIteration = 10;
         public int PositionIteration = 10;

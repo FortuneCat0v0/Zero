@@ -5,6 +5,11 @@
     {
         protected override async ETTask Run(Scene scene, NumbericChange args)
         {
+            if (args.Unit.Type() != EUnitType.Player)
+            {
+                return;
+            }
+
             M2C_NoticeUnitNumeric m2CNoticeUnitNumeric = M2C_NoticeUnitNumeric.Create();
             m2CNoticeUnitNumeric.UnitId = args.Unit.Id;
             m2CNoticeUnitNumeric.NumericType = args.NumericType;
