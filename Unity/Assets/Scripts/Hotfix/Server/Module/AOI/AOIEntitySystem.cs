@@ -13,7 +13,7 @@ namespace ET.Server
             self.ViewDistance = distance;
             self.Scene().GetComponent<AOIManagerComponent>().Add(self, pos.x, pos.z);
         }
-        
+
         [EntitySystem]
         private static void Destroy(this AOIEntity self)
         {
@@ -27,7 +27,7 @@ namespace ET.Server
             self.SubLeaveCells.Clear();
         }
     }
-    
+
     [FriendOf(typeof(AOIEntity))]
     [FriendOf(typeof(Cell))]
     public static partial class AOIEntitySystem
@@ -97,21 +97,20 @@ namespace ET.Server
             {
                 return;
             }
-            
+
             if (!AOISeeCheckHelper.IsCanSee(self, enter))
             {
                 return;
             }
 
-            if (self.Unit.Type() == UnitType.Player)
+            if (self.Unit.Type() == EUnitType.Player)
             {
-                if (enter.Unit.Type() == UnitType.Player)
+                if (enter.Unit.Type() == EUnitType.Player)
                 {
                     self.SeeUnits.Add(enter.Id, enter);
                     enter.BeSeeUnits.Add(self.Id, self);
                     self.SeePlayers.Add(enter.Id, enter);
                     enter.BeSeePlayers.Add(self.Id, self);
-                    
                 }
                 else
                 {
@@ -122,7 +121,7 @@ namespace ET.Server
             }
             else
             {
-                if (enter.Unit.Type() == UnitType.Player)
+                if (enter.Unit.Type() == EUnitType.Player)
                 {
                     self.SeeUnits.Add(enter.Id, enter);
                     enter.BeSeeUnits.Add(self.Id, self);
@@ -134,6 +133,7 @@ namespace ET.Server
                     enter.BeSeeUnits.Add(self.Id, self);
                 }
             }
+
             EventSystem.Instance.Publish(self.Scene(), new UnitEnterSightRange() { A = self, B = enter });
         }
 
@@ -151,13 +151,13 @@ namespace ET.Server
             }
 
             self.SeeUnits.Remove(leave.Id);
-            if (leave.Unit.Type() == UnitType.Player)
+            if (leave.Unit.Type() == EUnitType.Player)
             {
                 self.SeePlayers.Remove(leave.Id);
             }
 
             leave.BeSeeUnits.Remove(self.Id);
-            if (self.Unit.Type() == UnitType.Player)
+            if (self.Unit.Type() == EUnitType.Player)
             {
                 leave.BeSeePlayers.Remove(self.Id);
             }

@@ -1,18 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using Unity.Mathematics;
 
 namespace ET.Server
 {
     public static partial class UnitFactory
     {
-        public static Unit Create(Scene scene, long id, UnitType unitType)
+        public static Unit Create(Scene scene, long id, EUnitType eUnitType)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             Unit unit;
             NumericComponent numericComponent;
-            switch (unitType)
+            switch (eUnitType)
             {
-                case UnitType.Player:
+                case EUnitType.Player:
                 {
                     unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
                     unit.AddComponent<MoveComponent>();
@@ -29,7 +31,7 @@ namespace ET.Server
                     unit.AddComponent<EquipmentComponent>();
                     return unit;
                 }
-                case UnitType.Monster:
+                case EUnitType.Monster:
                     unit = unitComponent.AddChildWithId<Unit, int>(id, 1002);
                     unit.AddComponent<MoveComponent>();
                     unit.Position = new float3(-10, 0, -10);
@@ -46,8 +48,36 @@ namespace ET.Server
                     unit.AddComponent<AIComponent, int>(2);
                     return unit;
                 default:
-                    throw new Exception($"not such unit type: {unitType}");
+                    throw new Exception($"not such unit type: {eUnitType}");
             }
+        }
+
+        public static Unit CreateBullet(Scene scene, long id, Skill ownerSkill, int config, List<int> bulletData)
+        {
+            Log.Info($"create bullet");
+            UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
+            Unit owner = ownerSkill.Unit;
+            Unit bullet = unitComponent.AddChildWithId<Unit, int>(id, config);
+            MoveComponent moveComponent = bullet.AddComponent<MoveComponent>();
+            bullet.Position = owner.Position;
+            bullet.Forward = owner.Forward;
+            bullet.AddComponent<AOIEntity, int, float3>(15 * 1000, bullet.Position);
+            bullet.AddComponent<CollisionComponent>().AddCollider(EColliderType.Circle, Vector2.One * 0.2f, Vector2.Zero, true, bullet);
+            bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
+            NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
+            numericComponent.Set(NumericType.Speed, 10f); // 速度是10米每秒
+            numericComponent.Set(NumericType.AOI, 15000); // 视野15米
+            //子弹暂时1血量，击中穿透
+            numericComponent.Set(NumericType.MaxHp, 1);
+            numericComponent.Set(NumericType.Hp, 1);
+            //测试子弹1s后销毁
+            float3 targetPoint = bullet.Position + bullet.Forward * numericComponent.GetAsFloat(NumericType.Speed) * 0.6f;
+            List<float3> paths = new List<float3>();
+            paths.Add(bullet.Position);
+            paths.Add(targetPoint);
+            moveComponent.MoveToAsync(paths, numericComponent.GetAsFloat(NumericType.Speed)).Coroutine();
+
+            return bullet;
         }
     }
 }
