@@ -16,6 +16,15 @@ namespace ET
         }
 
         [EntitySystem]
+        private static void FixedUpdate(this BulletComponent self)
+        {
+            if (TimeInfo.Instance.ServerNow() > self.EndTime)
+            {
+                self.Root().GetComponent<UnitComponent>()?.Remove(self.GetParent<Unit>().Id);
+            }
+        }
+
+        [EntitySystem]
         private static void Destroy(this BulletComponent self)
         {
         }
@@ -24,18 +33,6 @@ namespace ET
         {
             self.OwnerSkill = skill;
             self.OwnerUnit = owner;
-        }
-
-        /// <summary>
-        /// 每帧更新
-        /// </summary>
-        /// <param name="self"></param>
-        public static void FixedUpdate(this BulletComponent self)
-        {
-            if (TimeInfo.Instance.ServerNow() > self.EndTime)
-            {
-                self.Root().GetComponent<UnitComponent>()?.Remove(self.GetParent<Unit>().Id);
-            }
         }
     }
 }
