@@ -2,38 +2,38 @@
 
 namespace ET
 {
-	public interface IFixedUpdate
-	{
-	}
-	
-	public interface IFixedUpdateSystem: ISystemType
-	{
-		void Run(Entity o);
-	}
+    public interface IFixedUpdate
+    {
+    }
 
-	[EntitySystem]
-	public abstract class FixedUpdateSystem<T> : SystemObject, IFixedUpdateSystem where T: Entity, IFixedUpdate
-	{
-		void IFixedUpdateSystem.Run(Entity o)
-		{
-			this.FixedUpdate((T)o);
-		}
+    public interface IFixedUpdateSystem : ISystemType
+    {
+        void Run(Entity o);
+    }
 
-		Type ISystemType.Type()
-		{
-			return typeof(T);
-		}
+    [EntitySystem]
+    public abstract class FixedUpdateSystem<T> : SystemObject, IFixedUpdateSystem where T : Entity, IFixedUpdate
+    {
+        void IFixedUpdateSystem.Run(Entity o)
+        {
+            this.FixedUpdate((T)o);
+        }
 
-		Type ISystemType.SystemType()
-		{
-			return typeof(IFixedUpdateSystem);
-		}
+        Type ISystemType.Type()
+        {
+            return typeof(T);
+        }
 
-		int ISystemType.GetInstanceQueueIndex()
-		{
-			return InstanceQueueIndex.FixedUpdate;
-		}
+        Type ISystemType.SystemType()
+        {
+            return typeof(IFixedUpdateSystem);
+        }
 
-		protected abstract void FixedUpdate(T self);
-	}
+        int ISystemType.GetInstanceQueueIndex()
+        {
+            return InstanceQueueIndex.FixedUpdate;
+        }
+
+        protected abstract void FixedUpdate(T self);
+    }
 }

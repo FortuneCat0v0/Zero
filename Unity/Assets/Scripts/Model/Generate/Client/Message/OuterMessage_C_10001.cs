@@ -2052,6 +2052,69 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.C2M_SpellSkill)]
+    [ResponseType(nameof(M2C_SpellSkill))]
+    public partial class C2M_SpellSkill : MessageObject, ILocationRequest
+    {
+        public static C2M_SpellSkill Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_SpellSkill), isFromPool) as C2M_SpellSkill;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int SkillId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.SkillId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_SpellSkill)]
+    public partial class M2C_SpellSkill : MessageObject, ILocationResponse
+    {
+        public static M2C_SpellSkill Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_SpellSkill), isFromPool) as M2C_SpellSkill;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -2114,5 +2177,7 @@ namespace ET
         public const ushort M2C_NoticeUnitNumeric = 10059;
         public const ushort M2C_AllItems = 10060;
         public const ushort M2C_ItemUpdateOp = 10061;
+        public const ushort C2M_SpellSkill = 10062;
+        public const ushort M2C_SpellSkill = 10063;
     }
 }

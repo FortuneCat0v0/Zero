@@ -49,20 +49,20 @@ namespace ET.Server
             MapMessageHelper.SendToClient(unit, m2CAllItems);
 
             // 通知客户端同步装备信息
-            Dictionary<int,Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
+            Dictionary<int, Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
             m2CAllItems = M2C_AllItems.Create();
             m2CAllItems.ItemContainerType = (int)ItemContainerType.Equipment;
-            foreach (KeyValuePair<int,Item> keyValuePair in equipItems)
+            foreach (KeyValuePair<int, Item> keyValuePair in equipItems)
             {
                 m2CAllItems.EquipPositions.Add(keyValuePair.Key);
                 m2CAllItems.ItemInfos.Add(keyValuePair.Value.ToMessage());
             }
             MapMessageHelper.SendToClient(unit, m2CAllItems);
-            
+
             // TODO 通知客户端同步技能信息
-            
-            
-            
+
+            // TODO 通知客户端同步Buff信息
+
             // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
 

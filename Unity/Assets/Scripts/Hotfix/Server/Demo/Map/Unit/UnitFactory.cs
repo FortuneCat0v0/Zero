@@ -24,11 +24,8 @@ namespace ET.Server
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             unit.AddComponent<BagComponent>();
             unit.AddComponent<EquipmentComponent>();
-
-            SkillComponent skillComponent = unit.AddComponent<SkillComponent>();
-            // 添加测试技能
-            skillComponent.AddSkill(1001);
-            skillComponent.AddSkill(1002);
+            unit.AddComponent<SkillComponent>();
+            unit.AddComponent<BuffComponent>();
 
             return unit;
         }

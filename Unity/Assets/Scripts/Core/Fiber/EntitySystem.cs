@@ -153,8 +153,7 @@ namespace ET
                     continue;
                 }
 
-                List<SystemObject> iFixedUpdateSystems =
-                        EntitySystemSingleton.Instance.TypeSystems.GetSystems(component.GetType(), typeof(IFixedUpdateSystem));
+                List<SystemObject> iFixedUpdateSystems = EntitySystemSingleton.Instance.TypeSystems.GetSystems(component.GetType(), typeof(IFixedUpdateSystem));
                 if (iFixedUpdateSystems == null)
                 {
                     continue;

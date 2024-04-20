@@ -26,12 +26,17 @@ namespace ET.Client
                     self.Root().GetComponent<ClientSenderComponent>().Send(c2MPathfindingResult);
                 }
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                self.Root().GetComponent<ClientSenderComponent>().Send(C2M_SpellSkill.Create());
+            }
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 self.Test1().Coroutine();
             }
-                
+
             if (Input.GetKeyDown(KeyCode.W))
             {
                 self.Test2().Coroutine();
@@ -49,7 +54,7 @@ namespace ET.Client
                 self.Root().GetComponent<ClientSenderComponent>().Call(c2MTransferMap).Coroutine();
             }
         }
-        
+
         private static async ETTask Test1(this OperaComponent self)
         {
             Log.Debug($"Croutine 1 start1 ");
@@ -60,7 +65,7 @@ namespace ET.Client
 
             Log.Debug($"Croutine 1 end1");
         }
-            
+
         private static async ETTask Test2(this OperaComponent self)
         {
             Log.Debug($"Croutine 2 start2");
@@ -68,6 +73,7 @@ namespace ET.Client
             {
                 await self.Root().GetComponent<TimerComponent>().WaitAsync(1000);
             }
+
             Log.Debug($"Croutine 2 end2");
         }
     }

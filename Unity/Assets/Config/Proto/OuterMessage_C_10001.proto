@@ -460,5 +460,16 @@ message M2C_ItemUpdateOp // IMessage
 	int32 EquipPosition = 5;
 }
 
+// ResponseType M2C_SpellSkill
+message C2M_SpellSkill // ILocationRequest
+{
+	int32 RpcId = 1;
+	int32 SkillId = 2;
+}
 
-
+message M2C_SpellSkill // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
