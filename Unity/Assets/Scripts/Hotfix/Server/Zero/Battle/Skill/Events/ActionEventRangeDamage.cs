@@ -3,17 +3,17 @@ using System.Linq;
 using System.Numerics;
 using Unity.Mathematics;
 
-namespace ET
+namespace ET.Server
 {
-	/// <summary>
-	/// 执行范围伤害技能事件
-	/// </summary>
-	[FriendOf(typeof(ActionEvent))]
-	[ActionEvent(EActionEventType.RangeDamage)]
-	public class ActionEventRangeDamage : IActionEvent
-	{
-		public void Run(ActionEvent actionEvent, EventType.ActionEventData args)
-		{
+    /// <summary>
+    /// 执行范围伤害技能事件
+    /// </summary>
+    [FriendOf(typeof(ActionEvent))]
+    [ActionEvent(EActionEventType.RangeDamage)]
+    public class ActionEventRangeDamage : IActionEvent
+    {
+        public void Run(ActionEvent actionEvent, EventType.ActionEventData args)
+        {
             Unit owner = args.owner;
             Log.Info($"enter range damage");
             if (owner == null)
@@ -23,7 +23,8 @@ namespace ET
             for (int i = 0; i < units.Count; i++)
             {
                 Unit unit = units[i] as Unit;
-                if(unit == null || (unit.Type() != EUnitType.Player && unit.Type() != EUnitType.Monster) || unit.GetComponent<SkillComponent>().IsDead())
+                if (unit == null || (unit.Type() != EUnitType.Player && unit.Type() != EUnitType.Monster) ||
+                    unit.GetComponent<SkillComponent>().IsDead())
                     continue;
                 float dis = math.distance(owner.Position, unit.Position);
                 //满足范围伤害，则进行命中伤害结算
@@ -32,8 +33,8 @@ namespace ET
                     BattleHelper.HitSettle(owner, unit);
                 }
             }
-            
+
             units.Dispose();
         }
-	}
+    }
 }

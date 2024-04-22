@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using World = Box2DSharp.Dynamics.World;
 
-namespace ET
+namespace ET.Server
 {
     [EntitySystemOf(typeof(CollisionWorldComponent))]
     [FriendOf(typeof(CollisionWorldComponent))]

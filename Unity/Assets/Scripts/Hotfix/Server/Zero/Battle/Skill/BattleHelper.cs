@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ET.EventType;
 
-namespace ET
+namespace ET.Server
 {
     public static class BattleHelper
     {

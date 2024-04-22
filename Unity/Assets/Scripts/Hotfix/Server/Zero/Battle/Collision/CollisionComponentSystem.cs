@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.Mathematics;
 
-namespace ET
+namespace ET.Server
 {
     [EntitySystemOf(typeof(CollisionComponent))]
     [FriendOf(typeof(CollisionComponent))]

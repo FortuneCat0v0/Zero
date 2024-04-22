@@ -53,16 +53,10 @@ namespace ET.Server
 
         public static Unit CreateBullet(Scene scene, long id, Skill ownerSkill, int config, List<int> bulletData)
         {
-            Log.Info($"create bullet");
+            Log.Info($"Create bullet");
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             Unit owner = ownerSkill.Unit;
             Unit bullet = unitComponent.AddChildWithId<Unit, int>(id, config);
-            MoveComponent moveComponent = bullet.AddComponent<MoveComponent>();
-            bullet.Position = owner.Position;
-            bullet.Forward = owner.Forward;
-            bullet.AddComponent<AOIEntity, int, float3>(15 * 1000, bullet.Position);
-            bullet.AddComponent<CollisionComponent>().AddCollider(EColliderType.Circle, Vector2.One * 0.2f, Vector2.Zero, true, bullet);
-            bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
 
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 10f); // 速度是10米每秒
@@ -71,11 +65,21 @@ namespace ET.Server
             numericComponent.Set(NumericType.MaxHp, 1);
             numericComponent.Set(NumericType.Hp, 1);
 
-            float3 targetPoint = bullet.Position + bullet.Forward * numericComponent.GetAsFloat(NumericType.Speed) * 0.6f;
+            bullet.Position = owner.Position;
+            bullet.Forward = owner.Forward;
+
+            bullet.AddComponent<MoveComponent>();
+            int time = 5;
+            float3 targetPoint = bullet.Position + bullet.Forward * numericComponent.GetAsFloat(NumericType.Speed) * time;
             List<float3> paths = new List<float3>();
             paths.Add(bullet.Position);
             paths.Add(targetPoint);
-            moveComponent.MoveToAsync(paths, numericComponent.GetAsFloat(NumericType.Speed)).Coroutine();
+            bullet.GetComponent<MoveComponent>().MoveToAsync(paths, numericComponent.GetAsFloat(NumericType.Speed)).Coroutine();
+
+            bullet.AddComponent<AOIEntity, int, float3>(15 * 1000, bullet.Position); // 添加AOI后会自动通知范围内玩家生成子弹
+
+            bullet.AddComponent<CollisionComponent>().AddCollider(EColliderType.Circle, Vector2.One * 0.2f, Vector2.Zero, true, bullet);
+            bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
 
             return bullet;
         }

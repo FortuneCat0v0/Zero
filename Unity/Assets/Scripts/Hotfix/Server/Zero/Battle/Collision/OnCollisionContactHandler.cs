@@ -1,6 +1,6 @@
 ﻿using Box2DSharp.Dynamics.Contacts;
 
-namespace ET
+namespace ET.Server
 {
     [Event(SceneType.Map)]
     [FriendOf(typeof(BulletComponent))]

@@ -47,7 +47,6 @@ namespace ET
                 return;
             }
 
-            // TODO 这里应该要和NumericWatcherComponent一样对不同的SceneType分发
             foreach (IActionEvent iActionEvent in list)
             {
                 iActionEvent.Run(actionEvent, args);

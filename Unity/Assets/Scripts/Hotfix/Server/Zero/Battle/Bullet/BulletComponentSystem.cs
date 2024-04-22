@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
 
-namespace ET
+namespace ET.Server
 {
     [EntitySystemOf(typeof(BulletComponent))]
     [FriendOf(typeof(BulletComponent))]
@@ -11,8 +11,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this BulletComponent self)
         {
-            // 测试子弹，生存时间700ms
-            self.EndTime = TimeInfo.Instance.ServerNow() + 1000;
+            self.EndTime = TimeInfo.Instance.ServerNow() + 5000;
         }
 
         [EntitySystem]

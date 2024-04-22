@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ET
+namespace ET.Server
 {
     [EntitySystemOf(typeof(SkillComponent))]
     [FriendOf(typeof(SkillComponent))]

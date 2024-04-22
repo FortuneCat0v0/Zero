@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace ET
+namespace ET.Server
 {
     public static class CollisionHelper
     {
