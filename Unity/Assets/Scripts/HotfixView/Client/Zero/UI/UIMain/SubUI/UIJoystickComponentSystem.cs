@@ -10,22 +10,6 @@ namespace ET.Client
     [EntitySystemOf(typeof(UIJoystickComponent))]
     public static partial class UIJoystickComponentSystem
     {
-        [Invoke(TimerInvokeType.JoystickTimer)]
-        public class JoystickTimer : ATimer<UIJoystickComponent>
-        {
-            protected override void Run(UIJoystickComponent self)
-            {
-                try
-                {
-                    self.SendMove();
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"move timer error: {self.Id}\n{e}");
-                }
-            }
-        }
-
         [EntitySystem]
         private static void Awake(this UIJoystickComponent self, GameObject gameObject)
         {
@@ -35,6 +19,10 @@ namespace ET.Client
             self.StartArea = rc.Get<GameObject>("StartArea");
             self.Joystick = rc.Get<GameObject>("Joystick");
             self.JoystickBottom = rc.Get<GameObject>("JoystickBottom");
+            self.PositionFocus0 = rc.Get<GameObject>("PositionFocus0");
+            self.PositionFocus1 = rc.Get<GameObject>("PositionFocus1");
+            self.PositionFocus2 = rc.Get<GameObject>("PositionFocus2");
+            self.PositionFocus3 = rc.Get<GameObject>("PositionFocus3");
             self.JoystickThumb = rc.Get<GameObject>("JoystickThumb");
 
             self.JoystickBottomImg = self.JoystickBottom.GetComponent<Image>();
@@ -64,9 +52,14 @@ namespace ET.Client
         }
 
         [EntitySystem]
+        private static void Update(this UIJoystickComponent self)
+        {
+            self.SendMove();
+        }
+
+        [EntitySystem]
         private static void Destroy(this UIJoystickComponent self)
         {
-            self.Root().GetComponent<TimerComponent>().Remove(ref self.JoystickTimer);
         }
 
         private static void OnPointerDown(this UIJoystickComponent self, PointerEventData pdata)
@@ -93,9 +86,7 @@ namespace ET.Client
             // 判断当前状态是否可以使用摇杆
 
             self.SetDirection(pdata);
-            TimerComponent timerComponent = self.Root().GetComponent<TimerComponent>();
-            timerComponent.Remove(ref self.JoystickTimer);
-            self.JoystickTimer = timerComponent.NewFrameTimer(TimerInvokeType.JoystickTimer, self);
+            self.IsDrag = true;
         }
 
         private static void OnDrag(this UIJoystickComponent self, PointerEventData pdata)
@@ -110,7 +101,8 @@ namespace ET.Client
                 return;
             }
 
-            self.Root().GetComponent<TimerComponent>()?.Remove(ref self.JoystickTimer);
+            self.IsDrag = false;
+
             // 松开发送停止移动
             self.ClientSenderComponent.Send(C2M_Stop.Create());
             self.ResetUI();
@@ -148,12 +140,23 @@ namespace ET.Client
             }
 
             self.Direction = (self.NewPoint - self.OldPoint).normalized;
+            // 摇杆方向显示
+            self.PositionFocus0.SetActive(self.Direction.x < 0 && self.Direction.y > 0);
+            self.PositionFocus1.SetActive(self.Direction.x > 0 && self.Direction.y > 0);
+            self.PositionFocus2.SetActive(self.Direction.x > 0 && self.Direction.y < 0);
+            self.PositionFocus3.SetActive(self.Direction.x < 0 && self.Direction.y < 0);
+
             self.Direction.z = self.Direction.y;
             self.Direction.y = 0;
         }
 
         private static void SendMove(this UIJoystickComponent self)
         {
+            if (!self.IsDrag)
+            {
+                return;
+            }
+
             if (self.MyUnit == null)
             {
                 return;

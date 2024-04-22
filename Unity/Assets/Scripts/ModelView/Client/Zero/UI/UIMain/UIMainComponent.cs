@@ -15,12 +15,6 @@ namespace ET.Client
         public GameObject AchievementBtn;
         public GameObject UIJoystick;
 
-        private EntityRef<UIJoystickComponent> uiJoystickComponent;
-
-        public UIJoystickComponent UIJoystickComponent
-        {
-            get => this.uiJoystickComponent;
-            set => this.uiJoystickComponent = value;
-        }
+        public UIJoystickComponent UIJoystickComponent { get; set; }
     }
 }

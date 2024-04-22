@@ -7,12 +7,16 @@ namespace ET.Client
     /// 摇杆
     /// </summary>
     [ComponentOf(typeof(UIMainComponent))]
-    public class UIJoystickComponent : Entity, IAwake<GameObject>, IDestroy
+    public class UIJoystickComponent : Entity, IAwake<GameObject>, IUpdate, IDestroy
     {
         public GameObject GameObject;
         public GameObject StartArea;
         public GameObject Joystick;
         public GameObject JoystickBottom;
+        public GameObject PositionFocus0;
+        public GameObject PositionFocus1;
+        public GameObject PositionFocus2;
+        public GameObject PositionFocus3;
         public GameObject JoystickThumb;
 
         public Image JoystickBottomImg;
@@ -20,9 +24,9 @@ namespace ET.Client
         public RectTransform RectTransform;
 
         public Camera UICamera;
-        private EntityRef<Unit> myUnit;
-        private EntityRef<MoveComponent> moveComponent;
-        private EntityRef<ClientSenderComponent> clientSenderComponent;
+        public Unit MyUnit { get; set; }
+        public MoveComponent MoveComponent { get; set; }
+        public ClientSenderComponent ClientSenderComponent { get; set; }
 
         public int MapMask;
         public Vector2 OldPoint;
@@ -33,25 +37,6 @@ namespace ET.Client
         public Vector3 Direction; // 方向单位向量
         public Vector3 LastDirection;
         public Vector3 Target;
-
-        public long JoystickTimer;
-
-        public Unit MyUnit
-        {
-            get => this.myUnit;
-            set => this.myUnit = value;
-        }
-
-        public MoveComponent MoveComponent
-        {
-            get => this.moveComponent;
-            set => this.moveComponent = value;
-        }
-
-        public ClientSenderComponent ClientSenderComponent
-        {
-            get => this.clientSenderComponent;
-            set => this.clientSenderComponent = value;
-        }
+        public bool IsDrag;
     }
 }
