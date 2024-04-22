@@ -78,7 +78,9 @@ namespace ET.Server
 
             bullet.AddComponent<AOIEntity, int, float3>(15 * 1000, bullet.Position); // 添加AOI后会自动通知范围内玩家生成子弹
 
-            bullet.AddComponent<CollisionComponent>().AddCollider(EColliderType.Circle, Vector2.One * 0.2f, Vector2.Zero, true, bullet);
+            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(bullet.ConfigId);
+            bullet.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
+                new Vector2(unitConfig.ColliderParams[0], unitConfig.ColliderParams[1]), Vector2.Zero, true, bullet);
             bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
 
             return bullet;

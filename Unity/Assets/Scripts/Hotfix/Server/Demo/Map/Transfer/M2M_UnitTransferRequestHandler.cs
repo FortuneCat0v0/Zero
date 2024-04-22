@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -46,6 +47,7 @@ namespace ET.Server
             {
                 m2CAllItems.ItemInfos.Add(item.ToMessage());
             }
+
             MapMessageHelper.SendToClient(unit, m2CAllItems);
 
             // 通知客户端同步装备信息
@@ -57,6 +59,7 @@ namespace ET.Server
                 m2CAllItems.EquipPositions.Add(keyValuePair.Key);
                 m2CAllItems.ItemInfos.Add(keyValuePair.Value.ToMessage());
             }
+
             MapMessageHelper.SendToClient(unit, m2CAllItems);
 
             // TODO 通知客户端同步技能信息
@@ -65,6 +68,10 @@ namespace ET.Server
 
             // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+
+            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
+            unit.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
+                new Vector2(unitConfig.ColliderParams[0], unitConfig.ColliderParams[1]), Vector2.Zero, true, unit);
 
             // 解锁location，可以接收发给Unit的消息
             await scene.Root().GetComponent<LocationProxyComponent>().UnLock(LocationType.Unit, unit.Id, request.OldActorId, unit.GetActorId());

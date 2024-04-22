@@ -24,6 +24,8 @@ public sealed partial class UnitConfig: Bright.Config.BeanBase
         Position = _buf.ReadInt();
         Height = _buf.ReadInt();
         Weight = _buf.ReadInt();
+        ColliderType = (EColliderType)_buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ColliderParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); ColliderParams.Add(_e0);}}
         PostInit();
     }
 
@@ -57,6 +59,14 @@ public sealed partial class UnitConfig: Bright.Config.BeanBase
     /// 体重
     /// </summary>
     public int Weight { get; private set; }
+    /// <summary>
+    /// 碰撞体类型
+    /// </summary>
+    public EColliderType ColliderType { get; private set; }
+    /// <summary>
+    /// 碰撞体参数(x,y)
+    /// </summary>
+    public System.Collections.Generic.List<float> ColliderParams { get; private set; }
 
     public const int __ID__ = -568528378;
     public override int GetTypeId() => __ID__;
@@ -80,6 +90,8 @@ public sealed partial class UnitConfig: Bright.Config.BeanBase
         + "Position:" + Position + ","
         + "Height:" + Height + ","
         + "Weight:" + Weight + ","
+        + "ColliderType:" + ColliderType + ","
+        + "ColliderParams:" + Bright.Common.StringUtil.CollectionToString(ColliderParams) + ","
         + "}";
     }
     
