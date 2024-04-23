@@ -13,6 +13,9 @@ namespace ET.Client
         {
             ReferenceCollector rc = self.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
+            self.SettingsBtn = rc.Get<GameObject>("SettingsBtn");
+            self.SettingsBtn.GetComponent<Button>().AddListenerAsync(self.OnSettingsBtn);
+
             self.LBShrinkBtn = rc.Get<GameObject>("LBShrinkBtn");
             self.LBBtns = rc.Get<GameObject>("LBBtns");
             self.BagBtn = rc.Get<GameObject>("BagBtn");
@@ -36,9 +39,9 @@ namespace ET.Client
             self.Skill0Btn.GetComponent<Button>().AddListenerAsync(self.SpellSkill);
         }
 
-        private static async ETTask SpellSkill(this UIMainComponent self)
+        private static async ETTask OnSettingsBtn(this UIMainComponent self)
         {
-            await self.Root().GetComponent<ClientSenderComponent>().Call(C2M_SpellSkill.Create());
+            await UIHelper.Create(self.Scene(), UIType.UISettings, UILayer.Mid);
         }
 
         private static void OnLBShrinkBtn(this UIMainComponent self)
@@ -88,6 +91,11 @@ namespace ET.Client
         {
             Log.Info("成就界面暂未开放");
             await ETTask.CompletedTask;
+        }
+
+        private static async ETTask SpellSkill(this UIMainComponent self)
+        {
+            await self.Root().GetComponent<ClientSenderComponent>().Call(C2M_SpellSkill.Create());
         }
     }
 }

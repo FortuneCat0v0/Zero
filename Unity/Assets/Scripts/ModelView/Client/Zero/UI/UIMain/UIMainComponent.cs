@@ -5,6 +5,8 @@ namespace ET.Client
     [ComponentOf(typeof(UI))]
     public class UIMainComponent : Entity, IAwake
     {
+        public GameObject SettingsBtn;
+
         public GameObject LBShrinkBtn;
         public GameObject LBBtns;
         public GameObject BagBtn;
@@ -13,11 +15,10 @@ namespace ET.Client
         public GameObject TaskBtn;
         public GameObject SocialBtn;
         public GameObject AchievementBtn;
-        
+
         public GameObject UIJoystick;
+        public UIJoystickComponent UIJoystickComponent { get; set; }
 
         public GameObject Skill0Btn;
-
-        public UIJoystickComponent UIJoystickComponent { get; set; }
     }
 }
