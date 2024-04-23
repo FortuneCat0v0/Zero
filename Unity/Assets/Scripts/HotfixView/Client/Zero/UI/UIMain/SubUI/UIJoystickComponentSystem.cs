@@ -57,11 +57,6 @@ namespace ET.Client
             self.SendMove();
         }
 
-        [EntitySystem]
-        private static void Destroy(this UIJoystickComponent self)
-        {
-        }
-
         private static void OnPointerDown(this UIJoystickComponent self, PointerEventData pdata)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(self.RectTransform, pdata.position, self.UICamera, out self.OldPoint);

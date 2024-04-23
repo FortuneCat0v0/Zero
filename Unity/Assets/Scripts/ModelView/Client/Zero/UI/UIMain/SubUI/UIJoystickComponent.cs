@@ -7,7 +7,7 @@ namespace ET.Client
     /// 摇杆
     /// </summary>
     [ComponentOf(typeof(UIMainComponent))]
-    public class UIJoystickComponent : Entity, IAwake<GameObject>, IUpdate, IDestroy
+    public class UIJoystickComponent : Entity, IAwake<GameObject>, IUpdate
     {
         public GameObject GameObject;
         public GameObject StartArea;

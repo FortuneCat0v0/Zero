@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
     [FriendOf(typeof(GameServer))]
-    [FriendOf(typeof(ServerComponent))]
+    [FriendOf(typeof(GameServerComponent))]
     [FriendOf(typeof(UIServerItem))]
     [EntitySystemOf(typeof(UIServerItem))]
     public static partial class UIServerItemSystem
@@ -26,7 +26,7 @@ namespace ET.Client
 
         private static void OnBtn(this UIServerItem self)
         {
-            self.Root().GetComponent<ServerComponent>().CurrentServerId = int.Parse(self.ServerId.ToString());
+            self.Root().GetComponent<GameServerComponent>().CurrentServerId = int.Parse(self.ServerId.ToString());
         }
     }
 }

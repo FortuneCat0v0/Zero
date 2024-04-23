@@ -25,8 +25,7 @@ namespace ET.Server
                 return;
             }
 
-            // @"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,15}$"
-            if (!Regex.IsMatch(request.Account.Trim(), @"^[A-Za-z0-9]+$"))
+            if (!Regex.IsMatch(request.Account.Trim(), @"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,15}$"))
             {
                 response.Error = ErrorCode.ERR_AccountNameFormError;
                 session.Disconnect().Coroutine();
@@ -38,16 +37,6 @@ namespace ET.Server
                 response.Error = ErrorCode.ERR_PasswordFormError;
                 session.Disconnect().Coroutine();
                 return;
-            }
-
-            if (session.GetComponent<AccountsZone>() == null)
-            {
-                session.AddComponent<AccountsZone>();
-            }
-
-            if (session.GetComponent<RolesZone>() == null)
-            {
-                session.AddComponent<RolesZone>();
             }
 
             //防止同一用户短时间频繁登录
@@ -63,12 +52,11 @@ namespace ET.Server
                     if (accounts != null && accounts.Count > 0)
                     {
                         account = accounts[0];
-                        session.GetComponent<AccountsZone>().AddChild(account);
+                        session.AddChild(account);
                         if (account.AccountType == (int)AccountType.BlackList)
                         {
                             response.Error = ErrorCode.ERR_AccountInBlackListError;
                             session.Disconnect().Coroutine();
-                            account.Dispose();
                             return;
                         }
 
@@ -76,14 +64,13 @@ namespace ET.Server
                         {
                             response.Error = ErrorCode.ERR_LoginPasswordError;
                             session.Disconnect().Coroutine();
-                            account.Dispose();
                             return;
                         }
                     }
                     else
                     {
                         // 不存在账号则立刻新创建一个
-                        account = session.GetComponent<AccountsZone>().AddChild<Account>();
+                        account = session.AddChild<Account>();
                         account.AccountName = request.Account.Trim();
                         account.Password = request.Password;
                         account.CreateTime = TimeInfo.Instance.ServerNow();
@@ -103,7 +90,6 @@ namespace ET.Server
                     {
                         response.Error = l2ALoginAccountResponse.Error;
                         session.Disconnect().Coroutine();
-                        account.Dispose();
                         return;
                     }
 
@@ -121,14 +107,12 @@ namespace ET.Server
                     root.GetComponent<AccountSessionComponent>().Add(account.Id, session.Id);
                     session.AddComponent<AccountCheckOutTimeComponent, long>(account.Id);
 
-                    string Token = TimeInfo.Instance.ServerNow() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
+                    string token = TimeInfo.Instance.ServerNow() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
                     root.GetComponent<TokenComponent>().Remove(account.Id);
-                    root.GetComponent<TokenComponent>().Add(account.Id, Token);
+                    root.GetComponent<TokenComponent>().Add(account.Id, token);
 
                     response.AccountId = account.Id;
-                    response.Token = Token;
-
-                    account.Dispose();
+                    response.Token = token;
                 }
             }
         }

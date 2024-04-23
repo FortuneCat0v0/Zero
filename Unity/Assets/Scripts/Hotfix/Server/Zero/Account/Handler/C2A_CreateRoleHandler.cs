@@ -45,7 +45,7 @@ namespace ET.Server
                         return;
                     }
 
-                    Role newRole = session.GetComponent<RolesZone>().AddChild<Role>();
+                    Role newRole = session.AddChild<Role>();
                     newRole.Name = request.Name;
                     newRole.State = (int)RoleState.Normal;
                     newRole.ServerId = request.ServerId;
@@ -56,8 +56,6 @@ namespace ET.Server
                     await root.GetComponent<DBManagerComponent>().GetZoneDB(session.Zone()).Save(newRole);
 
                     response.RoleInfo = newRole.ToMessage();
-
-                    newRole.Dispose();
                 }
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace ET.Client
 {
     [FriendOf(typeof(GameServer))]
-    [FriendOf(typeof(ServerComponent))]
+    [FriendOf(typeof(GameServerComponent))]
     [FriendOf(typeof(UIServerComponent))]
     [EntitySystemOf(typeof(UIServerComponent))]
     public static partial class UIServerComponentSystem
@@ -25,7 +25,7 @@ namespace ET.Client
 
         private static async ETTask OnConfirmBtn(this UIServerComponent self)
         {
-            bool isSelect = self.Scene().GetComponent<ServerComponent>().CurrentServerId != 0;
+            bool isSelect = self.Scene().GetComponent<GameServerComponent>().CurrentServerId != 0;
 
             if (!isSelect)
             {
@@ -49,7 +49,7 @@ namespace ET.Client
             string assetsName = $"Assets/Bundles/UI/UIServer/UIServerItem.prefab";
             GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
 
-            foreach (GameServer gameServer in self.Scene().GetComponent<ServerComponent>().GameServers)
+            foreach (GameServer gameServer in self.Scene().GetComponent<GameServerComponent>().GameServers)
             {
                 GameObject gameObject = UnityEngine.Object.Instantiate(bundleGameObject, self.ServerListNode.GetComponent<Transform>());
                 self.AddChild<UIServerItem, GameObject, GameServer>(gameObject, gameServer);

@@ -21,8 +21,6 @@ namespace ET.Client
             self.TaskBtn = rc.Get<GameObject>("TaskBtn");
             self.SocialBtn = rc.Get<GameObject>("SocialBtn");
             self.AchievementBtn = rc.Get<GameObject>("AchievementBtn");
-            self.UIJoystick = rc.Get<GameObject>("UIJoystick");
-
             self.LBShrinkBtn.GetComponent<Button>().AddListener(self.OnLBShrinkBtn);
             self.BagBtn.GetComponent<Button>().AddListenerAsync(self.OnBagBtn);
             self.PetBtn.GetComponent<Button>().AddListenerAsync(self.OnPetBtn);
@@ -31,6 +29,7 @@ namespace ET.Client
             self.SocialBtn.GetComponent<Button>().AddListenerAsync(self.OnSocialBtn);
             self.AchievementBtn.GetComponent<Button>().AddListenerAsync(self.OnAchievementBtn);
 
+            self.UIJoystick = rc.Get<GameObject>("UIJoystick");
             self.UIJoystickComponent = self.AddComponent<UIJoystickComponent, GameObject>(self.UIJoystick);
         }
 

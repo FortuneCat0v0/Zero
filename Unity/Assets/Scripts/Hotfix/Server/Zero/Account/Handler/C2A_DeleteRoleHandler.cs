@@ -2,9 +2,9 @@
 
 namespace ET.Server
 {
-    [FriendOf(typeof (Role))]
+    [FriendOf(typeof(Role))]
     [MessageSessionHandler(SceneType.Account)]
-    public class C2A_DeleteRoleHandler: MessageSessionHandler<C2A_DeleteRole, A2C_DeleteRole>
+    public class C2A_DeleteRoleHandler : MessageSessionHandler<C2A_DeleteRole, A2C_DeleteRole>
     {
         protected override async ETTask Run(Session session, C2A_DeleteRole request, A2C_DeleteRole response)
         {
@@ -40,13 +40,12 @@ namespace ET.Server
                     }
 
                     Role role = roleList[0];
-                    session.GetComponent<RolesZone>().AddChild(role);
+                    session.AddChild(role);
 
                     role.State = (int)RoleState.Freeze;
 
                     await root.GetComponent<DBManagerComponent>().GetZoneDB(request.ServerId).Save(role);
                     response.DeletedRoleId = role.Id;
-                    role.Dispose();
                 }
             }
         }

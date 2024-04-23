@@ -4,17 +4,17 @@ using System.Linq;
 namespace ET.Server
 {
     [FriendOf(typeof(GameServer))]
-    [FriendOf(typeof(ServerComponent))]
-    [EntitySystemOf(typeof(ServerComponent))]
-    public static partial class ServerComponentSystem
+    [FriendOf(typeof(GameServerComponent))]
+    [EntitySystemOf(typeof(GameServerComponent))]
+    public static partial class GameServerComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ServerComponent self)
+        private static void Awake(this GameServerComponent self)
         {
             self.Load().Coroutine();
         }
 
-        private static async ETTask Load(this ServerComponent self)
+        private static async ETTask Load(this GameServerComponent self)
         {
             List<GameServer> servers = await self.Root().GetComponent<DBManagerComponent>().GetZoneDB(self.Zone()).Query<GameServer>(d => true);
 

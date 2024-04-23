@@ -2,7 +2,7 @@
 
 namespace ET.Server
 {
-    [FriendOf(typeof(ServerComponent))]
+    [FriendOf(typeof(GameServerComponent))]
     [MessageSessionHandler(SceneType.Account)]
     public class C2A_GetServersHandler : MessageSessionHandler<C2A_GetServers, A2C_GetServers>
     {
@@ -19,7 +19,7 @@ namespace ET.Server
                 return;
             }
 
-            foreach (GameServer server in root.GetComponent<ServerComponent>().GameServers)
+            foreach (GameServer server in root.GetComponent<GameServerComponent>().GameServers)
             {
                 response.ServerInfos.Add(server.ToMessage());
             }

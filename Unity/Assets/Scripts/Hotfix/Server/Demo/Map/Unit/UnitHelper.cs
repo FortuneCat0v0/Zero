@@ -66,8 +66,7 @@ namespace ET.Server
             {
                 unit = UnitFactory.CreatePlayer(gateMapComponent.Scene, player.Id);
 
-                List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone())
-                        .Query<Role>(d => d.Id == player.Id);
+                // List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone()).Query<Role>(d => d.Id == player.Id);
                 // unit.AddComponent(roleList[0]);
 
                 UnitCacheHelper.AddOrUpdateUnitAllCache(unit);

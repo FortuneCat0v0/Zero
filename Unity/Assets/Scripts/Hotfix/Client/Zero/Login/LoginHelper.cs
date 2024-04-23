@@ -1,7 +1,7 @@
 ﻿namespace ET.Client
 {
     [FriendOf(typeof(RoleComponent))]
-    [FriendOf(typeof(ServerComponent))]
+    [FriendOf(typeof(GameServerComponent))]
     public static partial class LoginHelper
     {
         public static async ETTask<int> LoginAccount(Scene root, string account, string password)
@@ -44,9 +44,9 @@
 
             foreach (ServerInfo serverInfo in a2CGetServers.ServerInfos)
             {
-                GameServer server = root.GetComponent<ServerComponent>().AddChildWithId<GameServer>(serverInfo.Id);
+                GameServer server = root.GetComponent<GameServerComponent>().AddChildWithId<GameServer>(serverInfo.Id);
                 server.FromMessage(serverInfo);
-                root.GetComponent<ServerComponent>().GameServers.Add(server);
+                root.GetComponent<GameServerComponent>().GameServers.Add(server);
             }
 
             return ErrorCode.ERR_Success;
@@ -57,7 +57,7 @@
             C2A_GetRoles c2AGetRoles = C2A_GetRoles.Create();
             c2AGetRoles.AccountId = root.GetComponent<AccountComponent>().AccountId;
             c2AGetRoles.Token = root.GetComponent<AccountComponent>().Token;
-            c2AGetRoles.ServerId = root.GetComponent<ServerComponent>().CurrentServerId;
+            c2AGetRoles.ServerId = root.GetComponent<GameServerComponent>().CurrentServerId;
             A2C_GetRoles a2CGetRoles = await root.GetComponent<ClientSenderComponent>().Call(c2AGetRoles) as A2C_GetRoles;
             if (a2CGetRoles.Error != ErrorCode.ERR_Success)
             {
@@ -80,7 +80,7 @@
             c2ACreateRole.AccountId = root.GetComponent<AccountComponent>().AccountId;
             c2ACreateRole.Token = root.GetComponent<AccountComponent>().Token;
             c2ACreateRole.Name = name;
-            c2ACreateRole.ServerId = root.GetComponent<ServerComponent>().CurrentServerId;
+            c2ACreateRole.ServerId = root.GetComponent<GameServerComponent>().CurrentServerId;
             A2C_CreateRole a2CCreateRole = await root.GetComponent<ClientSenderComponent>().Call(c2ACreateRole) as A2C_CreateRole;
 
             if (a2CCreateRole.Error != ErrorCode.ERR_Success)
@@ -101,7 +101,7 @@
             c2ADeleteRole.Token = root.GetComponent<AccountComponent>().Token;
             c2ADeleteRole.AccountId = root.GetComponent<AccountComponent>().AccountId;
             c2ADeleteRole.RoleId = root.GetComponent<RoleComponent>().CurrentRoleId;
-            c2ADeleteRole.ServerId = root.GetComponent<ServerComponent>().CurrentServerId;
+            c2ADeleteRole.ServerId = root.GetComponent<GameServerComponent>().CurrentServerId;
             A2C_DeleteRole a2CDeleteRole = await root.GetComponent<ClientSenderComponent>().Call(c2ADeleteRole) as A2C_DeleteRole;
 
             if (a2CDeleteRole.Error != ErrorCode.ERR_Success)
@@ -119,7 +119,7 @@
             C2A_GetRealmKey c2AGetRealmKey = C2A_GetRealmKey.Create();
             c2AGetRealmKey.Token = root.GetComponent<AccountComponent>().Token;
             c2AGetRealmKey.AccountId = root.GetComponent<AccountComponent>().AccountId;
-            c2AGetRealmKey.ServerId = root.GetComponent<ServerComponent>().CurrentServerId;
+            c2AGetRealmKey.ServerId = root.GetComponent<GameServerComponent>().CurrentServerId;
             A2C_GetRealmKey a2CGetRealmKey = await root.GetComponent<ClientSenderComponent>().Call(c2AGetRealmKey) as A2C_GetRealmKey;
 
             if (a2CGetRealmKey.Error != ErrorCode.ERR_Success)
