@@ -22,6 +22,8 @@ namespace ET.Client
                 go.transform.position = unit.Position;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
                 unit.AddComponent<AnimatorComponent>();
+                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
+                await headInfosComponent.Init(go.transform, 0.2f);
             }
             else if (unit.Type() == EUnitType.Bullet)
             {
