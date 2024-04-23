@@ -63,7 +63,8 @@ namespace ET
             {
                 foreach (Type type in configTypes)
                 {
-                    TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>($"{type.Name.ToLower()}");
+                    TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>(
+                        $"Assets/Bundles/Config/GameConfig/{type.Name.ToLower()}.bytes");
                     output[type] = new ByteBuf(v.bytes);
                 }
             }

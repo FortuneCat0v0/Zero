@@ -8,8 +8,8 @@ namespace ET
         [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();
 
-        public EntityRef<Unit> OwnerUnit;
-        public EntityRef<Skill> OwnerSkill;
+        public Unit OwnerUnit { get; set; }
+        public Skill OwnerSkill { get; set; }
         public long EndTime;
     }
 }

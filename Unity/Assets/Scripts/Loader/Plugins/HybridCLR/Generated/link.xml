@@ -47,7 +47,6 @@
   <assembly fullname="System">
     <type fullname="System.Collections.Generic.SortedDictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/Enumerator" preserve="all" />
-    <type fullname="System.Collections.Generic.SortedDictionary`2/ValueCollection" preserve="all" />
     <type fullname="System.Net.EndPoint" preserve="all" />
     <type fullname="System.Net.IPAddress" preserve="all" />
     <type fullname="System.Net.IPEndPoint" preserve="all" />
@@ -62,9 +61,6 @@
     <type fullname="System.Net.Http.HttpClient" preserve="all" />
     <type fullname="System.Net.Http.HttpContent" preserve="all" />
     <type fullname="System.Net.Http.HttpResponseMessage" preserve="all" />
-  </assembly>
-  <assembly fullname="System.Numerics">
-    <type fullname="System.Numerics.Vector2" preserve="all" />
   </assembly>
   <assembly fullname="System.Runtime.CompilerServices.Unsafe">
     <type fullname="System.Runtime.CompilerServices.Unsafe" preserve="all" />
@@ -81,7 +77,6 @@
     <type fullname="ET.AwakeSystem`1" preserve="all" />
     <type fullname="ET.AwakeSystem`2" preserve="all" />
     <type fullname="ET.AwakeSystem`3" preserve="all" />
-    <type fullname="ET.AwakeSystem`4" preserve="all" />
     <type fullname="ET.BaseAttribute" preserve="all" />
     <type fullname="ET.ByteHelper" preserve="all" />
     <type fullname="ET.ChildOfAttribute" preserve="all" />
@@ -94,7 +89,6 @@
     <type fullname="ET.CoroutineLock" preserve="all" />
     <type fullname="ET.CoroutineLockComponent" preserve="all" />
     <type fullname="ET.CoroutineLockComponentSystem" preserve="all" />
-    <type fullname="ET.DefineCore" preserve="all" />
     <type fullname="ET.DeserializeSystem`1" preserve="all" />
     <type fullname="ET.DestroySystem`1" preserve="all" />
     <type fullname="ET.DisposeObject" preserve="all" />
@@ -115,7 +109,6 @@
     <type fullname="ET.Fiber" preserve="all" />
     <type fullname="ET.FiberInit" preserve="all" />
     <type fullname="ET.FiberManager" preserve="all" />
-    <type fullname="ET.FixedUpdateSystem`1" preserve="all" />
     <type fullname="ET.FriendOfAttribute" preserve="all" />
     <type fullname="ET.HandlerObject" preserve="all" />
     <type fullname="ET.IAwake" preserve="all" />
@@ -221,16 +214,9 @@
   </assembly>
   <assembly fullname="Unity.ThirdParty">
     <type fullname="Box2DSharp.Collision.Collider.Manifold" preserve="all" />
-    <type fullname="Box2DSharp.Collision.Shapes.CircleShape" preserve="all" />
-    <type fullname="Box2DSharp.Collision.Shapes.PolygonShape" preserve="all" />
-    <type fullname="Box2DSharp.Collision.Shapes.Shape" preserve="all" />
     <type fullname="Box2DSharp.Dynamics.Body" preserve="all" />
-    <type fullname="Box2DSharp.Dynamics.BodyDef" preserve="all" />
-    <type fullname="Box2DSharp.Dynamics.BodyType" preserve="all" />
     <type fullname="Box2DSharp.Dynamics.Contacts.Contact" preserve="all" />
     <type fullname="Box2DSharp.Dynamics.Contacts.ContactImpulse" preserve="all" />
-    <type fullname="Box2DSharp.Dynamics.Fixture" preserve="all" />
-    <type fullname="Box2DSharp.Dynamics.FixtureDef" preserve="all" />
     <type fullname="Box2DSharp.Dynamics.IContactListener" preserve="all" />
     <type fullname="Box2DSharp.Dynamics.World" preserve="all" />
     <type fullname="Bright.Common.StringUtil" preserve="all" />
@@ -296,9 +282,11 @@
     <type fullname="UnityEngine.Input" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.PhysicsModule">
+    <type fullname="UnityEngine.BoxCollider" preserve="all" />
     <type fullname="UnityEngine.Collider" preserve="all" />
     <type fullname="UnityEngine.Physics" preserve="all" />
     <type fullname="UnityEngine.RaycastHit" preserve="all" />
+    <type fullname="UnityEngine.SphereCollider" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.UI">
     <type fullname="UnityEngine.EventSystems.BaseEventData" preserve="all" />
@@ -360,8 +348,6 @@
     <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.IEnumerable`1" preserve="all" />
-    <type fullname="System.Collections.Generic.IReadOnlyCollection`1" preserve="all" />
-    <type fullname="System.Collections.Generic.IReadOnlyList`1" preserve="all" />
     <type fullname="System.Collections.Generic.KeyValuePair`2" preserve="all" />
     <type fullname="System.Collections.Generic.List`1" preserve="all" />
     <type fullname="System.Collections.Generic.List`1/Enumerator" preserve="all" />
@@ -387,7 +373,6 @@
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Int64" preserve="all" />
     <type fullname="System.Math" preserve="all" />
-    <type fullname="System.Nullable`1" preserve="all" />
     <type fullname="System.Object" preserve="all" />
     <type fullname="System.Reflection.BindingFlags" preserve="all" />
     <type fullname="System.Reflection.DefaultMemberAttribute" preserve="all" />
