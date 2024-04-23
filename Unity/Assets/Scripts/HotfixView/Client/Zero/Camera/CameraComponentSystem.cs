@@ -25,7 +25,7 @@ namespace ET.Client
             }
 
             Vector3 pos = self.UnitTransform.position;
-            self.Camera.transform.position = new Vector3(pos.x, pos.y + 5, pos.z - 5);
+            self.Camera.transform.position = new Vector3(pos.x, pos.y + 7, pos.z - 5);
             self.Camera.transform.LookAt(self.UnitTransform);
         }
     }
