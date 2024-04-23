@@ -27,11 +27,6 @@ namespace ET.Client
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                self.Root().GetComponent<ClientSenderComponent>().Send(C2M_SpellSkill.Create());
-            }
-
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 self.Test1().Coroutine();

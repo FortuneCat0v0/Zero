@@ -13,7 +13,10 @@ namespace ET.Client
         public GameObject TaskBtn;
         public GameObject SocialBtn;
         public GameObject AchievementBtn;
+        
         public GameObject UIJoystick;
+
+        public GameObject Skill0Btn;
 
         public UIJoystickComponent UIJoystickComponent { get; set; }
     }

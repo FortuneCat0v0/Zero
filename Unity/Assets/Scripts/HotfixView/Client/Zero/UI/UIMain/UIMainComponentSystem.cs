@@ -31,6 +31,14 @@ namespace ET.Client
 
             self.UIJoystick = rc.Get<GameObject>("UIJoystick");
             self.UIJoystickComponent = self.AddComponent<UIJoystickComponent, GameObject>(self.UIJoystick);
+
+            self.Skill0Btn = rc.Get<GameObject>("Skill0Btn");
+            self.Skill0Btn.GetComponent<Button>().AddListenerAsync(self.SpellSkill);
+        }
+
+        private static async ETTask SpellSkill(this UIMainComponent self)
+        {
+            await self.Root().GetComponent<ClientSenderComponent>().Call(C2M_SpellSkill.Create());
         }
 
         private static void OnLBShrinkBtn(this UIMainComponent self)
