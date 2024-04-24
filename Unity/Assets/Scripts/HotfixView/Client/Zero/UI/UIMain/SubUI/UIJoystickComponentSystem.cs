@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
+    [FriendOf(typeof(MoveComponent))]
     [FriendOf(typeof(OperaComponent))]
     [FriendOf(typeof(UIJoystickComponent))]
     [EntitySystemOf(typeof(UIJoystickComponent))]
@@ -80,8 +81,8 @@ namespace ET.Client
         {
             // 判断当前状态是否可以使用摇杆
 
-            self.SetDirection(pdata);
             self.IsDrag = true;
+            self.SetDirection(pdata);
         }
 
         private static void OnDrag(this UIJoystickComponent self, PointerEventData pdata)
@@ -91,14 +92,8 @@ namespace ET.Client
 
         private static void OnEndDrag(this UIJoystickComponent self, PointerEventData pdata)
         {
-            if (!self.Joystick.activeSelf)
-            {
-                return;
-            }
-
             self.IsDrag = false;
 
-            // 松开发送停止移动
             self.ClientSenderComponent.Send(C2M_Stop.Create());
             self.ResetUI();
         }
@@ -157,28 +152,23 @@ namespace ET.Client
                 return;
             }
 
-            // 切换方向立刻从新寻路，保持同一方向则要完成之前的移动后
-            if (Vector3.Distance(self.Direction, self.LastDirection) < 0.6f && !self.MoveComponent.IsArrived())
+            // 切换方向立刻从新寻路，保持同一方向则要马上完成之前的移动后
+            if (Vector3.Distance(self.Direction, self.LastDirection) < 0.6f && self.MoveComponent.Targets.Count > 1)
             {
                 return;
             }
 
             // 发出射线，检测到Collision,尽量生成直线最长路径，减少寻路次数
             Vector3 start = self.MyUnit.Position;
-            float intveral = 1f; // 初始寻的长度
-            int maxStep = 10; // 最多寻多少次
+            float intveral = 0.5f; // 寻的长度
+            int maxStep = 20; // 最多寻多少次
             Vector3 target = Vector3.zero;
             for (int i = 1; i <= maxStep; i++)
             {
                 RaycastHit hit;
                 Physics.Raycast(start + self.Direction * (i * intveral) + new Vector3(0f, 10f, 0f), Vector3.down, out hit, 100, self.MapMask);
 
-                if (hit.collider == null && target != Vector3.zero)
-                {
-                    break;
-                }
-
-                if (hit.collider == null && target == Vector3.zero)
+                if (hit.collider == null)
                 {
                     return;
                 }
@@ -187,7 +177,12 @@ namespace ET.Client
             }
 
             self.LastDirection = self.Direction;
-            // Debug.DrawLine(start, target, Color.red, 3);
+
+            if (target == Vector3.zero)
+            {
+                return;
+            }
+
             C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
             c2MPathfindingResult.Position = target;
             self.ClientSenderComponent.Send(c2MPathfindingResult);
