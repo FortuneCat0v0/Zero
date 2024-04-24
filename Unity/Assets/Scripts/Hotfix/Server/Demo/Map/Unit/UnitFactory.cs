@@ -31,30 +31,35 @@ namespace ET.Server
             return unit;
         }
 
-        public static Unit CreateMonster(Scene scene, long id)
+        public static Unit CreateMonster(Scene scene, long id, float3 position)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1002);
-            unit.AddComponent<MoveComponent>();
-            unit.Position = new float3(-10, 0, -10);
+            Unit monster = unitComponent.AddChildWithId<Unit, int>(id, 2001);
+            monster.AddComponent<MoveComponent>();
+            monster.Position = position;
 
-            NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
+            NumericComponent numericComponent = monster.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
+            numericComponent.Set(NumericType.Hp, 100, false);
 
-            unitComponent.Add(unit);
-            // 加入aoi
-            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
-            unit.AddComponent<PathfindingComponent, string>(scene.Name);
-            unit.AddComponent<XunLuoPathComponent>();
-            unit.AddComponent<AIComponent, int>(2);
-            return unit;
+            unitComponent.Add(monster);
+
+            monster.AddComponent<AOIEntity, int, float3>(9 * 1000, monster.Position);
+
+            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(monster.ConfigId);
+            monster.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
+                new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, monster);
+
+            monster.AddComponent<PathfindingComponent, string>("TestMap");
+            monster.AddComponent<XunLuoPathComponent>();
+            monster.AddComponent<AIComponent, int>(2);
+            return monster;
         }
 
         public static Unit CreateBullet(Scene scene, long id, Skill ownerSkill, int config, List<int> bulletData)
         {
-            Log.Info($"Create bullet");
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             Unit owner = ownerSkill.Unit;
             Unit bullet = unitComponent.AddChildWithId<Unit, int>(id, config);

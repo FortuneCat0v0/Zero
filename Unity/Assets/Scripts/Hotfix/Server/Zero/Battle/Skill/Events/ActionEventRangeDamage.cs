@@ -30,7 +30,7 @@ namespace ET.Server
                 //满足范围伤害，则进行命中伤害结算
                 if (dis <= actionEvent.ActionEventConfig.Params[0] / 1000f)
                 {
-                    BattleHelper.HitSettle(owner, unit);
+                    BattleHelper.HitSettle(owner, unit, EHitFromType.Skill_Normal);
                 }
             }
 

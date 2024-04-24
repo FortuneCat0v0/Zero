@@ -12,8 +12,7 @@ namespace ET.Server
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="hitType"></param>
-        /// <param name="bullet"></param>
-        public static void HitSettle(Unit from, Unit to, EHitFromType hitType = EHitFromType.Skill_Normal, Unit bullet = null)
+        public static void HitSettle(Unit from, Unit to, EHitFromType hitType)
         {
             switch (hitType)
             {
@@ -42,7 +41,7 @@ namespace ET.Server
 
                     to.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp, isForcedUpdate: true, isBroadcast: true);
 
-                    Log.Info($"hit settle, from:{from?.Id}, to:{to?.Id}, value:{dmg}");
+                    Log.Info($"hit settle, from:{from.Id}, to:{to.Id}, value:{dmg}");
                     EventSystem.Instance.Publish(from.Root(), new HitResult() { hitResultType = EHitResultType.Damage, value = dmg });
                     break;
                 }

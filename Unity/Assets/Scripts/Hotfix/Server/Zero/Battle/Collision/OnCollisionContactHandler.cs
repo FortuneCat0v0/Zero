@@ -15,55 +15,51 @@ namespace ET.Server
                 return;
             }
 
-            Log.Info($"start contact:{unitA.Config().Name}, {unitB.Config().Name}");
             EUnitType aType = unitA.Type();
             EUnitType bType = unitB.Type();
 
-            // 当前子弹只处理子弹伤害，子弹回血（给队友回血/技能吸血自行拓展）
-            if (aType == EUnitType.Bullet && bType == EUnitType.Player)
+            if (aType == EUnitType.Bullet && bType == EUnitType.Player || aType == EUnitType.Player && bType == EUnitType.Bullet)
             {
-                if (unitA.GetComponent<BulletComponent>().OwnerUnit == unitB)
+                Unit bullet;
+                Unit player;
+
+                if (aType == EUnitType.Bullet)
+                {
+                    bullet = unitA;
+                    player = unitB;
+                }
+                else
+                {
+                    bullet = unitB;
+                    player = unitA;
+                }
+
+                if (bullet.GetComponent<BulletComponent>().OwnerUnit == player)
                 {
                     return;
                 }
 
-                Log.Info($"发生碰撞 Bullet 对 Player");
-                int dmg = unitA.GetComponent<NumericComponent>().GetAsInt(NumericType.Attack);
-                int finalHp = unitB.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
-                if (finalHp <= 0)
-                {
-                    // 死亡发事件通知
-                }
-
-                unitB.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp, isForcedUpdate: true, isBroadcast: true);
-
-                Log.Info($"hit settle, from:{unitA?.Id}, to:{unitB?.Id}, value:{dmg}");
-                EventSystem.Instance.Publish(unitA.Root(), new HitResult() { hitResultType = EHitResultType.Damage, value = dmg });
-
-                // BattleHelper.HitSettle(unitA.GetComponent<BulletComponent>().OwnerUnit, unitB, EHitFromType.Skill_Bullet, unitA);
+                Log.Info($"Start contact:{unitA.Config().Name}, {unitB.Config().Name}");
+                BattleHelper.HitSettle(bullet, player, EHitFromType.Skill_Bullet);
             }
-            // 由于box2d没有双向碰撞响应，处理不同类型的时候判断各自类型
-            else if (aType == EUnitType.Player && bType == EUnitType.Bullet)
+            else if (aType == EUnitType.Bullet && bType == EUnitType.Monster || aType == EUnitType.Monster && bType == EUnitType.Bullet)
             {
-                if (unitA == unitB.GetComponent<BulletComponent>().OwnerUnit)
+                Unit bullet;
+                Unit monster;
+
+                if (aType == EUnitType.Bullet)
                 {
-                    return;
+                    bullet = unitA;
+                    monster = unitB;
+                }
+                else
+                {
+                    bullet = unitB;
+                    monster = unitA;
                 }
 
-                Log.Info($"发生碰撞 Player 对 Bullet");
-                int dmg = unitB.GetComponent<NumericComponent>().GetAsInt(NumericType.Attack);
-                int finalHp = unitA.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
-                if (finalHp <= 0)
-                {
-                    // 死亡发事件通知
-                }
-
-                unitA.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp, isForcedUpdate: true, isBroadcast: true);
-
-                Log.Info($"hit settle, from:{unitA?.Id}, to:{unitB?.Id}, value:{dmg}");
-                EventSystem.Instance.Publish(unitA.Root(), new HitResult() { hitResultType = EHitResultType.Damage, value = dmg });
-
-                // BattleHelper.HitSettle(unitA, unitB.GetComponent<BulletComponent>().OwnerUnit, EHitFromType.Skill_Bullet, unitB);
+                Log.Info($"Start contact:{unitA.Config().Name}, {unitB.Config().Name}");
+                BattleHelper.HitSettle(bullet, monster, EHitFromType.Skill_Bullet);
             }
             // 玩家跟玩家碰撞，判定玩家重量大小，大吃小
             else if (aType == EUnitType.Player && bType == EUnitType.Player)

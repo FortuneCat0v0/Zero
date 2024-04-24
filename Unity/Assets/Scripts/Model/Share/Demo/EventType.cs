@@ -54,4 +54,9 @@ namespace ET
         public EquipPosition EquipPosition;
         public EquipOp EquipOp;
     }
+
+    public struct UnitDeath
+    {
+        public Unit Unit;
+    }
 }

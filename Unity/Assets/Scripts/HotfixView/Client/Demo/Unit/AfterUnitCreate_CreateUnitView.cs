@@ -25,6 +25,18 @@ namespace ET.Client
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
                 await headInfosComponent.Init(go.transform, 0.2f);
             }
+            else if (unit.Type() == EUnitType.Monster)
+            {
+                string assetsName = $"Assets/Bundles/Unit/Monster.prefab";
+                GameObject bundleGameObject = await scene.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
+
+                GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
+                go = UnityEngine.Object.Instantiate(bundleGameObject, globalComponent.Unit, true);
+                go.transform.position = unit.Position;
+                unit.AddComponent<GameObjectComponent>().GameObject = go;
+                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
+                await headInfosComponent.Init(go.transform, 0.2f);
+            }
             else if (unit.Type() == EUnitType.Bullet)
             {
                 string assetsName = $"Assets/Bundles/Unit/Bullet.prefab";
@@ -34,7 +46,6 @@ namespace ET.Client
                 go = UnityEngine.Object.Instantiate(bundleGameObject, globalComponent.Unit, true);
                 go.transform.position = unit.Position;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
-                // unit.AddComponent<AnimatorComponent>();
             }
             else
             {

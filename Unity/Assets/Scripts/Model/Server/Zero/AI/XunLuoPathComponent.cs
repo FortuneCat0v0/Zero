@@ -3,9 +3,9 @@ using Unity.Mathematics;
 namespace ET.Server
 {
     [ComponentOf(typeof(Unit))]
-    public class XunLuoPathComponent: Entity, IAwake
+    public class XunLuoPathComponent : Entity, IAwake
     {
-        public float3[] path = new float3[] { new float3(0, 0, 0), new float3(20, 0, 0), new float3(20, 0, 20), new float3(0, 0, 20), };
+        public float3[] path = { new(0, 0, 0), new(25, 0, 25), new(-25, 0, 25), new(0, 0, 50) };
         public int Index;
     }
 }
