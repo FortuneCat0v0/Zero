@@ -47,7 +47,7 @@ namespace ET.Client
             CollisionViewComponent collisionViewComponent = unit.AddComponent<CollisionViewComponent, GameObject>(go);
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
 
-            collisionViewComponent.AddColloder(unitConfig.ColliderType, new Vector2(unitConfig.ColliderParams[0], unitConfig.ColliderParams[1]));
+            collisionViewComponent.AddColloder(unitConfig.ColliderType, new Vector2(unitConfig.ColliderParams[0], 0));
 #endif
 
             await ETTask.CompletedTask;

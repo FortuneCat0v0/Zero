@@ -153,15 +153,15 @@ namespace ET.Client
             }
 
             // 切换方向立刻从新寻路，保持同一方向则要马上完成之前的移动后
-            if (Vector3.Distance(self.Direction, self.LastDirection) < 0.6f && self.MoveComponent.Targets.Count > 1)
+            if (Vector3.Angle(self.Direction, self.LastDirection) < 10f && self.MoveComponent.Targets.Count > 1)
             {
                 return;
             }
 
             // 发出射线，检测到Collision,尽量生成直线最长路径，减少寻路次数
             Vector3 start = self.MyUnit.Position;
-            float intveral = 0.5f; // 寻的长度
-            int maxStep = 20; // 最多寻多少次
+            float intveral = 0.25f; // 寻的长度
+            int maxStep = 40; // 最多寻多少次
             Vector3 target = Vector3.zero;
             for (int i = 1; i <= maxStep; i++)
             {
@@ -176,12 +176,12 @@ namespace ET.Client
                 target = hit.point;
             }
 
-            self.LastDirection = self.Direction;
-
             if (target == Vector3.zero)
             {
                 return;
             }
+
+            self.LastDirection = self.Direction;
 
             C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
             c2MPathfindingResult.Position = target;

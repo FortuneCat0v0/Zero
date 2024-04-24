@@ -23,8 +23,10 @@ namespace ET.Server
             }
 
             unit.AddComponent<MoveComponent>();
-            unit.AddComponent<PathfindingComponent, string>(scene.Name);
-            unit.Position = new float3(-10, 0, -10);
+            // unit.AddComponent<PathfindingComponent, string>(scene.Name);
+            // 服务端添加寻路地图
+            unit.AddComponent<PathfindingComponent, string>("TestMap");
+            unit.Position = new float3(0, 0, 0);
 
             unit.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.OrderedMessage);
 
