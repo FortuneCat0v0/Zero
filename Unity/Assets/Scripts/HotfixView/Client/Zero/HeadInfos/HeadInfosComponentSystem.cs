@@ -24,7 +24,7 @@ namespace ET.Client
                 return;
             }
 
-            self.GameObject.transform.LookAt(self.MainCameraTransform);
+            self.GameObject.transform.forward = -self.MainCameraTransform.forward;
         }
 
         public static async ETTask Init(this HeadInfosComponent self, Transform parentTransform, float offset)
@@ -36,7 +36,7 @@ namespace ET.Client
             GameObject go = UnityEngine.Object.Instantiate(bundleGameObject, parentTransform);
 
             self.GameObject = go;
-            self.GameObject.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+            self.GameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             self.GameObject.transform.localPosition = new Vector3(0, offset, 0);
 
             ReferenceCollector rc = go.GetComponent<ReferenceCollector>();

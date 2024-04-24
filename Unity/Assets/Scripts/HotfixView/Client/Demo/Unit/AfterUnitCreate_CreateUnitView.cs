@@ -13,17 +13,16 @@ namespace ET.Client
             // Unit View层
             if (unit.Type() == EUnitType.Player)
             {
-                string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
+                string assetsName = $"Assets/Bundles/Unit/Player.prefab";
                 GameObject bundleGameObject = await scene.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
-                GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
 
                 GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
-                go = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+                go = UnityEngine.Object.Instantiate(bundleGameObject, globalComponent.Unit, true);
                 go.transform.position = unit.Position;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
                 unit.AddComponent<AnimatorComponent>();
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
-                await headInfosComponent.Init(go.transform, 0.2f);
+                await headInfosComponent.Init(go.transform, 2f);
             }
             else if (unit.Type() == EUnitType.Monster)
             {
@@ -35,7 +34,7 @@ namespace ET.Client
                 go.transform.position = unit.Position;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
-                await headInfosComponent.Init(go.transform, 0.2f);
+                await headInfosComponent.Init(go.transform, 2f);
             }
             else if (unit.Type() == EUnitType.Bullet)
             {
