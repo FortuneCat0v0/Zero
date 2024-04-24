@@ -14,7 +14,7 @@ namespace ET.Client
         [EntitySystem]
         private static void LateUpdate(this HeadInfosComponent self)
         {
-            if (self.GameObject == null)
+            if (self.Transform == null)
             {
                 return;
             }
@@ -24,7 +24,7 @@ namespace ET.Client
                 return;
             }
 
-            self.GameObject.transform.forward = -self.MainCameraTransform.forward;
+            self.Transform.forward = -self.MainCameraTransform.forward;
         }
 
         public static async ETTask Init(this HeadInfosComponent self, Transform parentTransform, float offset)
@@ -35,9 +35,9 @@ namespace ET.Client
 
             GameObject go = UnityEngine.Object.Instantiate(bundleGameObject, parentTransform);
 
-            self.GameObject = go;
-            self.GameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-            self.GameObject.transform.localPosition = new Vector3(0, offset, 0);
+            self.Transform = go.transform;
+            self.Transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            self.Transform.localPosition = new Vector3(0, offset, 0);
 
             ReferenceCollector rc = go.GetComponent<ReferenceCollector>();
             self.Slider_HealthBar_Miniboss = rc.Get<GameObject>("Slider_HealthBar_Miniboss");
