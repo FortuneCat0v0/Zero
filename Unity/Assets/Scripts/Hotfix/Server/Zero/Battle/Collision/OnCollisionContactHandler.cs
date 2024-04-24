@@ -27,6 +27,7 @@ namespace ET.Server
                     return;
                 }
 
+                Log.Info($"发生碰撞 Bullet 对 Player");
                 int dmg = unitA.GetComponent<NumericComponent>().GetAsInt(NumericType.Attack);
                 int finalHp = unitB.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
                 if (finalHp <= 0)
@@ -49,6 +50,7 @@ namespace ET.Server
                     return;
                 }
 
+                Log.Info($"发生碰撞 Player 对 Bullet");
                 int dmg = unitB.GetComponent<NumericComponent>().GetAsInt(NumericType.Attack);
                 int finalHp = unitA.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
                 if (finalHp <= 0)

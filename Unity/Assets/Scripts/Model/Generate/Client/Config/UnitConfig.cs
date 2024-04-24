@@ -59,7 +59,7 @@ public sealed partial class UnitConfig: Bright.Config.BeanBase
     /// </summary>
     public EColliderType ColliderType { get; private set; }
     /// <summary>
-    /// 碰撞体参数(x,y)
+    /// 碰撞体参数
     /// </summary>
     public System.Collections.Generic.List<float> ColliderParams { get; private set; }
 

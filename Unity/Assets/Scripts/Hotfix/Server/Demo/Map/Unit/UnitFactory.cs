@@ -81,7 +81,7 @@ namespace ET.Server
 
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(bullet.ConfigId);
             bullet.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
-                new Vector2(unitConfig.ColliderParams[0], unitConfig.ColliderParams[1]), Vector2.Zero, true, bullet);
+                new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, bullet);
             bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
 
             return bullet;

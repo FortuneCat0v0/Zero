@@ -71,7 +71,7 @@ namespace ET.Server
 
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
             unit.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
-                new Vector2(unitConfig.ColliderParams[0], unitConfig.ColliderParams[1]), Vector2.Zero, true, unit);
+                new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, unit);
 
             // 解锁location，可以接收发给Unit的消息
             await scene.Root().GetComponent<LocationProxyComponent>().UnLock(LocationType.Unit, unit.Id, request.OldActorId, unit.GetActorId());
