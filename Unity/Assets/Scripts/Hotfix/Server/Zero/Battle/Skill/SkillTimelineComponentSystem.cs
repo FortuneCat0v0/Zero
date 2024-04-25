@@ -64,7 +64,11 @@ namespace ET.Server
                         continue;
                     // #endif
 
-                    int triggerTime = self.SkillConfig.ActionEventTriggerPercent[i] * self.SkillConfig.Life / 100;
+                    // 事件触发时间计算来源
+                    // 1. 技能：技能表的触发百分比 / 100 * 技能周期 ms
+                    // 2. Buff：立即触发，EventTriggerTime = 0
+                    // 3. Bullet：立即触发，EventTriggerTime = 0
+                    int triggerTime = self.SkillConfig.ActionEventTriggerPercent[i] / 100 * self.SkillConfig.Life;
                     self.AddChild<ActionEvent, int, int, EActionEventSourceType>(actionEventId, triggerTime, EActionEventSourceType.Skill);
                 }
             }

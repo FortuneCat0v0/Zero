@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace ET.Client
 {
@@ -6,7 +7,7 @@ namespace ET.Client
     public class HeadInfosComponent : Entity, IAwake, ILateUpdate
     {
         public Transform Transform;
-        public GameObject Slider_HealthBar_Miniboss;
+        public Image HealthBarFillImg;
 
         public Transform MainCameraTransform;
     }

@@ -23,6 +23,8 @@ namespace ET.Client
                 unit.AddComponent<AnimatorComponent>();
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
                 await headInfosComponent.Init(go.transform, 2f);
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.Type() == EUnitType.Monster)
             {
@@ -35,6 +37,8 @@ namespace ET.Client
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
                 await headInfosComponent.Init(go.transform, 2f);
+                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.Type() == EUnitType.Bullet)
             {

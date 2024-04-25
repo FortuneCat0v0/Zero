@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace ET.Client
 {
@@ -40,9 +41,29 @@ namespace ET.Client
             self.Transform.localPosition = new Vector3(0, offset, 0);
 
             ReferenceCollector rc = go.GetComponent<ReferenceCollector>();
-            self.Slider_HealthBar_Miniboss = rc.Get<GameObject>("Slider_HealthBar_Miniboss");
+            self.HealthBarFillImg = rc.Get<GameObject>("HealthBarFillImg").GetComponent<Image>();
 
             self.MainCameraTransform = Camera.main.transform;
+        }
+
+        public static void RefreshHealthBar(this HeadInfosComponent self, float value)
+        {
+            if (self.HealthBarFillImg == null)
+            {
+                return;
+            }
+
+            if (value > 1)
+            {
+                value = 1;
+            }
+
+            if (value < 0)
+            {
+                value = 0;
+            }
+
+            self.HealthBarFillImg.fillAmount = value;
         }
     }
 }

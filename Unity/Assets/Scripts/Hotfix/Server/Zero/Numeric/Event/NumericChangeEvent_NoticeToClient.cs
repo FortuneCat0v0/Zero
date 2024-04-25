@@ -11,14 +11,7 @@
             m2CNoticeUnitNumeric.NewValue = args.New;
             if (args.IsBroadcast)
             {
-                if (args.Unit.Type() == EUnitType.Player)
-                {
-                    MapMessageHelper.Broadcast(args.Unit, m2CNoticeUnitNumeric);
-                }
-                else
-                {
-                    MapMessageHelper.BroadcastNoSelf(args.Unit, m2CNoticeUnitNumeric);
-                }
+                MapMessageHelper.Broadcast(args.Unit, m2CNoticeUnitNumeric);
             }
             else
             {

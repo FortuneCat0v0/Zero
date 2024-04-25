@@ -18,7 +18,8 @@ namespace ET.Server
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.Hp, 100, false);
+            numericComponent.Set(NumericType.HpBase, 100, false);
+            numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
             unitComponent.Add(unit);
             // 加入aoi
@@ -42,7 +43,8 @@ namespace ET.Server
             NumericComponent numericComponent = monster.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.Hp, 100, false);
+            numericComponent.Set(NumericType.HpBase, 100, false);
+            numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
             unitComponent.Add(monster);
 
@@ -67,9 +69,7 @@ namespace ET.Server
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 10f); // 速度是10米每秒
             numericComponent.Set(NumericType.AOI, 15000); // 视野15米
-            numericComponent.Set(NumericType.Attack, 1);
-            numericComponent.Set(NumericType.MaxHp, 1);
-            numericComponent.Set(NumericType.Hp, 1);
+            numericComponent.Set(NumericType.Attack, 10);
 
             bullet.Position = owner.Position;
             bullet.Forward = owner.Forward;
