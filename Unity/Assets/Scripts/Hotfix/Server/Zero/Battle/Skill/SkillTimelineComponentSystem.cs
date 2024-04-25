@@ -58,11 +58,10 @@ namespace ET.Server
                     ActionEventConfig actionEventConfig = ActionEventConfigCategory.Instance.Get(actionEventId);
                     if (actionEventConfig == null)
                         continue;
-                    // #if DOTNET
-                    //客户端渲染层的事件服务端不处理
+
+                    // 客户端渲染层的事件服务端不处理
                     if (actionEventConfig.IsClientOnly)
                         continue;
-                    // #endif
 
                     // 事件触发时间计算来源
                     // 1. 技能：技能表的触发百分比 / 100 * 技能周期 ms
