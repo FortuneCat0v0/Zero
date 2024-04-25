@@ -28,14 +28,22 @@ namespace ET.Client
             self.Transform.forward = -self.MainCameraTransform.forward;
         }
 
+        [EntitySystem]
+        private static void Destroy(this HeadInfosComponent self)
+        {
+            GameObjectPoolHelper.ReturnObjectToPool(self.Transform.gameObject);
+        }
+
         public static async ETTask Init(this HeadInfosComponent self, Transform parentTransform, float offset)
         {
             string assetsName = $"Assets/Bundles/UI/Other/HeadInfos.prefab";
-            GameObject bundleGameObject =
-                    await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
 
-            GameObject go = UnityEngine.Object.Instantiate(bundleGameObject, parentTransform);
+            GameObject headInfos = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
+            GameObjectPoolHelper.InitPoolFormGamObject(headInfos, 3);
 
+            GameObject go = GameObjectPoolHelper.GetObjectFromPool("HeadInfos");
+
+            go.transform.SetParent(parentTransform);
             self.Transform = go.transform;
             self.Transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             self.Transform.localPosition = new Vector3(0, offset, 0);
@@ -48,11 +56,6 @@ namespace ET.Client
 
         public static void RefreshHealthBar(this HeadInfosComponent self, float value)
         {
-            if (self.HealthBarFillImg == null)
-            {
-                return;
-            }
-
             if (value > 1)
             {
                 value = 1;

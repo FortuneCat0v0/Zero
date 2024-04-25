@@ -7,9 +7,9 @@ namespace ET.Client
 {
     public static class GameObjectPoolHelper
     {
-        private static Dictionary<string, GameObjectPool> poolDict = new Dictionary<string, GameObjectPool>();
-        
-        public static void InitPool( string poolName, int size, PoolInflationType type = PoolInflationType.DOUBLE)
+        private static Dictionary<string, GameObjectPool> poolDict = new();
+
+        public static void InitPool(string poolName, int size, PoolInflationType type = PoolInflationType.DOUBLE)
         {
             if (poolDict.ContainsKey(poolName))
             {
@@ -26,7 +26,6 @@ namespace ET.Client
                         return;
                     }
 
-                    
                     poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
                 }
                 catch (Exception e)
@@ -35,8 +34,8 @@ namespace ET.Client
                 }
             }
         }
-        
-        public static async ETTask InitPoolFormGamObjectAsync(  GameObject pb, int size, PoolInflationType type = PoolInflationType.DOUBLE)
+
+        public static void InitPoolFormGamObject(GameObject pb, int size, PoolInflationType type = PoolInflationType.DOUBLE)
         {
             string poolName = pb.name;
             if (poolDict.ContainsKey(poolName))
@@ -52,6 +51,7 @@ namespace ET.Client
                         Debug.LogError("[ResourceManager] Invalide prefab name for pooling :" + poolName);
                         return;
                     }
+
                     poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
                 }
                 catch (Exception e)
@@ -59,18 +59,15 @@ namespace ET.Client
                     Debug.LogError(e);
                 }
             }
-
-            await ETTask.CompletedTask;
         }
-        
-        
+
         /// <summary>
         /// Returns an available object from the pool 
         /// OR null in case the pool does not have any object available & can grow size is false.
         /// </summary>
         /// <OtherParam name="poolName"></OtherParam>
         /// <returns></returns>
-        public static GameObject GetObjectFromPool( string poolName,    bool autoActive = true, int autoCreate = 0)
+        public static GameObject GetObjectFromPool(string poolName, bool autoActive = true, int autoCreate = 0)
         {
             GameObject result = null;
 
@@ -100,12 +97,11 @@ namespace ET.Client
             return result;
         }
 
-        
         /// <summary>
         /// Return obj to the pool
         /// </summary>
         /// <OtherParam name="go"></OtherParam>
-        public static void ReturnObjectToPool( GameObject go)
+        public static void ReturnObjectToPool(GameObject go)
         {
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
@@ -134,7 +130,7 @@ namespace ET.Client
         /// Return obj to the pool
         /// </summary>
         /// <OtherParam name="t"></OtherParam>
-        public static void ReturnTransformToPool( Transform t)
+        public static void ReturnTransformToPool(Transform t)
         {
             if (t == null)
             {
@@ -143,12 +139,13 @@ namespace ET.Client
 #endif
                 return;
             }
+
             ReturnObjectToPool(t.gameObject);
         }
 
-        public static GameObject GetGameObjectByResType( string poolName)
+        public static GameObject GetGameObjectByResType(string poolName)
         {
-            GameObject pb = ResourcesComponent.Instance.LoadAssetSync<GameObject>( $"Assets/Bundles/UI/Item/{poolName}.prefab");
+            GameObject pb = ResourcesComponent.Instance.LoadAssetSync<GameObject>($"Assets/Bundles/UI/Item/{poolName}.prefab");
             return pb;
         }
     }

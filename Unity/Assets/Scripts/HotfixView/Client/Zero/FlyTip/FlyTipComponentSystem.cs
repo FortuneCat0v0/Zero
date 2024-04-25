@@ -38,10 +38,10 @@ namespace ET.Client
             ResourcesLoaderComponent resourcesLoaderComponent = self.Root().GetComponent<ResourcesLoaderComponent>();
 
             GameObject flyTip = await resourcesLoaderComponent.LoadAssetAsync<GameObject>($"Assets/Bundles/UI/Other/FlyTip.prefab");
-            await GameObjectPoolHelper.InitPoolFormGamObjectAsync(flyTip, 3);
+            GameObjectPoolHelper.InitPoolFormGamObject(flyTip, 3);
 
             GameObject flyTipDi = await resourcesLoaderComponent.LoadAssetAsync<GameObject>($"Assets/Bundles/UI/Other/FlyTipDi.prefab");
-            await GameObjectPoolHelper.InitPoolFormGamObjectAsync(flyTipDi, 3);
+            GameObjectPoolHelper.InitPoolFormGamObject(flyTipDi, 3);
         }
 
         public static void SpawnFlyTip(this FlyTipComponent self, string str)

@@ -29,7 +29,7 @@ namespace ET.Server
             MessageLocationSenderOneType oneTypeMessageLocationType = unit.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession);
             foreach (AOIEntity u in dict.Values)
             {
-                if (unit.Type() != EUnitType.Player && u.Unit == unit)
+                if (unit != null && unit.Type() != EUnitType.Player && u.Unit == unit)
                 {
                     continue;
                 }

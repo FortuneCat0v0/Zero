@@ -82,7 +82,7 @@ namespace ET.Client
             // 判断当前状态是否可以使用摇杆
 
             self.IsDrag = true;
-            self.SetDirection(pdata);
+            self.LastDirection = Vector3.zero;
         }
 
         private static void OnDrag(this UIJoystickComponent self, PointerEventData pdata)
@@ -93,7 +93,7 @@ namespace ET.Client
         private static void OnEndDrag(this UIJoystickComponent self, PointerEventData pdata)
         {
             self.IsDrag = false;
-
+            self.LastDirection = Vector3.zero;
             self.ClientSenderComponent.Send(C2M_Stop.Create());
             self.ResetUI();
         }

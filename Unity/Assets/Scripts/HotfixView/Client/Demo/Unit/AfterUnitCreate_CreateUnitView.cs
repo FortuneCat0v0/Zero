@@ -21,6 +21,7 @@ namespace ET.Client
                 go.transform.position = unit.Position;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
                 unit.AddComponent<AnimatorComponent>();
+
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
                 await headInfosComponent.Init(go.transform, 2f);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
@@ -35,6 +36,7 @@ namespace ET.Client
                 go = UnityEngine.Object.Instantiate(bundleGameObject, globalComponent.Unit, true);
                 go.transform.position = unit.Position;
                 unit.AddComponent<GameObjectComponent>().GameObject = go;
+
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent>();
                 await headInfosComponent.Init(go.transform, 2f);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
