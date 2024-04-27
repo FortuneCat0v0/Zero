@@ -1,4 +1,7 @@
-﻿namespace ET.Server
+﻿using System.Numerics;
+using Unity.Mathematics;
+
+namespace ET.Server
 {
     /// <summary>
     /// 技能发射子弹
@@ -15,8 +18,19 @@
                 return;
 
             Scene scene = actionEvent.Scene();
-            UnitFactory.CreateBullet(scene, IdGenerater.Instance.GenerateId(), actionEvent.OwnerSkill, 5001,
-                actionEvent.ActionEventConfig.Params);
+            ActionEventConfig actionEventConfig = actionEvent.ActionEventConfig;
+
+            quaternion ownerRotation = args.owner.Rotation;
+            int direct = 1;
+            for (int i = 0; i < actionEventConfig.Params[1]; i++)
+            {
+                direct = -direct;
+
+                quaternion rotatedQuaternion = math.mul(quaternion.RotateY(i * direct * 15f), ownerRotation);
+
+                UnitFactory.CreateBullet(scene, IdGenerater.Instance.GenerateId(), actionEvent.OwnerSkill, actionEventConfig.Params[0],
+                    rotatedQuaternion);
+            }
         }
     }
 }

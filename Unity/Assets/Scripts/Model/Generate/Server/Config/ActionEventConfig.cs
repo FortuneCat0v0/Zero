@@ -20,7 +20,6 @@ public sealed partial class ActionEventConfig: Bright.Config.BeanBase
     {
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
-        Desc = _buf.ReadString();
         ActionEventType = (EActionEventType)_buf.ReadInt();
         IsClientOnly = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Params = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Params.Add(_e0);}}
@@ -40,10 +39,6 @@ public sealed partial class ActionEventConfig: Bright.Config.BeanBase
     /// 名称
     /// </summary>
     public string Name { get; private set; }
-    /// <summary>
-    /// 备注
-    /// </summary>
-    public string Desc { get; private set; }
     /// <summary>
     /// 事件类型
     /// </summary>
@@ -74,7 +69,6 @@ public sealed partial class ActionEventConfig: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Name:" + Name + ","
-        + "Desc:" + Desc + ","
         + "ActionEventType:" + ActionEventType + ","
         + "IsClientOnly:" + IsClientOnly + ","
         + "Params:" + Bright.Common.StringUtil.CollectionToString(Params) + ","

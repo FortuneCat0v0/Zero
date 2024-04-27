@@ -60,7 +60,7 @@ namespace ET.Server
             return monster;
         }
 
-        public static Unit CreateBullet(Scene scene, long id, Skill ownerSkill, int config, List<int> bulletData)
+        public static Unit CreateBullet(Scene scene, long id, Skill ownerSkill, int config, quaternion quaternion)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
             Unit owner = ownerSkill.Unit;
@@ -72,7 +72,7 @@ namespace ET.Server
             numericComponent.Set(NumericType.Attack, 10, false);
 
             bullet.Position = owner.Position;
-            bullet.Forward = owner.Forward;
+            bullet.Rotation = quaternion;
 
             bullet.AddComponent<MoveComponent>();
             int time = 5;
