@@ -35,11 +35,12 @@ namespace ET.Client
             self.MoveComponent = self.MyUnit.GetComponent<MoveComponent>();
             self.ClientSenderComponent = self.Root().GetComponent<ClientSenderComponent>();
 
+            // 事件触发顺序 如果拖拽 PointerDown、BeginDrag、Drag、PointerUp、EndDrag 未拖拽 PointerDown、PointerUp
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerDown, EventTriggerType.PointerDown);
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnBeginDrag, EventTriggerType.BeginDrag);
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnDrag, EventTriggerType.Drag);
+            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerUp, EventTriggerType.PointerUp);
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
-            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.PointerUp);
 
             self.MapMask = LayerMask.GetMask("Map");
             self.OperateModel = 1;
@@ -83,6 +84,11 @@ namespace ET.Client
         private static void OnDrag(this UIJoystickComponent self, PointerEventData pdata)
         {
             self.SetDirection(pdata);
+        }
+
+        private static void OnPointerUp(this UIJoystickComponent self, PointerEventData pdata)
+        {
+            self.ResetUI();
         }
 
         private static void OnEndDrag(this UIJoystickComponent self, PointerEventData pdata)
