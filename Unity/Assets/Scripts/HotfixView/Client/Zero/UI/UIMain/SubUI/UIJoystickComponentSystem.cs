@@ -40,12 +40,6 @@ namespace ET.Client
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.PointerUp);
 
-            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnPointerDown, EventTriggerType.PointerDown);
-            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnBeginDrag, EventTriggerType.BeginDrag);
-            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnDrag, EventTriggerType.Drag);
-            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
-            self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.PointerUp);
-
             self.MapMask = LayerMask.GetMask("Map");
             self.OperateModel = 1;
             self.Radius = 110f;
@@ -104,6 +98,11 @@ namespace ET.Client
             newColor.a = value;
             self.JoystickBottomImg.color = newColor;
             self.JoystickThumbImg.color = newColor;
+
+            self.PositionFocus0.SetActive(false);
+            self.PositionFocus1.SetActive(false);
+            self.PositionFocus2.SetActive(false);
+            self.PositionFocus3.SetActive(false);
         }
 
         /// <summary>
@@ -152,8 +151,9 @@ namespace ET.Client
                 return;
             }
 
+            // TODO 现在有个问题，靠边走会发送寻路消息频繁
             // 切换方向立刻从新寻路，保持同一方向则要马上完成之前的移动后
-            if (Vector3.Angle(self.Direction, self.LastDirection) < 10f && self.MoveComponent.Targets.Count > 1)
+            if (self.LastDirection != Vector3.zero && Vector3.Angle(self.Direction, self.LastDirection) < 10f && self.MoveComponent.Targets.Count > 1)
             {
                 return;
             }
@@ -170,7 +170,7 @@ namespace ET.Client
 
                 if (hit.collider == null)
                 {
-                    return;
+                    break;
                 }
 
                 target = hit.point;

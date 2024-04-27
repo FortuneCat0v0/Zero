@@ -9,10 +9,5 @@ namespace ET
         public Unit Unit => this.GetParent<Skill>().Unit;
 
         public SkillConfig SkillConfig;
-
-        /// <summary>
-        /// 技能开始释放时的时间戳
-        /// </summary>
-        public long StartSpellTime;
     }
 }

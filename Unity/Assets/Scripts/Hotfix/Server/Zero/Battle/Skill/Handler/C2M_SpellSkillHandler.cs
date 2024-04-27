@@ -1,13 +1,12 @@
 ﻿namespace ET.Server
 {
     [MessageLocationHandler(SceneType.Map)]
-    public class C2M_SpellSkillHandler : MessageLocationHandler<Unit, C2M_SpellSkill, M2C_SpellSkill>
+    public class C2M_SpellSkillHandler : MessageLocationHandler<Unit, C2M_SpellSkill>
     {
-        protected override async ETTask Run(Unit unit, C2M_SpellSkill request, M2C_SpellSkill response)
+        protected override async ETTask Run(Unit unit, C2M_SpellSkill message)
         {
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            Skill skill = skillComponent.AddSkill(1002);
-            skill.StartSpell();
+            skillComponent.SpellSkill(message.SkillConfigId, message.Direction, message.Position, message.TargetUnitId);
             await ETTask.CompletedTask;
         }
     }

@@ -261,6 +261,9 @@ namespace ET
         [MemoryPackOrder(6)]
         public MoveInfo MoveInfo { get; set; }
 
+        [MemoryPackOrder(7)]
+        public List<SkillInfo> SkillInfos { get; set; } = new();
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -275,6 +278,7 @@ namespace ET
             this.Forward = default;
             this.KV.Clear();
             this.MoveInfo = default;
+            this.SkillInfos.Clear();
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -1864,6 +1868,35 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.C2M_GMCMD)]
+    public partial class C2M_GMCMD : MessageObject, ILocationMessage
+    {
+        public static C2M_GMCMD Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_GMCMD), isFromPool) as C2M_GMCMD;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public string CMDMessage { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.CMDMessage = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.AttributeEntryInfo)]
     public partial class AttributeEntryInfo : MessageObject
     {
@@ -1984,12 +2017,9 @@ namespace ET
         }
 
         [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
-
-        [MemoryPackOrder(1)]
         public int ItemContainerType { get; set; }
 
-        [MemoryPackOrder(3)]
+        [MemoryPackOrder(1)]
         public List<int> EquipPositions { get; set; } = new();
 
         [MemoryPackOrder(2)]
@@ -2002,7 +2032,6 @@ namespace ET
                 return;
             }
 
-            this.RpcId = default;
             this.ItemContainerType = default;
             this.EquipPositions.Clear();
             this.ItemInfos.Clear();
@@ -2021,18 +2050,15 @@ namespace ET
         }
 
         [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
-
-        [MemoryPackOrder(1)]
         public ItemInfo ItemInfo { get; set; }
 
-        [MemoryPackOrder(2)]
+        [MemoryPackOrder(1)]
         public int ItemOpType { get; set; }
 
-        [MemoryPackOrder(3)]
+        [MemoryPackOrder(2)]
         public int ItemContainerType { get; set; }
 
-        [MemoryPackOrder(4)]
+        [MemoryPackOrder(3)]
         public int EquipPosition { get; set; }
 
         public override void Dispose()
@@ -2042,7 +2068,6 @@ namespace ET
                 return;
             }
 
-            this.RpcId = default;
             this.ItemInfo = default;
             this.ItemOpType = default;
             this.ItemContainerType = default;
@@ -2053,9 +2078,45 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.SkillInfo)]
+    public partial class SkillInfo : MessageObject
+    {
+        public static SkillInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(SkillInfo), isFromPool) as SkillInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long Id { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int SkillConfigId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int SkillLevel { get; set; }
+
+        [MemoryPackOrder(3)]
+        public long SpellStartTime { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Id = default;
+            this.SkillConfigId = default;
+            this.SkillLevel = default;
+            this.SpellStartTime = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.C2M_SpellSkill)]
-    [ResponseType(nameof(M2C_SpellSkill))]
-    public partial class C2M_SpellSkill : MessageObject, ILocationRequest
+    public partial class C2M_SpellSkill : MessageObject, ILocationMessage
     {
         public static C2M_SpellSkill Create(bool isFromPool = false)
         {
@@ -2066,7 +2127,16 @@ namespace ET
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public int SkillId { get; set; }
+        public int SkillConfigId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public Unity.Mathematics.float3 Direction { get; set; }
+
+        [MemoryPackOrder(3)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(4)]
+        public long TargetUnitId { get; set; }
 
         public override void Dispose()
         {
@@ -2076,7 +2146,10 @@ namespace ET
             }
 
             this.RpcId = default;
-            this.SkillId = default;
+            this.SkillConfigId = default;
+            this.Direction = default;
+            this.Position = default;
+            this.TargetUnitId = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2084,7 +2157,7 @@ namespace ET
 
     [MemoryPackable]
     [Message(OuterMessage.M2C_SpellSkill)]
-    public partial class M2C_SpellSkill : MessageObject, ILocationResponse
+    public partial class M2C_SpellSkill : MessageObject, IMessage
     {
         public static M2C_SpellSkill Create(bool isFromPool = false)
         {
@@ -2092,13 +2165,19 @@ namespace ET
         }
 
         [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
+        public long UnitId { get; set; }
 
         [MemoryPackOrder(1)]
-        public int Error { get; set; }
+        public int SkillConfigId { get; set; }
 
         [MemoryPackOrder(2)]
-        public string Message { get; set; }
+        public Unity.Mathematics.float3 Direction { get; set; }
+
+        [MemoryPackOrder(3)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(4)]
+        public long TargetUnitId { get; set; }
 
         public override void Dispose()
         {
@@ -2107,9 +2186,40 @@ namespace ET
                 return;
             }
 
-            this.RpcId = default;
-            this.Error = default;
-            this.Message = default;
+            this.UnitId = default;
+            this.SkillConfigId = default;
+            this.Direction = default;
+            this.Position = default;
+            this.TargetUnitId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_SkillUpdateOp)]
+    public partial class M2C_SkillUpdateOp : MessageObject, IMessage
+    {
+        public static M2C_SkillUpdateOp Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_SkillUpdateOp), isFromPool) as M2C_SkillUpdateOp;
+        }
+
+        [MemoryPackOrder(0)]
+        public SkillInfo SkillInfo { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int SkillOpType { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.SkillInfo = default;
+            this.SkillOpType = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2172,12 +2282,15 @@ namespace ET
         public const ushort G2C_LoginGameGate = 10054;
         public const ushort C2G_EnterGame = 10055;
         public const ushort G2C_EnterGame = 10056;
-        public const ushort AttributeEntryInfo = 10057;
-        public const ushort ItemInfo = 10058;
-        public const ushort M2C_NoticeUnitNumeric = 10059;
-        public const ushort M2C_AllItems = 10060;
-        public const ushort M2C_ItemUpdateOp = 10061;
-        public const ushort C2M_SpellSkill = 10062;
-        public const ushort M2C_SpellSkill = 10063;
+        public const ushort C2M_GMCMD = 10057;
+        public const ushort AttributeEntryInfo = 10058;
+        public const ushort ItemInfo = 10059;
+        public const ushort M2C_NoticeUnitNumeric = 10060;
+        public const ushort M2C_AllItems = 10061;
+        public const ushort M2C_ItemUpdateOp = 10062;
+        public const ushort SkillInfo = 10063;
+        public const ushort C2M_SpellSkill = 10064;
+        public const ushort M2C_SpellSkill = 10065;
+        public const ushort M2C_SkillUpdateOp = 10066;
     }
 }

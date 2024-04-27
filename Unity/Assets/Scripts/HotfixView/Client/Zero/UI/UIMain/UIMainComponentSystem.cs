@@ -13,6 +13,10 @@ namespace ET.Client
         {
             ReferenceCollector rc = self.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
+            self.GMInput = rc.Get<GameObject>("GMInput");
+            self.GMSendBtn = rc.Get<GameObject>("GMSendBtn");
+            self.GMSendBtn.GetComponent<Button>().AddListener(self.OnGMSendBtn);
+
             self.SettingsBtn = rc.Get<GameObject>("SettingsBtn");
             self.SettingsBtn.GetComponent<Button>().AddListenerAsync(self.OnSettingsBtn);
 
@@ -37,6 +41,20 @@ namespace ET.Client
 
             self.Skill0Btn = rc.Get<GameObject>("Skill0Btn");
             self.Skill0Btn.GetComponent<Button>().AddListenerAsync(self.SpellSkill);
+        }
+
+        private static void OnGMSendBtn(this UIMainComponent self)
+        {
+            string message = self.GMInput.GetComponent<TMP_InputField>().text;
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+            C2M_GMCMD c2MGmcmd = C2M_GMCMD.Create();
+            c2MGmcmd.CMDMessage = message;
+            self.Root().GetComponent<ClientSenderComponent>().Send(c2MGmcmd);
+            self.GMInput.GetComponent<TMP_InputField>().text = "";
         }
 
         private static async ETTask OnSettingsBtn(this UIMainComponent self)
@@ -95,7 +113,7 @@ namespace ET.Client
 
         private static async ETTask SpellSkill(this UIMainComponent self)
         {
-            await self.Root().GetComponent<ClientSenderComponent>().Call(C2M_SpellSkill.Create());
+            await ETTask.CompletedTask;
         }
     }
 }

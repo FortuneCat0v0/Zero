@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using ET.EventType;
 
-namespace ET.Server
+namespace ET.Client
 {
     [FriendOf(typeof(SkillComponent))]
     [FriendOf(typeof(SkillTimelineComponent))]
@@ -57,8 +58,8 @@ namespace ET.Server
                     if (actionEventConfig == null)
                         continue;
 
-                    // 客户端事件不处理
-                    if (actionEventConfig.IsClientOnly)
+                    // 服务端事件不处理
+                    if (!actionEventConfig.IsClientOnly)
                         continue;
 
                     // 事件触发时间计算来源 技能表的触发百分比 / 100 * 技能周期 ms

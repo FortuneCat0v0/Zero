@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Unity.Mathematics;
 
-namespace ET.Server
+namespace ET.Client
 {
+    [FriendOf(typeof(Skill))]
     [EntitySystemOf(typeof(SkillComponent))]
     [FriendOf(typeof(SkillComponent))]
     public static partial class SkillComponentSystem
@@ -19,19 +20,13 @@ namespace ET.Server
             self.AbstractTypeSkills.Clear();
         }
 
-        public static bool AddSkill(this SkillComponent self, int configId, int skillLevel = 1)
+        public static void AddSkill(this SkillComponent self, Skill skill)
         {
-            if (!self.IdSkillMap.ContainsKey(configId))
+            if (!self.IdSkillMap.ContainsKey(skill.SkillConfigId))
             {
-                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(configId, skillLevel);
-                if (skillConfig == null)
-                {
-                    Log.Debug($"配置表不存在技能 {configId} {skillLevel}");
-                    return false;
-                }
-
-                Skill skill = self.AddChild<Skill, int, int>(configId, skillLevel);
-                self.IdSkillMap.Add(configId, skill.Id);
+                self.AddChild(skill);
+                self.IdSkillMap.Add(skill.SkillConfigId, skill.Id);
+                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skill.SkillConfigId, skill.SkillLevel);
                 ESkillAbstractType abstractType = (ESkillAbstractType)skillConfig.AbstractType;
                 if (!self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skills))
                 {
@@ -40,12 +35,7 @@ namespace ET.Server
                 }
 
                 self.AbstractTypeSkills[abstractType].Add(skill.Id);
-
-                return true;
             }
-
-            Log.Debug($"已经存在技能 {configId}");
-            return false;
         }
 
         public static Skill GetSkill(this SkillComponent self, int configId)
@@ -101,7 +91,30 @@ namespace ET.Server
             return self.Unit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) <= 0;
         }
 
-        public static void SpellSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
+        /// <summary>
+        /// 此方法只能由服务端下发的消息调用
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="skillConfigId"></param>
+        /// <param name="direction"></param>
+        /// <param name="position"></param>
+        /// <param name="targetUnitId"></param>
+        public static void SpllSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
+        {
+            Log.Debug($"释放技能 {skillConfigId}");
+
+            Skill skill = self.GetSkill(skillConfigId);
+
+            if (skill == null)
+            {
+                Log.Debug($"技能不存在 {skillConfigId}");
+                return;
+            }
+
+            skill.StartSpell();
+        }
+
+        public static void TrySpellSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
         {
             Log.Debug($"尝试释放技能 {skillConfigId}");
 
@@ -115,22 +128,18 @@ namespace ET.Server
 
             if (skill.IsInCd())
             {
-                Log.Debug($"技能在CD中 {skillConfigId}");
+                EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Str = "技能在CD中..." });
                 return;
             }
 
             // 这里可以做一些校验
 
-            skill.StartSpell();
-
-            M2C_SpellSkill m2CSpellSkill = M2C_SpellSkill.Create();
-            m2CSpellSkill.UnitId = self.Unit.Id;
-            m2CSpellSkill.SkillConfigId = skillConfigId;
-            m2CSpellSkill.Direction = direction;
-            m2CSpellSkill.Position = position;
-            m2CSpellSkill.TargetUnitId = targetUnitId;
-
-            MapMessageHelper.Broadcast(self.Unit, m2CSpellSkill);
+            C2M_SpellSkill c2MSpellSkill = C2M_SpellSkill.Create();
+            c2MSpellSkill.SkillConfigId = skillConfigId;
+            c2MSpellSkill.Direction = direction;
+            c2MSpellSkill.Position = position;
+            c2MSpellSkill.TargetUnitId = targetUnitId;
+            self.Root().GetComponent<ClientSenderComponent>().Send(C2M_SpellSkill.Create());
         }
     }
 }

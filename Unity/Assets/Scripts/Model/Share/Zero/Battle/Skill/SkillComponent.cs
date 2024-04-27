@@ -17,7 +17,7 @@ namespace ET
     }
 
     [ComponentOf(typeof(Unit))]
-    public class SkillComponent : Entity, IAwake, IAwake<List<int>>, IDestroy, ITransfer
+    public class SkillComponent : Entity, IAwake, IDestroy, ITransfer
     {
         [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();

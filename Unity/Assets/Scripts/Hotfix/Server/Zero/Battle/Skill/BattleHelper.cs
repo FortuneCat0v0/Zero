@@ -39,7 +39,7 @@ namespace ET.Server
                         // 死亡发事件通知
                     }
 
-                    to.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp, isForcedUpdate: true, isBroadcast: true);
+                    to.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp);
 
                     Log.Info($"hit settle, from:{from.Id}, to:{to.Id}, value:{dmg}");
                     EventSystem.Instance.Publish(from.Root(), new HitResult() { hitResultType = EHitResultType.Damage, value = dmg });

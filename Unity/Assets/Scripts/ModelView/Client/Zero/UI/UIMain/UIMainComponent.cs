@@ -5,6 +5,9 @@ namespace ET.Client
     [ComponentOf(typeof(UI))]
     public class UIMainComponent : Entity, IAwake
     {
+        public GameObject GMInput;
+        public GameObject GMSendBtn;
+        
         public GameObject SettingsBtn;
 
         public GameObject LBShrinkBtn;

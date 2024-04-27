@@ -67,9 +67,9 @@ namespace ET.Server
             Unit bullet = unitComponent.AddChildWithId<Unit, int>(id, config);
 
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 10f); // 速度是10米每秒
-            numericComponent.Set(NumericType.AOI, 15000); // 视野15米
-            numericComponent.Set(NumericType.Attack, 10);
+            numericComponent.Set(NumericType.Speed, 10f, false); // 速度是10米每秒
+            numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
+            numericComponent.Set(NumericType.Attack, 10, false);
 
             bullet.Position = owner.Position;
             bullet.Forward = owner.Forward;
@@ -82,7 +82,7 @@ namespace ET.Server
             paths.Add(targetPoint);
             bullet.GetComponent<MoveComponent>().MoveToAsync(paths, numericComponent.GetAsFloat(NumericType.Speed)).Coroutine();
 
-            bullet.AddComponent<AOIEntity, int, float3>(15 * 1000, bullet.Position); // 添加AOI后会自动通知范围内玩家生成子弹
+            bullet.AddComponent<AOIEntity, int, float3>(9 * 1000, bullet.Position); // 添加AOI后会自动通知范围内玩家生成子弹
 
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(bullet.ConfigId);
             bullet.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,

@@ -29,12 +29,9 @@ namespace ET
         /// <param name="nt"></param>
         /// <param name="value"></param>
         /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
-        /// <param name="isForcedUpdate">一定发送事件</param>
-        /// <param name="isBroadcast">发送事件时，是否会广播</param>
-        public static void Set(this NumericComponent self, int nt, float value, bool isPublicEvent = true, bool isForcedUpdate = false,
-        bool isBroadcast = false)
+        public static void Set(this NumericComponent self, int nt, float value, bool isPublicEvent = true)
         {
-            self.Insert(nt, (long)(value * 10000), isPublicEvent, isForcedUpdate, isBroadcast);
+            self.Insert(nt, (long)(value * 10000), isPublicEvent);
         }
 
         /// <summary>
@@ -44,12 +41,9 @@ namespace ET
         /// <param name="nt"></param>
         /// <param name="value"></param>
         /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
-        /// <param name="isForcedUpdate">一定发送事件</param>
-        /// <param name="isBroadcast">发送事件时，是否会广播</param>
-        public static void Set(this NumericComponent self, int nt, int value, bool isPublicEvent = true, bool isForcedUpdate = false,
-        bool isBroadcast = false)
+        public static void Set(this NumericComponent self, int nt, int value, bool isPublicEvent = true)
         {
-            self.Insert(nt, value, isPublicEvent, isForcedUpdate, isBroadcast);
+            self.Insert(nt, value, isPublicEvent);
         }
 
         /// <summary>
@@ -59,18 +53,15 @@ namespace ET
         /// <param name="nt"></param>
         /// <param name="value"></param>
         /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
-        /// <param name="isForcedUpdate">一定发送事件</param>
-        /// <param name="isBroadcast">发送事件时，是否会广播</param>
-        public static void Set(this NumericComponent self, int nt, long value, bool isPublicEvent = true, bool isForcedUpdate = false,
-        bool isBroadcast = false)
+        public static void Set(this NumericComponent self, int nt, long value, bool isPublicEvent = true)
         {
-            self.Insert(nt, value, isPublicEvent, isForcedUpdate, isBroadcast);
+            self.Insert(nt, value, isPublicEvent);
         }
 
-        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent, bool isForcedUpdate, bool isBroadcast)
+        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent)
         {
             long oldValue = self.GetByKey(numericType);
-            if (!isForcedUpdate && oldValue == value)
+            if (oldValue == value && !NumericType.ForcedUpdate.Contains(numericType))
             {
                 return;
             }
@@ -79,15 +70,18 @@ namespace ET
 
             if (numericType >= NumericType.Max)
             {
-                self.Update(numericType, isPublicEvent, isForcedUpdate, isBroadcast);
+                self.Update(numericType, isPublicEvent);
                 return;
             }
 
-            if (isForcedUpdate || isPublicEvent)
+            if (isPublicEvent)
             {
                 EventSystem.Instance.Publish(self.Scene(),
                     new NumbericChange()
-                            { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType, IsBroadcast = isBroadcast });
+                    {
+                        Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType,
+                        IsBroadcast = NumericType.Broadcast.Contains(numericType)
+                    });
             }
         }
 
@@ -98,8 +92,7 @@ namespace ET
             return value;
         }
 
-        public static void Update(this NumericComponent self, int numericType, bool isPublicEvent, bool isForcedUpdate = false,
-        bool isBroadcast = false)
+        public static void Update(this NumericComponent self, int numericType, bool isPublicEvent)
         {
             int final = (int)numericType / 10;
             int bas = final * 10 + 1;
@@ -112,7 +105,7 @@ namespace ET
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
             long result = (long)(((self.GetByKey(bas) + self.GetByKey(add)) * (100 + self.GetAsFloat(pct)) / 100f + self.GetByKey(finalAdd)) *
                 (100 + self.GetAsFloat(finalPct)) / 100f);
-            self.Insert(final, result, isPublicEvent, isForcedUpdate, isBroadcast);
+            self.Insert(final, result, isPublicEvent);
         }
     }
 
@@ -129,7 +122,7 @@ namespace ET
     public class NumericComponent : Entity, IAwake, ITransfer
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, long> NumericDic = new Dictionary<int, long>();
+        public Dictionary<int, long> NumericDic = new();
 
         public long this[int numericType]
         {

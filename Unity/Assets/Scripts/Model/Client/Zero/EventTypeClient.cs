@@ -30,6 +30,12 @@ namespace ET.Client
         public bool IsSucceed;
     }
 
+    public struct ShowFlyTip
+    {
+        public string Str;
+        public int Type;
+    }
+
     public struct ShowItemTips
     {
         public Item Item;

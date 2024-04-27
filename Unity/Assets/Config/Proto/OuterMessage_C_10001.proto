@@ -60,6 +60,7 @@ message UnitInfo
 	Unity.Mathematics.float3 Forward = 5;
 	map<int32, int64> KV = 6;
 	MoveInfo MoveInfo = 7;
+	repeated SkillInfo SkillInfos = 8;
 }
 
 message M2C_CreateUnits // IMessage
@@ -417,7 +418,11 @@ message G2C_EnterGame // ISessionResponse
 	int64 MyId = 4;
 }
 
-
+message C2M_GMCMD // ILocationMessage
+{
+	int32 RpcId = 1;
+	string CMDMessage = 2;
+}
 
 message AttributeEntryInfo
 {
@@ -445,31 +450,48 @@ message M2C_NoticeUnitNumeric // IMessage
 
 message M2C_AllItems // IMessage
 {
-	int32 RpcId = 1;
-	int32 ItemContainerType = 2;
-	repeated int32 EquipPositions = 4;
+	int32 ItemContainerType = 1;
+	repeated int32 EquipPositions = 2;
 	repeated ItemInfo ItemInfos = 3;
 }
 
 message M2C_ItemUpdateOp // IMessage
 {
-	int32 RpcId = 1;
-	ItemInfo ItemInfo = 2;
-	int32 ItemOpType = 3;
-	int32 ItemContainerType = 4;
-	int32 EquipPosition = 5;
+	ItemInfo ItemInfo = 1;
+	int32 ItemOpType = 2;
+	int32 ItemContainerType = 3;
+	int32 EquipPosition = 4;
 }
 
-// ResponseType M2C_SpellSkill
-message C2M_SpellSkill // ILocationRequest
+
+message SkillInfo
 {
-	int32 RpcId = 1;
-	int32 SkillId = 2;
+	int64 Id = 1;
+	int32 SkillConfigId = 2;
+	int32 SkillLevel = 3;
+	int64 SpellStartTime = 4;
 }
 
-message M2C_SpellSkill // ILocationResponse
+message C2M_SpellSkill // ILocationMessage
 {
 	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
+	int32 SkillConfigId = 2;
+	Unity.Mathematics.float3 Direction = 3;
+	Unity.Mathematics.float3 Position = 4;
+	int64 TargetUnitId = 5;
+}
+
+message M2C_SpellSkill // IMessage
+{
+	int64 UnitId = 1;
+	int32 SkillConfigId = 2;
+	Unity.Mathematics.float3 Direction = 3;
+	Unity.Mathematics.float3 Position = 4;
+	int64 TargetUnitId = 5;
+}
+
+message M2C_SkillUpdateOp // IMessage
+{
+	SkillInfo SkillInfo = 1;
+	int32 SkillOpType = 2;
 }

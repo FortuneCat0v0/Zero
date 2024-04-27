@@ -1,4 +1,4 @@
-﻿namespace ET.Server
+﻿namespace ET.Client
 {
     [EntitySystemOf(typeof(Skill))]
     [FriendOf(typeof(Skill))]
@@ -12,10 +12,6 @@
         [EntitySystem]
         private static void Awake(this Skill self, int skillId, int skillLevel)
         {
-            self.SkillConfigId = skillId;
-            self.SkillLevel = skillLevel;
-            self.CD = self.SkillConfig.CD;
-            self.AddComponent<SkillTimelineComponent, int, int>(skillId, skillLevel);
         }
 
         [EntitySystem]
@@ -41,15 +37,14 @@
             self.GetComponent<SkillTimelineComponent>().StartPlay();
         }
 
-        public static SkillInfo ToMessage(this Skill self)
+        public static void FromMessage(this Skill self, SkillInfo skillInfo)
         {
-            SkillInfo skillInfo = SkillInfo.Create();
-            skillInfo.Id = self.Id;
-            skillInfo.SkillConfigId = self.SkillConfigId;
-            skillInfo.SkillLevel = self.SkillLevel;
-            skillInfo.SpellStartTime = self.SpellStartTime;
+            self.SkillConfigId = skillInfo.SkillConfigId;
+            self.SkillLevel = skillInfo.SkillLevel;
+            self.SpellStartTime = skillInfo.SpellStartTime;
 
-            return skillInfo;
+            self.CD = self.SkillConfig.CD;
+            self.AddComponent<SkillTimelineComponent, int, int>(self.SkillConfigId, self.SkillLevel);
         }
     }
 }
