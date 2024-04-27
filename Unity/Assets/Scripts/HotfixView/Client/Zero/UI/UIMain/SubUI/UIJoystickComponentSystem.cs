@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -47,7 +48,7 @@ namespace ET.Client
         }
 
         [EntitySystem]
-        private static void Update(this UIJoystickComponent self)
+        private static void FixedUpdate(this UIJoystickComponent self)
         {
             self.SendMove();
         }
@@ -151,9 +152,9 @@ namespace ET.Client
                 return;
             }
 
-            // TODO 现在有个问题，靠边走会发送寻路消息频繁
-            // 切换方向立刻从新寻路，保持同一方向则要马上完成之前的移动后
-            if (self.LastDirection != Vector3.zero && Vector3.Angle(self.Direction, self.LastDirection) < 10f && self.MoveComponent.Targets.Count > 1)
+            // 切换方向立刻从新寻路，保持同一方向则要马上完成之前的移动后。解决卡边会发送寻路消息频繁
+            if (self.LastDirection != Vector3.zero && Vector3.Angle(self.Direction, self.LastDirection) < 10f &&
+                (self.MoveComponent.Targets.Count > 1 || Vector3.Distance(self.LastUnitPosition, self.MyUnit.Position) < 0.001f))
             {
                 return;
             }
@@ -182,6 +183,7 @@ namespace ET.Client
             }
 
             self.LastDirection = self.Direction;
+            self.LastUnitPosition = self.MyUnit.Position;
 
             C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
             c2MPathfindingResult.Position = target;

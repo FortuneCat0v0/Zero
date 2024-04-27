@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ET.Client
@@ -7,7 +8,7 @@ namespace ET.Client
     /// 摇杆
     /// </summary>
     [ComponentOf(typeof(UIMainComponent))]
-    public class UIJoystickComponent : Entity, IAwake<GameObject>, IUpdate
+    public class UIJoystickComponent : Entity, IAwake<GameObject>, IFixedUpdate
     {
         public GameObject GameObject;
         public GameObject StartArea;
@@ -38,5 +39,6 @@ namespace ET.Client
         public Vector3 LastDirection;
         public Vector3 Target;
         public bool IsDrag;
+        public float3 LastUnitPosition;
     }
 }
