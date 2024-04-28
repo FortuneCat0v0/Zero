@@ -13,7 +13,6 @@ namespace ET.Server
         public void Run(ActionEvent actionEvent, EventType.ActionEventData args)
         {
             Unit owner = args.owner;
-            Log.Info($"emit a bullet");
             if (owner == null)
                 return;
 
@@ -26,7 +25,7 @@ namespace ET.Server
             {
                 direct = -direct;
 
-                quaternion rotatedQuaternion = math.mul(quaternion.RotateY(i * direct * 15f), ownerRotation);
+                quaternion rotatedQuaternion = math.mul(ownerRotation, quaternion.RotateY(i * direct * 5f));
 
                 UnitFactory.CreateBullet(scene, IdGenerater.Instance.GenerateId(), actionEvent.OwnerSkill, actionEventConfig.Params[0],
                     rotatedQuaternion);
