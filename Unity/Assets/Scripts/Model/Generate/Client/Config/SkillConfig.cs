@@ -27,6 +27,7 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         CD = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventIds.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercent = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercent.Add(_e0);}}
+        SkillIndicatorType = (ESkillIndicatorType)_buf.ReadInt();
         PostInit();
     }
 
@@ -71,6 +72,10 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// 行为事件触发百分比，跟左边id一一对应
     /// </summary>
     public System.Collections.Generic.List<int> ActionEventTriggerPercent { get; private set; }
+    /// <summary>
+    /// 技能指示器类型
+    /// </summary>
+    public ESkillIndicatorType SkillIndicatorType { get; private set; }
 
     public const int __ID__ = -844226349;
     public override int GetTypeId() => __ID__;
@@ -96,6 +101,7 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         + "CD:" + CD + ","
         + "ActionEventIds:" + Bright.Common.StringUtil.CollectionToString(ActionEventIds) + ","
         + "ActionEventTriggerPercent:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercent) + ","
+        + "SkillIndicatorType:" + SkillIndicatorType + ","
         + "}";
     }
     
