@@ -77,6 +77,7 @@ namespace ET.Client
         private static void OnBeginDrag(this UIJoystickComponent self, PointerEventData pdata)
         {
             // 判断当前状态是否可以使用摇杆
+            // 。。。
 
             self.IsDrag = true;
             self.LastDirection = Vector3.zero;
@@ -122,22 +123,19 @@ namespace ET.Client
         private static void SetDirection(this UIJoystickComponent self, PointerEventData pdata)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(self.RectTransform, pdata.position, self.UICamera, out self.NewPoint);
-            Vector3 vector3 = new(self.NewPoint.x, self.NewPoint.y, 0f);
             float maxDistance = Vector2.Distance(self.OldPoint, self.NewPoint);
             if (maxDistance < self.Radius)
             {
-                self.JoystickThumb.transform.localPosition = vector3;
+                self.JoystickThumb.transform.localPosition = self.NewPoint;
             }
             else
             {
                 self.NewPoint = self.OldPoint + (self.NewPoint - self.OldPoint).normalized * self.Radius;
-                vector3.x = self.NewPoint.x;
-                vector3.y = self.NewPoint.y;
-                self.JoystickThumb.transform.localPosition = vector3;
+                self.JoystickThumb.transform.localPosition = self.NewPoint;
             }
 
             self.Direction = (self.NewPoint - self.OldPoint).normalized;
-            // 摇杆方向显示
+
             self.PositionFocus0.SetActive(self.Direction.x < 0 && self.Direction.y > 0);
             self.PositionFocus1.SetActive(self.Direction.x > 0 && self.Direction.y > 0);
             self.PositionFocus2.SetActive(self.Direction.x > 0 && self.Direction.y < 0);
