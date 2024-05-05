@@ -1,5 +1,3 @@
-
-
 namespace ET
 {
     public static partial class DefineCore
@@ -7,13 +5,17 @@ namespace ET
         [StaticField]
         public static float FixedDeltaTime = 1f / LogicFrame;
 
-#if UNITY_EDITOR
-        [StaticField]
-        public static int LogicFrame = 50;
-#else
+        // #if UNITY_EDITOR
+        //         [StaticField]
+        //         public static int LogicFrame = 50;
+        // #else
+        //         [StaticField]
+        //         public static int LogicFrame = 20;
+        // #endif
+
         [StaticField]
         public static int LogicFrame = 20;
-#endif
+
         /// <summary>
         /// you can alse use dynamic calculate below
         /// TimeSpan.TicksPerSecond / DefineCore.LogicFrame
@@ -47,6 +49,5 @@ namespace ET
                 return 500000;
             }
         }
-        
     }
 }

@@ -12,6 +12,9 @@ namespace ET
         private readonly ConcurrentQueue<int> idQueue = new();
         
         private readonly FiberManager fiberManager;
+        private DateTime dt1970;
+        private long lastTimeTicks = 0;
+        private long totalTicksSinceStart = 0;
 
         public ThreadPoolScheduler(FiberManager fiberManager)
         {
@@ -67,7 +70,14 @@ namespace ET
                 SynchronizationContext.SetSynchronizationContext(fiber.ThreadSynchronizationContext);
                 fiber.Update();
                 fiber.LateUpdate();
-                fiber.FixedUpdate();
+                long timeNow = (DateTime.UtcNow.Ticks - this.dt1970.Ticks);
+                this.totalTicksSinceStart += (timeNow - this.lastTimeTicks);
+                this.lastTimeTicks = timeNow;
+                while (this.totalTicksSinceStart >= DefineCore.FixedDeltaTicks)
+                {
+                    this.totalTicksSinceStart -= DefineCore.FixedDeltaTicks;
+                    fiber.FixedUpdate();
+                }
                 SynchronizationContext.SetSynchronizationContext(null);
                 Fiber.Instance = null;
 
