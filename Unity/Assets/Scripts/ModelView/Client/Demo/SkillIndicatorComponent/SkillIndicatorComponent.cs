@@ -6,9 +6,13 @@ namespace ET.Client
     public class SkillIndicatorComponent : Entity, IAwake
     {
         public SkillConfig SkillConfig;
-        public GameObject GameObject;
         public Vector2 Vector2;
         public float Angle;
+
+        public GameObject GameObject;
+        public GameObject Arrow;
+        public GameObject ArrowIndicator;
+        
 
         public Camera MainCamera;
     }

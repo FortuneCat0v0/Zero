@@ -10,9 +10,9 @@ namespace ET.Server
     {
         public static void CreateBoxFixture(this Body self, float hx, float hy, Vector2 offset, float angle, bool isSensor, object userData)
         {
-            PolygonShape m_BoxShape = new PolygonShape();
+            PolygonShape m_BoxShape = new();
             m_BoxShape.SetAsBox(hx, hy, offset, angle);
-            FixtureDef fixtureDef = new FixtureDef();
+            FixtureDef fixtureDef = new();
             fixtureDef.IsSensor = isSensor;
             fixtureDef.Shape = m_BoxShape;
             fixtureDef.UserData = userData;
@@ -21,10 +21,10 @@ namespace ET.Server
 
         public static void CreateCircleFixture(this Body self, float radius, Vector2 offset, bool isSensor, object userData)
         {
-            CircleShape m_CircleShape = new CircleShape();
+            CircleShape m_CircleShape = new();
             m_CircleShape.Radius = radius;
             m_CircleShape.Position = offset;
-            FixtureDef fixtureDef = new FixtureDef();
+            FixtureDef fixtureDef = new();
             fixtureDef.IsSensor = isSensor;
             fixtureDef.Shape = m_CircleShape;
             fixtureDef.UserData = userData;

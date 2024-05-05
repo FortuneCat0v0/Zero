@@ -26,9 +26,8 @@ namespace ET
         private bool _drawRunningSlowly;
         private bool _forceElapsedTimeToZero;
         private TimerTick _timer;
-        internal object TickLock = new object();
+        internal object TickLock = new();
         private Action UpdateCallback;
-
 
         // public FixedUpdate()
         public void Awake(Action updateCallback)
@@ -49,8 +48,8 @@ namespace ET
             // updateCountAverageSlowLimit = (2 * 2 + (4 - 2)) / 4 = 1.5f
             const int BadUpdateCountTime = 2; // number of bad frame (a bad frame is a frame that has at least 2 updates)
             var maxLastCount = 2 * Math.Min(BadUpdateCountTime, _lastUpdateCount.Length);
-            _updateCountAverageSlowLimit = (float) (maxLastCount + (_lastUpdateCount.Length - maxLastCount)) / _lastUpdateCount.Length;
-            
+            _updateCountAverageSlowLimit = (float)(maxLastCount + (_lastUpdateCount.Length - maxLastCount)) / _lastUpdateCount.Length;
+
             this.UpdateCallback = updateCallback;
         }
 
@@ -149,7 +148,7 @@ namespace ET
 
             // Calculate the number of update to issue
 
-            updateCount = (int) (_accumulatedElapsedGameTime.Ticks / TargetElapsedTime.Ticks);
+            updateCount = (int)(_accumulatedElapsedGameTime.Ticks / TargetElapsedTime.Ticks);
             if (updateCount == 0)
             {
                 // If there is no need for update, then exit
@@ -191,7 +190,6 @@ namespace ET
         }
 
         #region Methods
-
 
         /// <summary>
         /// Reference page contains links to related conceptual articles.
