@@ -49,7 +49,8 @@ namespace ET.Server
         object userData, float angle = 0)
         {
             Log.Info($"{self.GetParent<Unit>()?.Config()?.Name} add collider:{vec2.X}");
-            self.Body = self.WorldComponent.CreateDynamicBody();
+            Unit unit = self.GetParent<Unit>();
+            self.Body = self.WorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
             switch (colliderType)
             {
                 case EColliderType.Circle:

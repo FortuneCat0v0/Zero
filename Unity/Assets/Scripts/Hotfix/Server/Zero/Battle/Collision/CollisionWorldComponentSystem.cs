@@ -39,14 +39,19 @@ namespace ET.Server
         {
         }
 
-        public static Body CreateDynamicBody(this CollisionWorldComponent self)
+        public static Body CreateStaticBody(this CollisionWorldComponent self, Vector2 position)
         {
-            return self.World.CreateBody(new BodyDef() { BodyType = BodyType.DynamicBody, AllowSleep = false });
+            return self.World.CreateBody(new BodyDef() { BodyType = BodyType.StaticBody, Position = position });
         }
 
-        public static Body CreateStaticBody(this CollisionWorldComponent self)
+        public static Body CreateKinematicBody(this CollisionWorldComponent self, Vector2 position)
         {
-            return self.World.CreateBody(new BodyDef() { BodyType = BodyType.StaticBody });
+            return self.World.CreateBody(new BodyDef() { BodyType = BodyType.KinematicBody, AllowSleep = false, Position = position });
+        }
+
+        public static Body CreateDynamicBody(this CollisionWorldComponent self, Vector2 position)
+        {
+            return self.World.CreateBody(new BodyDef() { BodyType = BodyType.DynamicBody, AllowSleep = false, Position = position });
         }
 
         public static void AddBodyTobeDestroyed(this CollisionWorldComponent self, Body body)
