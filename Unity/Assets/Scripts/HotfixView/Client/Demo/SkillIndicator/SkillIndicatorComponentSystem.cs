@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -9,6 +10,17 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this SkillIndicatorComponent self)
         {
+            self.OnAwake().Coroutine();
+        }
+
+        private static async ETTask OnAwake(this SkillIndicatorComponent self)
+        {
+            foreach (ESkillIndicatorType eSkillIndicatorType in Enum.GetValues(typeof(ESkillIndicatorType)))
+            {
+                GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>()
+                        .LoadAssetAsync<GameObject>($"Assets/Bundles/Effect/SkillIndicator_{eSkillIndicatorType.ToString()}.prefab");
+                GameObjectPoolHelper.InitPoolFormGamObject(bundleGameObject, 2);
+            }
         }
 
         public static void ShowIndicator(this SkillIndicatorComponent self, long targetUnitId, SkillConfig skillconfig)
@@ -20,40 +32,34 @@ namespace ET.Client
                 self.GameObject = null;
             }
 
-            self.GameObject = GameObjectPoolHelper.GetObjectFromPool($"{self.SkillConfig.SkillIndicatorType.ToString()}");
+            self.GameObject = GameObjectPoolHelper.GetObjectFromPool($"SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}");
             self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().GameObject
                     .transform);
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
-                case ESkillIndicatorType.CommonAttack:
-                {
-                    rc.Get<GameObject>("Skill_Area").transform.localScale = Vector3.one;
-                }
-                    break;
                 case ESkillIndicatorType.Position:
                 {
-                    rc.Get<GameObject>("Skill_Area").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    rc.Get<GameObject>("Skill_InnerArea").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
+                    // rc.Get<GameObject>("CommonCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    // rc.Get<GameObject>("PositionCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
                     break;
                 }
                 case ESkillIndicatorType.Line:
                 {
-                    rc.Get<GameObject>("Skill_Dir").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("Skill_Area").transform.localScale = Vector3.one * outerRadius;
+                    // rc.Get<GameObject>("Arrow").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
                     break;
                 }
                 case ESkillIndicatorType.Angle:
                 {
-                    rc.Get<GameObject>("Skill_Area_60").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("Skill_Area").transform.localScale = Vector3.one * outerRadius;
+                    // rc.Get<GameObject>("AngleCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    // rc.Get<GameObject>("AngleCircleIndicator").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
                     break;
                 }
                 case ESkillIndicatorType.TargetOnly:
                 {
-                    rc.Get<GameObject>("Skill_Area").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    rc.Get<GameObject>("Skill_Dir").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
+                    // rc.Get<GameObject>("CommonCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    // rc.Get<GameObject>("TargetCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
                     break;
                 }
             }
@@ -91,12 +97,10 @@ namespace ET.Client
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
-                case ESkillIndicatorType.CommonAttack:
-                    break;
                 case ESkillIndicatorType.Position:
                 {
                     rc.Get<GameObject>("Skill_InnerArea").transform.localPosition =
-                            quaternion * Vector3.forward * self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude;
+                            quaternion * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
                     break;
                 }
                 case ESkillIndicatorType.Line:
@@ -113,7 +117,7 @@ namespace ET.Client
                 {
                     rc.Get<GameObject>("Skill_Dir").transform.LookAt(quaternion * Vector3.forward + unitPosition);
                     rc.Get<GameObject>("Skill_InnerArea").transform.localPosition =
-                            quaternion * Vector3.forward * self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude;
+                            quaternion * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
 
                     // 锁定最近的怪物。。
 
