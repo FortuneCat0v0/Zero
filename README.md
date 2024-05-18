@@ -1,6 +1,6 @@
 # English: please use your browser to translate to english
 
-# __讨论QQ群 : 474643097__  
+# __讨论QQ群 : 688514974__  
 
 ---
 # 公司黑名单：  
@@ -27,6 +27,7 @@
 16. [Culture & Chest](https://play.google.com/store/apps/details?id=com.Inutan.CultureChest)  
 17. [史莱姆大乱斗](https://www.taptap.cn/app/228923)  
 18. [魔灵幻想](https://www.taptap.cn/app/337878)  一个技术
+19. [Tank Clash: Blitz!](https://apps.apple.com/us/app/tank-clash-blitz/id6477913248)
 ---
 
 # ET8.1 发布!  
