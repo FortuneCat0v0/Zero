@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -111,7 +112,8 @@ namespace ET.Client
                 (isSucceed) =>
                 {
                     // 提示重启游戏
-                    EventSystem.Instance.Publish(root, new OnPatchDownlodOver() { IsSucceed = isSucceed });
+                    // EventSystem.Instance.Publish(root, new OnPatchDownlodOver() { IsSucceed = isSucceed });
+                    GameObject.Find("Global").GetComponent<Init>().Restart().Coroutine();
                 });
 
             if (errorCode != ErrorCode.ERR_Success)
