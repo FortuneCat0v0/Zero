@@ -20,6 +20,11 @@ namespace ET.Client
             self.AbstractTypeSkills.Clear();
         }
 
+        [EntitySystem]
+        private static void Deserialize(this SkillComponent self)
+        {
+        }
+
         public static void AddSkill(this SkillComponent self, Skill skill)
         {
             if (!self.IdSkillMap.ContainsKey(skill.SkillConfigId))

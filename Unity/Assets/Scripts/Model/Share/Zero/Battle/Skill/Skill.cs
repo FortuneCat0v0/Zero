@@ -3,14 +3,14 @@
 namespace ET
 {
     [ChildOf]
-    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, ITransfer
+    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, ISerializeToEntity
     {
         [BsonIgnore]
         public Unit Unit => this.GetParent<SkillComponent>().Unit;
 
-        public int SkillConfigId;
+        public int SkillConfigId { get; set; }
 
-        public int SkillLevel;
+        public int SkillLevel { get; set; }
 
         // public int AbstractIndex;
         [BsonIgnore]
@@ -23,13 +23,13 @@ namespace ET
         /// 技能释放开始时间戳
         /// </summary>
         [BsonIgnore]
-        public long SpellStartTime;
+        public long SpellStartTime { get; set; }
 
         /// <summary>
         /// 技能结束完成释放时间
         /// </summary>
         [BsonIgnore]
-        public long SpellEndTime;
+        public long SpellEndTime { get; set; }
 
         /// <summary>
         /// 冷却时间
@@ -41,6 +41,6 @@ namespace ET
         /// 当前冷却时间
         /// </summary>
         [BsonIgnore]
-        public int CurrentCD => (int)(this.SpellStartTime + this.CD - TimeInfo.Instance.ClientNow());
+        public long CurrentCD => this.SpellStartTime + this.CD - TimeInfo.Instance.ClientNow();
     }
 }

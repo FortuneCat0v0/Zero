@@ -17,7 +17,7 @@ namespace ET
     }
 
     [ComponentOf(typeof(Unit))]
-    public class SkillComponent : Entity, IAwake, IDestroy, ITransfer
+    public class SkillComponent : Entity, IAwake, IDestroy, IDeserialize, ITransfer
     {
         [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();
@@ -27,7 +27,5 @@ namespace ET
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<ESkillAbstractType, List<long>> AbstractTypeSkills = new();
-
-        public Dictionary<int, long> SkillDic = new();
     }
 }
