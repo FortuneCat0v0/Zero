@@ -20,7 +20,7 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     {
         Id = _buf.ReadInt();
         Level = _buf.ReadInt();
-        AbstractType = _buf.ReadInt();
+        SkillAbstractType = (ESkillAbstractType)_buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         Life = _buf.ReadInt();
@@ -48,7 +48,7 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// <summary>
     /// 技能抽象类型
     /// </summary>
-    public int AbstractType { get; private set; }
+    public ESkillAbstractType SkillAbstractType { get; private set; }
     /// <summary>
     /// 名字
     /// </summary>
@@ -99,7 +99,7 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Level:" + Level + ","
-        + "AbstractType:" + AbstractType + ","
+        + "SkillAbstractType:" + SkillAbstractType + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "Life:" + Life + ","

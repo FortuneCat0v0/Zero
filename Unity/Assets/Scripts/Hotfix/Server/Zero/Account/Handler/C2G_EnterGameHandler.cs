@@ -93,8 +93,12 @@ namespace ET.Server
                         // player.ChatInfoInstanceId = await this.EnterWorldChatServer(unit); //登录聊天服
                         // player.MatchInfoInstanceId = await this.EnterMatchServer(unit); // 登录匹配服
 
-                        //玩家Unit上线后的初始化操作
-                        await UnitHelper.InitUnit(unit, isNewPlayer);
+                        // WorkFlow 玩家Unit上线后的初始化操作
+                        // unit.GetComponent<NumericComponent>().SetNoEvent(NumericType.MaxBagCapacity, 30);
+                        SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+                        skillComponent.AddSkill(1001, 1);
+                        skillComponent.AddSkill(1002, 1);
+
                         response.MyId = player.Id;
 
                         StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Map1");

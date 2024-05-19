@@ -11,11 +11,26 @@ namespace ET
 { 
     public enum ESkillIndicatorType
     {
-        CommonAttack = 1,
-        Position = 2,
-        Line = 3,
-        Angle = 4,
-        TargetOnly = 5,
+        /// <summary>
+        /// 单一目标指示器
+        /// </summary>
+        TargetOnly = 1,
+        /// <summary>
+        /// 圆形指示器
+        /// </summary>
+        Circle = 2,
+        /// <summary>
+        /// 扇形指示器
+        /// </summary>
+        Umbrella = 3,
+        /// <summary>
+        /// 范围指示器
+        /// </summary>
+        Range = 4,
+        /// <summary>
+        /// 单线指示器
+        /// </summary>
+        SingleLine = 5,
     }
 
 } 

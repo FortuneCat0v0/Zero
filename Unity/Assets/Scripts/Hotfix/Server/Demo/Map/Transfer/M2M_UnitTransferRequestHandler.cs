@@ -64,10 +64,6 @@ namespace ET.Server
 
             MapMessageHelper.SendToClient(unit, m2CAllItems);
 
-            // TODO 通知客户端同步技能信息
-
-            // TODO 通知客户端同步Buff信息
-
             // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
 

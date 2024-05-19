@@ -10,7 +10,6 @@ namespace ET.Server
         public static UnitInfo CreateUnitInfo(Unit unit)
         {
             UnitInfo unitInfo = UnitInfo.Create();
-            NumericComponent nc = unit.GetComponent<NumericComponent>();
             unitInfo.UnitId = unit.Id;
             unitInfo.ConfigId = unit.ConfigId;
             unitInfo.Type = (int)unit.Type();
@@ -32,9 +31,20 @@ namespace ET.Server
                 }
             }
 
-            foreach ((int key, long value) in nc.NumericDic)
+            NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+            foreach ((int key, long value) in numericComponent.NumericDic)
             {
                 unitInfo.KV.Add(key, value);
+            }
+
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent != null)
+            {
+                List<Skill> skills = skillComponent.GetAllSkill();
+                foreach (Skill skill in skills)
+                {
+                    unitInfo.SkillInfos.Add(skill.ToMessage());
+                }
             }
 
             return unitInfo;
@@ -73,12 +83,6 @@ namespace ET.Server
             }
 
             return (isNewUnit, unit);
-        }
-
-        public static async ETTask InitUnit(Unit unit, bool isNew)
-        {
-            // unit.GetComponent<NumericComponent>().SetNoEvent(NumericType.MaxBagCapacity, 30);
-            await ETTask.CompletedTask;
         }
     }
 }

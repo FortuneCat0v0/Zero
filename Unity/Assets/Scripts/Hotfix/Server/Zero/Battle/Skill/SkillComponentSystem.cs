@@ -32,7 +32,7 @@ namespace ET.Server
 
                 Skill skill = self.AddChild<Skill, int, int>(configId, skillLevel);
                 self.IdSkillMap.Add(configId, skill.Id);
-                ESkillAbstractType abstractType = (ESkillAbstractType)skillConfig.AbstractType;
+                ESkillAbstractType abstractType = skillConfig.SkillAbstractType;
                 if (!self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skills))
                 {
                     skills = new List<long>();

@@ -22,6 +22,7 @@ namespace ET.Client
         public GameObject UIJoystick;
         public UIJoystickComponent UIJoystickComponent { get; set; }
 
-        public GameObject Skill0Btn;
+        public GameObject UISkillGrid_0;
+        public GameObject UISkillGrid_1;
     }
 }

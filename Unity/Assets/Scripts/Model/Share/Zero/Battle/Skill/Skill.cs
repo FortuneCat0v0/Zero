@@ -14,7 +14,7 @@ namespace ET
 
         // public int AbstractIndex;
         [BsonIgnore]
-        public ESkillAbstractType AbstractType => (ESkillAbstractType)this.SkillConfig.AbstractType;
+        public ESkillAbstractType SkillAbstractType => this.SkillConfig.SkillAbstractType;
 
         [BsonIgnore]
         public SkillConfig SkillConfig => SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
@@ -35,7 +35,7 @@ namespace ET
         /// 冷却时间
         /// </summary>
         [BsonIgnore]
-        public int CD;
+        public int CD { get; set; }
 
         /// <summary>
         /// 当前冷却时间

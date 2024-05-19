@@ -27,7 +27,7 @@ namespace ET.Client
                 self.AddChild(skill);
                 self.IdSkillMap.Add(skill.SkillConfigId, skill.Id);
                 SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skill.SkillConfigId, skill.SkillLevel);
-                ESkillAbstractType abstractType = (ESkillAbstractType)skillConfig.AbstractType;
+                ESkillAbstractType abstractType = skillConfig.SkillAbstractType;
                 if (!self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skills))
                 {
                     skills = new List<long>();
@@ -60,31 +60,30 @@ namespace ET.Client
             return skills;
         }
 
-        // public static bool TryGetSkill(this SkillComponent self, ESkillAbstractType abstractType, int index, out Skill skill)
-        // {
-        //     if (self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skillIds))
-        //     {
-        //         if (skillIds?.Count > index)
-        //         {
-        //             skill = self.GetChild<Skill>(skillIds[index]);
-        //             return true;
-        //         }
-        //     }
-        //
-        //     skill = null;
-        //     return false;
-        // }
-        //
-        // public static bool SpellSkill(this SkillComponent self, ESkillAbstractType absType, int index = 0)
-        // {
-        //     Log.Info($"spell skill {index}");
-        //     Skill skill = null;
-        //     self.TryGetSkill(absType, index, out skill);
-        //     if (skill == null || skill.IsInCd())
-        //         return false;
-        //     skill.StartSpell();
-        //     return true;
-        // }
+        public static Skill GetSkill(this SkillComponent self, ESkillAbstractType abstractType, int index)
+        {
+            Skill skill = null;
+            if (self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skillIds))
+            {
+                if (skillIds?.Count > index)
+                {
+                    skill = self.GetChild<Skill>(skillIds[index]);
+                }
+            }
+
+            return skill;
+        }
+
+        public static bool SpellSkill(this SkillComponent self, ESkillAbstractType absType, int index = 0)
+        {
+            Log.Info($"Spell skill index:{index}");
+            Skill skill = null;
+            skill = self.GetSkill(absType, index);
+            if (skill == null || skill.IsInCd())
+                return false;
+            skill.StartSpell();
+            return true;
+        }
 
         public static bool IsDead(this SkillComponent self)
         {

@@ -10,9 +10,6 @@ namespace ET.Client
         public float Angle;
 
         public GameObject GameObject;
-        public GameObject Arrow;
-        public GameObject ArrowIndicator;
-        
 
         public Camera MainCamera;
     }

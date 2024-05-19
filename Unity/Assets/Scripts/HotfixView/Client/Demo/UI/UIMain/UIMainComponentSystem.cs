@@ -39,8 +39,10 @@ namespace ET.Client
             self.UIJoystick = rc.Get<GameObject>("UIJoystick");
             self.UIJoystickComponent = self.AddComponent<UIJoystickComponent, GameObject>(self.UIJoystick);
 
-            self.Skill0Btn = rc.Get<GameObject>("Skill0Btn");
-            self.Skill0Btn.GetComponent<Button>().AddListenerAsync(self.SpellSkill);
+            self.UISkillGrid_0 = rc.Get<GameObject>("UISkillGrid_0");
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillAbstractType.ActiveSkill, 0);
+            self.UISkillGrid_1 = rc.Get<GameObject>("UISkillGrid_1");
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillAbstractType.ActiveSkill, 1);
         }
 
         private static void OnGMSendBtn(this UIMainComponent self)
@@ -108,11 +110,6 @@ namespace ET.Client
         private static async ETTask OnAchievementBtn(this UIMainComponent self)
         {
             Log.Info("成就界面暂未开放");
-            await ETTask.CompletedTask;
-        }
-
-        private static async ETTask SpellSkill(this UIMainComponent self)
-        {
             await ETTask.CompletedTask;
         }
     }

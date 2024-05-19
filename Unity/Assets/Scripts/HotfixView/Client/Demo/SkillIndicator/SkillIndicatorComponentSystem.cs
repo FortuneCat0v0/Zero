@@ -10,6 +10,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this SkillIndicatorComponent self)
         {
+            self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
             self.OnAwake().Coroutine();
         }
 
@@ -39,27 +40,32 @@ namespace ET.Client
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
-                case ESkillIndicatorType.Position:
-                {
-                    // rc.Get<GameObject>("CommonCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("PositionCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
-                    break;
-                }
-                case ESkillIndicatorType.Line:
-                {
-                    // rc.Get<GameObject>("Arrow").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    break;
-                }
-                case ESkillIndicatorType.Angle:
-                {
-                    // rc.Get<GameObject>("AngleCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("AngleCircleIndicator").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    break;
-                }
                 case ESkillIndicatorType.TargetOnly:
                 {
-                    // rc.Get<GameObject>("CommonCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("TargetCircle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
+                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    break;
+                }
+                case ESkillIndicatorType.Circle:
+                {
+                    // rc.Get<GameObject>("Circle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    break;
+                }
+                case ESkillIndicatorType.Umbrella:
+                {
+                    // rc.Get<GameObject>("Umbrella").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    // rc.Get<GameObject>("CircleIndicator").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    break;
+                }
+                case ESkillIndicatorType.Range:
+                {
+                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    break;
+                }
+                case ESkillIndicatorType.SingleLine:
+                {
+                    // rc.Get<GameObject>("Line").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
                     break;
                 }
             }
@@ -84,7 +90,7 @@ namespace ET.Client
             Unit myUnit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             Vector3 unitPosition = myUnit.Position;
 
-            if (self.SkillConfig.SkillIndicatorType == ESkillIndicatorType.Position ||
+            if (self.SkillConfig.SkillIndicatorType == ESkillIndicatorType.Circle ||
                 self.SkillConfig.SkillIndicatorType == ESkillIndicatorType.TargetOnly)
             {
             }
@@ -97,30 +103,29 @@ namespace ET.Client
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
-                case ESkillIndicatorType.Position:
-                {
-                    rc.Get<GameObject>("Skill_InnerArea").transform.localPosition =
-                            quaternion * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
-                    break;
-                }
-                case ESkillIndicatorType.Line:
-                {
-                    rc.Get<GameObject>("Skill_Dir").transform.LookAt(quaternion * Vector3.forward + unitPosition);
-                    break;
-                }
-                case ESkillIndicatorType.Angle:
-                {
-                    rc.Get<GameObject>("Skill_Area_60").transform.LookAt(quaternion * Vector3.forward + unitPosition);
-                    break;
-                }
                 case ESkillIndicatorType.TargetOnly:
                 {
-                    rc.Get<GameObject>("Skill_Dir").transform.LookAt(quaternion * Vector3.forward + unitPosition);
-                    rc.Get<GameObject>("Skill_InnerArea").transform.localPosition =
-                            quaternion * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
-
                     // 锁定最近的怪物。。
-
+                    break;
+                }
+                case ESkillIndicatorType.Circle:
+                {
+                    rc.Get<GameObject>("Circle").transform.localPosition =
+                            quaternion * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
+                    break;
+                }
+                case ESkillIndicatorType.Umbrella:
+                {
+                    rc.Get<GameObject>("Umbrella").transform.LookAt(quaternion * Vector3.forward + unitPosition);
+                    break;
+                }
+                case ESkillIndicatorType.Range:
+                {
+                    break;
+                }
+                case ESkillIndicatorType.SingleLine:
+                {
+                    rc.Get<GameObject>("Line").transform.LookAt(quaternion * Vector3.forward + unitPosition);
                     break;
                 }
             }
@@ -144,18 +149,16 @@ namespace ET.Client
             {
                 return self.Angle;
             }
+
+            Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
+            if (unit != null)
+            {
+                Quaternion quaternion = unit.Rotation;
+                return quaternion.eulerAngles.y;
+            }
             else
             {
-                Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-                if (unit != null)
-                {
-                    Quaternion quaternion = unit.Rotation;
-                    return quaternion.eulerAngles.y;
-                }
-                else
-                {
-                    return 0;
-                }
+                return 0;
             }
         }
 
