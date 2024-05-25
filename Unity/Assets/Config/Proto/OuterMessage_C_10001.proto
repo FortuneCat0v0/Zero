@@ -463,6 +463,25 @@ message M2C_ItemUpdateOp // IMessage
 	int32 EquipPosition = 4;
 }
 
+message C2M_Operation // ILocationMessage
+{
+	int32 RpcId = 1;
+	int32 OperateType = 2;
+	int32 Value_Int_1 = 11;
+	int64 Value_Long_1 = 21;
+	Unity.Mathematics.float3 Value_Vec3_1 = 31;
+}
+
+message M2C_Operation // IMessage
+{
+	int64 UnitId = 1;
+	int32 OperateType = 2;
+	int32 Value_Int_1 = 11;
+	int64 Value_Long_1 = 21;
+	Unity.Mathematics.float3 Value_Vec3_1 = 31;
+	Unity.Mathematics.float3 Value_Vec3_2 = 32;
+	repeated Unity.Mathematics.float3 Value_List_Vec3_1 = 41;
+}
 
 message SkillInfo
 {

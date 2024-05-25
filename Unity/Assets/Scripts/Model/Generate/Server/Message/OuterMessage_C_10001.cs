@@ -2078,6 +2078,96 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.C2M_Operation)]
+    public partial class C2M_Operation : MessageObject, ILocationMessage
+    {
+        public static C2M_Operation Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_Operation), isFromPool) as C2M_Operation;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int OperateType { get; set; }
+
+        [MemoryPackOrder(10)]
+        public int Value_Int_1 { get; set; }
+
+        [MemoryPackOrder(20)]
+        public long Value_Long_1 { get; set; }
+
+        [MemoryPackOrder(30)]
+        public Unity.Mathematics.float3 Value_Vec3_1 { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.OperateType = default;
+            this.Value_Int_1 = default;
+            this.Value_Long_1 = default;
+            this.Value_Vec3_1 = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_Operation)]
+    public partial class M2C_Operation : MessageObject, IMessage
+    {
+        public static M2C_Operation Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_Operation), isFromPool) as M2C_Operation;
+        }
+
+        [MemoryPackOrder(0)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int OperateType { get; set; }
+
+        [MemoryPackOrder(10)]
+        public int Value_Int_1 { get; set; }
+
+        [MemoryPackOrder(20)]
+        public long Value_Long_1 { get; set; }
+
+        [MemoryPackOrder(30)]
+        public Unity.Mathematics.float3 Value_Vec3_1 { get; set; }
+
+        [MemoryPackOrder(31)]
+        public Unity.Mathematics.float3 Value_Vec3_2 { get; set; }
+
+        [MemoryPackOrder(40)]
+        public List<Unity.Mathematics.float3> Value_List_Vec3_1 { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.UnitId = default;
+            this.OperateType = default;
+            this.Value_Int_1 = default;
+            this.Value_Long_1 = default;
+            this.Value_Vec3_1 = default;
+            this.Value_Vec3_2 = default;
+            this.Value_List_Vec3_1.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.SkillInfo)]
     public partial class SkillInfo : MessageObject
     {
@@ -2288,9 +2378,11 @@ namespace ET
         public const ushort M2C_NoticeUnitNumeric = 10060;
         public const ushort M2C_AllItems = 10061;
         public const ushort M2C_ItemUpdateOp = 10062;
-        public const ushort SkillInfo = 10063;
-        public const ushort C2M_SpellSkill = 10064;
-        public const ushort M2C_SpellSkill = 10065;
-        public const ushort M2C_SkillUpdateOp = 10066;
+        public const ushort C2M_Operation = 10063;
+        public const ushort M2C_Operation = 10064;
+        public const ushort SkillInfo = 10065;
+        public const ushort C2M_SpellSkill = 10066;
+        public const ushort M2C_SpellSkill = 10067;
+        public const ushort M2C_SkillUpdateOp = 10068;
     }
 }

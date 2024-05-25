@@ -93,12 +93,6 @@
         Skill4,
     }
 
-    /*public enum EColliderType: byte
-    {
-        Circle,
-        Box,
-    }*/
-
     public enum EHitFromType : byte
     {
         /// <summary>
