@@ -84,9 +84,10 @@
 
     public enum EOperateType : byte
     {
-        Move = 0,
-        Jump = 1,
-        Attack = 2, //普攻
+        None = 0,
+        Move,
+        Stop,
+        Attack, //普攻
         Skill1,
         Skill2,
         Skill3,

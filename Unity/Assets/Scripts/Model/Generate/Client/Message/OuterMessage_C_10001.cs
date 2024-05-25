@@ -2101,6 +2101,9 @@ namespace ET
         [MemoryPackOrder(30)]
         public Unity.Mathematics.float3 Value_Vec3_1 { get; set; }
 
+        [MemoryPackOrder(31)]
+        public Unity.Mathematics.float3 Value_Vec3_2 { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -2113,6 +2116,7 @@ namespace ET
             this.Value_Int_1 = default;
             this.Value_Long_1 = default;
             this.Value_Vec3_1 = default;
+            this.Value_Vec3_2 = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2146,6 +2150,9 @@ namespace ET
         public Unity.Mathematics.float3 Value_Vec3_2 { get; set; }
 
         [MemoryPackOrder(40)]
+        public Unity.Mathematics.quaternion Value_Qua_1 { get; set; }
+
+        [MemoryPackOrder(50)]
         public List<Unity.Mathematics.float3> Value_List_Vec3_1 { get; set; } = new();
 
         public override void Dispose()
@@ -2161,6 +2168,7 @@ namespace ET
             this.Value_Long_1 = default;
             this.Value_Vec3_1 = default;
             this.Value_Vec3_2 = default;
+            this.Value_Qua_1 = default;
             this.Value_List_Vec3_1.Clear();
 
             ObjectPool.Instance.Recycle(this);
@@ -2199,88 +2207,6 @@ namespace ET
             this.SkillConfigId = default;
             this.SkillLevel = default;
             this.SpellStartTime = default;
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.C2M_SpellSkill)]
-    public partial class C2M_SpellSkill : MessageObject, ILocationMessage
-    {
-        public static C2M_SpellSkill Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(C2M_SpellSkill), isFromPool) as C2M_SpellSkill;
-        }
-
-        [MemoryPackOrder(0)]
-        public int RpcId { get; set; }
-
-        [MemoryPackOrder(1)]
-        public int SkillConfigId { get; set; }
-
-        [MemoryPackOrder(2)]
-        public Unity.Mathematics.float3 Direction { get; set; }
-
-        [MemoryPackOrder(3)]
-        public Unity.Mathematics.float3 Position { get; set; }
-
-        [MemoryPackOrder(4)]
-        public long TargetUnitId { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.RpcId = default;
-            this.SkillConfigId = default;
-            this.Direction = default;
-            this.Position = default;
-            this.TargetUnitId = default;
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.M2C_SpellSkill)]
-    public partial class M2C_SpellSkill : MessageObject, IMessage
-    {
-        public static M2C_SpellSkill Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(M2C_SpellSkill), isFromPool) as M2C_SpellSkill;
-        }
-
-        [MemoryPackOrder(0)]
-        public long UnitId { get; set; }
-
-        [MemoryPackOrder(1)]
-        public int SkillConfigId { get; set; }
-
-        [MemoryPackOrder(2)]
-        public Unity.Mathematics.float3 Direction { get; set; }
-
-        [MemoryPackOrder(3)]
-        public Unity.Mathematics.float3 Position { get; set; }
-
-        [MemoryPackOrder(4)]
-        public long TargetUnitId { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.UnitId = default;
-            this.SkillConfigId = default;
-            this.Direction = default;
-            this.Position = default;
-            this.TargetUnitId = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2381,8 +2307,6 @@ namespace ET
         public const ushort C2M_Operation = 10063;
         public const ushort M2C_Operation = 10064;
         public const ushort SkillInfo = 10065;
-        public const ushort C2M_SpellSkill = 10066;
-        public const ushort M2C_SpellSkill = 10067;
-        public const ushort M2C_SkillUpdateOp = 10068;
+        public const ushort M2C_SkillUpdateOp = 10066;
     }
 }

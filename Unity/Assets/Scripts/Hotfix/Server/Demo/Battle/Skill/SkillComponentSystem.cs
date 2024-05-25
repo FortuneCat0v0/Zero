@@ -106,7 +106,7 @@ namespace ET.Server
             return self.Unit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) <= 0;
         }
 
-        public static void SpellSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
+        public static bool SpellSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
         {
             Log.Debug($"尝试释放技能 {skillConfigId}");
 
@@ -115,27 +115,20 @@ namespace ET.Server
             if (skill == null)
             {
                 Log.Debug($"技能不存在 {skillConfigId}");
-                return;
+                return false;
             }
 
             if (skill.IsInCd())
             {
                 Log.Debug($"技能在CD中 {skillConfigId}");
-                return;
+                return false;
             }
 
             // 这里可以做一些校验
 
             skill.StartSpell();
 
-            M2C_SpellSkill m2CSpellSkill = M2C_SpellSkill.Create();
-            m2CSpellSkill.UnitId = self.Unit.Id;
-            m2CSpellSkill.SkillConfigId = skillConfigId;
-            m2CSpellSkill.Direction = direction;
-            m2CSpellSkill.Position = position;
-            m2CSpellSkill.TargetUnitId = targetUnitId;
-
-            MapMessageHelper.Broadcast(self.Unit, m2CSpellSkill);
+            return true;
         }
     }
 }

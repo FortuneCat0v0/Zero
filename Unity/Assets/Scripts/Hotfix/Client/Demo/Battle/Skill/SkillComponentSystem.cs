@@ -138,12 +138,13 @@ namespace ET.Client
 
             // 这里可以做一些校验
 
-            C2M_SpellSkill c2MSpellSkill = C2M_SpellSkill.Create();
-            c2MSpellSkill.SkillConfigId = skillConfigId;
-            c2MSpellSkill.Direction = direction;
-            c2MSpellSkill.Position = position;
-            c2MSpellSkill.TargetUnitId = targetUnitId;
-            self.Root().GetComponent<ClientSenderComponent>().Send(C2M_SpellSkill.Create());
+            C2M_Operation c2MOperation = C2M_Operation.Create();
+            c2MOperation.OperateType = (int)EOperateType.Skill1;
+            c2MOperation.Value_Int_1 = skillConfigId;
+            c2MOperation.Value_Vec3_1 = direction;
+            c2MOperation.Value_Vec3_1 = position;
+            c2MOperation.Value_Long_1 = targetUnitId;
+            self.Root().GetComponent<ClientSenderComponent>().Send(c2MOperation);
         }
     }
 }

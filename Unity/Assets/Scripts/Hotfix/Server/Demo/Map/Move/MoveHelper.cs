@@ -15,22 +15,23 @@ namespace ET.Server
                 return;
             }
 
-            M2C_PathfindingResult m2CPathfindingResult = M2C_PathfindingResult.Create();
-            unit.GetComponent<PathfindingComponent>().Find(unit.Position, target, m2CPathfindingResult.Points);
+            M2C_Operation m2COperation = M2C_Operation.Create();
+            m2COperation.OperateType = (int)EOperateType.Move;
+            unit.GetComponent<PathfindingComponent>().Find(unit.Position, target, m2COperation.Value_List_Vec3_1);
 
-            if (m2CPathfindingResult.Points.Count < 2)
+            if (m2COperation.Value_List_Vec3_1.Count < 2)
             {
                 unit.SendStop(3);
                 return;
             }
-                
+
             // 广播寻路路径
-            m2CPathfindingResult.Id = unit.Id;
-            MapMessageHelper.Broadcast(unit, m2CPathfindingResult);
+            m2COperation.UnitId = unit.Id;
+            MapMessageHelper.Broadcast(unit, m2COperation);
 
             MoveComponent moveComponent = unit.GetComponent<MoveComponent>();
-            
-            bool ret = await moveComponent.MoveToAsync(m2CPathfindingResult.Points, speed);
+
+            bool ret = await moveComponent.MoveToAsync(m2COperation.Value_List_Vec3_1, speed);
             if (ret) // 如果返回false，说明被其它移动取消了，这时候不需要通知客户端stop
             {
                 unit.SendStop(0);
@@ -46,13 +47,14 @@ namespace ET.Server
         // error: 0表示协程走完正常停止
         public static void SendStop(this Unit unit, int error)
         {
-            M2C_Stop m2CStop = M2C_Stop.Create();
-            m2CStop.Error = error;
-            m2CStop.Id = unit.Id;
-            m2CStop.Position = unit.Position;
-            m2CStop.Rotation = unit.Rotation;
-            
-            MapMessageHelper.Broadcast(unit, m2CStop);
+            M2C_Operation m2COperation = M2C_Operation.Create();
+            m2COperation.OperateType = (int)EOperateType.Stop;
+            m2COperation.Value_Int_1 = error;
+            m2COperation.UnitId = unit.Id;
+            m2COperation.Value_Vec3_1 = unit.Position;
+            m2COperation.Value_Qua_1 = unit.Rotation;
+
+            MapMessageHelper.Broadcast(unit, m2COperation);
         }
     }
 }
