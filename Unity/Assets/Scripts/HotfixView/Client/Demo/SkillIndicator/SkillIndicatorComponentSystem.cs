@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ET.Client
@@ -31,12 +32,13 @@ namespace ET.Client
             {
                 GameObjectPoolHelper.ReturnObjectToPool(self.GameObject);
                 self.GameObject = null;
+                self.IndicatorGameObject = null;
             }
 
             self.GameObject = GameObjectPoolHelper.GetObjectFromPool($"SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}");
             self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().GameObject
                     .transform);
-            self.GameObject.transform.localPosition = Vector3.zero;
+            self.GameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
             self.Vector2 = Vector2.zero;
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
@@ -68,6 +70,7 @@ namespace ET.Client
                 {
                     // rc.Get<GameObject>("Line").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
                     // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
+                    self.IndicatorGameObject = rc.Get<GameObject>("Line");
                     break;
                 }
             }
@@ -99,8 +102,7 @@ namespace ET.Client
 
             float angle = 90 - Mathf.Atan2(self.Vector2.y, self.Vector2.x) * Mathf.Rad2Deg;
             angle += self.MainCamera.transform.eulerAngles.y;
-            Quaternion quaternion = Quaternion.Euler(0, angle, 0);
-            self.Angle = angle;
+            Quaternion qua = Quaternion.Euler(0, angle, 0);
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
@@ -113,12 +115,12 @@ namespace ET.Client
                 case ESkillIndicatorType.Circle:
                 {
                     rc.Get<GameObject>("Circle").transform.localPosition =
-                            quaternion * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
+                            qua * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
                     break;
                 }
                 case ESkillIndicatorType.Umbrella:
                 {
-                    rc.Get<GameObject>("Umbrella").transform.LookAt(quaternion * Vector3.forward + unitPosition);
+                    rc.Get<GameObject>("Umbrella").transform.LookAt(qua * Vector3.forward + unitPosition);
                     break;
                 }
                 case ESkillIndicatorType.Range:
@@ -127,7 +129,7 @@ namespace ET.Client
                 }
                 case ESkillIndicatorType.SingleLine:
                 {
-                    rc.Get<GameObject>("Line").transform.LookAt(quaternion * Vector3.forward + unitPosition);
+                    rc.Get<GameObject>("Line").transform.rotation = qua;
                     break;
                 }
             }
@@ -141,37 +143,38 @@ namespace ET.Client
                 GameObjectPoolHelper.ReturnObjectToPool(self.GameObject);
                 self.GameObject = null;
             }
-
-            self.Angle = 0;
         }
 
-        public static float GetIndicatorAngle(this SkillIndicatorComponent self)
+        public static quaternion GetQuaternion(this SkillIndicatorComponent self)
         {
-            if (self.Angle != 0)
+            if (self.IndicatorGameObject != null)
             {
-                return self.Angle;
+                return self.IndicatorGameObject.transform.rotation;
             }
 
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             if (unit != null)
             {
-                Quaternion quaternion = unit.Rotation;
-                return quaternion.eulerAngles.y;
+                return unit.Rotation;
             }
-            else
-            {
-                return 0;
-            }
+
+            return default;
         }
 
-        public static Vector3 GetIndicatorPosition(this SkillIndicatorComponent self)
+        public static float3 GetPosition(this SkillIndicatorComponent self)
         {
-            if (self.GameObject == null)
+            if (self.IndicatorGameObject != null)
             {
-                return Vector3.zero;
+                return self.IndicatorGameObject.transform.position;
             }
 
-            return self.GameObject.transform.position;
+            Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
+            if (unit != null)
+            {
+                return unit.Position;
+            }
+
+            return default;
         }
     }
 }

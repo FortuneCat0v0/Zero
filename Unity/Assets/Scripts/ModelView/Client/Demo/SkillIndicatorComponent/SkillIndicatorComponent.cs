@@ -7,9 +7,9 @@ namespace ET.Client
     {
         public SkillConfig SkillConfig;
         public Vector2 Vector2;
-        public float Angle;
 
         public GameObject GameObject;
+        public GameObject IndicatorGameObject;
 
         public Camera MainCamera;
     }
