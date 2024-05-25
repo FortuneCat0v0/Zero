@@ -467,6 +467,7 @@ message C2M_Operation // ILocationMessage
 {
 	int32 RpcId = 1;
 	int32 OperateType = 2;
+	int32 InputType = 3;
 	int32 Value_Int_1 = 11;
 	int64 Value_Long_1 = 21;
 	Unity.Mathematics.float3 Value_Vec3_1 = 31;

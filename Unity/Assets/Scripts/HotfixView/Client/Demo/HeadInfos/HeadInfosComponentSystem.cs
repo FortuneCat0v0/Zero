@@ -8,8 +8,16 @@ namespace ET.Client
     public static partial class HeadInfosComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this HeadInfosComponent self)
+        private static void Awake(this HeadInfosComponent self, GameObject gameObject)
         {
+            self.Transform = gameObject.transform;
+            self.Transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            self.Transform.localPosition = new Vector3(0, 2f, 0);
+
+            ReferenceCollector rc = self.Transform.GetComponent<ReferenceCollector>();
+            self.HealthBarFillImg = rc.Get<GameObject>("HealthBarFillImg").GetComponent<Image>();
+
+            self.MainCameraTransform = Camera.main.transform;
         }
 
         [EntitySystem]
@@ -28,30 +36,14 @@ namespace ET.Client
             self.Transform.forward = -self.MainCameraTransform.forward;
         }
 
-        [EntitySystem]
-        private static void Destroy(this HeadInfosComponent self)
+        public static void SetScale(this HeadInfosComponent self, Vector3 vector3)
         {
-            GameObjectPoolHelper.ReturnObjectToPool(self.Transform.gameObject);
+            self.Transform.localScale = vector3;
         }
 
-        public static async ETTask Init(this HeadInfosComponent self, Transform parentTransform, float offset)
+        public static void SetPosition(this HeadInfosComponent self, Vector3 vector3)
         {
-            string assetsName = $"Assets/Bundles/UI/Other/HeadInfos.prefab";
-
-            GameObject headInfos = await self.Scene().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
-            GameObjectPoolHelper.InitPoolFormGamObject(headInfos, 3);
-
-            GameObject go = GameObjectPoolHelper.GetObjectFromPool("HeadInfos");
-
-            go.transform.SetParent(parentTransform);
-            self.Transform = go.transform;
-            self.Transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-            self.Transform.localPosition = new Vector3(0, offset, 0);
-
-            ReferenceCollector rc = go.GetComponent<ReferenceCollector>();
-            self.HealthBarFillImg = rc.Get<GameObject>("HealthBarFillImg").GetComponent<Image>();
-
-            self.MainCameraTransform = Camera.main.transform;
+            self.Transform.localPosition = vector3;
         }
 
         public static void RefreshHealthBar(this HeadInfosComponent self, float value)

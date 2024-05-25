@@ -166,6 +166,7 @@ namespace ET.Client
                 return;
             }
 
+            // 适应摄像机
             Quaternion rotation = Quaternion.Euler(0, self.MainCamera.transform.eulerAngles.y, 0);
             Vector3 direction = rotation * self.Direction;
 

@@ -36,6 +36,8 @@ namespace ET.Client
             self.GameObject = GameObjectPoolHelper.GetObjectFromPool($"SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}");
             self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().GameObject
                     .transform);
+            self.GameObject.transform.localPosition = Vector3.zero;
+            self.Vector2 = Vector2.zero;
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
@@ -75,7 +77,7 @@ namespace ET.Client
 
         public static void UpdateIndicator(this SkillIndicatorComponent self, Vector2 vector2)
         {
-            self.Vector2 = vector2;
+            self.Vector2 += vector2;
 
             if (self.SkillConfig == null)
             {

@@ -2092,6 +2092,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public int OperateType { get; set; }
 
+        [MemoryPackOrder(2)]
+        public int InputType { get; set; }
+
         [MemoryPackOrder(10)]
         public int Value_Int_1 { get; set; }
 
@@ -2113,6 +2116,7 @@ namespace ET
 
             this.RpcId = default;
             this.OperateType = default;
+            this.InputType = default;
             this.Value_Int_1 = default;
             this.Value_Long_1 = default;
             this.Value_Vec3_1 = default;

@@ -28,6 +28,8 @@
                 }
                 case EOperateType.Skill1:
                 {
+                    EInputType inputType = (EInputType)message.InputType;
+
                     SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
                     if (skillComponent.SpellSkill(message.Value_Int_1, message.Value_Vec3_1, message.Value_Vec3_2, message.Value_Long_1))
                     {

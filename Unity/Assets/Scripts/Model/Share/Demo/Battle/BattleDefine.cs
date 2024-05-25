@@ -84,7 +84,7 @@
 
     public enum EOperateType : byte
     {
-        None = 0,
+        Invaild = 0,
         Move,
         Stop,
         Attack, //普攻
