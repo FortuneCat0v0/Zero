@@ -145,17 +145,18 @@ namespace ET.Client
             }
         }
 
-        public static quaternion GetQuaternion(this SkillIndicatorComponent self)
+        public static float3 GetDirecttion(this SkillIndicatorComponent self)
         {
             if (self.IndicatorGameObject != null)
             {
-                return self.IndicatorGameObject.transform.rotation;
+                return self.IndicatorGameObject.transform.forward;
             }
 
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             if (unit != null)
             {
-                return unit.Rotation;
+                Quaternion rotation = unit.Rotation;
+                return rotation * Vector3.forward;
             }
 
             return default;

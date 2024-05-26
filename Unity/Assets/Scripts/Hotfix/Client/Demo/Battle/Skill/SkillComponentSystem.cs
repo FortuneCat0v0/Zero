@@ -43,7 +43,7 @@ namespace ET.Client
             }
         }
 
-        public static Skill GetSkill(this SkillComponent self, int configId)
+        public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
             Skill skill = null;
             if (self.IdSkillMap.ContainsKey(configId))
@@ -52,6 +52,16 @@ namespace ET.Client
             }
 
             return skill;
+        }
+
+        public static Skill GetSkillByGrid(this SkillComponent self, ESkillGridType skillGridType)
+        {
+            if (self.SkillGridMap[(int)skillGridType] == 0)
+            {
+                return null;
+            }
+
+            return self.GetChild<Skill>(self.SkillGridMap[(int)skillGridType]);
         }
 
         public static List<Skill> GetAllSkill(this SkillComponent self)
@@ -107,7 +117,7 @@ namespace ET.Client
         {
             Log.Debug($"释放技能 {skillConfigId}");
 
-            Skill skill = self.GetSkill(skillConfigId);
+            Skill skill = self.GetSkillByConfigId(skillConfigId);
 
             if (skill == null)
             {
@@ -118,15 +128,16 @@ namespace ET.Client
             skill.StartSpell();
         }
 
-        public static void TrySpellSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
+        public static void TrySpellSkill(this SkillComponent self, EInputType inputType, ESkillGridType skillGridType, float3 direction,
+        float3 position, long targetUnitId)
         {
-            Log.Debug($"尝试释放技能 {skillConfigId}");
+            Log.Debug($"尝试释放技能 {skillGridType}");
 
-            Skill skill = self.GetSkill(skillConfigId);
+            Skill skill = self.GetSkillByGrid(skillGridType);
 
             if (skill == null)
             {
-                Log.Debug($"技能不存在 {skillConfigId}");
+                Log.Debug($"技能不存在 {skillGridType}");
                 return;
             }
 
@@ -140,9 +151,10 @@ namespace ET.Client
 
             C2M_Operation c2MOperation = C2M_Operation.Create();
             c2MOperation.OperateType = (int)EOperateType.Skill1;
-            c2MOperation.Value_Int_1 = skillConfigId;
+            c2MOperation.InputType = (int)inputType;
+            c2MOperation.Value_Int_1 = (int)skillGridType;
             c2MOperation.Value_Vec3_1 = direction;
-            c2MOperation.Value_Vec3_1 = position;
+            c2MOperation.Value_Vec3_2 = position;
             c2MOperation.Value_Long_1 = targetUnitId;
             self.Root().GetComponent<ClientSenderComponent>().Send(c2MOperation);
         }

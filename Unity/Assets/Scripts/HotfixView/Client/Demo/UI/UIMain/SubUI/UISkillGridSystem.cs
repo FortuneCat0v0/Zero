@@ -43,23 +43,16 @@ namespace ET.Client
             self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.Skill.CD;
         }
 
-        public static void SetSkill(this UISkillGrid self, ESkillAbstractType eSkillAbstractType, int skillIndex)
+        public static void SetSkill(this UISkillGrid self, ESkillGridType skillGridType)
         {
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
+            self.SkillGridType = skillGridType;
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            Skill skill = skillComponent.GetSkill(eSkillAbstractType, skillIndex);
-
-            if (skill == null)
-            {
-                Log.Warning($"角色未配置技能 {eSkillAbstractType.ToString()} {skillIndex}");
-            }
-
-            self.Skill = skill;
-
-            self.SetSkillIcon().Coroutine();
+            self.Skill = skillComponent.GetSkillByGrid(skillGridType);
+            self.RefeshIcon().Coroutine();
         }
 
-        private static async ETTask SetSkillIcon(this UISkillGrid self)
+        private static async ETTask RefeshIcon(this UISkillGrid self)
         {
             await ETTask.CompletedTask;
         }
@@ -77,8 +70,15 @@ namespace ET.Client
             }
 
             // 先锁定一个敌人
+            long targetUnitId = 0;
+            self.SkillIndicatorComponent.ShowIndicator(targetUnitId, self.Skill.SkillConfig);
 
-            self.SkillIndicatorComponent.ShowIndicator(0, self.Skill.SkillConfig);
+            // 这里可以触发一些需要蓄力的技能
+            // Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
+            // SkillIndicatorComponent skillIndicatorComponent = self.Root().GetComponent<SkillIndicatorComponent>();
+            // SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            // skillComponent.TrySpellSkill(EInputType.KeyDown, self.SkillGridType, skillIndicatorComponent.GetDirecttion(),
+            //     skillIndicatorComponent.GetPosition(), 0);
         }
 
         private static void OnDrag(this UISkillGrid self, PointerEventData pdata)
@@ -109,7 +109,15 @@ namespace ET.Client
             }
 
             self.SkillIndicatorComponent.HideIndicator();
+
             // 发送消息 使用技能
+            Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
+            SkillIndicatorComponent skillIndicatorComponent = self.Root().GetComponent<SkillIndicatorComponent>();
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+
+            long targetUnitId = 0;
+            skillComponent.TrySpellSkill(EInputType.KeyUp, self.SkillGridType, skillIndicatorComponent.GetDirecttion(),
+                skillIndicatorComponent.GetPosition(), targetUnitId);
         }
     }
 }

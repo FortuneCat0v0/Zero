@@ -40,9 +40,9 @@ namespace ET.Client
             self.UIJoystickComponent = self.AddComponent<UIJoystickComponent, GameObject>(self.UIJoystick);
 
             self.UISkillGrid_0 = rc.Get<GameObject>("UISkillGrid_0");
-            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillAbstractType.ActiveSkill, 0);
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillGridType.SkillGrid0);
             self.UISkillGrid_1 = rc.Get<GameObject>("UISkillGrid_1");
-            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillAbstractType.ActiveSkill, 1);
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillGridType.SkillGrid1);
         }
 
         private static void OnGMSendBtn(this UIMainComponent self)

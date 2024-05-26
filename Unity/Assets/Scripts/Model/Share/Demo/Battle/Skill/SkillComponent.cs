@@ -22,10 +22,16 @@ namespace ET
         [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();
 
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        [BsonIgnore]
         public Dictionary<int, long> IdSkillMap = new();
 
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        [BsonIgnore]
         public Dictionary<ESkillAbstractType, List<long>> AbstractTypeSkills = new();
+
+        /// <summary>
+        /// 容器-技能
+        /// </summary>
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        public Dictionary<int, long> SkillGridMap = new();
     }
 }

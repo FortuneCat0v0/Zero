@@ -76,6 +76,13 @@
         KeyUp,
     }
 
+    public enum ESkillGridType
+    {
+        SkillGrid0,
+        SkillGrid1,
+        SkillGrid2,
+    }
+
     public enum EOperateStatus : byte
     {
         Success = 0,
