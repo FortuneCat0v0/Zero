@@ -66,21 +66,10 @@
     }
     */
 
-    /// <summary>
-    /// 输入操作类型
-    /// </summary>
-    public enum EInputType : byte
-    {
-        Key,
-        KeyDown,
-        KeyUp,
-    }
-
     public enum ESkillGridType
     {
         SkillGrid0,
         SkillGrid1,
-        SkillGrid2,
     }
 
     public enum EOperateStatus : byte
@@ -95,10 +84,7 @@
         Move,
         Stop,
         Attack, //普攻
-        Skill1,
-        Skill2,
-        Skill3,
-        Skill4,
+        Skill,
     }
 
     public enum EHitFromType : byte

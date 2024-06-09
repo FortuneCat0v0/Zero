@@ -66,6 +66,35 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.KeyValuePair_Int_Int)]
+    public partial class KeyValuePair_Int_Int : MessageObject
+    {
+        public static KeyValuePair_Int_Int Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(KeyValuePair_Int_Int), isFromPool) as KeyValuePair_Int_Int;
+        }
+
+        [MemoryPackOrder(0)]
+        public int Key { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Value { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Key = default;
+            this.Value = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.C2M_TestRequest)]
     [ResponseType(nameof(M2C_TestResponse))]
     public partial class C2M_TestRequest : MessageObject, ILocationRequest
@@ -264,6 +293,9 @@ namespace ET
         [MemoryPackOrder(7)]
         public List<SkillInfo> SkillInfos { get; set; } = new();
 
+        [MemoryPackOrder(8)]
+        public List<KeyValuePair_Int_Int> SkillGridDict { get; set; } = new();
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -279,6 +311,7 @@ namespace ET
             this.KV.Clear();
             this.MoveInfo = default;
             this.SkillInfos.Clear();
+            this.SkillGridDict.Clear();
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2141,6 +2174,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public int OperateType { get; set; }
 
+        [MemoryPackOrder(2)]
+        public int InputType { get; set; }
+
         [MemoryPackOrder(10)]
         public int Value_Int_1 { get; set; }
 
@@ -2168,6 +2204,7 @@ namespace ET
 
             this.UnitId = default;
             this.OperateType = default;
+            this.InputType = default;
             this.Value_Int_1 = default;
             this.Value_Long_1 = default;
             this.Value_Vec3_1 = default;
@@ -2200,6 +2237,9 @@ namespace ET
         [MemoryPackOrder(3)]
         public long SpellStartTime { get; set; }
 
+        [MemoryPackOrder(4)]
+        public long SpellEndTime { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -2211,6 +2251,7 @@ namespace ET
             this.SkillConfigId = default;
             this.SkillLevel = default;
             this.SpellStartTime = default;
+            this.SpellEndTime = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2249,68 +2290,69 @@ namespace ET
     {
         public const ushort HttpGetRouterResponse = 10002;
         public const ushort RouterSync = 10003;
-        public const ushort C2M_TestRequest = 10004;
-        public const ushort M2C_TestResponse = 10005;
-        public const ushort C2G_EnterMap = 10006;
-        public const ushort G2C_EnterMap = 10007;
-        public const ushort MoveInfo = 10008;
-        public const ushort UnitInfo = 10009;
-        public const ushort M2C_CreateUnits = 10010;
-        public const ushort M2C_CreateMyUnit = 10011;
-        public const ushort M2C_StartSceneChange = 10012;
-        public const ushort M2C_RemoveUnits = 10013;
-        public const ushort C2M_PathfindingResult = 10014;
-        public const ushort C2M_Stop = 10015;
-        public const ushort M2C_PathfindingResult = 10016;
-        public const ushort M2C_Stop = 10017;
-        public const ushort C2G_Ping = 10018;
-        public const ushort G2C_Ping = 10019;
-        public const ushort G2C_Test = 10020;
-        public const ushort C2M_Reload = 10021;
-        public const ushort M2C_Reload = 10022;
-        public const ushort C2R_Login = 10023;
-        public const ushort R2C_Login = 10024;
-        public const ushort C2G_LoginGate = 10025;
-        public const ushort G2C_LoginGate = 10026;
-        public const ushort G2C_TestHotfixMessage = 10027;
-        public const ushort C2M_TestRobotCase = 10028;
-        public const ushort M2C_TestRobotCase = 10029;
-        public const ushort C2M_TestRobotCase2 = 10030;
-        public const ushort M2C_TestRobotCase2 = 10031;
-        public const ushort C2M_TransferMap = 10032;
-        public const ushort M2C_TransferMap = 10033;
-        public const ushort C2G_Benchmark = 10034;
-        public const ushort G2C_Benchmark = 10035;
-        public const ushort C2A_LoginAccount = 10036;
-        public const ushort A2C_LoginAccount = 10037;
-        public const ushort A2C_Disconnect = 10038;
-        public const ushort ServerInfo = 10039;
-        public const ushort C2A_GetServers = 10040;
-        public const ushort A2C_GetServers = 10041;
-        public const ushort RoleInfo = 10042;
-        public const ushort C2A_CreateRole = 10043;
-        public const ushort A2C_CreateRole = 10044;
-        public const ushort C2A_GetRoles = 10045;
-        public const ushort A2C_GetRoles = 10046;
-        public const ushort C2A_DeleteRole = 10047;
-        public const ushort A2C_DeleteRole = 10048;
-        public const ushort C2A_GetRealmKey = 10049;
-        public const ushort A2C_GetRealmKey = 10050;
-        public const ushort C2R_LoginRealm = 10051;
-        public const ushort R2C_LoginRealm = 10052;
-        public const ushort C2G_LoginGameGate = 10053;
-        public const ushort G2C_LoginGameGate = 10054;
-        public const ushort C2G_EnterGame = 10055;
-        public const ushort G2C_EnterGame = 10056;
-        public const ushort C2M_GMCMD = 10057;
-        public const ushort AttributeEntryInfo = 10058;
-        public const ushort ItemInfo = 10059;
-        public const ushort M2C_NoticeUnitNumeric = 10060;
-        public const ushort M2C_AllItems = 10061;
-        public const ushort M2C_ItemUpdateOp = 10062;
-        public const ushort C2M_Operation = 10063;
-        public const ushort M2C_Operation = 10064;
-        public const ushort SkillInfo = 10065;
-        public const ushort M2C_SkillUpdateOp = 10066;
+        public const ushort KeyValuePair_Int_Int = 10004;
+        public const ushort C2M_TestRequest = 10005;
+        public const ushort M2C_TestResponse = 10006;
+        public const ushort C2G_EnterMap = 10007;
+        public const ushort G2C_EnterMap = 10008;
+        public const ushort MoveInfo = 10009;
+        public const ushort UnitInfo = 10010;
+        public const ushort M2C_CreateUnits = 10011;
+        public const ushort M2C_CreateMyUnit = 10012;
+        public const ushort M2C_StartSceneChange = 10013;
+        public const ushort M2C_RemoveUnits = 10014;
+        public const ushort C2M_PathfindingResult = 10015;
+        public const ushort C2M_Stop = 10016;
+        public const ushort M2C_PathfindingResult = 10017;
+        public const ushort M2C_Stop = 10018;
+        public const ushort C2G_Ping = 10019;
+        public const ushort G2C_Ping = 10020;
+        public const ushort G2C_Test = 10021;
+        public const ushort C2M_Reload = 10022;
+        public const ushort M2C_Reload = 10023;
+        public const ushort C2R_Login = 10024;
+        public const ushort R2C_Login = 10025;
+        public const ushort C2G_LoginGate = 10026;
+        public const ushort G2C_LoginGate = 10027;
+        public const ushort G2C_TestHotfixMessage = 10028;
+        public const ushort C2M_TestRobotCase = 10029;
+        public const ushort M2C_TestRobotCase = 10030;
+        public const ushort C2M_TestRobotCase2 = 10031;
+        public const ushort M2C_TestRobotCase2 = 10032;
+        public const ushort C2M_TransferMap = 10033;
+        public const ushort M2C_TransferMap = 10034;
+        public const ushort C2G_Benchmark = 10035;
+        public const ushort G2C_Benchmark = 10036;
+        public const ushort C2A_LoginAccount = 10037;
+        public const ushort A2C_LoginAccount = 10038;
+        public const ushort A2C_Disconnect = 10039;
+        public const ushort ServerInfo = 10040;
+        public const ushort C2A_GetServers = 10041;
+        public const ushort A2C_GetServers = 10042;
+        public const ushort RoleInfo = 10043;
+        public const ushort C2A_CreateRole = 10044;
+        public const ushort A2C_CreateRole = 10045;
+        public const ushort C2A_GetRoles = 10046;
+        public const ushort A2C_GetRoles = 10047;
+        public const ushort C2A_DeleteRole = 10048;
+        public const ushort A2C_DeleteRole = 10049;
+        public const ushort C2A_GetRealmKey = 10050;
+        public const ushort A2C_GetRealmKey = 10051;
+        public const ushort C2R_LoginRealm = 10052;
+        public const ushort R2C_LoginRealm = 10053;
+        public const ushort C2G_LoginGameGate = 10054;
+        public const ushort G2C_LoginGameGate = 10055;
+        public const ushort C2G_EnterGame = 10056;
+        public const ushort G2C_EnterGame = 10057;
+        public const ushort C2M_GMCMD = 10058;
+        public const ushort AttributeEntryInfo = 10059;
+        public const ushort ItemInfo = 10060;
+        public const ushort M2C_NoticeUnitNumeric = 10061;
+        public const ushort M2C_AllItems = 10062;
+        public const ushort M2C_ItemUpdateOp = 10063;
+        public const ushort C2M_Operation = 10064;
+        public const ushort M2C_Operation = 10065;
+        public const ushort SkillInfo = 10066;
+        public const ushort M2C_SkillUpdateOp = 10067;
     }
 }

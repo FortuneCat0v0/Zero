@@ -45,6 +45,14 @@ namespace ET.Server
                 {
                     unitInfo.SkillInfos.Add(skill.ToMessage());
                 }
+
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillGridDict)
+                {
+                    KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
+                    keyValuePairIntInt.Key = keyValuePair.Key;
+                    keyValuePairIntInt.Value = keyValuePair.Value;
+                    unitInfo.SkillGridDict.Add(keyValuePairIntInt);
+                }
             }
 
             return unitInfo;

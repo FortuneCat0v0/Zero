@@ -1,151 +1,327 @@
 [
   {
-    "Id": 1001,
+    "Id": 10001,
     "Level": 1,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "扩散吞噬1级",
     "Desc": "爆发混沌之力，吸食2m附近食物",
     "Life": 1000,
     "CD": 3000,
-    "ActionEventIds": [
-      1001
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventRangeDamage"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        20000,
+        20
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       10
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 4,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1001,
+    "Id": 10001,
     "Level": 2,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "扩散吞噬2级",
     "Desc": "爆发混沌之力，吸食3m附近食物",
     "Life": 1000,
     "CD": 3000,
-    "ActionEventIds": [
-      1001
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventRangeDamage"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        30000,
+        30
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       10
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 4,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1001,
+    "Id": 10001,
     "Level": 3,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "扩散吞噬3级",
     "Desc": "爆发混沌之力，吸食4m附近食物",
     "Life": 1000,
     "CD": 3000,
-    "ActionEventIds": [
-      1001
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventRangeDamage"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        40000,
+        40
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       10
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 4,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1001,
+    "Id": 10001,
     "Level": 4,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "扩散吞噬4级",
     "Desc": "爆发混沌之力，吸食5m附近食物",
     "Life": 1000,
     "CD": 3000,
-    "ActionEventIds": [
-      1001
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventRangeDamage"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        50000,
+        50
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       10
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 4,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1002,
+    "Id": 10002,
     "Level": 1,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "随机喷射1级",
     "Desc": "随机方向间隔发射1颗子弹",
     "Life": 1000,
     "CD": 2000,
-    "ActionEventIds": [
-      1101
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventBullet"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        1,
+        5001
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       0
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 5,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1002,
+    "Id": 10002,
     "Level": 2,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "随机喷射2级",
     "Desc": "随机方向间隔发射2颗子弹",
     "Life": 1000,
     "CD": 2000,
-    "ActionEventIds": [
-      1102
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventBullet"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        2,
+        5001
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       0
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 5,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1002,
+    "Id": 10002,
     "Level": 3,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "随机喷射3级",
     "Desc": "随机方向间隔发射3颗子弹",
     "Life": 1000,
     "CD": 2000,
-    "ActionEventIds": [
-      1103
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventBullet"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        3,
+        5001
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       0
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 5,
     "SkillIndicatorParams": [
       0
     ]
   },
   {
-    "Id": 1002,
+    "Id": 10002,
     "Level": 4,
+    "Sub": [],
     "SkillAbstractType": 2,
     "Name": "随机喷射4级",
     "Desc": "随机方向间隔发射4颗子弹",
     "Life": 1000,
     "CD": 2000,
-    "ActionEventIds": [
-      1104
+    "InputType": 2,
+    "ActionEventsServer": [
+      "ActionEventBullet"
     ],
-    "ActionEventTriggerPercent": [
+    "ActionEventParamsServer": [
+      [
+        4,
+        5001
+      ]
+    ],
+    "ActionEventTriggerPercentServer": [
       0
     ],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
+    "SkillIndicatorType": 5,
+    "SkillIndicatorParams": [
+      0
+    ]
+  },
+  {
+    "Id": 10003,
+    "Level": 1,
+    "Sub": [
+      1000301,
+      1000302,
+      1000303
+    ],
+    "SkillAbstractType": 2,
+    "Name": "连续挥砍1级",
+    "Desc": "3段挥砍",
+    "Life": 1000,
+    "CD": 2000,
+    "InputType": 2,
+    "ActionEventsServer": [],
+    "ActionEventParamsServer": [],
+    "ActionEventTriggerPercentServer": [],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
+    "SkillIndicatorType": 5,
+    "SkillIndicatorParams": [
+      0
+    ]
+  },
+  {
+    "Id": 1000301,
+    "Level": 1,
+    "Sub": [],
+    "SkillAbstractType": 2,
+    "Name": "连续挥砍1级",
+    "Desc": "3段挥砍，第1段",
+    "Life": 1000,
+    "CD": 2000,
+    "InputType": 2,
+    "ActionEventsServer": [],
+    "ActionEventParamsServer": [],
+    "ActionEventTriggerPercentServer": [],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
+    "SkillIndicatorType": 5,
+    "SkillIndicatorParams": [
+      0
+    ]
+  },
+  {
+    "Id": 1000302,
+    "Level": 1,
+    "Sub": [],
+    "SkillAbstractType": 2,
+    "Name": "连续挥砍1级",
+    "Desc": "3段挥砍，第2段",
+    "Life": 1000,
+    "CD": 2000,
+    "InputType": 2,
+    "ActionEventsServer": [],
+    "ActionEventParamsServer": [],
+    "ActionEventTriggerPercentServer": [],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
+    "SkillIndicatorType": 5,
+    "SkillIndicatorParams": [
+      0
+    ]
+  },
+  {
+    "Id": 1000303,
+    "Level": 1,
+    "Sub": [],
+    "SkillAbstractType": 2,
+    "Name": "连续挥砍1级",
+    "Desc": "3段挥砍，第3段",
+    "Life": 1000,
+    "CD": 2000,
+    "InputType": 2,
+    "ActionEventsServer": [],
+    "ActionEventParamsServer": [],
+    "ActionEventTriggerPercentServer": [],
+    "ActionEventsClient": [],
+    "ActionEventParamsClient": [],
+    "ActionEventTriggerPercentClient": [],
     "SkillIndicatorType": 5,
     "SkillIndicatorParams": [
       0

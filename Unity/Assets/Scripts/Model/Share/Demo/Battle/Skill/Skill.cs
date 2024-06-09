@@ -2,45 +2,51 @@
 
 namespace ET
 {
-    [ChildOf]
-    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, ISerializeToEntity
+    public enum SkillState
     {
-        [BsonIgnore]
-        public Unit Unit => this.GetParent<SkillComponent>().Unit;
+        Ready,
+        Active,
+        Cooldown
+    }
 
+    [ChildOf]
+    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, IUpdate, ISerializeToEntity
+    {
         public int SkillConfigId { get; set; }
 
         public int SkillLevel { get; set; }
 
-        // public int AbstractIndex;
         [BsonIgnore]
-        public ESkillAbstractType SkillAbstractType => this.SkillConfig.SkillAbstractType;
+        public EInputType InputType { get; set; }
+
+        [BsonIgnore]
+        public int CurrentExecuteSkillIndex { get; set; }
+
+        [BsonIgnore]
+        public SkillConfig CurrentExecuteSkillConfig { get; set; }
+
+        [BsonIgnore]
+        public int CurrentActionEventIndex { get; set; }
+
+        [BsonIgnore]
+        public int NextActionEventIndex { get; set; }
+
+        [BsonIgnore]
+        public ETCancellationToken CancellationToken { get; set; }
+
+        [BsonIgnore]
+        public SkillState SkillState { get; set; }
+
+        [BsonIgnore]
+        public Unit OwnerUnit => this.GetParent<SkillComponent>().Unit;
 
         [BsonIgnore]
         public SkillConfig SkillConfig => SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
 
-        /// <summary>
-        /// 技能释放开始时间戳
-        /// </summary>
         [BsonIgnore]
         public long SpellStartTime { get; set; }
 
-        /// <summary>
-        /// 技能结束完成释放时间
-        /// </summary>
         [BsonIgnore]
         public long SpellEndTime { get; set; }
-
-        /// <summary>
-        /// 冷却时间
-        /// </summary>
-        [BsonIgnore]
-        public int CD { get; set; }
-
-        /// <summary>
-        /// 当前冷却时间
-        /// </summary>
-        [BsonIgnore]
-        public long CurrentCD => this.SpellStartTime + this.CD - TimeInfo.Instance.ClientNow();
     }
 }

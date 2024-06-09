@@ -38,6 +38,11 @@ namespace ET.Client
                 skillComponent.AddSkill(skill);
             }
 
+            foreach (KeyValuePair_Int_Int keyValuePairIntInt in unitInfo.SkillGridDict)
+            {
+                skillComponent.SkillGridDict[keyValuePairIntInt.Key] = keyValuePairIntInt.Value;
+            }
+
             unit.AddComponent<ObjectWait>();
 
             // unit.AddComponent<XunLuoPathComponent>();

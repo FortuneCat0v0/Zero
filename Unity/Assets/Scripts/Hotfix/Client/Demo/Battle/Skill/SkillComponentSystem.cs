@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 
 namespace ET.Client
@@ -11,13 +13,18 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this SkillComponent self)
         {
+            foreach (ESkillGridType eSkillGridType in Enum.GetValues(typeof(ESkillGridType)))
+            {
+                if (!self.SkillGridDict.ContainsKey((int)eSkillGridType))
+                {
+                    self.SkillGridDict.Add((int)eSkillGridType, 0);
+                }
+            }
         }
 
         [EntitySystem]
         private static void Destroy(this SkillComponent self)
         {
-            self.IdSkillMap.Clear();
-            self.AbstractTypeSkills.Clear();
         }
 
         [EntitySystem]
@@ -27,28 +34,21 @@ namespace ET.Client
 
         public static void AddSkill(this SkillComponent self, Skill skill)
         {
-            if (!self.IdSkillMap.ContainsKey(skill.SkillConfigId))
+            if (self.SkillDict.TryAdd(skill.SkillConfigId, skill))
             {
                 self.AddChild(skill);
-                self.IdSkillMap.Add(skill.SkillConfigId, skill.Id);
-                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skill.SkillConfigId, skill.SkillLevel);
-                ESkillAbstractType abstractType = skillConfig.SkillAbstractType;
-                if (!self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skills))
-                {
-                    skills = new List<long>();
-                    self.AbstractTypeSkills[abstractType] = skills;
-                }
-
-                self.AbstractTypeSkills[abstractType].Add(skill.Id);
+                return;
             }
+
+            Log.Error($"客户端添加技能失败 SkillConfigId : {skill.SkillConfigId}");
         }
 
         public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
             Skill skill = null;
-            if (self.IdSkillMap.ContainsKey(configId))
+            if (self.SkillDict.TryGetValue(configId, out Skill value))
             {
-                skill = self.GetChild<Skill>(self.IdSkillMap[configId]);
+                skill = value;
             }
 
             return skill;
@@ -56,53 +56,17 @@ namespace ET.Client
 
         public static Skill GetSkillByGrid(this SkillComponent self, ESkillGridType skillGridType)
         {
-            if (self.SkillGridMap[(int)skillGridType] == 0)
+            if (self.SkillGridDict[(int)skillGridType] == 0)
             {
                 return null;
             }
 
-            return self.GetChild<Skill>(self.SkillGridMap[(int)skillGridType]);
+            return self.GetSkillByConfigId(self.SkillGridDict[(int)skillGridType]);
         }
 
         public static List<Skill> GetAllSkill(this SkillComponent self)
         {
-            List<Skill> skills = new List<Skill>();
-            foreach (Entity entity in self.Children.Values)
-            {
-                skills.Add(entity as Skill);
-            }
-
-            return skills;
-        }
-
-        public static Skill GetSkill(this SkillComponent self, ESkillAbstractType abstractType, int index)
-        {
-            Skill skill = null;
-            if (self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skillIds))
-            {
-                if (skillIds?.Count > index)
-                {
-                    skill = self.GetChild<Skill>(skillIds[index]);
-                }
-            }
-
-            return skill;
-        }
-
-        public static bool SpellSkill(this SkillComponent self, ESkillAbstractType absType, int index = 0)
-        {
-            Log.Info($"Spell skill index:{index}");
-            Skill skill = null;
-            skill = self.GetSkill(absType, index);
-            if (skill == null || skill.IsInCd())
-                return false;
-            skill.StartSpell();
-            return true;
-        }
-
-        public static bool IsDead(this SkillComponent self)
-        {
-            return self.Unit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) <= 0;
+            return self.SkillDict.Values.ToList();
         }
 
         /// <summary>
@@ -113,7 +77,8 @@ namespace ET.Client
         /// <param name="direction"></param>
         /// <param name="position"></param>
         /// <param name="targetUnitId"></param>
-        public static void SpllSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
+        public static void SpllSkill(this SkillComponent self, EInputType inputType, int skillConfigId, float3 direction, float3 position,
+        long targetUnitId)
         {
             Log.Debug($"释放技能 {skillConfigId}");
 
@@ -125,23 +90,23 @@ namespace ET.Client
                 return;
             }
 
-            skill.StartSpell();
+            skill.StartSpell(inputType);
         }
 
         public static void TrySpellSkill(this SkillComponent self, EInputType inputType, ESkillGridType skillGridType, float3 direction,
         float3 position, long targetUnitId)
         {
-            Log.Debug($"尝试释放技能 {skillGridType}");
+            Log.Debug($"尝试释放技能 ESkillGridType : {skillGridType}");
 
             Skill skill = self.GetSkillByGrid(skillGridType);
 
             if (skill == null)
             {
-                Log.Debug($"技能不存在 {skillGridType}");
+                Log.Error($"技能不存在 ESkillGridType : {skillGridType}");
                 return;
             }
 
-            if (skill.IsInCd())
+            if (skill.SkillState == SkillState.Cooldown)
             {
                 EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Str = "技能在CD中..." });
                 return;
@@ -150,9 +115,9 @@ namespace ET.Client
             // 这里可以做一些校验
 
             C2M_Operation c2MOperation = C2M_Operation.Create();
-            c2MOperation.OperateType = (int)EOperateType.Skill1;
+            c2MOperation.OperateType = (int)EOperateType.Skill;
             c2MOperation.InputType = (int)inputType;
-            c2MOperation.Value_Int_1 = (int)skillGridType;
+            c2MOperation.Value_Int_1 = skill.SkillConfigId;
             c2MOperation.Value_Vec3_1 = direction;
             c2MOperation.Value_Vec3_2 = position;
             c2MOperation.Value_Long_1 = targetUnitId;

@@ -14,6 +14,13 @@ message RouterSync
 	string Address = 2;
 }
 
+message KeyValuePair_Int_Int
+{
+	int32 Key = 1;
+	int32 Value = 2;
+}
+
+
 // ResponseType M2C_TestResponse
 message C2M_TestRequest // ILocationRequest
 {
@@ -61,6 +68,7 @@ message UnitInfo
 	map<int32, int64> KV = 6;
 	MoveInfo MoveInfo = 7;
 	repeated SkillInfo SkillInfos = 8;
+	repeated KeyValuePair_Int_Int SkillGridDict = 9;
 }
 
 message M2C_CreateUnits // IMessage
@@ -478,6 +486,7 @@ message M2C_Operation // IMessage
 {
 	int64 UnitId = 1;
 	int32 OperateType = 2;
+	int32 InputType = 3;
 	int32 Value_Int_1 = 11;
 	int64 Value_Long_1 = 21;
 	Unity.Mathematics.float3 Value_Vec3_1 = 31;
@@ -492,6 +501,7 @@ message SkillInfo
 	int32 SkillConfigId = 2;
 	int32 SkillLevel = 3;
 	int64 SpellStartTime = 4;
+	int64 SpellEndTime = 5;
 }
 
 message M2C_SkillUpdateOp // IMessage

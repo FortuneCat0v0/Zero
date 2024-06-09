@@ -26,15 +26,17 @@
                     unit.Stop(1);
                     break;
                 }
-                case EOperateType.Skill1:
+                case EOperateType.Skill:
                 {
                     EInputType inputType = (EInputType)message.InputType;
 
                     SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-                    if (skillComponent.SpellSkill(message.Value_Int_1, message.Value_Vec3_1, message.Value_Vec3_2, message.Value_Long_1))
+                    if (skillComponent.SpellSkill(inputType, message.Value_Int_1, message.Value_Vec3_1, message.Value_Vec3_2, message.Value_Long_1))
                     {
                         M2C_Operation m2COperation = M2C_Operation.Create();
                         m2COperation.UnitId = unit.Id;
+                        m2COperation.OperateType = (int)EOperateType.Skill;
+                        m2COperation.InputType = (int)inputType;
                         m2COperation.Value_Int_1 = message.Value_Int_1;
                         m2COperation.Value_Vec3_1 = message.Value_Vec3_1;
                         m2COperation.Value_Vec3_2 = message.Value_Vec3_2;

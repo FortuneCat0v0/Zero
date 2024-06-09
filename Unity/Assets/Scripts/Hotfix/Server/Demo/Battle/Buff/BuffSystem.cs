@@ -43,7 +43,7 @@ namespace ET.Server
             {
                 foreach (int eventId in self.BuffConfig.EndEvents)
                 {
-                    self.CreateActionEvent(eventId);
+                    // self.CreateActionEvent(eventId);
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace ET.Server
             {
                 foreach (int eventId in self.BuffConfig.StartEvents)
                 {
-                    self.CreateActionEvent(eventId);
+                    // self.CreateActionEvent(eventId);
                 }
             }
 
@@ -90,7 +90,7 @@ namespace ET.Server
             {
                 foreach (int eventId in self.BuffConfig.TriggerEvents)
                 {
-                    self.CreateActionEvent(eventId);
+                    // self.CreateActionEvent(eventId);
                 }
             }
         }

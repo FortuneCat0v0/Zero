@@ -37,10 +37,11 @@
                     unit.GetComponent<ObjectWait>()?.Notify(new Wait_UnitStop() { Error = message.Value_Int_1 });
                     break;
                 }
-                case EOperateType.Skill1:
+                case EOperateType.Skill:
                 {
+                    EInputType inputType = (EInputType)message.InputType;
                     unit.GetComponent<SkillComponent>()
-                            .SpllSkill(message.Value_Int_1, message.Value_Vec3_1, message.Value_Vec3_2, message.Value_Long_1);
+                            .SpllSkill(inputType, message.Value_Int_1, message.Value_Vec3_1, message.Value_Vec3_2, message.Value_Long_1);
                     break;
                 }
             }

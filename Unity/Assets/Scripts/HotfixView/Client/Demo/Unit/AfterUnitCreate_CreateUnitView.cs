@@ -32,6 +32,7 @@ namespace ET.Client
                 unit.AddComponent<AnimatorComponent>();
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, GameObject>(rc.Get<GameObject>("HeadInfos"));
+                headInfosComponent.Transform.gameObject.SetActive(true);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
@@ -45,6 +46,7 @@ namespace ET.Client
                 unit.AddComponent<GameObjectComponent>().GameObject = unitParent;
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, GameObject>(rc.Get<GameObject>("HeadInfos"));
+                headInfosComponent.Transform.gameObject.SetActive(true);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }

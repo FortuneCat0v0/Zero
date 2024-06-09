@@ -145,7 +145,7 @@ namespace ET.Client
             }
         }
 
-        public static float3 GetDirecttion(this SkillIndicatorComponent self)
+        public static float3 GetDirection(this SkillIndicatorComponent self)
         {
             if (self.IndicatorGameObject != null)
             {

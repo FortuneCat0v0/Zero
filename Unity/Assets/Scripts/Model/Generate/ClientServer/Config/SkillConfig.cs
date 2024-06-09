@@ -20,13 +20,19 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     {
         Id = _buf.ReadInt();
         Level = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Sub = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Sub.Add(_e0);}}
         SkillAbstractType = (ESkillAbstractType)_buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         Life = _buf.ReadInt();
         CD = _buf.ReadInt();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventIds.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercent = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercent.Add(_e0);}}
+        InputType = (EInputType)_buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventsServer = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionEventsServer.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventParamsServer = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} ActionEventParamsServer.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercentServer = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercentServer.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventsClient = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionEventsClient.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventParamsClient = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} ActionEventParamsClient.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercentClient = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercentClient.Add(_e0);}}
         SkillIndicatorType = (ESkillIndicatorType)_buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
         PostInit();
@@ -45,6 +51,10 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// 技能等级
     /// </summary>
     public int Level { get; private set; }
+    /// <summary>
+    /// 子技能
+    /// </summary>
+    public System.Collections.Generic.List<int> Sub { get; private set; }
     /// <summary>
     /// 技能抽象类型
     /// </summary>
@@ -66,13 +76,33 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// </summary>
     public int CD { get; private set; }
     /// <summary>
-    /// 行为事件id
+    /// 输入触发类型
     /// </summary>
-    public System.Collections.Generic.List<int> ActionEventIds { get; private set; }
+    public EInputType InputType { get; private set; }
     /// <summary>
-    /// 行为事件触发百分比，跟左边id一一对应
+    /// 行为事件(服务端)
     /// </summary>
-    public System.Collections.Generic.List<int> ActionEventTriggerPercent { get; private set; }
+    public System.Collections.Generic.List<string> ActionEventsServer { get; private set; }
+    /// <summary>
+    /// 行为事件参数(服务端)
+    /// </summary>
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> ActionEventParamsServer { get; private set; }
+    /// <summary>
+    /// 行为事件触发百分比(服务端)
+    /// </summary>
+    public System.Collections.Generic.List<int> ActionEventTriggerPercentServer { get; private set; }
+    /// <summary>
+    /// 行为事件(客户端)
+    /// </summary>
+    public System.Collections.Generic.List<string> ActionEventsClient { get; private set; }
+    /// <summary>
+    /// 行为事件参数(客户端)
+    /// </summary>
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> ActionEventParamsClient { get; private set; }
+    /// <summary>
+    /// 行为事件触发百分比(客户端)
+    /// </summary>
+    public System.Collections.Generic.List<int> ActionEventTriggerPercentClient { get; private set; }
     /// <summary>
     /// 技能指示器类型
     /// </summary>
@@ -99,13 +129,19 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Level:" + Level + ","
+        + "Sub:" + Bright.Common.StringUtil.CollectionToString(Sub) + ","
         + "SkillAbstractType:" + SkillAbstractType + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
         + "Life:" + Life + ","
         + "CD:" + CD + ","
-        + "ActionEventIds:" + Bright.Common.StringUtil.CollectionToString(ActionEventIds) + ","
-        + "ActionEventTriggerPercent:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercent) + ","
+        + "InputType:" + InputType + ","
+        + "ActionEventsServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventsServer) + ","
+        + "ActionEventParamsServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventParamsServer) + ","
+        + "ActionEventTriggerPercentServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercentServer) + ","
+        + "ActionEventsClient:" + Bright.Common.StringUtil.CollectionToString(ActionEventsClient) + ","
+        + "ActionEventParamsClient:" + Bright.Common.StringUtil.CollectionToString(ActionEventParamsClient) + ","
+        + "ActionEventTriggerPercentClient:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercentClient) + ","
         + "SkillIndicatorType:" + SkillIndicatorType + ","
         + "SkillIndicatorParams:" + Bright.Common.StringUtil.CollectionToString(SkillIndicatorParams) + ","
         + "}";

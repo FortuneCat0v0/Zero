@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -10,55 +12,61 @@ namespace ET.Server
         [EntitySystem]
         private static void Awake(this SkillComponent self)
         {
+            foreach (ESkillGridType eSkillGridType in Enum.GetValues(typeof(ESkillGridType)))
+            {
+                if (!self.SkillGridDict.ContainsKey((int)eSkillGridType))
+                {
+                    self.SkillGridDict.Add((int)eSkillGridType, 0);
+                }
+            }
+
+            // 测试
+            self.SkillGridDict[0] = 10001;
+            self.SkillGridDict[1] = 10002;
         }
 
         [EntitySystem]
         private static void Destroy(this SkillComponent self)
         {
-            self.IdSkillMap.Clear();
-            self.AbstractTypeSkills.Clear();
         }
 
         [EntitySystem]
         private static void Deserialize(this SkillComponent self)
         {
+            foreach (Entity entity in self.Children.Values)
+            {
+                Skill skill = entity as Skill;
+                self.SkillDict.Add(skill.SkillConfigId, skill);
+            }
         }
 
         public static bool AddSkill(this SkillComponent self, int configId, int skillLevel = 1)
         {
-            if (!self.IdSkillMap.ContainsKey(configId))
+            if (!self.SkillDict.ContainsKey(configId))
             {
                 SkillConfig skillConfig = SkillConfigCategory.Instance.Get(configId, skillLevel);
                 if (skillConfig == null)
                 {
-                    Log.Debug($"配置表不存在技能 {configId} {skillLevel}");
+                    Log.Error($"配置表不存在技能 {configId} {skillLevel}");
                     return false;
                 }
 
                 Skill skill = self.AddChild<Skill, int, int>(configId, skillLevel);
-                self.IdSkillMap.Add(configId, skill.Id);
-                ESkillAbstractType abstractType = skillConfig.SkillAbstractType;
-                if (!self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skills))
-                {
-                    skills = new List<long>();
-                    self.AbstractTypeSkills[abstractType] = skills;
-                }
-
-                self.AbstractTypeSkills[abstractType].Add(skill.Id);
+                self.SkillDict.Add(configId, skill);
 
                 return true;
             }
 
-            Log.Debug($"已经存在技能 {configId}");
+            Log.Error($"已经存在技能 configId:{configId} lv:{skillLevel}");
             return false;
         }
 
-        public static Skill GetSkill(this SkillComponent self, int configId)
+        public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
             Skill skill = null;
-            if (self.IdSkillMap.ContainsKey(configId))
+            if (self.SkillDict.TryGetValue(configId, out Skill value))
             {
-                skill = self.GetChild<Skill>(self.IdSkillMap[configId]);
+                skill = value;
             }
 
             return skill;
@@ -66,51 +74,15 @@ namespace ET.Server
 
         public static List<Skill> GetAllSkill(this SkillComponent self)
         {
-            List<Skill> skills = new List<Skill>();
-            foreach (Entity entity in self.Children.Values)
-            {
-                skills.Add(entity as Skill);
-            }
-
-            return skills;
+            return self.SkillDict.Values.ToList();
         }
 
-        // public static bool TryGetSkill(this SkillComponent self, ESkillAbstractType abstractType, int index, out Skill skill)
-        // {
-        //     if (self.AbstractTypeSkills.TryGetValue(abstractType, out List<long> skillIds))
-        //     {
-        //         if (skillIds?.Count > index)
-        //         {
-        //             skill = self.GetChild<Skill>(skillIds[index]);
-        //             return true;
-        //         }
-        //     }
-        //
-        //     skill = null;
-        //     return false;
-        // }
-        //
-        // public static bool SpellSkill(this SkillComponent self, ESkillAbstractType absType, int index = 0)
-        // {
-        //     Log.Info($"spell skill {index}");
-        //     Skill skill = null;
-        //     self.TryGetSkill(absType, index, out skill);
-        //     if (skill == null || skill.IsInCd())
-        //         return false;
-        //     skill.StartSpell();
-        //     return true;
-        // }
-
-        public static bool IsDead(this SkillComponent self)
-        {
-            return self.Unit.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) <= 0;
-        }
-
-        public static bool SpellSkill(this SkillComponent self, int skillConfigId, float3 direction, float3 position, long targetUnitId)
+        public static bool SpellSkill(this SkillComponent self, EInputType inputType, int skillConfigId, float3 direction, float3 position,
+        long targetUnitId)
         {
             Log.Debug($"尝试释放技能 {skillConfigId}");
 
-            Skill skill = self.GetSkill(skillConfigId);
+            Skill skill = self.GetSkillByConfigId(skillConfigId);
 
             if (skill == null)
             {
@@ -118,17 +90,9 @@ namespace ET.Server
                 return false;
             }
 
-            if (skill.IsInCd())
-            {
-                Log.Debug($"技能在CD中 {skillConfigId}");
-                return false;
-            }
-
             // 这里可以做一些校验
 
-            skill.StartSpell();
-
-            return true;
+            return skill.StartSpell(inputType);
         }
     }
 }

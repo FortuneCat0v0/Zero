@@ -37,10 +37,10 @@ namespace ET.Client
                 return;
             }
 
-            long cd = self.Skill.CurrentCD;
+            long cd = self.Skill.GetCurrentCD();
             self.CDText.text = cd <= 0 ? string.Empty : (cd / 1000).ToString();
 
-            self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.Skill.CD;
+            self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.Skill.GetCD();
         }
 
         public static void SetSkill(this UISkillGrid self, ESkillGridType skillGridType)
@@ -64,7 +64,7 @@ namespace ET.Client
                 return;
             }
 
-            if (self.Skill.IsInCd())
+            if (self.Skill.GetCurrentCD() > 0)
             {
                 return;
             }
@@ -88,7 +88,7 @@ namespace ET.Client
                 return;
             }
 
-            if (self.Skill.IsInCd())
+            if (self.Skill.GetCurrentCD() > 0)
             {
                 return;
             }
@@ -103,7 +103,7 @@ namespace ET.Client
                 return;
             }
 
-            if (self.Skill.IsInCd())
+            if (self.Skill.GetCurrentCD() > 0)
             {
                 return;
             }
@@ -116,7 +116,7 @@ namespace ET.Client
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
 
             long targetUnitId = 0;
-            skillComponent.TrySpellSkill(EInputType.KeyUp, self.SkillGridType, skillIndicatorComponent.GetDirecttion(),
+            skillComponent.TrySpellSkill(EInputType.KeyUp, self.SkillGridType, skillIndicatorComponent.GetDirection(),
                 skillIndicatorComponent.GetPosition(), targetUnitId);
         }
     }

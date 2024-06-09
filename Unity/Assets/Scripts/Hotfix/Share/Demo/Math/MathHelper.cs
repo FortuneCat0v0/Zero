@@ -6,6 +6,16 @@ namespace ET
 {
     public static class MathHelper
     {
+        /// <summary>
+        /// 万分比转换
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static float ToFloat(this int self)
+        {
+            return self / 1000f;
+        }
+
         //
         // Summary:
         //     The well-known 3.14159265358979... value (Read Only).

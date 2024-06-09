@@ -29,11 +29,6 @@
                 SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
                 // skillComponent.UpSkill(int.Parse(cmd[1]), int.Parse(cmd[2]));
             }
-            else if (cmd[0] == ".SpellSkill")
-            {
-                SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-                skillComponent.SpellSkill(int.Parse(cmd[1]), default, default, 0);
-            }
 
             await ETTask.CompletedTask;
         }

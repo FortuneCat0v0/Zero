@@ -71,7 +71,7 @@ namespace ET.Server
                         }
                         catch (Exception e)
                         {
-                            Log.Error("二次登录失败  " + e.ToString());
+                            Log.Error("二次登录失败  " + e);
                             response.Error = ErrorCode.ERR_ReEnterGameError2;
                             await DisconnectHelper.KickPlayer(player, true);
                             session.Disconnect().Coroutine();
@@ -96,8 +96,8 @@ namespace ET.Server
                         // WorkFlow 玩家Unit上线后的初始化操作
                         // unit.GetComponent<NumericComponent>().SetNoEvent(NumericType.MaxBagCapacity, 30);
                         SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-                        skillComponent.AddSkill(1001, 1);
-                        skillComponent.AddSkill(1002, 1);
+                        skillComponent.AddSkill(10001, 1);
+                        skillComponent.AddSkill(10002, 1);
 
                         response.MyId = player.Id;
 
@@ -105,11 +105,8 @@ namespace ET.Server
 
                         TransferHelper.TransferAtFrameFinish(unit, startSceneConfig.ActorId, startSceneConfig.Name).Coroutine();
 
-                        SessionStateComponent SessionStateComponent = session.GetComponent<SessionStateComponent>();
-                        if (SessionStateComponent == null)
-                        {
-                            SessionStateComponent = session.AddComponent<SessionStateComponent>();
-                        }
+                        SessionStateComponent SessionStateComponent =
+                                session.GetComponent<SessionStateComponent>() ?? session.AddComponent<SessionStateComponent>();
 
                         SessionStateComponent.State = SessionState.Game;
 

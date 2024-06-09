@@ -60,11 +60,12 @@ namespace ET.Server
             return monster;
         }
 
-        public static Unit CreateBullet(Scene scene, long id, Skill ownerSkill, int config, quaternion quaternion)
+        public static Unit CreateBullet(Scene root, long id, Skill ownerSkill, int config, quaternion quaternion)
         {
-            UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
-            Unit owner = ownerSkill.Unit;
+            UnitComponent unitComponent = root.GetComponent<UnitComponent>();
+            Unit owner = ownerSkill.OwnerUnit;
             Unit bullet = unitComponent.AddChildWithId<Unit, int>(id, config);
+            unitComponent.Add(bullet);
 
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 10f, false); // 速度是10米每秒
