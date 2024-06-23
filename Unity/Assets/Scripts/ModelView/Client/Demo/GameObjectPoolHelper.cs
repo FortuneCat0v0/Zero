@@ -18,7 +18,7 @@ namespace ET.Client
             {
                 try
                 {
-                    GameObject pb = GetGameObjectByResType(scene, poolName);
+                    GameObject pb = GetGameObject(scene, poolName);
                     if (pb == null)
                     {
                         Debug.LogError("[ResourceManager] Invalide prefab name for pooling :" + poolName);
@@ -78,7 +78,7 @@ namespace ET.Client
             }
         }
 
-        private static GameObject GetGameObjectByResType(Scene scene, string poolName)
+        private static GameObject GetGameObject(Scene scene, string poolName)
         {
             GameObject pb = scene.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(poolName);
             return pb;
