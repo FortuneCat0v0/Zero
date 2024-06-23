@@ -15,11 +15,12 @@ namespace ET
 
         public int SkillLevel { get; set; }
 
-        public ESkillState SkillState;
-
         public long SpellStartTime { get; set; }
 
         public long SpellEndTime { get; set; }
+
+        [BsonIgnore]
+        public ESkillState SkillState;
 
         [BsonIgnore]
         public long Timer;
