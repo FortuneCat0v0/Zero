@@ -485,7 +485,7 @@ namespace ET
         }
 
         [MemoryPackOrder(0)]
-        public long Id { get; set; }
+        public long UnitId { get; set; }
 
         [MemoryPackOrder(1)]
         public Unity.Mathematics.float3 Position { get; set; }
@@ -500,7 +500,7 @@ namespace ET
                 return;
             }
 
-            this.Id = default;
+            this.UnitId = default;
             this.Position = default;
             this.Points.Clear();
 
@@ -521,7 +521,7 @@ namespace ET
         public int Error { get; set; }
 
         [MemoryPackOrder(1)]
-        public long Id { get; set; }
+        public long UnitId { get; set; }
 
         [MemoryPackOrder(2)]
         public Unity.Mathematics.float3 Position { get; set; }
@@ -537,7 +537,7 @@ namespace ET
             }
 
             this.Error = default;
-            this.Id = default;
+            this.UnitId = default;
             this.Position = default;
             this.Rotation = default;
 
@@ -2111,34 +2111,28 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.C2M_Operation)]
-    public partial class C2M_Operation : MessageObject, ILocationMessage
+    [Message(OuterMessage.C2M_SpellSkill)]
+    public partial class C2M_SpellSkill : MessageObject, ILocationMessage
     {
-        public static C2M_Operation Create(bool isFromPool = false)
+        public static C2M_SpellSkill Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2M_Operation), isFromPool) as C2M_Operation;
+            return ObjectPool.Instance.Fetch(typeof(C2M_SpellSkill), isFromPool) as C2M_SpellSkill;
         }
 
         [MemoryPackOrder(0)]
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public int OperateType { get; set; }
+        public int SkillConfigId { get; set; }
 
         [MemoryPackOrder(2)]
-        public int InputType { get; set; }
+        public long TargetUnitId { get; set; }
 
-        [MemoryPackOrder(10)]
-        public int Value_Int_1 { get; set; }
+        [MemoryPackOrder(3)]
+        public Unity.Mathematics.float3 Position { get; set; }
 
-        [MemoryPackOrder(20)]
-        public long Value_Long_1 { get; set; }
-
-        [MemoryPackOrder(30)]
-        public Unity.Mathematics.float3 Value_Vec3_1 { get; set; }
-
-        [MemoryPackOrder(31)]
-        public Unity.Mathematics.float3 Value_Vec3_2 { get; set; }
+        [MemoryPackOrder(4)]
+        public Unity.Mathematics.float3 Direction { get; set; }
 
         public override void Dispose()
         {
@@ -2148,52 +2142,38 @@ namespace ET
             }
 
             this.RpcId = default;
-            this.OperateType = default;
-            this.InputType = default;
-            this.Value_Int_1 = default;
-            this.Value_Long_1 = default;
-            this.Value_Vec3_1 = default;
-            this.Value_Vec3_2 = default;
+            this.SkillConfigId = default;
+            this.TargetUnitId = default;
+            this.Position = default;
+            this.Direction = default;
 
             ObjectPool.Instance.Recycle(this);
         }
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.M2C_Operation)]
-    public partial class M2C_Operation : MessageObject, IMessage
+    [Message(OuterMessage.M2C_SpellSkill)]
+    public partial class M2C_SpellSkill : MessageObject, IMessage
     {
-        public static M2C_Operation Create(bool isFromPool = false)
+        public static M2C_SpellSkill Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(M2C_Operation), isFromPool) as M2C_Operation;
+            return ObjectPool.Instance.Fetch(typeof(M2C_SpellSkill), isFromPool) as M2C_SpellSkill;
         }
 
         [MemoryPackOrder(0)]
         public long UnitId { get; set; }
 
         [MemoryPackOrder(1)]
-        public int OperateType { get; set; }
+        public int SkillConfigId { get; set; }
 
         [MemoryPackOrder(2)]
-        public int InputType { get; set; }
+        public long TargetUnitId { get; set; }
 
-        [MemoryPackOrder(10)]
-        public int Value_Int_1 { get; set; }
+        [MemoryPackOrder(3)]
+        public Unity.Mathematics.float3 Position { get; set; }
 
-        [MemoryPackOrder(20)]
-        public long Value_Long_1 { get; set; }
-
-        [MemoryPackOrder(30)]
-        public Unity.Mathematics.float3 Value_Vec3_1 { get; set; }
-
-        [MemoryPackOrder(31)]
-        public Unity.Mathematics.float3 Value_Vec3_2 { get; set; }
-
-        [MemoryPackOrder(40)]
-        public Unity.Mathematics.quaternion Value_Qua_1 { get; set; }
-
-        [MemoryPackOrder(50)]
-        public List<Unity.Mathematics.float3> Value_List_Vec3_1 { get; set; } = new();
+        [MemoryPackOrder(4)]
+        public Unity.Mathematics.float3 Direction { get; set; }
 
         public override void Dispose()
         {
@@ -2203,14 +2183,10 @@ namespace ET
             }
 
             this.UnitId = default;
-            this.OperateType = default;
-            this.InputType = default;
-            this.Value_Int_1 = default;
-            this.Value_Long_1 = default;
-            this.Value_Vec3_1 = default;
-            this.Value_Vec3_2 = default;
-            this.Value_Qua_1 = default;
-            this.Value_List_Vec3_1.Clear();
+            this.SkillConfigId = default;
+            this.TargetUnitId = default;
+            this.Position = default;
+            this.Direction = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2350,8 +2326,8 @@ namespace ET
         public const ushort M2C_NoticeUnitNumeric = 10061;
         public const ushort M2C_AllItems = 10062;
         public const ushort M2C_ItemUpdateOp = 10063;
-        public const ushort C2M_Operation = 10064;
-        public const ushort M2C_Operation = 10065;
+        public const ushort C2M_SpellSkill = 10064;
+        public const ushort M2C_SpellSkill = 10065;
         public const ushort SkillInfo = 10066;
         public const ushort M2C_SkillUpdateOp = 10067;
     }

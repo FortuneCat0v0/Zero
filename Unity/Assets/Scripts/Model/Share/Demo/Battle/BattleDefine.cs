@@ -78,15 +78,6 @@
         Error = 1,
     }
 
-    public enum EOperateType : byte
-    {
-        Invaild = 0,
-        Move,
-        Stop,
-        Attack, //普攻
-        Skill,
-    }
-
     public enum EHitFromType : byte
     {
         /// <summary>

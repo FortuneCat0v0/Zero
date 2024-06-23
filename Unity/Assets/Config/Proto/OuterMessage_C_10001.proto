@@ -105,7 +105,7 @@ message C2M_Stop // ILocationMessage
 
 message M2C_PathfindingResult // IMessage
 {
-	int64 Id = 1;
+	int64 UnitId = 1;
 	Unity.Mathematics.float3 Position = 2;
 	repeated Unity.Mathematics.float3 Points = 3;
 }
@@ -113,7 +113,7 @@ message M2C_PathfindingResult // IMessage
 message M2C_Stop // IMessage
 {
 	int32 Error = 1;
-	int64 Id = 2;
+	int64 UnitId = 2;
 	Unity.Mathematics.float3 Position = 3;
 	Unity.Mathematics.quaternion Rotation = 4;
 }
@@ -471,28 +471,22 @@ message M2C_ItemUpdateOp // IMessage
 	int32 EquipPosition = 4;
 }
 
-message C2M_Operation // ILocationMessage
+message C2M_SpellSkill // ILocationMessage
 {
 	int32 RpcId = 1;
-	int32 OperateType = 2;
-	int32 InputType = 3;
-	int32 Value_Int_1 = 11;
-	int64 Value_Long_1 = 21;
-	Unity.Mathematics.float3 Value_Vec3_1 = 31;
-	Unity.Mathematics.float3 Value_Vec3_2 = 32;
+	int32 SkillConfigId = 2;
+	int64 TargetUnitId = 3;
+	Unity.Mathematics.float3 Position = 4;
+	Unity.Mathematics.float3 Direction = 5;
 }
 
-message M2C_Operation // IMessage
+message M2C_SpellSkill // IMessage
 {
 	int64 UnitId = 1;
-	int32 OperateType = 2;
-	int32 InputType = 3;
-	int32 Value_Int_1 = 11;
-	int64 Value_Long_1 = 21;
-	Unity.Mathematics.float3 Value_Vec3_1 = 31;
-	Unity.Mathematics.float3 Value_Vec3_2 = 32;
-	Unity.Mathematics.quaternion Value_Qua_1 = 41;
-	repeated Unity.Mathematics.float3 Value_List_Vec3_1 = 51;
+	int32 SkillConfigId = 2;
+	int64 TargetUnitId = 3;
+	Unity.Mathematics.float3 Position = 4;
+	Unity.Mathematics.float3 Direction = 5;
 }
 
 message SkillInfo

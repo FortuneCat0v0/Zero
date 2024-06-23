@@ -77,22 +77,25 @@ namespace ET.Server
             return self.SkillDict.Values.ToList();
         }
 
-        public static bool SpellSkill(this SkillComponent self, EInputType inputType, int skillConfigId, float3 direction, float3 position,
-        long targetUnitId)
+        public static bool SpellSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float3 direction)
         {
-            Log.Debug($"尝试释放技能 {skillConfigId}");
-
             Skill skill = self.GetSkillByConfigId(skillConfigId);
 
             if (skill == null)
             {
-                Log.Debug($"技能不存在 {skillConfigId}");
+                Log.Debug($"Server 技能不存在 {skillConfigId}");
                 return false;
             }
 
             // 这里可以做一些校验
+            if (skill.GetCurrentCD() > 0)
+            {
+                Log.Debug($"Server 技能CD中 {skillConfigId}");
+                return false;
+            }
 
-            return skill.StartSpell(inputType);
+            skill.StartSpell();
+            return true;
         }
     }
 }

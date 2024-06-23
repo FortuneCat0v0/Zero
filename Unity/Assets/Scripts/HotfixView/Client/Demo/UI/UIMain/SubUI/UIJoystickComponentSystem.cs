@@ -50,7 +50,7 @@ namespace ET.Client
         }
 
         [EntitySystem]
-        private static void FixedUpdate(this UIJoystickComponent self)
+        private static void Update(this UIJoystickComponent self)
         {
             self.SendMove();
         }
@@ -97,9 +97,8 @@ namespace ET.Client
         {
             self.IsDrag = false;
             self.LastDirection = Vector3.zero;
-            C2M_Operation c2MOperation = C2M_Operation.Create();
-            c2MOperation.OperateType = (int)EOperateType.Stop;
-            self.ClientSenderComponent.Send(c2MOperation);
+            C2M_Stop c2MStop = C2M_Stop.Create();
+            self.ClientSenderComponent.Send(c2MStop);
             self.ResetUI();
         }
 
@@ -195,10 +194,9 @@ namespace ET.Client
             self.LastDirection = self.Direction;
             self.LastUnitPosition = self.MyUnit.Position;
 
-            C2M_Operation c2MOperation = C2M_Operation.Create();
-            c2MOperation.OperateType = (int)EOperateType.Move;
-            c2MOperation.Value_Vec3_1 = target;
-            self.ClientSenderComponent.Send(c2MOperation);
+            C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
+            c2MPathfindingResult.Position = target;
+            self.ClientSenderComponent.Send(c2MPathfindingResult);
         }
 
         private static void ResetUI(this UIJoystickComponent self)

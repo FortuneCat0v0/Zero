@@ -2,51 +2,57 @@
 
 namespace ET
 {
-    public enum SkillState
+    public enum ESkillState
     {
-        Ready,
-        Active,
-        Cooldown
+        Normal,
+        Execute
     }
 
     [ChildOf]
-    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, IUpdate, ISerializeToEntity
+    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, ISerializeToEntity
     {
         public int SkillConfigId { get; set; }
 
         public int SkillLevel { get; set; }
 
-        [BsonIgnore]
-        public EInputType InputType { get; set; }
+        public ESkillState SkillState;
+
+        public long SpellStartTime { get; set; }
+
+        public long SpellEndTime { get; set; }
 
         [BsonIgnore]
-        public int CurrentExecuteSkillIndex { get; set; }
-
-        [BsonIgnore]
-        public SkillConfig CurrentExecuteSkillConfig { get; set; }
+        public long Timer;
 
         [BsonIgnore]
         public int CurrentActionEventIndex { get; set; }
 
         [BsonIgnore]
-        public int NextActionEventIndex { get; set; }
-
-        [BsonIgnore]
         public ETCancellationToken CancellationToken { get; set; }
-
-        [BsonIgnore]
-        public SkillState SkillState { get; set; }
 
         [BsonIgnore]
         public Unit OwnerUnit => this.GetParent<SkillComponent>().Unit;
 
         [BsonIgnore]
-        public SkillConfig SkillConfig => SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
+        public SkillConfig SkillConfig
+        {
+            get
+            {
+                if (this.skillConfig == null)
+                {
+                    this.skillConfig = SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
+                }
+
+                if (this.skillConfig.Id != this.SkillConfigId || this.skillConfig.Level != this.SkillLevel)
+                {
+                    this.skillConfig = SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
+                }
+
+                return this.skillConfig;
+            }
+        }
 
         [BsonIgnore]
-        public long SpellStartTime { get; set; }
-
-        [BsonIgnore]
-        public long SpellEndTime { get; set; }
+        private SkillConfig skillConfig;
     }
 }

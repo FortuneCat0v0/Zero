@@ -1,9 +1,27 @@
-﻿namespace ET.Client
+﻿using System;
+
+namespace ET.Client
 {
     [EntitySystemOf(typeof(Skill))]
     [FriendOf(typeof(Skill))]
     public static partial class SkillSystem
     {
+        [Invoke(TimerInvokeType.SkillTimer_Client)]
+        public class SkillUpdate : ATimer<Skill>
+        {
+            protected override void Run(Skill self)
+            {
+                try
+                {
+                    self.Update();
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"move timer error: {self.Id}\n{e}");
+                }
+            }
+        }
+
         [EntitySystem]
         private static void Awake(this Skill self)
         {
@@ -17,102 +35,42 @@
         [EntitySystem]
         private static void Destroy(this Skill self)
         {
-            self.CancellationToken?.Cancel();
-            self.CancellationToken = null;
+            self.EndSpell();
         }
 
-        [EntitySystem]
         private static void Update(this Skill self)
         {
-            if (self.SkillState == SkillState.Ready)
-            {
-                return;
-            }
-
-            if (self.SkillState == SkillState.Cooldown)
-            {
-                if (self.GetCurrentCD() <= 0)
-                {
-                    self.SkillState = SkillState.Ready;
-                }
-
-                return;
-            }
-
-            // 开始
-            if (self.CurrentExecuteSkillConfig == null)
-            {
-                self.CurrentExecuteSkillIndex = 0;
-                self.CurrentActionEventIndex = -1;
-                self.NextActionEventIndex = 0;
-
-                if (self.SkillConfig.Sub.Count > 0)
-                {
-                    self.CurrentExecuteSkillConfig =
-                            SkillConfigCategory.Instance.Get(self.SkillConfig.Sub[self.CurrentExecuteSkillIndex], self.SkillLevel);
-                }
-                else
-                {
-                    self.CurrentExecuteSkillConfig = self.SkillConfig;
-                }
-            }
-
             long nowTime = TimeInfo.Instance.ServerNow();
-            if (self.NextActionEventIndex >= self.CurrentExecuteSkillConfig.ActionEventsClient.Count)
-            {
-                if (self.SkillConfig.Sub.Count > 0)
-                {
-                    if (self.CurrentExecuteSkillIndex < self.SkillConfig.Sub.Count)
-                    {
-                        self.InputType = EInputType.Invaild;
-                        self.CurrentExecuteSkillIndex++;
-                        self.CurrentActionEventIndex = -1;
-                        self.NextActionEventIndex = 0;
-                        self.CurrentExecuteSkillConfig =
-                                SkillConfigCategory.Instance.Get(self.SkillConfig.Sub[self.CurrentExecuteSkillIndex], self.SkillLevel);
-                    }
-                    else
-                    {
-                        self.EndSpell();
-                        return;
-                    }
-                }
-                else
-                {
-                    self.EndSpell();
-                    return;
-                }
-            }
-
-            if (nowTime > self.CurrentExecuteSkillConfig.Life + self.SpellStartTime)
+            if (nowTime > self.SpellStartTime + self.SkillConfig.Life)
             {
                 self.EndSpell();
                 return;
             }
 
-            if (self.NextActionEventIndex <= self.CurrentActionEventIndex)
+            if (self.SkillConfig.ActionEventsClient.Count == 0)
             {
                 return;
             }
 
-            string actionEventName = self.CurrentExecuteSkillConfig.ActionEventsClient[self.NextActionEventIndex];
-            AActionEvent actionEvent = ActionEventDispatcherComponent.Instance.Get(actionEventName);
-
-            if (actionEvent == null)
+            if (self.CurrentActionEventIndex == self.SkillConfig.ActionEventsClient.Count - 1)
             {
-                Log.Error($"not found actionEvent: {actionEventName}");
                 return;
             }
 
-            int triggerTime = self.CurrentExecuteSkillConfig.ActionEventTriggerPercentClient[self.NextActionEventIndex] / 100 * self.SkillConfig.Life;
+            int triggerTime = self.SkillConfig.ActionEventTriggerPercentClient[self.CurrentActionEventIndex + 1] / 100 * self.SkillConfig.Life;
             if (nowTime < self.SpellStartTime + triggerTime)
             {
                 return;
             }
 
-            bool ret = actionEvent.Check(self);
-            if (ret == false)
+            self.CurrentActionEventIndex++;
+
+            string actionEventName = self.SkillConfig.ActionEventsClient[self.CurrentActionEventIndex];
+            AActionEvent actionEvent = ActionEventDispatcherComponent.Instance.Get(actionEventName);
+
+            if (actionEvent == null)
             {
+                Log.Error($"not found actionEvent: {actionEventName}");
                 return;
             }
 
@@ -122,55 +80,39 @@
                 self.CancellationToken = cancellationToken;
             }
 
-            self.CurrentActionEventIndex = self.NextActionEventIndex;
-            actionEvent.Execute(self, self.CancellationToken).Coroutine();
-        }
-
-        private static void Cancel(this Skill self)
-        {
-            self.CancellationToken?.Cancel();
-            self.CancellationToken = null;
-            self.CurrentExecuteSkillConfig = null;
-            self.InputType = EInputType.Invaild;
-        }
-
-        public static void CancelSpell(this Skill self)
-        {
-            self.Cancel();
-
-            self.SkillState = SkillState.Ready;
+            actionEvent.Execute(self, self.SkillConfig.ActionEventParamsClient[self.CurrentActionEventIndex], self.CancellationToken).Coroutine();
         }
 
         public static void EndSpell(this Skill self)
         {
-            self.Cancel();
-
-            self.SkillState = SkillState.Cooldown;
-            self.SpellEndTime = TimeInfo.Instance.ClientNow();
+            self.CancellationToken?.Cancel();
+            self.CancellationToken = null;
+            self.SkillState = ESkillState.Normal;
+            self.SpellEndTime = TimeInfo.Instance.ServerNow();
+            self.Root().GetComponent<TimerComponent>().Remove(ref self.Timer);
         }
 
-        public static bool StartSpell(this Skill self, EInputType inputType)
+        public static void StartSpell(this Skill self)
         {
-            if (self.SkillState == SkillState.Ready)
+            self.SkillState = ESkillState.Execute;
+            self.CurrentActionEventIndex = -1;
+            self.SpellStartTime = TimeInfo.Instance.ServerNow();
+            self.Timer = self.Root().GetComponent<TimerComponent>().NewFrameTimer(TimerInvokeType.SkillTimer_Client, self);
+        }
+
+        public static bool CanSpell(this Skill self)
+        {
+            if (self.SkillState == ESkillState.Execute)
             {
-                if (self.SkillConfig.InputType == inputType)
-                {
-                    self.SpellStartTime = TimeInfo.Instance.ClientNow();
-                    self.SkillState = SkillState.Active;
-                    self.InputType = inputType;
-                    return true;
-                }
-            }
-            else if (self.SkillState == SkillState.Active)
-            {
-                if (self.CurrentExecuteSkillConfig.InputType == inputType)
-                {
-                    self.InputType = inputType;
-                    return true;
-                }
+                return false;
             }
 
-            return false;
+            if (self.GetCurrentCD() > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public static long GetCurrentCD(this Skill self)

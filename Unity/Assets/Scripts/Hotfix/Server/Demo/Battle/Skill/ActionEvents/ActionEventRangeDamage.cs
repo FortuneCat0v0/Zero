@@ -10,16 +10,10 @@ namespace ET.Server
     /// </summary>
     public class ActionEventRangeDamage : AActionEvent
     {
-        public override bool Check(Skill skill)
-        {
-            return true;
-        }
-
-        public override async ETTask Execute(Skill skill, ETCancellationToken cancellationToken)
+        public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
         {
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
-            List<int> param = skill.CurrentExecuteSkillConfig.ActionEventParamsServer[skill.CurrentActionEventIndex];
 
             List<Unit> units = new();
             units.AddRange(root.GetComponent<UnitComponent>().GetAll());
@@ -39,7 +33,6 @@ namespace ET.Server
                 }
             }
 
-            skill.NextActionEventIndex++;
             await ETTask.CompletedTask;
         }
     }

@@ -77,8 +77,7 @@ namespace ET.Client
         /// <param name="direction"></param>
         /// <param name="position"></param>
         /// <param name="targetUnitId"></param>
-        public static void SpllSkill(this SkillComponent self, EInputType inputType, int skillConfigId, float3 direction, float3 position,
-        long targetUnitId)
+        public static void SpllSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float3 direction)
         {
             Log.Debug($"释放技能 {skillConfigId}");
 
@@ -90,10 +89,10 @@ namespace ET.Client
                 return;
             }
 
-            skill.StartSpell(inputType);
+            skill.StartSpell();
         }
 
-        public static void TrySpellSkill(this SkillComponent self, EInputType inputType, ESkillGridType skillGridType, float3 direction,
+        public static void TrySpellSkill(this SkillComponent self, ESkillGridType skillGridType, float3 direction,
         float3 position, long targetUnitId)
         {
             Log.Debug($"尝试释放技能 ESkillGridType : {skillGridType}");
@@ -106,22 +105,20 @@ namespace ET.Client
                 return;
             }
 
-            if (skill.SkillState == SkillState.Cooldown)
-            {
-                EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Str = "技能在CD中..." });
-                return;
-            }
+            // if (skill.SkillState == SkillState.Cooldown)
+            // {
+            //     EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Str = "技能在CD中..." });
+            //     return;
+            // }
 
             // 这里可以做一些校验
 
-            C2M_Operation c2MOperation = C2M_Operation.Create();
-            c2MOperation.OperateType = (int)EOperateType.Skill;
-            c2MOperation.InputType = (int)inputType;
-            c2MOperation.Value_Int_1 = skill.SkillConfigId;
-            c2MOperation.Value_Vec3_1 = direction;
-            c2MOperation.Value_Vec3_2 = position;
-            c2MOperation.Value_Long_1 = targetUnitId;
-            self.Root().GetComponent<ClientSenderComponent>().Send(c2MOperation);
+            C2M_SpellSkill c2MSpellSkill = C2M_SpellSkill.Create();
+            c2MSpellSkill.SkillConfigId = skill.SkillConfigId;
+            c2MSpellSkill.TargetUnitId = targetUnitId;
+            c2MSpellSkill.Position = position;
+            c2MSpellSkill.Direction = direction;
+            self.Root().GetComponent<ClientSenderComponent>().Send(c2MSpellSkill);
         }
     }
 }

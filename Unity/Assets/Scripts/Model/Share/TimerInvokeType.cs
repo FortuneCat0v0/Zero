@@ -20,5 +20,7 @@
         public const int NoticeUnitNumericTime = 304;
         public const int SaveChangeDBData = 305;
         public const int RefreshMonsterInMap = 306;
+        public const int SkillTimer_Client = 307;
+        public const int SkillTimer_Server = 308;
     }
 }

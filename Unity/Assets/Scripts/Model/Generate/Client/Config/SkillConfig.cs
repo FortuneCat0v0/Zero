@@ -20,13 +20,11 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     {
         Id = _buf.ReadInt();
         Level = _buf.ReadInt();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Sub = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Sub.Add(_e0);}}
         SkillAbstractType = (ESkillAbstractType)_buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        Life = _buf.ReadInt();
         CD = _buf.ReadInt();
-        InputType = (EInputType)_buf.ReadInt();
+        Life = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventsServer = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionEventsServer.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventParamsServer = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} ActionEventParamsServer.Add(_e0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercentServer = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercentServer.Add(_e0);}}
@@ -52,10 +50,6 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// </summary>
     public int Level { get; private set; }
     /// <summary>
-    /// 子技能
-    /// </summary>
-    public System.Collections.Generic.List<int> Sub { get; private set; }
-    /// <summary>
     /// 技能抽象类型
     /// </summary>
     public ESkillAbstractType SkillAbstractType { get; private set; }
@@ -68,17 +62,13 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// </summary>
     public string Desc { get; private set; }
     /// <summary>
-    /// 技能持续时间毫秒
-    /// </summary>
-    public int Life { get; private set; }
-    /// <summary>
-    /// 冷却时间毫秒
+    /// 冷却时间(毫秒)
     /// </summary>
     public int CD { get; private set; }
     /// <summary>
-    /// 输入触发类型
+    /// 技能执行时间(毫秒)
     /// </summary>
-    public EInputType InputType { get; private set; }
+    public int Life { get; private set; }
     /// <summary>
     /// 行为事件(服务端)
     /// </summary>
@@ -129,13 +119,11 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         return "{ "
         + "Id:" + Id + ","
         + "Level:" + Level + ","
-        + "Sub:" + Bright.Common.StringUtil.CollectionToString(Sub) + ","
         + "SkillAbstractType:" + SkillAbstractType + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "Life:" + Life + ","
         + "CD:" + CD + ","
-        + "InputType:" + InputType + ","
+        + "Life:" + Life + ","
         + "ActionEventsServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventsServer) + ","
         + "ActionEventParamsServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventParamsServer) + ","
         + "ActionEventTriggerPercentServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercentServer) + ","
