@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33d7a5362e34f0caa69d1f4cc0a5332, type: 3}
+  m_Name: CubeSlime_Unit
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4921278172235921440, guid: 279a11adf43b9174f9373871d1988767, type: 3}
+  MaterialSlots:
+  - Name: Base
+    TransformPathToBindMaterial: SlimeBase
+    MaterialBundle: {fileID: 11400000, guid: 0ad5f8a40b905f24bbf0be751126beeb, type: 2}
+  - Name: Eye
+    TransformPathToBindMaterial: Eye_Plane
+    MaterialBundle: {fileID: 11400000, guid: 30c6e8c9cca699b4cb045a20a1ed4939, type: 2}
+  - Name: Mouth
+    TransformPathToBindMaterial: Mouth_Plane
+    MaterialBundle: {fileID: 11400000, guid: 5b08f7dcfe00b2341a5019d9b4687474, type: 2}
+  _cosmeticModule:
+    _slots:
+    - Type: Hat
+      ParentBonePath: SlimeArmature/ROOT/DEF_TOP
+      Offset: {x: 0, y: 1.08, z: 0}
+      Rotation: {x: 0, y: 0, z: 0}
+    - Type: Wing
+      ParentBonePath: SlimeArmature/ROOT/DEF_TOP
+      Offset: {x: 0, y: 0.7, z: 0}
+      Rotation: {x: 0, y: 0, z: 0}
+    - Type: Body
+      ParentBonePath: SlimeArmature/ROOT/DEF_BOTTOM
+      Offset: {x: 0, y: 0.5, z: 0}
+      Rotation: {x: 0, y: 0, z: 0}
