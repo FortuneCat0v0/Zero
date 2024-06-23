@@ -87,10 +87,8 @@ namespace ET.Server
                 return false;
             }
 
-            // 这里可以做一些校验
-            if (skill.GetCurrentCD() > 0)
+            if (!skill.CanSpell())
             {
-                Log.Debug($"Server 技能CD中 {skillConfigId}");
                 return false;
             }
 

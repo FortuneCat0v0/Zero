@@ -105,13 +105,10 @@ namespace ET.Client
                 return;
             }
 
-            // if (skill.SkillState == SkillState.Cooldown)
-            // {
-            //     EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Str = "技能在CD中..." });
-            //     return;
-            // }
-
-            // 这里可以做一些校验
+            if (!skill.CanSpell())
+            {
+                return;
+            }
 
             C2M_SpellSkill c2MSpellSkill = C2M_SpellSkill.Create();
             c2MSpellSkill.SkillConfigId = skill.SkillConfigId;

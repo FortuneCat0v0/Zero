@@ -64,31 +64,14 @@ namespace ET.Client
                 return;
             }
 
-            if (self.Skill.GetCurrentCD() > 0)
-            {
-                return;
-            }
-
             // 先锁定一个敌人
             long targetUnitId = 0;
             self.SkillIndicatorComponent.ShowIndicator(targetUnitId, self.Skill.SkillConfig);
-
-            // 这里可以触发一些需要蓄力的技能
-            // Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            // SkillIndicatorComponent skillIndicatorComponent = self.Root().GetComponent<SkillIndicatorComponent>();
-            // SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            // skillComponent.TrySpellSkill(EInputType.KeyDown, self.SkillGridType, skillIndicatorComponent.GetDirecttion(),
-            //     skillIndicatorComponent.GetPosition(), 0);
         }
 
         private static void OnDrag(this UISkillGrid self, PointerEventData pdata)
         {
             if (self.Skill == null)
-            {
-                return;
-            }
-
-            if (self.Skill.GetCurrentCD() > 0)
             {
                 return;
             }
@@ -99,11 +82,6 @@ namespace ET.Client
         private static void OnPointerUp(this UISkillGrid self, PointerEventData pdata)
         {
             if (self.Skill == null)
-            {
-                return;
-            }
-
-            if (self.Skill.GetCurrentCD() > 0)
             {
                 return;
             }
