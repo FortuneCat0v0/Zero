@@ -11,7 +11,6 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this FlyTipComponent self)
         {
-            self.OnAwake().Coroutine();
         }
 
         [EntitySystem]
@@ -33,21 +32,10 @@ namespace ET.Client
             self.FlyTipDis.Clear();
         }
 
-        private static async ETTask OnAwake(this FlyTipComponent self)
-        {
-            ResourcesLoaderComponent resourcesLoaderComponent = self.Root().GetComponent<ResourcesLoaderComponent>();
-
-            GameObject flyTip = await resourcesLoaderComponent.LoadAssetAsync<GameObject>($"Assets/Bundles/UI/Other/FlyTip.prefab");
-            GameObjectPoolHelper.InitPoolFormGamObject(flyTip, 3);
-
-            GameObject flyTipDi = await resourcesLoaderComponent.LoadAssetAsync<GameObject>($"Assets/Bundles/UI/Other/FlyTipDi.prefab");
-            GameObjectPoolHelper.InitPoolFormGamObject(flyTipDi, 3);
-        }
-
         public static void SpawnFlyTip(this FlyTipComponent self, string str)
         {
             Vector3 startPos = new(0, -100, 0);
-            GameObject FlyTipGO = GameObjectPoolHelper.GetObjectFromPool("FlyTip");
+            GameObject FlyTipGO = GameObjectPoolHelper.GetObjectFromPool(self.Root(), $"Assets/Bundles/UI/Other/FlyTip.prefab");
             FlyTipGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
             self.FlyTips.Add(FlyTipGO);
             FlyTipGO.SetActive(true);
@@ -71,7 +59,7 @@ namespace ET.Client
         public static void SpawnFlyTipDi(this FlyTipComponent self, string str)
         {
             Vector3 startPos = new(0, -100, 0);
-            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPool("FlyTipDi");
+            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPool(self.Root(), $"Assets/Bundles/UI/Other/FlyTipDi.prefab");
             FlyTipDiGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
             self.FlyTipDis.Add(FlyTipDiGO);
             FlyTipDiGO.SetActive(true);

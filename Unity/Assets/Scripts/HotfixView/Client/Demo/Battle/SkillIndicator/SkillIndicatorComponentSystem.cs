@@ -12,17 +12,6 @@ namespace ET.Client
         private static void Awake(this SkillIndicatorComponent self)
         {
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
-            self.OnAwake().Coroutine();
-        }
-
-        private static async ETTask OnAwake(this SkillIndicatorComponent self)
-        {
-            foreach (ESkillIndicatorType eSkillIndicatorType in Enum.GetValues(typeof(ESkillIndicatorType)))
-            {
-                GameObject bundleGameObject = await self.Scene().GetComponent<ResourcesLoaderComponent>()
-                        .LoadAssetAsync<GameObject>($"Assets/Bundles/Effect/SkillIndicator_{eSkillIndicatorType.ToString()}.prefab");
-                GameObjectPoolHelper.InitPoolFormGamObject(bundleGameObject, 2);
-            }
         }
 
         public static void ShowIndicator(this SkillIndicatorComponent self, long targetUnitId, SkillConfig skillconfig)
@@ -35,7 +24,8 @@ namespace ET.Client
                 self.IndicatorGameObject = null;
             }
 
-            self.GameObject = GameObjectPoolHelper.GetObjectFromPool($"SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}");
+            self.GameObject = GameObjectPoolHelper.GetObjectFromPool(self.Root(),
+                $"Assets/Bundles/Effect/SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}.prefab");
             self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().GameObject
                     .transform);
             self.GameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
