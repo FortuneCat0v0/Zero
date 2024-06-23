@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -88,14 +89,24 @@ namespace ET.Client
             self.CancellationToken?.Cancel();
             self.CancellationToken = null;
             self.SkillState = ESkillState.Normal;
+
+            self.TargetUnitId = 0;
+            self.Position = default;
+            self.Direction = default;
+
             self.SpellEndTime = TimeInfo.Instance.ServerNow();
             self.Root().GetComponent<TimerComponent>().Remove(ref self.Timer);
         }
 
-        public static void StartSpell(this Skill self)
+        public static void StartSpell(this Skill self, long targetUnitId, float3 position, float3 direction)
         {
             self.SkillState = ESkillState.Execute;
             self.CurrentActionEventIndex = -1;
+
+            self.TargetUnitId = targetUnitId;
+            self.Position = position;
+            self.Direction = direction;
+
             self.SpellStartTime = TimeInfo.Instance.ServerNow();
             self.Timer = self.Root().GetComponent<TimerComponent>().NewFrameTimer(TimerInvokeType.SkillTimer_Client, self);
         }

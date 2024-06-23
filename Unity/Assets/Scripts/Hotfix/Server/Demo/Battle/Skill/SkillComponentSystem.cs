@@ -92,7 +92,7 @@ namespace ET.Server
                 return false;
             }
 
-            skill.StartSpell();
+            skill.StartSpell(targetUnitId, position, direction);
             return true;
         }
     }

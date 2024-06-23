@@ -89,7 +89,7 @@ namespace ET.Client
                 return;
             }
 
-            skill.StartSpell();
+            skill.StartSpell(targetUnitId, position, direction);
         }
 
         public static void TrySpellSkill(this SkillComponent self, ESkillGridType skillGridType, float3 direction,

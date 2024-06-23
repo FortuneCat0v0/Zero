@@ -86,8 +86,6 @@ namespace ET.Client
                 return;
             }
 
-            self.SkillIndicatorComponent.HideIndicator();
-
             // 发送消息 使用技能
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             SkillIndicatorComponent skillIndicatorComponent = self.Root().GetComponent<SkillIndicatorComponent>();
@@ -96,6 +94,8 @@ namespace ET.Client
             long targetUnitId = 0;
             skillComponent.TrySpellSkill(self.SkillGridType, skillIndicatorComponent.GetDirection(), skillIndicatorComponent.GetPosition(),
                 targetUnitId);
+
+            self.SkillIndicatorComponent.HideIndicator();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using Unity.Mathematics;
 
 namespace ET
 {
@@ -21,6 +22,15 @@ namespace ET
 
         [BsonIgnore]
         public ESkillState SkillState;
+
+        [BsonIgnore]
+        public long TargetUnitId { get; set; }
+
+        [BsonIgnore]
+        public float3 Position { get; set; }
+
+        [BsonIgnore]
+        public float3 Direction { get; set; }
 
         [BsonIgnore]
         public long Timer;

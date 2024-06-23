@@ -15,13 +15,9 @@ namespace ET.Server
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 
-            quaternion ownerRotation = owner.Rotation;
-            int direct = 1;
             for (int i = 0; i < param[0]; i++)
             {
-                direct = -direct;
-
-                quaternion rotatedQuaternion = math.mul(ownerRotation, quaternion.RotateY(i * direct * 5f));
+                quaternion rotatedQuaternion = quaternion.LookRotation(skill.Direction, math.up());
 
                 UnitFactory.CreateBullet(root, IdGenerater.Instance.GenerateId(), skill, param[1], rotatedQuaternion);
             }

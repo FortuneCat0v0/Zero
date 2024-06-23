@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using Unity.Mathematics;
+
+namespace ET.Client
 {
     [MessageHandler(SceneType.Demo)]
     public class M2C_SpellSkillHandler : MessageHandler<Scene, M2C_SpellSkill>
@@ -12,6 +14,7 @@
                 return;
             }
 
+            unit.Rotation = quaternion.LookRotation(message.Direction, math.up());
             unit.GetComponent<SkillComponent>().SpllSkill(message.SkillConfigId, message.TargetUnitId, message.Position, message.Direction);
 
             await ETTask.CompletedTask;
