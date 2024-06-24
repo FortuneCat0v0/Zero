@@ -33,7 +33,6 @@ namespace ET.Client
     public struct ShowFlyTip
     {
         public string Str;
-        public int Type;
     }
 
     public struct ShowItemTips

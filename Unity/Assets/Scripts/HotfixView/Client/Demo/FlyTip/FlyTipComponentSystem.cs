@@ -11,6 +11,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this FlyTipComponent self)
         {
+            FlyTipComponent.Instance = self;
         }
 
         [EntitySystem]
@@ -22,46 +23,34 @@ namespace ET.Client
                 UnityEngine.Object.Destroy(flyTip);
             }
 
-            foreach (GameObject flyTipDi in self.FlyTipDis)
-            {
-                flyTipDi.transform.DOKill();
-                UnityEngine.Object.Destroy(flyTipDi);
-            }
-
             self.FlyTips.Clear();
-            self.FlyTipDis.Clear();
         }
 
-        public static void SpawnFlyTip(this FlyTipComponent self, string str)
+        [EntitySystem]
+        private static void Update(this FlyTipComponent self)
         {
-            Vector3 startPos = new(0, -100, 0);
-            GameObject FlyTipGO = GameObjectPoolHelper.GetObjectFromPool(self.Root(), $"Assets/Bundles/UI/Other/FlyTip.prefab");
-            FlyTipGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
-            self.FlyTips.Add(FlyTipGO);
-            FlyTipGO.SetActive(true);
-
-            RectTransform rectTransform = FlyTipGO.transform.GetComponent<RectTransform>();
-            rectTransform.localPosition = startPos;
-            rectTransform.localScale = Vector3.one;
-            rectTransform.DOLocalMoveY(0, 2f).SetEase(Ease.OutQuad).onComplete = () =>
+            if (self.FlyTipQueue.Count > 0)
             {
-                FlyTipGO.SetActive(false);
-                self.FlyTips.Remove(FlyTipGO);
-                GameObjectPoolHelper.ReturnObjectToPool(FlyTipGO);
-            };
-
-            Text text = FlyTipGO.GetComponentInChildren<Text>();
-            text.text = str;
-            text.color = Color.white;
-            text.DOColor(new Color(255, 255, 255, 0), 2f).SetEase(Ease.OutQuad);
+                long time = TimeInfo.Instance.ClientNow();
+                if (time - self.LastSpawnFlyTipTime >= self.Interval)
+                {
+                    self.LastSpawnFlyTipTime = time;
+                    self.SpawnFlyTip(self.FlyTipQueue.Dequeue());
+                }
+            }
         }
 
-        public static void SpawnFlyTipDi(this FlyTipComponent self, string str)
+        public static void ShowFlyTip(this FlyTipComponent self, string str)
         {
-            Vector3 startPos = new(0, -100, 0);
-            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPool(self.Root(), $"Assets/Bundles/UI/Other/FlyTipDi.prefab");
+            self.FlyTipQueue.Enqueue(str);
+        }
+
+        private static void SpawnFlyTip(this FlyTipComponent self, string str)
+        {
+            Vector3 startPos = new(0, -200, 0);
+            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPool(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
             FlyTipDiGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
-            self.FlyTipDis.Add(FlyTipDiGO);
+            self.FlyTips.Add(FlyTipDiGO);
             FlyTipDiGO.SetActive(true);
 
             RectTransform rectTransform = FlyTipDiGO.transform.GetComponent<RectTransform>();
@@ -70,7 +59,7 @@ namespace ET.Client
             rectTransform.GetComponent<RectTransform>().DOMoveY(0, 2f).SetEase(Ease.OutQuad).onComplete = () =>
             {
                 FlyTipDiGO.SetActive(false);
-                self.FlyTipDis.Remove(FlyTipDiGO);
+                self.FlyTips.Remove(FlyTipDiGO);
                 GameObjectPoolHelper.ReturnObjectToPool(FlyTipDiGO);
             };
 
