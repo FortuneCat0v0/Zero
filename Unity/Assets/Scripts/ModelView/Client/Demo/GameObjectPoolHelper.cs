@@ -21,14 +21,14 @@ namespace ET.Client
                     GameObject pb = GetGameObject(scene, poolName);
                     if (pb == null)
                     {
-                        Debug.LogError("[ResourceManager] Invalide prefab name for pooling :" + poolName);
+                        Log.Error("[ResourceManager] Invalide prefab name for pooling :" + poolName);
                     }
 
                     poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
+                    Log.Error(e);
                 }
             }
 
@@ -37,19 +37,17 @@ namespace ET.Client
                 GameObjectPool pool = poolDict[poolName];
                 result = pool.NextAvailableObject(autoActive);
                 //scenario when no available object is found in pool
-#if UNITY_EDITOR
+
                 if (result == null)
                 {
-                    Debug.LogWarning("[ResourceManager]:No object available in " + poolName);
+                    Log.Warning("[ResourceManager]:No object available in " + poolName);
                 }
-#endif
             }
-#if UNITY_EDITOR
             else
             {
-                Debug.LogError("[ResourceManager]:Invalid pool name specified: " + poolName);
+                Log.Error("[ResourceManager]:Invalid pool name specified: " + poolName);
             }
-#endif
+
             return result;
         }
 
@@ -58,9 +56,7 @@ namespace ET.Client
             PoolObject po = go.GetComponent<PoolObject>();
             if (po == null)
             {
-#if UNITY_EDITOR
-                Debug.LogWarning("Specified object is not a pooled instance: " + go.name);
-#endif
+                Log.Warning("Specified object is not a pooled instance: " + go.name);
             }
             else
             {
@@ -69,12 +65,10 @@ namespace ET.Client
                 {
                     pool.ReturnObjectToPool(po);
                 }
-#if UNITY_EDITOR
                 else
                 {
-                    Debug.LogWarning("No pool available with name: " + po.poolName);
+                    Log.Warning("No pool available with name: " + po.poolName);
                 }
-#endif
             }
         }
 
