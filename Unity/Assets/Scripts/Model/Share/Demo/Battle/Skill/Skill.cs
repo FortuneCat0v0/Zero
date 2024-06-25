@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET
@@ -42,7 +43,7 @@ namespace ET
         public ETCancellationToken CancellationToken { get; set; }
 
         [BsonIgnore]
-        public Unit OwnerUnit => this.GetParent<SkillComponent>().Unit;
+        public Unit OwnerUnit => this.GetParent<SkillComponent>().GetParent<Unit>();
 
         [BsonIgnore]
         public SkillConfig SkillConfig
@@ -65,5 +66,8 @@ namespace ET
 
         [BsonIgnore]
         private SkillConfig skillConfig;
+
+        [BsonIgnore]
+        public long EffectId;
     }
 }

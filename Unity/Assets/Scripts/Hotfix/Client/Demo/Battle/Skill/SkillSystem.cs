@@ -93,6 +93,7 @@ namespace ET.Client
             self.TargetUnitId = 0;
             self.Position = default;
             self.Direction = default;
+            self.EffectId = 0;
 
             self.SpellEndTime = TimeInfo.Instance.ServerNow();
             self.Root().GetComponent<TimerComponent>().Remove(ref self.Timer);

@@ -19,6 +19,8 @@ namespace ET.Client
             unitParent.transform.position = unit.Position;
             unitParent.name = EUnitType.Player + "" + unit.Id;
 
+            unit.AddComponent<EffectComponent>();
+
             ReferenceCollector rc = unitParent.GetComponent<ReferenceCollector>();
             GameObject model;
             if (unit.Type() == EUnitType.Player)

@@ -2,21 +2,10 @@
 {
     public static partial class AssetPathHelper
     {
-        public const string PetHeadIcon = "PetHeadIcon";
-        public const string PetSkillIcon = "PetSkillIcon";
-        public const string RoleSkillIcon = "RoleSkillIcon";
-        public const string TianFuIcon = "TianFuIcon";
-        public const string ChapterIcon = "ChapterIcon";
-        public const string PropertyIcon = "PropertyIcon";
-        public const string ChengJiuIcon = "ChengJiuIcon";
-        public const string RechageIcon = "RechageIcon";
-        public const string MonsterIcon = "MonsterIcon";
-        public const string TiTleIcon = "TiTleIcon";
-        public const string TaskIcon = "TaskIcon";
-        public const string OtherIcon = "OtherIcon";
-        public const string PlayerIcon = "PlayerIcon";
-        public const string ChengHaoIcon = "ChengHaoIcon";
-        public const string MulLanguageIcon = "MulLanguageIcon";
+        public static string GetEffectPath(string fileName)
+        {
+            return $"Assets/Bundles/Effect/{fileName}.prefab";
+        }
 
         public static string GetItemIconPath(string fileName)
         {
