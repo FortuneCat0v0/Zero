@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-    public class ActionEventPlayEffect_Centre : AActionEvent
+    public class ActionEventPlayEffect : AActionEvent
     {
         public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
         {
@@ -16,7 +16,7 @@ namespace ET.Client
                 {
                     EffectConfigId = param[0],
                     TargetUnitId = skill.TargetUnitId,
-                    Position = owner.Position,
+                    Position = skill.Position,
                     Direction = skill.Direction
                 }
             });

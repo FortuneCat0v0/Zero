@@ -20,7 +20,7 @@ namespace ET.Server
             for (int i = 0; i < units.Count; i++)
             {
                 Unit unit = units[i];
-                if (unit == null || (unit.Type() != EUnitType.Player && unit.Type() != EUnitType.Monster))
+                if (unit == null || (unit.Type() != EUnitType.Player && unit.Type() != EUnitType.Monster) || owner.Id == unit.Id)
                 {
                     continue;
                 }

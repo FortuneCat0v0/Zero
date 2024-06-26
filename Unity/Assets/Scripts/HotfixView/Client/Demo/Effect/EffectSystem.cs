@@ -59,9 +59,8 @@ namespace ET.Client
                         }
                         case EEffectType.BindUnit:
                         {
-                            Unit targetUnit = UnitHelper.GetUnitById(self.Root(), self.EffectData.TargetUnitId);
-                            self.EffectGo.transform.SetParent(targetUnit.GetComponent<GameObjectComponent>().Transform);
-                            self.EffectGo.transform.localPosition = Vector3.one;
+                            self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().Transform);
+                            self.EffectGo.transform.localPosition = Vector3.zero;
                             self.EffectGo.transform.localScale = Vector3.one;
                             break;
                         }
