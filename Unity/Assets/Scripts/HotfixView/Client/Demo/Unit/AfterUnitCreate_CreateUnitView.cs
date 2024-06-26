@@ -25,7 +25,7 @@ namespace ET.Client
             GameObject model;
             if (unit.Type() == EUnitType.Player)
             {
-                assetsName = $"Assets/Bundles/Unit/Player.prefab";
+                assetsName = $"Assets/Bundles/Unit/AngelSlime.prefab";
                 bundleGameObject = await resourcesLoaderComponent.LoadAssetAsync<GameObject>(assetsName);
 
                 model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
@@ -40,7 +40,7 @@ namespace ET.Client
             }
             else if (unit.Type() == EUnitType.Monster)
             {
-                assetsName = $"Assets/Bundles/Unit/Monster.prefab";
+                assetsName = $"Assets/Bundles/Unit/PowerSlime.prefab";
                 bundleGameObject = await resourcesLoaderComponent.LoadAssetAsync<GameObject>(assetsName);
 
                 model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
