@@ -59,7 +59,7 @@ namespace ET.Client
                         }
                         case EEffectType.BindUnit:
                         {
-                            self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().Transform);
+                            self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().GameObject.transform);
                             self.EffectGo.transform.localPosition = Vector3.zero;
                             self.EffectGo.transform.localScale = Vector3.one;
                             break;

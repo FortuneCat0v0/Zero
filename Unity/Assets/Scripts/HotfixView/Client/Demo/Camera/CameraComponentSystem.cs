@@ -17,7 +17,7 @@ namespace ET.Client
         {
             if (self.UnitTransform == null)
             {
-                self.UnitTransform = UnitHelper.GetMyUnitFromCurrentScene(self.Scene())?.GetComponent<GameObjectComponent>()?.Transform;
+                self.UnitTransform = UnitHelper.GetMyUnitFromCurrentScene(self.Scene())?.GetComponent<GameObjectComponent>()?.GameObject.transform;
                 if (self.UnitTransform == null)
                 {
                     return;

@@ -17,9 +17,10 @@ namespace ET.Client
             GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
             GameObject unitParent = UnityEngine.Object.Instantiate(bundleGameObject, globalComponent.Unit, true);
             unitParent.transform.position = unit.Position;
-            unitParent.name = EUnitType.Player + "" + unit.Id;
+            unitParent.name = unit.Type() + "" + unit.Id;
 
             unit.AddComponent<EffectComponent>();
+            unit.AddComponent<GameObjectComponent>().GameObject = unitParent;
 
             ReferenceCollector rc = unitParent.GetComponent<ReferenceCollector>();
             GameObject model;
@@ -30,8 +31,9 @@ namespace ET.Client
 
                 model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
                 model.transform.localPosition = Vector3.zero;
-                unit.AddComponent<GameObjectComponent>().GameObject = unitParent;
-                unit.AddComponent<AnimatorComponent>();
+
+                unit.GetComponent<GameObjectComponent>().ModelGo = model;
+                unit.AddComponent<AnimatorComponent, GameObject>(model);
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, GameObject>(rc.Get<GameObject>("HeadInfos"));
                 headInfosComponent.Transform.gameObject.SetActive(true);
@@ -45,7 +47,9 @@ namespace ET.Client
 
                 model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
                 model.transform.localPosition = Vector3.zero;
-                unit.AddComponent<GameObjectComponent>().GameObject = unitParent;
+
+                unit.GetComponent<GameObjectComponent>().ModelGo = model;
+                unit.AddComponent<AnimatorComponent, GameObject>(model);
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, GameObject>(rc.Get<GameObject>("HeadInfos"));
                 headInfosComponent.Transform.gameObject.SetActive(true);
@@ -59,21 +63,15 @@ namespace ET.Client
 
                 model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
                 model.transform.localPosition = Vector3.zero;
-                unit.AddComponent<GameObjectComponent>().GameObject = unitParent;
-            }
-            else
-            {
-                return;
-            }
 
-#if UNITY_EDITOR
+                unit.GetComponent<GameObjectComponent>().ModelGo = model;
+            }
 
             // 碰撞体显示
-            CollisionViewComponent collisionViewComponent = unit.AddComponent<CollisionViewComponent, GameObject>(model);
-            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
-
-            collisionViewComponent.AddColloder(unitConfig.ColliderType, new Vector2(unitConfig.ColliderParams[0], 0));
-#endif
+            // CollisionViewComponent collisionViewComponent = unit.AddComponent<CollisionViewComponent, GameObject>(model);
+            // UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
+            //
+            // collisionViewComponent.AddColloder(unitConfig.ColliderType, new Vector2(unitConfig.ColliderParams[0], 0));
 
             await ETTask.CompletedTask;
         }
