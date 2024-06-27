@@ -77,7 +77,7 @@ namespace ET
             if (isPublicEvent)
             {
                 EventSystem.Instance.Publish(self.Scene(),
-                    new NumbericChange()
+                    new NumericChange()
                     {
                         Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType,
                         IsBroadcast = NumericType.Broadcast.Contains(numericType)
@@ -109,7 +109,7 @@ namespace ET
         }
     }
 
-    public struct NumbericChange
+    public struct NumericChange
     {
         public Unit Unit;
         public int NumericType;

@@ -28,7 +28,7 @@ namespace ET.Client
 
     public struct ShowFlyTip
     {
-        public string Str;
+        public int Error;
     }
 
     public struct ShowItemTips

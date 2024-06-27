@@ -44,7 +44,10 @@ namespace ET.Client
             request.OwnerFiberId = self.Fiber().Id;
             request.Account = account;
             request.Password = password;
-            await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, request);
+            NetClient2Main_ConnectAccount response =
+                    await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, request) as NetClient2Main_ConnectAccount;
+
+            EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Error = response.Error });
         }
 
         public static async ETTask<long> EnterGameAsync(this ClientSenderComponent self, long accountId, string realmKey, string realmAddress,
@@ -61,6 +64,9 @@ namespace ET.Client
             NetClient2Main_EnterGame response =
                     await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientEnterGame) as
                             NetClient2Main_EnterGame;
+
+            EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Error = response.Error });
+
             return response.MyId;
         }
 
@@ -102,6 +108,8 @@ namespace ET.Client
             {
                 throw new RpcException(response.Error, $"Rpc error: {request}, response: {response}");
             }
+
+            EventSystem.Instance.Publish(self.Root(), new ShowFlyTip() { Error = response.Error });
 
             return response;
         }

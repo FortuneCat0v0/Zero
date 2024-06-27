@@ -3,7 +3,7 @@
     [NumericWatcher(SceneType.Current, NumericType.Hp)]
     public class NumericWatcher_Hp_ShowUI : INumericWatcher
     {
-        public void Run(Unit unit, NumbericChange args)
+        public void Run(Unit unit, NumericChange args)
         {
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
             unit.GetComponent<HeadInfosComponent>()
