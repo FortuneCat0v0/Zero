@@ -44,9 +44,9 @@ namespace ET.Client
             self.StartArea.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
 
             self.MapMask = LayerMask.GetMask("Map");
-            self.OperateModel = 1;
+            self.JoystickModel = EJoystickModel.Fixed;
             self.Radius = 110f;
-            self.Joystick.SetActive(false);
+            self.ResetUI();
         }
 
         [EntitySystem]
@@ -59,7 +59,7 @@ namespace ET.Client
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(self.RectTransform, pdata.position, self.UICamera, out self.OldPoint);
             self.SetAlpha(1f);
-            if (self.OperateModel == 0)
+            if (self.JoystickModel == EJoystickModel.Fixed)
             {
                 self.Joystick.SetActive(true);
                 self.JoystickBottom.transform.localPosition = Vector3.zero;
@@ -202,7 +202,7 @@ namespace ET.Client
         private static void ResetUI(this UIJoystickComponent self)
         {
             self.SetAlpha(0.3f);
-            if (self.OperateModel == 0)
+            if (self.JoystickModel == EJoystickModel.Fixed)
             {
                 self.JoystickBottom.transform.localPosition = Vector3.zero;
                 self.JoystickThumb.transform.localPosition = Vector3.zero;

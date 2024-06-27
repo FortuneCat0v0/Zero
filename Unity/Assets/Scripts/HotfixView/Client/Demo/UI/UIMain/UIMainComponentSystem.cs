@@ -61,8 +61,12 @@ namespace ET.Client
 
         private static async ETTask OnSettingsBtn(this UIMainComponent self)
         {
-            await UIHelper.Create(self.Scene(), UIType.UISettings, UILayer.Mid);
+            // await UIHelper.Create(self.Scene(), UIType.UISettings, UILayer.Mid);
+            FlyTipComponent.Instance.ShowFlyTip("背包界面暂未开放");
+            await ETTask.CompletedTask;
         }
+
+        #region 左下角按钮
 
         private static void OnLBShrinkBtn(this UIMainComponent self)
         {
@@ -80,37 +84,41 @@ namespace ET.Client
 
         private static async ETTask OnBagBtn(this UIMainComponent self)
         {
-            await UIHelper.Create(self.Scene(), UIType.UIBag, UILayer.Mid);
+            // await UIHelper.Create(self.Scene(), UIType.UIBag, UILayer.Mid);
+            FlyTipComponent.Instance.ShowFlyTip("背包界面暂未开放");
+            await ETTask.CompletedTask;
         }
 
         private static async ETTask OnPetBtn(this UIMainComponent self)
         {
-            Log.Info("宠物界面暂未开放");
+            FlyTipComponent.Instance.ShowFlyTip("宠物界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnSkillBtn(this UIMainComponent self)
         {
-            Log.Info("技能界面暂未开放");
+            FlyTipComponent.Instance.ShowFlyTip("技能界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnTaskBtn(this UIMainComponent self)
         {
-            Log.Info("任务界面暂未开放");
+            FlyTipComponent.Instance.ShowFlyTip("任务界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnSocialBtn(this UIMainComponent self)
         {
-            Log.Info("技能界面暂未开放");
+            FlyTipComponent.Instance.ShowFlyTip("社交界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnAchievementBtn(this UIMainComponent self)
         {
-            Log.Info("成就界面暂未开放");
+            FlyTipComponent.Instance.ShowFlyTip("成就界面暂未开放");
             await ETTask.CompletedTask;
         }
+
+        #endregion
     }
 }

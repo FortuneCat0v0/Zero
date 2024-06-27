@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
+    public enum EJoystickModel
+    {
+        Fixed,
+        Free
+    }
+
     /// <summary>
     /// 摇杆
     /// </summary>
@@ -33,7 +39,7 @@ namespace ET.Client
         public int MapMask;
         public Vector2 OldPoint;
         public Vector2 NewPoint;
-        public int OperateModel; // 0固定 1移动
+        public EJoystickModel JoystickModel;
         public float Radius; // 摇杆按钮移动的半径
 
         public Vector3 Direction; // 方向单位向量
