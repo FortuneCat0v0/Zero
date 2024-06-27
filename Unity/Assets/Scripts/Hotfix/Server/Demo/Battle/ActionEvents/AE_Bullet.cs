@@ -7,7 +7,7 @@ namespace ET.Server
     /// <summary>
     /// 技能发射子弹
     /// </summary>
-    public class ActionEventBullet : AActionEvent
+    public class AE_Bullet : AActionEvent
     {
         public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
         {

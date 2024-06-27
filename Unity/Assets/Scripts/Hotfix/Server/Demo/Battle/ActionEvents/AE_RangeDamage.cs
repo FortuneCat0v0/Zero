@@ -8,7 +8,7 @@ namespace ET.Server
     /// <summary>
     /// 执行范围伤害技能事件
     /// </summary>
-    public class ActionEventRangeDamage : AActionEvent
+    public class AE_RangeDamage : AActionEvent
     {
         public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
         {

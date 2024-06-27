@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-    public class ActionEventPlayEffect : AActionEvent
+    public class AE_PlayEffect : AActionEvent
     {
         public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
         {
