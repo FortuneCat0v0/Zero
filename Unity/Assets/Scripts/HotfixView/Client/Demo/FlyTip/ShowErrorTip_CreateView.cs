@@ -2,10 +2,10 @@
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
-    public class ShowMessageErrorTip_CreateView : AEvent<Scene, ShowMessageErrorTip>
+    [Event(SceneType.Demo)]
+    public class ShowErrorTip_CreateView : AEvent<Scene, ShowErrorTip>
     {
-        protected override async ETTask Run(Scene scene, ShowMessageErrorTip args)
+        protected override async ETTask Run(Scene scene, ShowErrorTip args)
         {
             string str = args.Error switch
             {

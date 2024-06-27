@@ -26,7 +26,7 @@ namespace ET.Client
         public bool IsSucceed;
     }
 
-    public struct ShowMessageErrorTip
+    public struct ShowErrorTip
     {
         public int Error;
     }
