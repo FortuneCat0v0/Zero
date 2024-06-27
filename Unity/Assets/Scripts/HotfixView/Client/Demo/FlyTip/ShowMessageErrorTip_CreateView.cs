@@ -3,9 +3,9 @@
 namespace ET.Client
 {
     [Event(SceneType.Current)]
-    public class ShowFlyTip_CreateView : AEvent<Scene, ShowFlyTip>
+    public class ShowMessageErrorTip_CreateView : AEvent<Scene, ShowMessageErrorTip>
     {
-        protected override async ETTask Run(Scene scene, ShowFlyTip args)
+        protected override async ETTask Run(Scene scene, ShowMessageErrorTip args)
         {
             string str = args.Error switch
             {
