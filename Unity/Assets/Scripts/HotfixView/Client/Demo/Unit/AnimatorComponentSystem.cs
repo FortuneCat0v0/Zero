@@ -9,7 +9,9 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, MoveStart args)
         {
             Log.Warning("start");
-            args.Unit.GetComponent<AnimatorComponent>().MontionSpeed = 1;
+
+            args.Unit.GetComponent<AnimatorComponent>()?.SetFloatValue("yVelocity", 1f);
+
             await ETTask.CompletedTask;
         }
     }
@@ -20,7 +22,9 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, MoveStop args)
         {
             Log.Warning("stop");
-            args.Unit.GetComponent<AnimatorComponent>().MontionSpeed = 0;
+
+            args.Unit.GetComponent<AnimatorComponent>()?.SetFloatValue("yVelocity", 0);
+
             await ETTask.CompletedTask;
         }
     }
@@ -84,7 +88,7 @@ namespace ET.Client
 
             try
             {
-                self.Animator.SetFloat("yVelocity", self.MontionSpeed);
+                // self.Animator.SetFloat("MotionSpeed", self.MontionSpeed);
 
                 // self.Animator.SetTrigger(self.MotionType.ToString());
 
