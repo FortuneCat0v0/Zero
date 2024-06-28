@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ET.Client
@@ -43,6 +44,11 @@ namespace ET.Client
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillGridType.SkillGrid0);
             self.UISkillGrid_1 = rc.Get<GameObject>("UISkillGrid_1");
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillGridType.SkillGrid1);
+
+            self.RotateAngleDragPanel = rc.Get<GameObject>("RotateAngleDragPanel");
+            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.BeginDrag, EventTriggerType.BeginDrag);
+            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.Drag, EventTriggerType.Drag);
+            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.EndDrag, EventTriggerType.EndDrag);
         }
 
         private static void OnGMSendBtn(this UIMainComponent self)
@@ -120,5 +126,24 @@ namespace ET.Client
         }
 
         #endregion
+
+        private static void BeginDrag(this UIMainComponent self, PointerEventData pdata)
+        {
+            self.PreviousPressPosition = pdata.position;
+            self.Root().CurrentScene().GetComponent<CameraComponent>().StartRotate();
+        }
+
+        private static void Drag(this UIMainComponent self, PointerEventData pdata)
+        {
+            self.AngleX = (pdata.position.x - self.PreviousPressPosition.x) * self.DRAG_TO_ANGLE;
+            self.AngleY = (pdata.position.y - self.PreviousPressPosition.y) * self.DRAG_TO_ANGLE;
+            self.Root().CurrentScene().GetComponent<CameraComponent>().Rotate(-self.AngleX, -self.AngleY);
+            self.PreviousPressPosition = pdata.position;
+        }
+
+        private static void EndDrag(this UIMainComponent self, PointerEventData pdata)
+        {
+            self.Root().CurrentScene().GetComponent<CameraComponent>().EndRotate();
+        }
     }
 }

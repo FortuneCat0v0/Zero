@@ -7,7 +7,7 @@ namespace ET.Client
     {
         public GameObject GMInput;
         public GameObject GMSendBtn;
-        
+
         public GameObject SettingsBtn;
 
         public GameObject LBShrinkBtn;
@@ -24,5 +24,11 @@ namespace ET.Client
 
         public GameObject UISkillGrid_0;
         public GameObject UISkillGrid_1;
+
+        public GameObject RotateAngleDragPanel;
+        public float DRAG_TO_ANGLE = 0.5f;
+        public Vector2 PreviousPressPosition;
+        public float AngleX;
+        public float AngleY;
     }
 }
