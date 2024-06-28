@@ -15,13 +15,14 @@ namespace ET.Client
             root.AddComponent<UIGlobalComponent>();
             root.AddComponent<UIComponent>();
             root.AddComponent<ResourcesLoaderComponent>();
-            root.AddComponent<PlayerComponent>();
             root.AddComponent<CurrentScenesComponent>();
+            root.AddComponent<PlayerComponent>();
             root.AddComponent<FlyTipComponent>();
-            root.AddComponent<SkillIndicatorComponent>();
+            root.AddComponent<AudioComponent>();
             root.AddComponent<AccountComponent>();
             root.AddComponent<GameServerComponent>();
             root.AddComponent<RoleComponent>();
+            root.AddComponent<SkillIndicatorComponent>();
             root.AddComponent<BagComponent>();
             root.AddComponent<EquipmentComponent>();
 
