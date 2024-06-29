@@ -19,7 +19,7 @@ namespace ET.Client
             ReferenceCollector rc = self.Transform.GetComponent<ReferenceCollector>();
             self.HealthBarFillImg = rc.Get<GameObject>("HealthBarFillImg").GetComponent<Image>();
 
-            self.MainCameraTransform = Camera.main.transform;
+            self.MainCameraTransform = self.Root().GetComponent<GlobalComponent>().MainCamera;
         }
 
         [EntitySystem]

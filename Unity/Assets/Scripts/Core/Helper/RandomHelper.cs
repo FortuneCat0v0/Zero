@@ -73,6 +73,19 @@ namespace ET
             return value;
         }
 
+        /// <summary>
+        /// 获取lower与Upper之间的随机数,包含下限，不包含上限
+        /// </summary>
+        /// <param name="lower"></param>
+        /// <param name="upper"></param>
+        /// <returns></returns>
+        public static float RandomNumberFloat(float lower, float upper)
+        {
+
+            float value = lower + (upper - lower) * (float)random.NextDouble();
+            return value;
+        }
+
         public static long NextLong(long minValue,long maxValue)
         {
             if (minValue > maxValue)
@@ -119,9 +132,7 @@ namespace ET
             for (int i = 0; i < arr.Count; i++)
             {
                 int index = random.Next(0, arr.Count);
-                T temp = arr[index];
-                arr[index] = arr[i];
-                arr[i] = temp;
+                (arr[index], arr[i]) = (arr[i], arr[index]);
             }
         }
 

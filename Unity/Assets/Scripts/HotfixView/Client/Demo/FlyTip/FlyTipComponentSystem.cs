@@ -48,27 +48,27 @@ namespace ET.Client
         private static void SpawnFlyTip(this FlyTipComponent self, string str)
         {
             Vector3 startPos = new(0, -200, 0);
-            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
-            FlyTipDiGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
-            self.FlyTips.Add(FlyTipDiGO);
-            FlyTipDiGO.SetActive(true);
+            GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
+            go.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
+            self.FlyTips.Add(go);
+            go.SetActive(true);
 
-            RectTransform rectTransform = FlyTipDiGO.transform.GetComponent<RectTransform>();
+            RectTransform rectTransform = go.transform.GetComponent<RectTransform>();
             rectTransform.localPosition = startPos;
             rectTransform.localScale = Vector3.one;
-            rectTransform.GetComponent<RectTransform>().DOMoveY(0, 2f).SetEase(Ease.OutQuad).onComplete = () =>
+            rectTransform.DOMoveY(0, 2f).SetEase(Ease.OutQuad).onComplete = () =>
             {
-                FlyTipDiGO.SetActive(false);
-                self.FlyTips.Remove(FlyTipDiGO);
-                GameObjectPoolHelper.ReturnObjectToPool(FlyTipDiGO);
+                go.SetActive(false);
+                self.FlyTips.Remove(go);
+                GameObjectPoolHelper.ReturnObjectToPool(go);
             };
 
-            Text text = FlyTipDiGO.GetComponentInChildren<Text>();
+            Text text = go.GetComponentInChildren<Text>();
             text.text = str;
             text.color = Color.white;
             text.DOColor(new Color(255, 255, 255, 0), 2f).SetEase(Ease.OutQuad);
 
-            Image image = FlyTipDiGO.GetComponentInChildren<Image>();
+            Image image = go.GetComponentInChildren<Image>();
             image.color = Color.white;
             image.DOColor(new Color(255, 255, 255, 0), 2f).SetEase(Ease.OutQuad);
         }
