@@ -2262,6 +2262,43 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_HitResult)]
+    public partial class M2C_HitResult : MessageObject, IMessage
+    {
+        public static M2C_HitResult Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_HitResult), isFromPool) as M2C_HitResult;
+        }
+
+        [MemoryPackOrder(0)]
+        public long FromUnitId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long ToUnitId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int HitResultType { get; set; }
+
+        [MemoryPackOrder(3)]
+        public int Value { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FromUnitId = default;
+            this.ToUnitId = default;
+            this.HitResultType = default;
+            this.Value = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -2330,5 +2367,6 @@ namespace ET
         public const ushort M2C_SpellSkill = 10065;
         public const ushort SkillInfo = 10066;
         public const ushort M2C_SkillUpdateOp = 10067;
+        public const ushort M2C_HitResult = 10068;
     }
 }

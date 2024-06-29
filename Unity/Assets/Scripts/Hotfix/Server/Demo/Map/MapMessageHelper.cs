@@ -33,6 +33,7 @@ namespace ET.Server
                     continue;
                 }
 
+                Log.Warning($"发送 {u.Unit.Type().ToString()}");
                 oneTypeMessageLocationType.Send(u.Unit.Id, message);
             }
         }

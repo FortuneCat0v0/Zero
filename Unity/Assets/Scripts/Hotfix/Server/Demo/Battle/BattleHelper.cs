@@ -21,7 +21,8 @@ namespace ET.Server
 
                     Log.Info($"hit settle, from:{from?.Id}, to:{to?.Id}, value:{dmg}");
 
-                    EventSystem.Instance.Publish(from.Root(), new HitResult() { hitResultType = EHitResultType.Damage, value = dmg });
+                    EventSystem.Instance.Publish(from.Root(),
+                        new HitResult() { FromUnit = from, ToUnit = to, HitResultType = EHitResultType.Damage, Value = dmg });
                     break;
                 }
                 case EHitFromType.Skill_Bullet:
@@ -36,7 +37,8 @@ namespace ET.Server
 
                     Log.Info($"hit settle, from:{from.Id}, to:{to.Id}, value:{dmg}");
 
-                    EventSystem.Instance.Publish(from.Root(), new HitResult() { hitResultType = EHitResultType.Damage, value = dmg });
+                    EventSystem.Instance.Publish(from.Root(),
+                        new HitResult() { FromUnit = from, ToUnit = to, HitResultType = EHitResultType.Damage, Value = dmg });
                     break;
                 }
             }

@@ -39,8 +39,10 @@ namespace ET
 
     public struct HitResult
     {
-        public EHitResultType hitResultType;
-        public int value;
+        public Unit FromUnit;
+        public Unit ToUnit;
+        public EHitResultType HitResultType;
+        public int Value;
     }
 
     public struct ChangeEquipItem

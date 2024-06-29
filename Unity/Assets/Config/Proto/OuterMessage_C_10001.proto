@@ -503,3 +503,11 @@ message M2C_SkillUpdateOp // IMessage
 	SkillInfo SkillInfo = 1;
 	int32 SkillOpType = 2;
 }
+
+message M2C_HitResult // IMessage
+{
+	int64 FromUnitId = 1;
+	int64 ToUnitId = 2;
+	int32 HitResultType = 3;
+	int32 Value = 4;
+}
