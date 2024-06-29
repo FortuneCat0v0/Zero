@@ -61,7 +61,7 @@ namespace ET
         public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent)
         {
             long oldValue = self.GetByKey(numericType);
-            if (oldValue == value && !NumericType.ForcedUpdate.Contains(numericType))
+            if (oldValue == value)
             {
                 return;
             }

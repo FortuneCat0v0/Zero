@@ -5,12 +5,6 @@ namespace ET
     public static class NumericType
     {
         /// <summary>
-        /// 值没有变化也要更新，用于客户端表现闪避 等
-        /// </summary>
-        [StaticField]
-        public static List<int> ForcedUpdate = new() { Hp };
-
-        /// <summary>
         /// 需要广播的数据
         /// </summary>
         [StaticField]
