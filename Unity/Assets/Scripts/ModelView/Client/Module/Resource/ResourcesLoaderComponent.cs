@@ -155,6 +155,8 @@ namespace ET.Client
         /// <returns></returns>
         public static async ETTask<int> UpdateManifestAsync(this ResourcesLoaderComponent self)
         {
+            self.package.ForceUnloadAllAssets();
+
             var operation = self.package.UpdatePackageManifestAsync(self.PackageVersion);
 
             await operation.Task;
