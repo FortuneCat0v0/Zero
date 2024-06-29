@@ -13,7 +13,7 @@ namespace ET.Client
             {
                 return;
             }
-            Transform transform = gameObjectComponent.GameObject.transform;
+            Transform transform = gameObjectComponent.UnitGo.transform;
             transform.rotation = unit.Rotation;
             await ETTask.CompletedTask;
         }

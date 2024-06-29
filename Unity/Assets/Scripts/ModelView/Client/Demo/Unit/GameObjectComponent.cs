@@ -5,7 +5,7 @@ namespace ET.Client
     [ComponentOf(typeof(Unit))]
     public class GameObjectComponent : Entity, IAwake, IDestroy
     {
-        public GameObject GameObject { get; set; }
+        public GameObject UnitGo { get; set; }
         public GameObject ModelGo { get; set; }
     }
 }

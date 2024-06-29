@@ -48,7 +48,7 @@ namespace ET.Client
         private static void SpawnFlyTip(this FlyTipComponent self, string str)
         {
             Vector3 startPos = new(0, -200, 0);
-            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPool(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
+            GameObject FlyTipDiGO = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
             FlyTipDiGO.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
             self.FlyTips.Add(FlyTipDiGO);
             FlyTipDiGO.SetActive(true);

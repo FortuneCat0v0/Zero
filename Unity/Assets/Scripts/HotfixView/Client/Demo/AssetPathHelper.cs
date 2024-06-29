@@ -2,6 +2,16 @@
 {
     public static partial class AssetPathHelper
     {
+        public static string GetUIPath(string fileName)
+        {
+            return $"Assets/Bundles/UI/{fileName}.prefab";
+        }
+
+        public static string GetUnitPath(string fileName)
+        {
+            return $"Assets/Bundles/Unit/{fileName}.prefab";
+        }
+
         public static string GetEffectPath(string fileName)
         {
             return $"Assets/Bundles/Effect/{fileName}.prefab";

@@ -8,9 +8,11 @@ namespace ET.Client
     public static partial class HeadInfosComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this HeadInfosComponent self, GameObject gameObject)
+        private static void Awake(this HeadInfosComponent self, Transform transform)
         {
-            self.Transform = gameObject.transform;
+            GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Scene(), AssetPathHelper.GetUIPath("Other/HeadInfos"));
+            go.transform.SetParent(transform);
+            self.Transform = go.transform;
             self.Transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             self.Transform.localPosition = new Vector3(0, 2f, 0);
 
@@ -18,6 +20,12 @@ namespace ET.Client
             self.HealthBarFillImg = rc.Get<GameObject>("HealthBarFillImg").GetComponent<Image>();
 
             self.MainCameraTransform = Camera.main.transform;
+        }
+
+        [EntitySystem]
+        private static void Destroy(this HeadInfosComponent self)
+        {
+            GameObjectPoolHelper.ReturnObjectToPool(self.Transform.gameObject);
         }
 
         [EntitySystem]

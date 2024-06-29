@@ -9,7 +9,7 @@ namespace ET.Client
         [StaticField]
         private static Dictionary<string, GameObjectPool> poolDict = new();
 
-        public static GameObject GetObjectFromPool(Scene scene, string poolName, bool autoActive = true, int size = 3,
+        public static GameObject GetObjectFromPoolSync(Scene scene, string poolName, bool autoActive = true, int size = 3,
         PoolInflationType type = PoolInflationType.INCREMENT)
         {
             GameObject result = null;
@@ -18,7 +18,49 @@ namespace ET.Client
             {
                 try
                 {
-                    GameObject pb = GetGameObject(scene, poolName);
+                    GameObject pb = GetGameObjectSync(scene, poolName);
+                    if (pb == null)
+                    {
+                        Log.Error("[ResourceManager] Invalide prefab name for pooling :" + poolName);
+                    }
+
+                    poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+
+            if (poolDict.ContainsKey(poolName))
+            {
+                GameObjectPool pool = poolDict[poolName];
+                result = pool.NextAvailableObject(autoActive);
+                //scenario when no available object is found in pool
+
+                if (result == null)
+                {
+                    Log.Warning("[ResourceManager]:No object available in " + poolName);
+                }
+            }
+            else
+            {
+                Log.Error("[ResourceManager]:Invalid pool name specified: " + poolName);
+            }
+
+            return result;
+        }
+
+        public static async ETTask<GameObject> GetObjectFromPoolAsync(Scene scene, string poolName, bool autoActive = true, int size = 3,
+        PoolInflationType type = PoolInflationType.INCREMENT)
+        {
+            GameObject result = null;
+
+            if (!poolDict.ContainsKey(poolName) && size > 0)
+            {
+                try
+                {
+                    GameObject pb = await GetGameObjectAsync(scene, poolName);
                     if (pb == null)
                     {
                         Log.Error("[ResourceManager] Invalide prefab name for pooling :" + poolName);
@@ -72,9 +114,15 @@ namespace ET.Client
             }
         }
 
-        private static GameObject GetGameObject(Scene scene, string poolName)
+        private static GameObject GetGameObjectSync(Scene scene, string poolName)
         {
-            GameObject pb = scene.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(poolName);
+            GameObject go = scene.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(poolName);
+            return go;
+        }
+
+        private static async ETTask<GameObject> GetGameObjectAsync(Scene scene, string poolName)
+        {
+            GameObject pb = await scene.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(poolName);
             return pb;
         }
     }

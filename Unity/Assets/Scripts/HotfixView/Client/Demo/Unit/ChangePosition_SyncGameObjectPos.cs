@@ -14,7 +14,7 @@ namespace ET.Client
                 return;
             }
 
-            Transform transform = gameObjectComponent.GameObject.transform;
+            Transform transform = gameObjectComponent.UnitGo.transform;
             transform.position = unit.Position;
             await ETTask.CompletedTask;
         }

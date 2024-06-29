@@ -12,56 +12,46 @@ namespace ET.Client
             ResourcesLoaderComponent resourcesLoaderComponent = scene.GetComponent<ResourcesLoaderComponent>();
 
             // Unit View层
-            string assetsName = "Assets/Bundles/Unit/Unit.prefab";
-            GameObject bundleGameObject = await resourcesLoaderComponent.LoadAssetAsync<GameObject>(assetsName);
             GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
-            GameObject unitParent = UnityEngine.Object.Instantiate(bundleGameObject, globalComponent.Unit, true);
-            unitParent.transform.position = unit.Position;
-            unitParent.name = unit.Type() + "" + unit.Id;
+            GameObject unitRoot = GameObjectPoolHelper.GetObjectFromPoolSync(scene, "Assets/Bundles/Unit/Unit.prefab");
+            unitRoot.transform.SetParent(globalComponent.Unit);
+            unitRoot.transform.position = unit.Position;
 
             unit.AddComponent<EffectComponent>();
-            unit.AddComponent<GameObjectComponent>().GameObject = unitParent;
+            unit.AddComponent<GameObjectComponent>().UnitGo = unitRoot;
 
-            ReferenceCollector rc = unitParent.GetComponent<ReferenceCollector>();
+            ReferenceCollector rc = unitRoot.GetComponent<ReferenceCollector>();
             GameObject model;
             if (unit.Type() == EUnitType.Player)
             {
-                assetsName = $"Assets/Bundles/Unit/AngelSlime.prefab";
-                bundleGameObject = await resourcesLoaderComponent.LoadAssetAsync<GameObject>(assetsName);
-
-                model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
+                model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("AngelSlime"));
+                model.transform.SetParent(unitRoot.transform);
                 model.transform.localPosition = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
                 unit.AddComponent<AnimatorComponent, GameObject>(model);
 
-                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, GameObject>(rc.Get<GameObject>("HeadInfos"));
-                headInfosComponent.Transform.gameObject.SetActive(true);
+                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(unitRoot.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.Type() == EUnitType.Monster)
             {
-                assetsName = $"Assets/Bundles/Unit/PowerSlime.prefab";
-                bundleGameObject = await resourcesLoaderComponent.LoadAssetAsync<GameObject>(assetsName);
-
-                model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
+                model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("PowerSlime"));
+                model.transform.SetParent(unitRoot.transform);
                 model.transform.localPosition = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
                 unit.AddComponent<AnimatorComponent, GameObject>(model);
 
-                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, GameObject>(rc.Get<GameObject>("HeadInfos"));
-                headInfosComponent.Transform.gameObject.SetActive(true);
+                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(unitRoot.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.Type() == EUnitType.Bullet)
             {
-                assetsName = $"Assets/Bundles/Unit/Bullet.prefab";
-                bundleGameObject = await resourcesLoaderComponent.LoadAssetAsync<GameObject>(assetsName);
-
-                model = UnityEngine.Object.Instantiate(bundleGameObject, unitParent.transform, true);
+                model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("Bullet"));
+                model.transform.SetParent(unitRoot.transform);
                 model.transform.localPosition = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;

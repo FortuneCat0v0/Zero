@@ -31,7 +31,7 @@ namespace ET.Client
 
             self.StartTime = TimeInfo.Instance.ServerNow();
             self.Timer = self.Root().GetComponent<TimerComponent>().NewFrameTimer(TimerInvokeType.EffectTimer, self);
-            self.EffectGo = GameObjectPoolHelper.GetObjectFromPool(self.Scene(), AssetPathHelper.GetEffectPath(self.EffectConfig.AssetPath));
+            self.EffectGo = GameObjectPoolHelper.GetObjectFromPoolSync(self.Scene(), AssetPathHelper.GetEffectPath(self.EffectConfig.AssetPath));
         }
 
         [EntitySystem]
@@ -59,7 +59,7 @@ namespace ET.Client
                         }
                         case EEffectType.BindUnit:
                         {
-                            self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().GameObject.transform);
+                            self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().UnitGo.transform);
                             self.EffectGo.transform.localPosition = Vector3.zero;
                             self.EffectGo.transform.localScale = Vector3.one;
                             break;
