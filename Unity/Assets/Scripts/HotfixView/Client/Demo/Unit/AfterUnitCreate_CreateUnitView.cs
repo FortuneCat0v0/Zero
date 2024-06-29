@@ -27,6 +27,7 @@ namespace ET.Client
                 model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("AngelSlime"));
                 model.transform.SetParent(unitRoot.transform);
                 model.transform.localPosition = Vector3.zero;
+                model.transform.localEulerAngles = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
                 unit.AddComponent<AnimatorComponent, GameObject>(model);
@@ -40,6 +41,7 @@ namespace ET.Client
                 model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("PowerSlime"));
                 model.transform.SetParent(unitRoot.transform);
                 model.transform.localPosition = Vector3.zero;
+                model.transform.localEulerAngles = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
                 unit.AddComponent<AnimatorComponent, GameObject>(model);
@@ -53,6 +55,7 @@ namespace ET.Client
                 model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("Bullet"));
                 model.transform.SetParent(unitRoot.transform);
                 model.transform.localPosition = Vector3.zero;
+                model.transform.localEulerAngles = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
             }
