@@ -28,12 +28,6 @@ namespace ET.Server
                     unit.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession);
             foreach (AOIEntity u in dict.Values)
             {
-                if (unit != null && unit.Type() != EUnitType.Player && u.Unit == unit)
-                {
-                    continue;
-                }
-
-                Log.Warning($"发送 {u.Unit.Type().ToString()}");
                 oneTypeMessageLocationType.Send(u.Unit.Id, message);
             }
         }
