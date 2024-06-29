@@ -18,7 +18,6 @@ namespace ET.Client
             root.AddComponent<CurrentScenesComponent>();
             root.AddComponent<PlayerComponent>();
             root.AddComponent<FlyTipComponent>();
-            root.AddComponent<AudioComponent>();
             root.AddComponent<AccountComponent>();
             root.AddComponent<GameServerComponent>();
             root.AddComponent<RoleComponent>();

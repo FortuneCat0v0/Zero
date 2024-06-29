@@ -14,10 +14,6 @@ namespace ET
     {
     }
 
-    public struct AfterCreateCurrentScene
-    {
-    }
-
     public struct AppStartInitFinish
     {
     }
