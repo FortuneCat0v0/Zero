@@ -2,6 +2,16 @@
 
 namespace ET.Client
 {
+    [Event(SceneType.Current)]
+    public class PlaySound_PlayView : AEvent<Scene, PlaySound>
+    {
+        protected override async ETTask Run(Scene scene, PlaySound args)
+        {
+            scene.GetComponent<AudioComponent>().PlaySound(AudioConfigCategory.Instance.Get(args.AudioConfigId).AssetName);
+            await ETTask.CompletedTask;
+        }
+    }
+
     [FriendOf(typeof(AudioComponent))]
     [EntitySystemOf(typeof(AudioComponent))]
     public static partial class AudioComponentSystem

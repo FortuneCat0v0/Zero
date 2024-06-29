@@ -38,16 +38,10 @@ namespace ET.Client
         public int Occ;
     }
 
-    /// <summary>
-    /// 播动画
-    /// </summary>
     public struct PlayAnimation
     {
     }
 
-    /// <summary>
-    /// 震屏
-    /// </summary>
     public struct ShakeCamera
     {
     }
@@ -60,9 +54,6 @@ namespace ET.Client
         public float3 Direction;
     }
 
-    /// <summary>
-    /// 播特效
-    /// </summary>
     public struct PlayEffect
     {
         public Unit Unit;
@@ -76,11 +67,9 @@ namespace ET.Client
         public long EffectId;
     }
 
-    /// <summary>
-    /// 播音效
-    /// </summary>
     public struct PlaySound
     {
+        public int AudioConfigId;
     }
 
     /// <summary>
