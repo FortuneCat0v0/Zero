@@ -6,25 +6,36 @@ namespace ET
 {
     public static class MathHelper
     {
-        /// <summary>
-        /// 万分比转换
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
         public static float ToFloat(this int self)
         {
             return self / 1000f;
         }
 
-        /// <summary>
-        /// 单位向量
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
         public static float3 Normalized(this float3 self)
         {
-            float num = (float)Math.Sqrt(self.x * self.x + self.y * self.y + self.z * self.z);
-            return num > 9.999999747378752E-06 ? self / num : float3.zero;
+            float num = (float)Math.Sqrt((double)self.x * (double)self.x + (double)self.y * (double)self.y + (double)self.z * (double)self.z);
+            return (double)num > 9.999999747378752E-06 ? self / num : float3.zero;
+        }
+
+        public static float SqrMagnitude(this float3 self)
+        {
+            return (float)((double)self.x * (double)self.x + (double)self.y * (double)self.y + (double)self.z * (double)self.z);
+        }
+
+        public static float Length(this float3 self)
+        {
+            return (float)Math.Sqrt((double)self.x * (double)self.x + (double)self.y * (double)self.y + (double)self.z * (double)self.z);
+        }
+
+        public static float3 IncreaseLength(float3 vector, float increase)
+        {
+            float originalLength = vector.Length();
+
+            float newLength = originalLength + increase;
+
+            float scale = newLength / originalLength;
+
+            return new float3(vector.x * scale, vector.y * scale, vector.z * scale);
         }
 
         public static float Distance(float3 value1, float3 value2)
@@ -32,7 +43,7 @@ namespace ET
             float num1 = value1.x - value2.x;
             float num2 = value1.y - value2.y;
             float num3 = value1.y - value2.y;
-            return (float)Math.Sqrt(num1 * num1 + num2 * num2 + num3 * num3);
+            return (float)Math.Sqrt((double)num1 * (double)num1 + (double)num2 * (double)num2 + (double)num3 * (double)num3);
         }
 
         //

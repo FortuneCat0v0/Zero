@@ -84,31 +84,85 @@ namespace ET
                 RcVec3f pos = self.straightPath[i].pos;
                 result.Add(new float3(-pos.x, pos.y, pos.z));
             }
+
+            Log.Info("寻路点数" + result.Count);
         }
 
         /// <summary>
-        /// 判断某一点是否在地图上
+        /// 不能绕过障碍物
         /// </summary>
         /// <param name="self"></param>
         /// <param name="start"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public static bool CheckPointInMap(this PathfindingComponent self, float3 start)
+        /// <param name="target"></param>
+        /// <param name="result"></param>
+        public static void Find2(this PathfindingComponent self, float3 start, float3 target, List<float3> result)
         {
-            if (self.navMesh == null)
+            self.Find(start, target, result);
+
+            if (result.Count <= 2)
             {
-                Log.Debug("寻路| Find 失败 pathfinding ptr is zero");
-                throw new Exception($"pathfinding ptr is zero: {self.Scene().Name}");
+                return;
             }
 
-            RcVec3f startPos = new(-start.x, start.y, start.z);
+            float epsilon = 0.2f;
+            float3 startPoint = result[0];
+            float3 endPoint = result[^1];
 
-            long startRef;
-            RcVec3f startPt;
-            RcVec3f extents = new(1, 1, 1);
+            float3 AB = endPoint - startPoint;
+            float AB_squared = AB.SqrMagnitude();
+            for (int i = result.Count - 2; i > 0; i--)
+            {
+                float3 point = result[i];
 
-            DtStatus dtStatus = self.query.FindNearestPoly(startPos, extents, self.filter, out startRef, out startPt, out _);
-            return dtStatus.Succeeded();
+                float3 AP = point - startPoint;
+
+                // 投影长度的平方
+                float AP_dot_AB = MathHelper.Dot(AP, AB);
+
+                // 投影点
+                float3 projection = startPoint + (AP_dot_AB / AB_squared) * AB;
+
+                // 点到直线的距离
+                float distance = MathHelper.Distance(point, projection);
+
+                if (distance <= epsilon)
+                {
+                    continue;
+                }
+
+                result.Clear();
+                self.Find2(start, CalculateNewB(start, target, -1f), result);
+                break;
+            }
+        }
+
+        // 将向量的长度增加指定的值
+        private static float3 IncreaseLength(float3 vector, float lengthIncrease)
+        {
+            // 计算原始向量的长度
+            float originalLength = vector.Length();
+
+            // 新的长度是原始长度加上增加的值
+            float newLength = originalLength + lengthIncrease;
+
+            // 计算缩放因子
+            float scale = newLength / originalLength;
+
+            // 返回新的向量
+            return vector * scale;
+        }
+
+        // 计算新的点B的位置
+        private static float3 CalculateNewB(float3 pointA, float3 pointB, float distanceChange)
+        {
+            // 计算从A到B的向量
+            float3 vectorAB = pointB - pointA;
+
+            // 增加向量的长度
+            float3 newVectorAB = IncreaseLength(vectorAB, distanceChange);
+
+            // 计算新的点B的位置
+            return pointA + newVectorAB;
         }
     }
 }

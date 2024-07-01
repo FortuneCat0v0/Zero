@@ -191,6 +191,11 @@ namespace ET.Client
                 return;
             }
 
+            if (Vector3.Distance(target, self.MyUnit.Position) < 0.1f)
+            {
+                return;
+            }
+
             self.LastDirection = self.Direction;
             self.LastUnitPosition = self.MyUnit.Position;
 
