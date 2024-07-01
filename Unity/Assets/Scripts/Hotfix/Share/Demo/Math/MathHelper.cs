@@ -16,6 +16,25 @@ namespace ET
             return self / 1000f;
         }
 
+        /// <summary>
+        /// 单位向量
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
+        public static float3 Normalized(this float3 self)
+        {
+            float num = (float)Math.Sqrt(self.x * self.x + self.y * self.y + self.z * self.z);
+            return num > 9.999999747378752E-06 ? self / num : float3.zero;
+        }
+
+        public static float Distance(float3 value1, float3 value2)
+        {
+            float num1 = value1.x - value2.x;
+            float num2 = value1.y - value2.y;
+            float num3 = value1.y - value2.y;
+            return (float)Math.Sqrt(num1 * num1 + num2 * num2 + num3 * num3);
+        }
+
         //
         // Summary:
         //     The well-known 3.14159265358979... value (Read Only).
@@ -40,7 +59,7 @@ namespace ET
         // Summary:
         //     Radians-to-degrees conversion constant (Read Only).
         public const float Rad2Deg = 57.29578f;
-        
+
         public static float RadToDeg(float radians)
         {
             return (float)(radians * 180 / System.Math.PI);

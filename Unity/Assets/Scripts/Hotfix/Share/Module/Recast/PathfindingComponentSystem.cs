@@ -17,17 +17,17 @@ namespace ET
         {
             self.Name = name;
             byte[] buffer = NavmeshComponent.Instance.Get(name);
-            
+
             DtMeshSetReader reader = new();
             using MemoryStream ms = new(buffer);
             using BinaryReader br = new(ms);
             self.navMesh = reader.Read32Bit(br, 6); // cpp recast导出来的要用Read32Bit读取，DotRecast导出来的还没试过
-            
+
             if (self.navMesh == null)
             {
                 throw new Exception($"nav load fail: {name}");
             }
-            
+
             self.filter = new DtQueryDefaultFilter();
             self.query = new DtNavMeshQuery(self.navMesh);
         }
@@ -38,7 +38,7 @@ namespace ET
             self.Name = string.Empty;
             self.navMesh = null;
         }
-        
+
         public static void Find(this PathfindingComponent self, float3 start, float3 target, List<float3> result)
         {
             if (self.navMesh == null)
@@ -54,7 +54,7 @@ namespace ET
             long endRef;
             RcVec3f startPt;
             RcVec3f endPt;
-            
+
             self.query.FindNearestPoly(startPos, self.extents, self.filter, out startRef, out startPt, out _);
             self.query.FindNearestPoly(endPos, self.extents, self.filter, out endRef, out endPt, out _);
             
@@ -64,7 +64,7 @@ namespace ET
             {
                 return;
             }
-            
+
             // In case of partial path, make sure the end point is clamped to the last polygon.
             RcVec3f epos = RcVec3f.Of(endPt.x, endPt.y, endPt.z);
             if (self.polys[^1] != endRef)
@@ -76,13 +76,51 @@ namespace ET
                 }
             }
 
-            self.query.FindStraightPath(startPt, epos, self.polys, ref self.straightPath, PathfindingComponent.MAX_POLYS, DtNavMeshQuery.DT_STRAIGHTPATH_ALL_CROSSINGS);
+            self.query.FindStraightPath(startPt, epos, self.polys, ref self.straightPath, PathfindingComponent.MAX_POLYS,
+                DtNavMeshQuery.DT_STRAIGHTPATH_ALL_CROSSINGS);
 
             for (int i = 0; i < self.straightPath.Count; ++i)
             {
                 RcVec3f pos = self.straightPath[i].pos;
                 result.Add(new float3(-pos.x, pos.y, pos.z));
             }
+        }
+
+        /// <summary>
+        /// 得到可以冲刺到的目标点
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="start"></param>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static float3 GetCanChongJiPath(this PathfindingComponent self, float3 start, float3 target)
+        {
+            using var list = ListComponent<float3>.Create();
+            float3 dir = (target - start).Normalized();
+            float3 tmm = start;
+            self.Find(start, target, list);
+            while (true)
+            {
+                float3 next = tmm + (1f * dir);
+                if (list.Count == 0 || list.Count == 1)
+                {
+                    break;
+                }
+
+                if (Math.Abs(list[^1].x - next.x) > 0.1f || Math.Abs(list[^1].z - next.z) > 0.1f)
+                {
+                    break;
+                }
+
+                if (MathHelper.Distance(next, target) <= 1f)
+                {
+                    break;
+                }
+
+                tmm = next;
+            }
+
+            return tmm;
         }
     }
 }
