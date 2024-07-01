@@ -57,7 +57,7 @@ namespace ET
 
             self.query.FindNearestPoly(startPos, self.extents, self.filter, out startRef, out startPt, out _);
             self.query.FindNearestPoly(endPos, self.extents, self.filter, out endRef, out endPt, out _);
-            
+
             self.query.FindPath(startRef, endRef, startPt, endPt, self.filter, ref self.polys, new DtFindPathOption(0, float.MaxValue));
 
             if (0 >= self.polys.Count)
@@ -87,40 +87,28 @@ namespace ET
         }
 
         /// <summary>
-        /// 得到可以冲刺到的目标点
+        /// 判断某一点是否在地图上
         /// </summary>
         /// <param name="self"></param>
         /// <param name="start"></param>
-        /// <param name="target"></param>
         /// <returns></returns>
-        public static float3 GetCanChongJiPath(this PathfindingComponent self, float3 start, float3 target)
+        /// <exception cref="Exception"></exception>
+        public static bool CheckPointInMap(this PathfindingComponent self, float3 start)
         {
-            using var list = ListComponent<float3>.Create();
-            float3 dir = (target - start).Normalized();
-            float3 tmm = start;
-            self.Find(start, target, list);
-            while (true)
+            if (self.navMesh == null)
             {
-                float3 next = tmm + (1f * dir);
-                if (list.Count == 0 || list.Count == 1)
-                {
-                    break;
-                }
-
-                if (Math.Abs(list[^1].x - next.x) > 0.1f || Math.Abs(list[^1].z - next.z) > 0.1f)
-                {
-                    break;
-                }
-
-                if (MathHelper.Distance(next, target) <= 1f)
-                {
-                    break;
-                }
-
-                tmm = next;
+                Log.Debug("寻路| Find 失败 pathfinding ptr is zero");
+                throw new Exception($"pathfinding ptr is zero: {self.Scene().Name}");
             }
 
-            return tmm;
+            RcVec3f startPos = new(-start.x, start.y, start.z);
+
+            long startRef;
+            RcVec3f startPt;
+            RcVec3f extents = new(1, 1, 1);
+
+            DtStatus dtStatus = self.query.FindNearestPoly(startPos, extents, self.filter, out startRef, out startPt, out _);
+            return dtStatus.Succeeded();
         }
     }
 }
