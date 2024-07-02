@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 //Object并非C#基础中的Object，而是 UnityEngine.Object
 using Object = UnityEngine.Object;
@@ -31,6 +32,8 @@ public class ReferenceCollectorEditor: Editor
 	private Object heroPrefab;
 
 	private string _searchKey = "";
+	
+	private ReorderableList reorderableList;
 
 	private void DelNullReference()
 	{
@@ -50,8 +53,34 @@ public class ReferenceCollectorEditor: Editor
 
 	private void OnEnable()
 	{
-        //将被选中的gameobject所挂载的ReferenceCollector赋值给编辑器类中的ReferenceCollector，方便操作
-        referenceCollector = (ReferenceCollector) target;
+		//将被选中的gameobject所挂载的ReferenceCollector赋值给编辑器类中的ReferenceCollector，方便操作
+		referenceCollector = (ReferenceCollector)target;
+
+		var dataProperty = serializedObject.FindProperty("data");
+
+		reorderableList = new ReorderableList(serializedObject, dataProperty, true, true, true, true)
+		{
+			drawHeaderCallback = (Rect rect) => { EditorGUI.LabelField(rect, "References"); },
+
+			drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
+			{
+				var element = dataProperty.GetArrayElementAtIndex(index);
+				var keyProperty = element.FindPropertyRelative("key");
+				var gameObjectProperty = element.FindPropertyRelative("gameObject");
+
+				EditorGUI.PropertyField(new Rect(rect.x, rect.y, 150, EditorGUIUtility.singleLineHeight), keyProperty, GUIContent.none);
+				EditorGUI.PropertyField(new Rect(rect.x + 155, rect.y, rect.width - 180, EditorGUIUtility.singleLineHeight), gameObjectProperty,
+					GUIContent.none);
+				if (GUI.Button(new Rect(rect.x + rect.width - 25, rect.y, 25, EditorGUIUtility.singleLineHeight), "X"))
+				{
+					dataProperty.DeleteArrayElementAtIndex(index);
+				}
+			},
+
+			onAddCallback = (ReorderableList list) => { AddReference(dataProperty, Guid.NewGuid().GetHashCode().ToString(), null); },
+
+			onRemoveCallback = (ReorderableList list) => { dataProperty.DeleteArrayElementAtIndex(list.index); }
+		};
 	}
 
 	public override void OnInspectorGUI()
@@ -95,52 +124,11 @@ public class ReferenceCollectorEditor: Editor
 		GUILayout.EndHorizontal();
 		EditorGUILayout.Space();
 
-		var delList = new List<int>();
-        SerializedProperty property;
-        //遍历ReferenceCollector中data list的所有元素，显示在编辑器中
-        for (int i = referenceCollector.data.Count - 1; i >= 0; i--)
-		{
-			GUILayout.BeginHorizontal();
-            //这里的知识点在ReferenceCollector中有说
-            property = dataProperty.GetArrayElementAtIndex(i).FindPropertyRelative("key");
-            property.stringValue = EditorGUILayout.TextField(property.stringValue, GUILayout.Width(150));
-            property = dataProperty.GetArrayElementAtIndex(i).FindPropertyRelative("gameObject");
-            property.objectReferenceValue = EditorGUILayout.ObjectField(property.objectReferenceValue, typeof(Object), true);
-			if (GUILayout.Button("X"))
-			{
-                //将元素添加进删除list
-				delList.Add(i);
-			}
-			GUILayout.EndHorizontal();
-		}
-		var eventType = Event.current.type;
-        //在Inspector 窗口上创建区域，向区域拖拽资源对象，获取到拖拽到区域的对象
-        if (eventType == EventType.DragUpdated || eventType == EventType.DragPerform)
-		{
-			// Show a copy icon on the drag
-			DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+		reorderableList.DoLayoutList();
 
-			if (eventType == EventType.DragPerform)
-			{
-				DragAndDrop.AcceptDrag();
-				foreach (var o in DragAndDrop.objectReferences)
-				{
-					AddReference(dataProperty, o.name, o);
-				}
-			}
-
-			Event.current.Use();
-		}
-
-        //遍历删除list，将其删除掉
-		foreach (var i in delList)
-		{
-			dataProperty.DeleteArrayElementAtIndex(i);
-		}
 		serializedObject.ApplyModifiedProperties();
-		serializedObject.UpdateIfRequiredOrScript();
 	}
-
+	
     //添加元素，具体知识点在ReferenceCollector中说了
     private void AddReference(SerializedProperty dataProperty, string key, Object obj)
 	{
