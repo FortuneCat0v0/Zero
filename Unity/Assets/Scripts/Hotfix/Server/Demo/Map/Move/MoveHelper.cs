@@ -16,7 +16,7 @@ namespace ET.Server
             }
 
             M2C_PathfindingResult m2CPathfindingResult = M2C_PathfindingResult.Create();
-            unit.GetComponent<PathfindingComponent>().Find2(unit.Position, target, m2CPathfindingResult.Points);
+            unit.GetComponent<PathfindingComponent>().Find(unit.Position, target, m2CPathfindingResult.Points);
 
             if (m2CPathfindingResult.Points.Count < 2)
             {

@@ -41,7 +41,7 @@ namespace ET.Server
             monster.Position = position;
 
             NumericComponent numericComponent = monster.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 6f, false); // 速度是6米每秒
+            numericComponent.Set(NumericType.SpeedBase, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
             numericComponent.Set(NumericType.Hp, 100, false);
             numericComponent.Set(NumericType.MaxHpBase, 100, false);
@@ -68,9 +68,9 @@ namespace ET.Server
             unitComponent.Add(bullet);
 
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 10f, false); // 速度是10米每秒
+            numericComponent.Set(NumericType.SpeedBase, 10f, false); // 速度是10米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.DamageValueBase, 10, false);
+            numericComponent.Set(NumericType.AttackDamageBase, 10, false);
 
             bullet.Position = owner.Position;
             bullet.Rotation = quaternion;

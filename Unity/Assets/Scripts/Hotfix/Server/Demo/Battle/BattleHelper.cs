@@ -57,7 +57,7 @@ namespace ET.Server
                 }
                 case EHitFromType.Skill_Bullet:
                 {
-                    int dmg = from.GetComponent<NumericComponent>().GetAsInt(NumericType.DamageValue);
+                    int dmg = from.GetComponent<NumericComponent>().GetAsInt(NumericType.AttackDamage);
                     int finalHp = to.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
                     to.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp);
                     if (finalHp <= 0)
@@ -77,7 +77,7 @@ namespace ET.Server
         
         public static int CalcuateDamageValue(Unit attackUnit, Unit TargetUnit)
         {
-            int damage = attackUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.DamageValue);
+            int damage = attackUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.AttackDamage);
             int dodge = TargetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Dodge);
             int aromr = TargetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Armor);
 
