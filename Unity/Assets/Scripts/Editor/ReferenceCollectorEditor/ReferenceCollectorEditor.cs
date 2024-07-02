@@ -64,6 +64,11 @@ public class ReferenceCollectorEditor : Editor
 
             drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
             {
+                if (index >= dataProperty.arraySize)
+                {
+                    return;
+                }
+
                 var element = dataProperty.GetArrayElementAtIndex(index);
                 var keyProperty = element.FindPropertyRelative("key");
                 var gameObjectProperty = element.FindPropertyRelative("gameObject");
