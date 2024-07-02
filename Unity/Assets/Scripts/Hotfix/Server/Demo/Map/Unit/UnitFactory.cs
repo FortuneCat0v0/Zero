@@ -70,7 +70,7 @@ namespace ET.Server
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 10f, false); // 速度是10米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.Attack, 10, false);
+            numericComponent.Set(NumericType.DamageValueBase, 10, false);
 
             bullet.Position = owner.Position;
             bullet.Rotation = quaternion;
