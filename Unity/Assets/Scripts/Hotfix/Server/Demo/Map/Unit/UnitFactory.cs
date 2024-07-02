@@ -16,9 +16,9 @@ namespace ET.Server
             unit.Position = new float3(-10, 0, -10);
 
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.Speed, 6f, false); // 速度是6米每秒
+            numericComponent.Set(NumericType.SpeedBase, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.HpBase, 100, false);
+            numericComponent.Set(NumericType.Hp, 100, false);
             numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
             unitComponent.Add(unit);
@@ -43,7 +43,7 @@ namespace ET.Server
             NumericComponent numericComponent = monster.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.Speed, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.HpBase, 100, false);
+            numericComponent.Set(NumericType.Hp, 100, false);
             numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
             unitComponent.Add(monster);

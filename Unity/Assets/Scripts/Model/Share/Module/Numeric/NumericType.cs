@@ -20,7 +20,6 @@ namespace ET
         public const int SpeedFinalPct = Speed * 10 + 5;
 
         public const int Hp = 1001;
-        public const int HpBase = Hp * 10 + 1;
 
         public const int MaxHp = 1002;
         public const int MaxHpBase = MaxHp * 10 + 1;
@@ -30,11 +29,6 @@ namespace ET
         public const int MaxHpFinalPct = MaxHp * 10 + 5;
 
         public const int AOI = 1003;
-        public const int AOIBase = AOI * 10 + 1;
-        public const int AOIAdd = AOI * 10 + 2;
-        public const int AOIPct = AOI * 10 + 3;
-        public const int AOIFinalAdd = AOI * 10 + 4;
-        public const int AOIFinalPct = AOI * 10 + 5;
 
         public const int MaxMp = 1004;
         public const int MaxMpBase = MaxMp * 10 + 1;
@@ -51,11 +45,13 @@ namespace ET
         public const int DamageValueFinalPct = DamageValue * 10 + 5;
 
         public const int MP = 1014; //法力值
-        public const int MPBase = MP * 10 + 1;
-        public const int MPAdd = MP * 10 + 2;
-        public const int MPPct = MP * 10 + 3;
-        public const int MPFinalAdd = MP * 10 + 4;
-        public const int MPFinalPct = MP * 10 + 5;
+
+        public const int MaxMP = 1014; //法力值上限
+        public const int MaxMPBase = MaxMP * 10 + 1;
+        public const int MaxMPAdd = MaxMP * 10 + 2;
+        public const int MaxMPPct = MaxMP * 10 + 3;
+        public const int MaxMPFinalAdd = MaxMP * 10 + 4;
+        public const int MaxMPFinalPct = MaxMP * 10 + 5;
 
         public const int Armor = 1015; //护甲
         public const int ArmorBase = Armor * 10 + 1;
@@ -64,16 +60,12 @@ namespace ET
         public const int ArmorFinalAdd = Armor * 10 + 4;
         public const int ArmorFinalPct = Armor * 10 + 5;
 
-        public const int ArmorAddition = 1015; //护甲追加
-
         public const int Dodge = 1017; //闪避
         public const int DodgeBase = Dodge * 10 + 1;
         public const int DodgeAdd = Dodge * 10 + 2;
         public const int DodgePct = Dodge * 10 + 3;
         public const int DodgeFinalAdd = Dodge * 10 + 4;
         public const int DodgeFinalPct = Dodge * 10 + 5;
-
-        public const int DodgeAddition = 1018; // 闪避追加
 
         public const int CriticalHitRate = 1019; //暴击率
         public const int CriticalHitRateBase = CriticalHitRate * 10 + 1;
@@ -82,8 +74,7 @@ namespace ET
         public const int CriticalHitRateFinalAdd = CriticalHitRate * 10 + 4;
         public const int CriticalHitRateFinalPct = CriticalHitRate * 10 + 5;
 
-        // 时运
-        public const int Fortune = 1014;
+        public const int Fortune = 1014; //时运
         public const int FortuneBase = Fortune * 10 + 1;
         public const int FortuneAdd = Fortune * 10 + 2;
         public const int FortunePct = Fortune * 10 + 3;
