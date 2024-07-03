@@ -178,5 +178,6 @@ namespace ET
         public const int AOI = 2000;
         public const int BulletRadius = 2001; //子弹半径
         public const int BulletLife = 2002; //子弹周期
+        public const int RideState = 2003; //骑乘状态 0未骑乘 1骑乘中
     }
 }

@@ -285,6 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 300807667144473993}
   - component: {fileID: 827279220421964248}
+  - component: {fileID: 185944326962357314}
   m_Layer: 0
   m_Name: PowerSlime
   m_TagString: Untagged
@@ -332,6 +333,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &185944326962357314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3800877505991992661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+  - key: DEF_TOP
+    gameObject: {fileID: 2562323666353229154}
+  - key: FACE
+    gameObject: {fileID: 5699649169828698276}
+  - key: DEF_BOTTOM
+    gameObject: {fileID: 6070861144437007933}
 --- !u!1 &5699649169828698276
 GameObject:
   m_ObjectHideFlags: 0
