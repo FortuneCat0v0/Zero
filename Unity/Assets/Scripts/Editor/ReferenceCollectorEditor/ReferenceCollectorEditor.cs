@@ -35,7 +35,7 @@ public class ReferenceCollectorEditor : Editor
 
     private ReorderableList reorderableList;
 
-    List<int> delList = new();
+    private List<int> delList = new();
 
     private void DelNullReference()
     {
@@ -103,13 +103,11 @@ public class ReferenceCollectorEditor : Editor
         if (GUILayout.Button("全部删除"))
         {
             referenceCollector.Clear();
-            this.delList.Clear();
         }
 
         if (GUILayout.Button("删除空引用"))
         {
             DelNullReference();
-            this.delList.Clear();
         }
 
         if (GUILayout.Button("排序"))
@@ -128,7 +126,6 @@ public class ReferenceCollectorEditor : Editor
         {
             referenceCollector.Remove(searchKey);
             heroPrefab = null;
-            this.delList.Clear();
         }
 
         GUILayout.EndHorizontal();
