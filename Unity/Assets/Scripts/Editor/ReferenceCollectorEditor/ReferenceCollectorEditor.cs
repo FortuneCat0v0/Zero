@@ -35,6 +35,8 @@ public class ReferenceCollectorEditor : Editor
 
     private ReorderableList reorderableList;
 
+    List<int> delList = new();
+
     private void DelNullReference()
     {
         var dataProperty = serializedObject.FindProperty("data");
@@ -64,11 +66,6 @@ public class ReferenceCollectorEditor : Editor
 
             drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
             {
-                if (index >= dataProperty.arraySize)
-                {
-                    return;
-                }
-
                 var element = dataProperty.GetArrayElementAtIndex(index);
                 var keyProperty = element.FindPropertyRelative("key");
                 var gameObjectProperty = element.FindPropertyRelative("gameObject");
@@ -78,13 +75,13 @@ public class ReferenceCollectorEditor : Editor
                     GUIContent.none);
                 if (GUI.Button(new Rect(rect.x + rect.width - 25, rect.y, 25, EditorGUIUtility.singleLineHeight), "X"))
                 {
-                    dataProperty.DeleteArrayElementAtIndex(index);
+                    this.delList.Add(index);
                 }
             },
 
-            onAddCallback = (ReorderableList list) => { AddReference(dataProperty, Guid.NewGuid().GetHashCode().ToString(), null); },
+            // onAddCallback = (ReorderableList list) => { AddReference(dataProperty, Guid.NewGuid().GetHashCode().ToString(), null); },
 
-            onRemoveCallback = (ReorderableList list) => { dataProperty.DeleteArrayElementAtIndex(list.index); }
+            // onRemoveCallback = (ReorderableList list) => { dataProperty.DeleteArrayElementAtIndex(list.index); }
         };
     }
 
@@ -106,11 +103,13 @@ public class ReferenceCollectorEditor : Editor
         if (GUILayout.Button("全部删除"))
         {
             referenceCollector.Clear();
+            this.delList.Clear();
         }
 
         if (GUILayout.Button("删除空引用"))
         {
             DelNullReference();
+            this.delList.Clear();
         }
 
         if (GUILayout.Button("排序"))
@@ -129,6 +128,7 @@ public class ReferenceCollectorEditor : Editor
         {
             referenceCollector.Remove(searchKey);
             heroPrefab = null;
+            this.delList.Clear();
         }
 
         GUILayout.EndHorizontal();
@@ -152,6 +152,13 @@ public class ReferenceCollectorEditor : Editor
 
             Event.current.Use();
         }
+
+        //遍历删除list，将其删除掉
+        for (int i = delList.Count - 1; i >= 0; i--)
+        {
+            dataProperty.DeleteArrayElementAtIndex(delList[i]);
+        }
+        this.delList.Clear();
 
         reorderableList.DoLayoutList();
 
