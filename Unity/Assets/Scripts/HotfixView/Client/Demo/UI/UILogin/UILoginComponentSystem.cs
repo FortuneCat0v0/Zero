@@ -19,8 +19,8 @@ namespace ET.Client
 
             self.LoginBtn.GetComponent<Button>().AddListenerAsync(self.OnLoginBtn);
 
-            self.AccountIF.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString("Zero_Account", string.Empty);
-            self.PasswordIF.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString("Zero_Password", string.Empty);
+            self.AccountIF.GetComponent<TMP_InputField>().text = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Account, string.Empty);
+            self.PasswordIF.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString(PlayerPrefsHelper.Password, string.Empty);
         }
 
         private static async ETTask OnLoginBtn(this UILoginComponent self)
@@ -35,8 +35,8 @@ namespace ET.Client
                 return;
             }
 
-            PlayerPrefs.SetString("Zero_Account", accountName);
-            PlayerPrefs.SetString("Zero_Password", password);
+            PlayerPrefsHelper.SetString(PlayerPrefsHelper.Account, accountName);
+            PlayerPrefs.SetString(PlayerPrefsHelper.Password, password);
 
             errorCode = await LoginHelper.GetServerInfos(self.Root());
             if (errorCode != ErrorCode.ERR_Success)
@@ -44,6 +44,33 @@ namespace ET.Client
                 return;
             }
 
+            UIHelper.Create(self.Scene(), UIType.UIServer, UILayer.Mid).Coroutine();
+            UIHelper.Remove(self.Scene(), UIType.UILogin);
+        }
+
+        public static async ETTask OnTapTapLoginBtn(this UILoginComponent self)
+        {
+            TapSDKHelper.Init();
+            string tatapId = await TapSDKHelper.Login();
+            if (string.IsNullOrEmpty(tatapId))
+            {
+                FlyTipComponent.Instance.ShowFlyTip("TapTap登录失败");
+                return;
+            }
+
+            int errorCode = await LoginHelper.LoginAccount(self.Root(), tatapId, "TapTap");
+            if (errorCode != ErrorCode.ERR_Success)
+            {
+                return;
+            }
+
+            errorCode = await LoginHelper.GetServerInfos(self.Root());
+            if (errorCode != ErrorCode.ERR_Success)
+            {
+                return;
+            }
+
+            FlyTipComponent.Instance.ShowFlyTip("TapTap登录成功!");
             UIHelper.Create(self.Scene(), UIType.UIServer, UILayer.Mid).Coroutine();
             UIHelper.Remove(self.Scene(), UIType.UILogin);
         }

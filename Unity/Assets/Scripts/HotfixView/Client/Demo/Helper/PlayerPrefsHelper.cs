@@ -4,9 +4,9 @@ namespace ET.Client
 {
     public static class PlayerPrefsHelper
     {
-        public const string LastAccount = "Zero_LastAccount";
-        public const string LastPassword = "Zero_LastPassword";
-        public const string LastRole = "Zero_LastRole";
+        public const string Account = "Zero_Account";
+        public const string Password = "Zero_Password";
+        public const string Role = "Zero_Role";
         public const string SoundVolume = "Zero_SoundVolume";
         public const string MusicVolume = "Zero_MusicVolume";
 
