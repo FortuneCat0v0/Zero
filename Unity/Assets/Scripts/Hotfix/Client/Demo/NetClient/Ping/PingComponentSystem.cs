@@ -45,7 +45,8 @@ namespace ET.Client
 
                     long time2 = TimeInfo.Instance.ClientNow();
                     self.Ping = time2 - time1;
-                    
+
+                    TimeInfo.Instance.Ping = self.Ping;
                     TimeInfo.Instance.ServerMinusClientTime = response.Time + (time2 - time1) / 2 - time2;
                 }
                 catch (RpcException e)

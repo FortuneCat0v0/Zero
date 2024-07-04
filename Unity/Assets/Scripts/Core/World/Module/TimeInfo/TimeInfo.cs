@@ -22,6 +22,8 @@ namespace ET
         private DateTime dt1970;
         private DateTime dt;
         
+        public long Ping { get; set; }
+        
         // ping消息会设置该值，原子操作
         public long ServerMinusClientTime { private get; set; }
 
