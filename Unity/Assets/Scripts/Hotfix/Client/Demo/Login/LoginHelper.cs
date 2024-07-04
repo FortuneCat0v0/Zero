@@ -4,7 +4,7 @@
     [FriendOf(typeof(GameServerComponent))]
     public static partial class LoginHelper
     {
-        public static async ETTask<int> LoginAccount(Scene root, string account, string password)
+        public static async ETTask<int> LoginAccount(Scene root, string account, string password, ELoginType loginType)
         {
             ClientSenderComponent clientSenderComponent = root.GetComponent<ClientSenderComponent>();
             if (clientSenderComponent != null)
@@ -18,6 +18,7 @@
             C2A_LoginAccount request = C2A_LoginAccount.Create();
             request.Account = account;
             request.Password = password;
+            request.ELoginType = (int)loginType;
             A2C_LoginAccount response = await clientSenderComponent.Call(request) as A2C_LoginAccount;
             if (response.Error != ErrorCode.ERR_Success)
             {

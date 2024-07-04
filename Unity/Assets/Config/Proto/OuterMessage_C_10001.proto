@@ -251,6 +251,7 @@ message C2A_LoginAccount // ISessionRequest
 	int32 RpcId = 1;
 	string Account = 2;
 	string Password = 3;
+	int32 ELoginType = 4;
 }
 
 

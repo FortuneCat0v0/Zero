@@ -8,5 +8,6 @@ namespace ET.Client
         public GameObject AccountIF;
         public GameObject PasswordIF;
         public GameObject LoginBtn;
+        public GameObject TapTapBtn;
     }
 }

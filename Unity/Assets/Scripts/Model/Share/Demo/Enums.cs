@@ -1,5 +1,11 @@
 ﻿namespace ET
 {
+    public enum ELoginType
+    {
+        Normal,
+        TapTap
+    }
+
     public enum ItemType
     {
         Equipment,

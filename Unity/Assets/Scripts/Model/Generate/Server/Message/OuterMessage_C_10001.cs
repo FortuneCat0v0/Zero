@@ -1142,6 +1142,9 @@ namespace ET
         [MemoryPackOrder(2)]
         public string Password { get; set; }
 
+        [MemoryPackOrder(3)]
+        public int ELoginType { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -1152,6 +1155,7 @@ namespace ET
             this.RpcId = default;
             this.Account = default;
             this.Password = default;
+            this.ELoginType = default;
 
             ObjectPool.Instance.Recycle(this);
         }

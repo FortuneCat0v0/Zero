@@ -17,5 +17,7 @@
         public long CreateTime; //账号创建时间
 
         public int AccountType; //账号类型
+
+        public int LoginType; //登录类型
     }
 }

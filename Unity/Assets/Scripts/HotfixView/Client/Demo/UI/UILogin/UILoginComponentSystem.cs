@@ -16,11 +16,15 @@ namespace ET.Client
             self.AccountIF = rc.Get<GameObject>("AccountIF");
             self.PasswordIF = rc.Get<GameObject>("PasswordIF");
             self.LoginBtn = rc.Get<GameObject>("LoginBtn");
+            self.TapTapBtn = rc.Get<GameObject>("TapTapBtn");
 
             self.LoginBtn.GetComponent<Button>().AddListenerAsync(self.OnLoginBtn);
+            self.TapTapBtn.GetComponent<Button>().AddListenerAsync(self.OnTapTapBtn);
 
             self.AccountIF.GetComponent<TMP_InputField>().text = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Account, string.Empty);
             self.PasswordIF.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString(PlayerPrefsHelper.Password, string.Empty);
+
+            TapSDKHelper.Init();
         }
 
         private static async ETTask OnLoginBtn(this UILoginComponent self)
@@ -28,7 +32,7 @@ namespace ET.Client
             string accountName = self.AccountIF.GetComponent<TMP_InputField>().text;
             string password = self.PasswordIF.GetComponent<TMP_InputField>().text;
             // 弹出登录中UI,放置重复发送
-            int errorCode = await LoginHelper.LoginAccount(self.Root(), accountName, password);
+            int errorCode = await LoginHelper.LoginAccount(self.Root(), accountName, password, ELoginType.Normal);
             // 关闭登录中UI
             if (errorCode != ErrorCode.ERR_Success)
             {
@@ -48,9 +52,8 @@ namespace ET.Client
             UIHelper.Remove(self.Scene(), UIType.UILogin);
         }
 
-        public static async ETTask OnTapTapLoginBtn(this UILoginComponent self)
+        public static async ETTask OnTapTapBtn(this UILoginComponent self)
         {
-            TapSDKHelper.Init();
             string tatapId = await TapSDKHelper.Login();
             if (string.IsNullOrEmpty(tatapId))
             {
@@ -58,7 +61,7 @@ namespace ET.Client
                 return;
             }
 
-            int errorCode = await LoginHelper.LoginAccount(self.Root(), tatapId, "TapTap");
+            int errorCode = await LoginHelper.LoginAccount(self.Root(), tatapId, "TapTap", ELoginType.TapTap);
             if (errorCode != ErrorCode.ERR_Success)
             {
                 return;

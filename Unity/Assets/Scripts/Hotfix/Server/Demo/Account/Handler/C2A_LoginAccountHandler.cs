@@ -25,18 +25,21 @@ namespace ET.Server
                 return;
             }
 
-            if (!Regex.IsMatch(request.Account.Trim(), @"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,15}$"))
+            if (request.ELoginType == (int)ELoginType.Normal)
             {
-                response.Error = ErrorCode.ERR_AccountNameFormError;
-                session.Disconnect().Coroutine();
-                return;
-            }
+                if (!Regex.IsMatch(request.Account.Trim(), @"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,15}$"))
+                {
+                    response.Error = ErrorCode.ERR_AccountNameFormError;
+                    session.Disconnect().Coroutine();
+                    return;
+                }
 
-            if (!Regex.IsMatch(request.Password.Trim(), @"^[A-Za-z0-9]+$"))
-            {
-                response.Error = ErrorCode.ERR_PasswordFormError;
-                session.Disconnect().Coroutine();
-                return;
+                if (!Regex.IsMatch(request.Password.Trim(), @"^[A-Za-z0-9]+$"))
+                {
+                    response.Error = ErrorCode.ERR_PasswordFormError;
+                    session.Disconnect().Coroutine();
+                    return;
+                }
             }
 
             //防止同一用户短时间频繁登录
@@ -75,6 +78,7 @@ namespace ET.Server
                         account.Password = request.Password;
                         account.CreateTime = TimeInfo.Instance.ServerNow();
                         account.AccountType = (int)AccountType.General;
+                        account.LoginType = request.ELoginType;
                         await root.GetComponent<DBManagerComponent>().GetZoneDB(session.Zone()).Save(account);
                     }
 

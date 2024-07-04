@@ -84,8 +84,6 @@ namespace ET
                 RcVec3f pos = self.straightPath[i].pos;
                 result.Add(new float3(-pos.x, pos.y, pos.z));
             }
-
-            Log.Info("寻路点数" + result.Count);
         }
 
         /// <summary>
