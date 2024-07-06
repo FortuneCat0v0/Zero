@@ -7,6 +7,11 @@ namespace ET.Client
         public string PackageVersion;
     }
 
+    public struct HaveDownloader
+    {
+        public long TotalDownloadBytes;
+    }
+
     public struct OnPatchDownloadProgress
     {
         public int CurrentDownloadCount;

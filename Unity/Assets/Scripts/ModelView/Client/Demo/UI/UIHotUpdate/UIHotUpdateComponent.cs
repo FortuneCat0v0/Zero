@@ -4,11 +4,14 @@ using UnityEngine.UI;
 
 namespace ET.Client
 {
-    [ComponentOf(typeof (UI))]
-    public class UIHotUpdateComponent: Entity, IAwake
+    [ComponentOf(typeof(UI))]
+    public class UIHotUpdateComponent : Entity, IAwake
     {
         public GameObject PackageVersionText;
-        public Image ProgressBarImg;
-        public TMP_Text ProgressText;
+        public GameObject ProgressText { get; set; }
+        public GameObject ProgressBarImg;
+        public GameObject TipPanel;
+        public GameObject TipText;
+        public GameObject StartDownloadBtn;
     }
 }
