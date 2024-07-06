@@ -13,22 +13,28 @@ namespace ET.Client
         {
             ReferenceCollector rc = self.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
+            self.NormalBtn = rc.Get<GameObject>("NormalBtn");
+            self.TapTapBtn = rc.Get<GameObject>("TapTapBtn");
+            self.NormalLoginPanel = rc.Get<GameObject>("NormalLoginPanel");
             self.AccountIF = rc.Get<GameObject>("AccountIF");
             self.PasswordIF = rc.Get<GameObject>("PasswordIF");
-            self.LoginBtn = rc.Get<GameObject>("LoginBtn");
-            self.TapTapBtn = rc.Get<GameObject>("TapTapBtn");
+            self.NormalLoginBtn = rc.Get<GameObject>("NormalLoginBtn");
+            self.CloseNormalLoginPanelBtn = rc.Get<GameObject>("CloseNormalLoginPanelBtn");
 
-            self.LoginBtn.GetComponent<Button>().AddListenerAsync(self.OnLoginBtn);
+            self.NormalBtn.GetComponent<Button>().AddListener(() => { self.NormalLoginPanel.SetActive(true); });
             self.TapTapBtn.GetComponent<Button>().AddListenerAsync(self.OnTapTapBtn);
 
+            self.NormalLoginPanel.SetActive(false);
             self.AccountIF.GetComponent<TMP_InputField>().text = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Account, string.Empty);
             self.PasswordIF.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString(PlayerPrefsHelper.Password, string.Empty);
+            self.NormalLoginBtn.GetComponent<Button>().AddListenerAsync(self.OnNormalLoginBtn);
+            self.CloseNormalLoginPanelBtn.GetComponent<Button>().AddListener(() => { self.NormalLoginPanel.SetActive(false); });
 
             TapTapSDKHelper.LoginInit();
             TapTapSDKHelper.AntiAddictionInit(self.AntiAddictionCallback);
         }
 
-        private static async ETTask OnLoginBtn(this UILoginComponent self)
+        private static async ETTask OnNormalLoginBtn(this UILoginComponent self)
         {
             string account = self.AccountIF.GetComponent<TMP_InputField>().text;
             string password = self.PasswordIF.GetComponent<TMP_InputField>().text;
