@@ -9,5 +9,7 @@ namespace ET.Client
         public GameObject PasswordIF;
         public GameObject LoginBtn;
         public GameObject TapTapBtn;
+
+        public string TapTapOpenid;
     }
 }
