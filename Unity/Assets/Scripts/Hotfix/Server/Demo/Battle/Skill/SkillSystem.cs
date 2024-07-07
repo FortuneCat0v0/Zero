@@ -50,17 +50,17 @@ namespace ET.Server
                 return;
             }
 
-            if (self.SkillConfig.ActionEventsServer.Count == 0)
+            if (self.SkillConfig.AEsServer.Count == 0)
             {
                 return;
             }
 
-            if (self.CurrentActionEventIndex == self.SkillConfig.ActionEventsServer.Count - 1)
+            if (self.CurrentActionEventIndex == self.SkillConfig.AEsServer.Count - 1)
             {
                 return;
             }
 
-            int triggerTime = self.SkillConfig.ActionEventTriggerPercentServer[self.CurrentActionEventIndex + 1] / 100 * self.SkillConfig.Life;
+            int triggerTime = self.SkillConfig.AETriggerPercentServer[self.CurrentActionEventIndex + 1] / 100 * self.SkillConfig.Life;
             if (nowTime < self.SpellStartTime + triggerTime)
             {
                 return;
@@ -68,7 +68,7 @@ namespace ET.Server
 
             self.CurrentActionEventIndex++;
 
-            string actionEventName = self.SkillConfig.ActionEventsServer[self.CurrentActionEventIndex];
+            string actionEventName = self.SkillConfig.AEsServer[self.CurrentActionEventIndex];
             AActionEvent actionEvent = ActionEventDispatcherComponent.Instance.Get(actionEventName);
 
             if (actionEvent == null)
@@ -83,7 +83,7 @@ namespace ET.Server
                 self.CancellationToken = cancellationToken;
             }
 
-            actionEvent.Execute(self, self.SkillConfig.ActionEventParamsServer[self.CurrentActionEventIndex], self.CancellationToken).Coroutine();
+            actionEvent.Execute(self, self.SkillConfig.AEParamsServer[self.CurrentActionEventIndex], self.CancellationToken).Coroutine();
         }
 
         public static void EndSpell(this Skill self)

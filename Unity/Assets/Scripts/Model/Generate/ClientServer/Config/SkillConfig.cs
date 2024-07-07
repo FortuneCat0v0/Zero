@@ -25,12 +25,12 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         Desc = _buf.ReadString();
         CD = _buf.ReadInt();
         Life = _buf.ReadInt();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventsServer = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionEventsServer.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventParamsServer = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} ActionEventParamsServer.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercentServer = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercentServer.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventsClient = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); ActionEventsClient.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventParamsClient = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} ActionEventParamsClient.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionEventTriggerPercentClient = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); ActionEventTriggerPercentClient.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEsServer = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsServer.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEParamsServer = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsServer.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentServer = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentServer.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEsClient = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsClient.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEParamsClient = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsClient.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentClient = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentClient.Add(_e0);}}
         SkillIndicatorType = (ESkillIndicatorType)_buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
         PostInit();
@@ -72,27 +72,27 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
     /// <summary>
     /// 行为事件(服务端)
     /// </summary>
-    public System.Collections.Generic.List<string> ActionEventsServer { get; private set; }
+    public System.Collections.Generic.List<string> AEsServer { get; private set; }
     /// <summary>
     /// 行为事件参数(服务端)
     /// </summary>
-    public System.Collections.Generic.List<System.Collections.Generic.List<int>> ActionEventParamsServer { get; private set; }
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> AEParamsServer { get; private set; }
     /// <summary>
     /// 行为事件触发百分比(服务端)
     /// </summary>
-    public System.Collections.Generic.List<int> ActionEventTriggerPercentServer { get; private set; }
+    public System.Collections.Generic.List<int> AETriggerPercentServer { get; private set; }
     /// <summary>
     /// 行为事件(客户端)
     /// </summary>
-    public System.Collections.Generic.List<string> ActionEventsClient { get; private set; }
+    public System.Collections.Generic.List<string> AEsClient { get; private set; }
     /// <summary>
     /// 行为事件参数(客户端)
     /// </summary>
-    public System.Collections.Generic.List<System.Collections.Generic.List<int>> ActionEventParamsClient { get; private set; }
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> AEParamsClient { get; private set; }
     /// <summary>
     /// 行为事件触发百分比(客户端)
     /// </summary>
-    public System.Collections.Generic.List<int> ActionEventTriggerPercentClient { get; private set; }
+    public System.Collections.Generic.List<int> AETriggerPercentClient { get; private set; }
     /// <summary>
     /// 技能指示器类型
     /// </summary>
@@ -124,12 +124,12 @@ public sealed partial class SkillConfig: Bright.Config.BeanBase
         + "Desc:" + Desc + ","
         + "CD:" + CD + ","
         + "Life:" + Life + ","
-        + "ActionEventsServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventsServer) + ","
-        + "ActionEventParamsServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventParamsServer) + ","
-        + "ActionEventTriggerPercentServer:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercentServer) + ","
-        + "ActionEventsClient:" + Bright.Common.StringUtil.CollectionToString(ActionEventsClient) + ","
-        + "ActionEventParamsClient:" + Bright.Common.StringUtil.CollectionToString(ActionEventParamsClient) + ","
-        + "ActionEventTriggerPercentClient:" + Bright.Common.StringUtil.CollectionToString(ActionEventTriggerPercentClient) + ","
+        + "AEsServer:" + Bright.Common.StringUtil.CollectionToString(AEsServer) + ","
+        + "AEParamsServer:" + Bright.Common.StringUtil.CollectionToString(AEParamsServer) + ","
+        + "AETriggerPercentServer:" + Bright.Common.StringUtil.CollectionToString(AETriggerPercentServer) + ","
+        + "AEsClient:" + Bright.Common.StringUtil.CollectionToString(AEsClient) + ","
+        + "AEParamsClient:" + Bright.Common.StringUtil.CollectionToString(AEParamsClient) + ","
+        + "AETriggerPercentClient:" + Bright.Common.StringUtil.CollectionToString(AETriggerPercentClient) + ","
         + "SkillIndicatorType:" + SkillIndicatorType + ","
         + "SkillIndicatorParams:" + Bright.Common.StringUtil.CollectionToString(SkillIndicatorParams) + ","
         + "}";
