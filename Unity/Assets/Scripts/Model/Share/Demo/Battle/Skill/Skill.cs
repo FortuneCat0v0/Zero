@@ -10,6 +10,15 @@ namespace ET
         Execute
     }
 
+    public enum ESkillOpType
+    {
+        Add,
+        Remove,
+        Interrupt,
+        SetSkillGrid,
+        UpLevel
+    }
+
     [ChildOf]
     public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, ISerializeToEntity
     {
@@ -22,7 +31,7 @@ namespace ET
         public long SpellEndTime { get; set; }
 
         [BsonIgnore]
-        public ESkillState SkillState;
+        public ESkillState SkillState { get; set; }
 
         [BsonIgnore]
         public long TargetUnitId { get; set; }

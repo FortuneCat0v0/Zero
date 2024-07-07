@@ -2247,10 +2247,16 @@ namespace ET
         }
 
         [MemoryPackOrder(0)]
-        public SkillInfo SkillInfo { get; set; }
+        public long UnitId { get; set; }
 
         [MemoryPackOrder(1)]
         public int SkillOpType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public SkillInfo SkillInfo { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<KeyValuePair_Int_Int> SkillGridDict { get; set; } = new();
 
         public override void Dispose()
         {
@@ -2259,8 +2265,10 @@ namespace ET
                 return;
             }
 
-            this.SkillInfo = default;
+            this.UnitId = default;
             this.SkillOpType = default;
+            this.SkillInfo = default;
+            this.SkillGridDict.Clear();
 
             ObjectPool.Instance.Recycle(this);
         }

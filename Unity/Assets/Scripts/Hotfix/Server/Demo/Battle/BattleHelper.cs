@@ -131,5 +131,77 @@ namespace ET.Server
                 MapMessageHelper.Broadcast(unit, m2CSpellSkill);
             }
         }
+
+        public static void AddSkill(this Unit unit, int skillConfigId, int skillLevel)
+        {
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent.AddSkill(skillConfigId, skillLevel))
+            {
+                Skill skill = skillComponent.GetSkillByConfigId(skillConfigId);
+
+                M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
+                m2CSkillUpdateOp.UnitId = unit.Id;
+                m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.Add;
+                m2CSkillUpdateOp.SkillInfo = skill.ToMessage();
+            }
+        }
+
+        public static void RemoveSkill(this Unit unit, int skillConfigId)
+        {
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent.RemoveSkill(skillConfigId))
+            {
+                M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
+                m2CSkillUpdateOp.UnitId = unit.Id;
+                m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.Remove;
+                SkillInfo skillInfo = SkillInfo.Create();
+                skillInfo.SkillConfigId = skillConfigId;
+                m2CSkillUpdateOp.SkillInfo = skillInfo;
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillGridDict)
+                {
+                    KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
+                    keyValuePairIntInt.Key = keyValuePair.Key;
+                    keyValuePairIntInt.Value = keyValuePair.Value;
+                    m2CSkillUpdateOp.SkillGridDict.Add(keyValuePairIntInt);
+                }
+            }
+        }
+
+        public static void InterruptSkill(this Unit unit)
+        {
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            List<Skill> skills = skillComponent.GetAllSkill();
+            foreach (Skill skill in skills)
+            {
+                if (skill.SkillState == ESkillState.Execute)
+                {
+                    skill.EndSpell();
+                    M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
+                    m2CSkillUpdateOp.UnitId = unit.Id;
+                    m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.Interrupt;
+                    SkillInfo skillInfo = SkillInfo.Create();
+                    skillInfo.SkillConfigId = skill.SkillConfigId;
+                    m2CSkillUpdateOp.SkillInfo = skillInfo;
+                }
+            }
+        }
+
+        public static void SetSkillGrid(this Unit unit, int skillConfigId, ESkillGridType skillGridType)
+        {
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent.SetSkillGrid(skillConfigId, skillGridType))
+            {
+                M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
+                m2CSkillUpdateOp.UnitId = unit.Id;
+                m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.SetSkillGrid;
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillGridDict)
+                {
+                    KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
+                    keyValuePairIntInt.Key = keyValuePair.Key;
+                    keyValuePairIntInt.Value = keyValuePair.Value;
+                    m2CSkillUpdateOp.SkillGridDict.Add(keyValuePairIntInt);
+                }
+            }
+        }
     }
 }

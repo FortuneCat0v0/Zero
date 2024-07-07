@@ -43,6 +43,28 @@ namespace ET.Client
             Log.Error($"客户端添加技能失败 SkillConfigId : {skill.SkillConfigId}");
         }
 
+        public static bool RemoveSkill(this SkillComponent self, int skillConfigId)
+        {
+            if (!self.SkillDict.ContainsKey(skillConfigId))
+            {
+                return false;
+            }
+
+            Skill skill = self.GetSkillByConfigId(skillConfigId);
+            self.SkillDict.Remove(skillConfigId);
+
+            foreach (KeyValuePair<int, int> keyValue in self.SkillGridDict)
+            {
+                if (keyValue.Value == skillConfigId)
+                {
+                    self.SkillGridDict[keyValue.Key] = 0;
+                }
+            }
+
+            skill.Dispose();
+            return false;
+        }
+
         public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
             Skill skill = null;

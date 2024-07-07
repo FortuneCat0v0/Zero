@@ -501,8 +501,10 @@ message SkillInfo
 
 message M2C_SkillUpdateOp // IMessage
 {
-	SkillInfo SkillInfo = 1;
+	int64 UnitId = 1;
 	int32 SkillOpType = 2;
+	SkillInfo SkillInfo = 3;
+	repeated KeyValuePair_Int_Int SkillGridDict = 4;
 }
 
 message M2C_HitResult // IMessage

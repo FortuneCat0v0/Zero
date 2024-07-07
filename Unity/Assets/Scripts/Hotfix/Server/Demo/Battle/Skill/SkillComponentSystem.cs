@@ -41,25 +41,67 @@ namespace ET.Server
             }
         }
 
-        public static bool AddSkill(this SkillComponent self, int configId, int skillLevel = 1)
+        public static bool AddSkill(this SkillComponent self, int skillConfigId, int skillLevel = 1)
         {
-            if (!self.SkillDict.ContainsKey(configId))
+            if (!self.SkillDict.ContainsKey(skillConfigId))
             {
-                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(configId, skillLevel);
+                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skillConfigId, skillLevel);
                 if (skillConfig == null)
                 {
-                    Log.Error($"配置表不存在技能 {configId} {skillLevel}");
+                    Log.Error($"配置表不存在技能 {skillConfigId} {skillLevel}");
                     return false;
                 }
 
-                Skill skill = self.AddChild<Skill, int, int>(configId, skillLevel);
-                self.SkillDict.Add(configId, skill);
+                Skill skill = self.AddChild<Skill, int, int>(skillConfigId, skillLevel);
+                self.SkillDict.Add(skillConfigId, skill);
 
                 return true;
             }
 
-            Log.Error($"已经存在技能 configId:{configId} lv:{skillLevel}");
+            Log.Error($"已经存在技能 configId:{skillConfigId} lv:{skillLevel}");
             return false;
+        }
+
+        public static bool RemoveSkill(this SkillComponent self, int skillConfigId)
+        {
+            if (!self.SkillDict.ContainsKey(skillConfigId))
+            {
+                return false;
+            }
+
+            Skill skill = self.GetSkillByConfigId(skillConfigId);
+            self.SkillDict.Remove(skillConfigId);
+
+            foreach (KeyValuePair<int, int> keyValue in self.SkillGridDict)
+            {
+                if (keyValue.Value == skillConfigId)
+                {
+                    self.SkillGridDict[keyValue.Key] = 0;
+                }
+            }
+
+            skill.Dispose();
+            return false;
+        }
+
+        public static bool SetSkillGrid(this SkillComponent self, int skillConfigId, ESkillGridType skillGridType)
+        {
+            if (!self.SkillDict.ContainsKey(skillConfigId))
+            {
+                return false;
+            }
+
+            foreach (KeyValuePair<int, int> keyValue in self.SkillGridDict)
+            {
+                if (keyValue.Value == skillConfigId)
+                {
+                    self.SkillGridDict[keyValue.Key] = 0;
+                }
+            }
+
+            self.SkillGridDict[(int)skillGridType] = skillConfigId;
+
+            return true;
         }
 
         public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
