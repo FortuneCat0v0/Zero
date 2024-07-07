@@ -14,9 +14,10 @@ namespace ET.Client
         {
             ReferenceCollector rc = self.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
-            self.GMInput = rc.Get<GameObject>("GMInput");
-            self.GMSendBtn = rc.Get<GameObject>("GMSendBtn");
-            self.GMSendBtn.GetComponent<Button>().AddListener(self.OnGMSendBtn);
+            self.RotateAngleDragPanel = rc.Get<GameObject>("RotateAngleDragPanel");
+            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.BeginDrag, EventTriggerType.BeginDrag);
+            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.Drag, EventTriggerType.Drag);
+            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.EndDrag, EventTriggerType.EndDrag);
 
             self.SettingsBtn = rc.Get<GameObject>("SettingsBtn");
             self.SettingsBtn.GetComponent<Button>().AddListenerAsync(self.OnSettingsBtn);
@@ -44,11 +45,12 @@ namespace ET.Client
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillGridType.SkillGrid0);
             self.UISkillGrid_1 = rc.Get<GameObject>("UISkillGrid_1");
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillGridType.SkillGrid1);
+            self.UISkillGrid_2 = rc.Get<GameObject>("UISkillGrid_2");
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_2).SetSkill(ESkillGridType.SkillGrid2);
 
-            self.RotateAngleDragPanel = rc.Get<GameObject>("RotateAngleDragPanel");
-            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.BeginDrag, EventTriggerType.BeginDrag);
-            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.Drag, EventTriggerType.Drag);
-            self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.EndDrag, EventTriggerType.EndDrag);
+            self.GMInput = rc.Get<GameObject>("GMInput");
+            self.GMSendBtn = rc.Get<GameObject>("GMSendBtn");
+            self.GMSendBtn.GetComponent<Button>().AddListener(self.OnGMSendBtn);
         }
 
         private static void OnGMSendBtn(this UIMainComponent self)

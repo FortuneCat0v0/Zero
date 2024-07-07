@@ -306,5 +306,40 @@
     "SkillIndicatorParams": [
       0
     ]
+  },
+  {
+    "Id": 10003,
+    "Level": 1,
+    "SkillAbstractType": 2,
+    "Name": "治愈1级",
+    "Desc": "添加治愈Buff",
+    "CD": 2000,
+    "Life": 500,
+    "AEsServer": [
+      "AE_AddBuff"
+    ],
+    "AEParamsServer": [
+      [
+        8011
+      ]
+    ],
+    "AETriggerPercentServer": [
+      0
+    ],
+    "AEsClient": [
+      "AE_PlaySound"
+    ],
+    "AEParamsClient": [
+      [
+        10002
+      ]
+    ],
+    "AETriggerPercentClient": [
+      0
+    ],
+    "SkillIndicatorType": 4,
+    "SkillIndicatorParams": [
+      0
+    ]
   }
 ]

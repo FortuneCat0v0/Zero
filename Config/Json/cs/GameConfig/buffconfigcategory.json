@@ -9,9 +9,7 @@
     "EndAEParams": [],
     "Duration": 15000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
+    "IntervalAEs": [],
     "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 0
@@ -21,15 +19,16 @@
     "Name": "测试-加攻击%",
     "Desc": "攻击+50%",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "5000"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -38,14 +37,8 @@
     ],
     "Duration": 10000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 0
   },
@@ -54,15 +47,16 @@
     "Name": "测试-加攻击",
     "Desc": "攻击+100",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "100"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -71,14 +65,8 @@
     ],
     "Duration": 12000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 1
   },
@@ -87,31 +75,27 @@
     "Name": "测试-加攻击",
     "Desc": "攻击+200",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        101002,
+        200
       ]
     ],
     "EndAEs": [
-      "200"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
-        1001
+        101002,
+        -200
       ]
     ],
     "Duration": 12000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 1
   },
@@ -120,15 +104,16 @@
     "Name": "测试-减攻击",
     "Desc": "攻击-100",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        101002,
+        -100
       ]
     ],
     "EndAEs": [
-      "-100"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -137,14 +122,8 @@
     ],
     "Duration": 10000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 2
   },
@@ -153,15 +132,16 @@
     "Name": "测试-减攻击",
     "Desc": "攻击-300",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "-300"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -170,14 +150,8 @@
     ],
     "Duration": 10000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 2
   },
@@ -186,15 +160,16 @@
     "Name": "测试-加速",
     "Desc": "速度+50",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "50"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -203,14 +178,8 @@
     ],
     "Duration": 5000,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 0
   },
@@ -219,15 +188,16 @@
     "Name": "测试-减速%",
     "Desc": "速度-100%",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "-10000"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -236,14 +206,8 @@
     ],
     "Duration": 7500,
     "TriggerInterval": 0,
-    "IntervalAEs": [
-      "0"
-    ],
-    "IntervalAEParams": [
-      [
-        1001
-      ]
-    ],
+    "IntervalAEs": [],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 0
   },
@@ -252,15 +216,16 @@
     "Name": "测试-持续伤害",
     "Desc": "500伤害/秒",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        -2
       ]
     ],
     "EndAEs": [
-      "500"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -270,7 +235,7 @@
     "Duration": 10000,
     "TriggerInterval": 1000,
     "IntervalAEs": [
-      "0"
+      "AE_NumericChange"
     ],
     "IntervalAEParams": [
       [
@@ -285,15 +250,16 @@
     "Name": "测试-持续伤害%",
     "Desc": "血量上限5%伤害/5秒",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "500"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -303,7 +269,7 @@
     "Duration": 25000,
     "TriggerInterval": 5000,
     "IntervalAEs": [
-      "0"
+      "AE_NumericChange"
     ],
     "IntervalAEParams": [
       [
@@ -318,29 +284,25 @@
     "Name": "测试-持续回血",
     "Desc": "回复200点/3秒",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
-    "EndAEs": [
-      "200"
-    ],
-    "EndAEParams": [
-      [
-        1001
-      ]
-    ],
+    "EndAEs": [],
+    "EndAEParams": [],
     "Duration": 15000,
     "TriggerInterval": 3000,
     "IntervalAEs": [
-      "0"
+      "AE_NumericChange"
     ],
     "IntervalAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "MaxLayer": 1,
@@ -351,15 +313,16 @@
     "Name": "测试-持续回血%",
     "Desc": "回复血量上限10%点/3秒",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "1000"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -369,7 +332,7 @@
     "Duration": 15000,
     "TriggerInterval": 3000,
     "IntervalAEs": [
-      "0"
+      "AE_NumericChange"
     ],
     "IntervalAEParams": [
       [
@@ -384,15 +347,16 @@
     "Name": "测试-持续回护盾",
     "Desc": "加100盾/2秒",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "100"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -402,7 +366,7 @@
     "Duration": 10000,
     "TriggerInterval": 2000,
     "IntervalAEs": [
-      "0"
+      "AE_NumericChange"
     ],
     "IntervalAEParams": [
       [
@@ -417,15 +381,16 @@
     "Name": "测试-持续回护盾%",
     "Desc": "加10%盾/2秒",
     "StartAEs": [
-      "1001"
+      "AE_NumericChange"
     ],
     "StartAEParams": [
       [
-        1001
+        1010,
+        2
       ]
     ],
     "EndAEs": [
-      "1000"
+      "AE_NumericChange"
     ],
     "EndAEParams": [
       [
@@ -435,7 +400,7 @@
     "Duration": 10000,
     "TriggerInterval": 2000,
     "IntervalAEs": [
-      "0"
+      "AE_NumericChange"
     ],
     "IntervalAEParams": [
       [

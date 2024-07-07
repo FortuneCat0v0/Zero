@@ -23,6 +23,7 @@ namespace ET.Server
             // 测试
             self.SkillGridDict[0] = 10001;
             self.SkillGridDict[1] = 10002;
+            self.SkillGridDict[2] = 10003;
         }
 
         [EntitySystem]

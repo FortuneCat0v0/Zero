@@ -70,6 +70,7 @@
     {
         SkillGrid0,
         SkillGrid1,
+        SkillGrid2,
     }
 
     public enum EOperateStatus : byte

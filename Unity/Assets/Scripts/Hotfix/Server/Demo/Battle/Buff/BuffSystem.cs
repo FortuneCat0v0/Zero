@@ -51,6 +51,8 @@ namespace ET.Server
             }
 
             self.Root().GetComponent<TimerComponent>().Remove(ref self.Timer);
+
+            Log.Warning($"移除buff {self.BuffConfigId}");
         }
 
         private static void Update(this Buff self)
@@ -90,6 +92,8 @@ namespace ET.Server
 
         public static void InitBuff(this Buff self)
         {
+            Log.Warning($"初始化buff {self.BuffConfigId}");
+
             if (self.BuffConfig.StartAEs.Count > 0)
             {
                 for (int i = 0; i < self.BuffConfig.StartAEs.Count; i++)
@@ -100,11 +104,6 @@ namespace ET.Server
 
             self.StartTime = TimeInfo.Instance.ServerNow();
             self.NextTriggerTime = self.StartTime + self.BuffConfig.TriggerInterval;
-        }
-
-        public static Unit GetOwnerUnit(this Buff self)
-        {
-            return self.GetParent<Unit>();
         }
     }
 }

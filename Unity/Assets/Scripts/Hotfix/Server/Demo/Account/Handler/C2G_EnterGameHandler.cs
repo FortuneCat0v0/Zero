@@ -98,6 +98,7 @@ namespace ET.Server
                         SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
                         skillComponent.AddSkill(10001, 1);
                         skillComponent.AddSkill(10002, 1);
+                        skillComponent.AddSkill(10003, 1);
 
                         response.MyId = player.Id;
 

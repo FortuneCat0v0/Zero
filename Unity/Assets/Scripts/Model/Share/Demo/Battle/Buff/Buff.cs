@@ -33,7 +33,7 @@ namespace ET
         public uint LayerCount { get; set; }
 
         [BsonIgnore]
-        public Unit Unit => this.GetParent<Unit>();
+        public Unit OwnerUnit => this.GetParent<BuffComponent>().GetParent<Unit>();
 
         [BsonIgnore]
         public long Timer;
