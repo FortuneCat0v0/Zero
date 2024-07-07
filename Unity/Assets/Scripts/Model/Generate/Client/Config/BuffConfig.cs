@@ -21,11 +21,14 @@ public sealed partial class BuffConfig: Bright.Config.BeanBase
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);StartEvents = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); StartEvents.Add(_e0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EndEvents = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); EndEvents.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);StartAEs = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); StartAEs.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);StartAEParams = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} StartAEParams.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EndAEs = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EndAEs.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EndAEParams = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} EndAEParams.Add(_e0);}}
         Duration = _buf.ReadInt();
         TriggerInterval = _buf.ReadInt();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TriggerEvents = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); TriggerEvents.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);IntervalAEs = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); IntervalAEs.Add(_e0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);IntervalAEParams = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} IntervalAEParams.Add(_e0);}}
         MaxLayer = _buf.ReadInt();
         Goup = _buf.ReadInt();
         PostInit();
@@ -51,11 +54,19 @@ public sealed partial class BuffConfig: Bright.Config.BeanBase
     /// <summary>
     /// 开始事件
     /// </summary>
-    public System.Collections.Generic.List<int> StartEvents { get; private set; }
+    public System.Collections.Generic.List<string> StartAEs { get; private set; }
+    /// <summary>
+    /// 开始事件参数
+    /// </summary>
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> StartAEParams { get; private set; }
     /// <summary>
     /// 结束事件
     /// </summary>
-    public System.Collections.Generic.List<int> EndEvents { get; private set; }
+    public System.Collections.Generic.List<string> EndAEs { get; private set; }
+    /// <summary>
+    /// 结束事件参数
+    /// </summary>
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> EndAEParams { get; private set; }
     /// <summary>
     /// 持续时间
     /// </summary>
@@ -65,9 +76,13 @@ public sealed partial class BuffConfig: Bright.Config.BeanBase
     /// </summary>
     public int TriggerInterval { get; private set; }
     /// <summary>
-    /// 触发事件id
+    /// 间隔事件
     /// </summary>
-    public System.Collections.Generic.List<int> TriggerEvents { get; private set; }
+    public System.Collections.Generic.List<string> IntervalAEs { get; private set; }
+    /// <summary>
+    /// 间隔事件参数
+    /// </summary>
+    public System.Collections.Generic.List<System.Collections.Generic.List<int>> IntervalAEParams { get; private set; }
     /// <summary>
     /// 最大叠加层数
     /// </summary>
@@ -95,11 +110,14 @@ public sealed partial class BuffConfig: Bright.Config.BeanBase
         + "Id:" + Id + ","
         + "Name:" + Name + ","
         + "Desc:" + Desc + ","
-        + "StartEvents:" + Bright.Common.StringUtil.CollectionToString(StartEvents) + ","
-        + "EndEvents:" + Bright.Common.StringUtil.CollectionToString(EndEvents) + ","
+        + "StartAEs:" + Bright.Common.StringUtil.CollectionToString(StartAEs) + ","
+        + "StartAEParams:" + Bright.Common.StringUtil.CollectionToString(StartAEParams) + ","
+        + "EndAEs:" + Bright.Common.StringUtil.CollectionToString(EndAEs) + ","
+        + "EndAEParams:" + Bright.Common.StringUtil.CollectionToString(EndAEParams) + ","
         + "Duration:" + Duration + ","
         + "TriggerInterval:" + TriggerInterval + ","
-        + "TriggerEvents:" + Bright.Common.StringUtil.CollectionToString(TriggerEvents) + ","
+        + "IntervalAEs:" + Bright.Common.StringUtil.CollectionToString(IntervalAEs) + ","
+        + "IntervalAEParams:" + Bright.Common.StringUtil.CollectionToString(IntervalAEParams) + ","
         + "MaxLayer:" + MaxLayer + ","
         + "Goup:" + Goup + ","
         + "}";

@@ -3,13 +3,16 @@
     "Id": 8001,
     "Name": "测试-标记buff",
     "Desc": "纯标记",
-    "StartEvents": [],
-    "EndEvents": [],
+    "StartAEs": [],
+    "StartAEParams": [],
+    "EndAEs": [],
+    "EndAEParams": [],
     "Duration": 15000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
     ],
+    "IntervalAEParams": [],
     "MaxLayer": 1,
     "Goup": 0
   },
@@ -17,16 +20,31 @@
     "Id": 8002,
     "Name": "测试-加攻击%",
     "Desc": "攻击+50%",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      5000
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "5000"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 10000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -35,16 +53,31 @@
     "Id": 8003,
     "Name": "测试-加攻击",
     "Desc": "攻击+100",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      100
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "100"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 12000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 1
@@ -53,16 +86,31 @@
     "Id": 8004,
     "Name": "测试-加攻击",
     "Desc": "攻击+200",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      200
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "200"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 12000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 1
@@ -71,16 +119,31 @@
     "Id": 8005,
     "Name": "测试-减攻击",
     "Desc": "攻击-100",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      -100
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "-100"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 10000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 2
@@ -89,16 +152,31 @@
     "Id": 8006,
     "Name": "测试-减攻击",
     "Desc": "攻击-300",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      -300
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "-300"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 10000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 2
@@ -107,16 +185,31 @@
     "Id": 8007,
     "Name": "测试-加速",
     "Desc": "速度+50",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      50
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "50"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 5000,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -125,16 +218,31 @@
     "Id": 8008,
     "Name": "测试-减速%",
     "Desc": "速度-100%",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      -10000
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "-10000"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 7500,
     "TriggerInterval": 0,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -143,16 +251,31 @@
     "Id": 8009,
     "Name": "测试-持续伤害",
     "Desc": "500伤害/秒",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      500
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "500"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 10000,
     "TriggerInterval": 1000,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -161,16 +284,31 @@
     "Id": 8010,
     "Name": "测试-持续伤害%",
     "Desc": "血量上限5%伤害/5秒",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      500
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "500"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 25000,
     "TriggerInterval": 5000,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -179,16 +317,31 @@
     "Id": 8011,
     "Name": "测试-持续回血",
     "Desc": "回复200点/3秒",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      200
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "200"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 15000,
     "TriggerInterval": 3000,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -197,16 +350,31 @@
     "Id": 8012,
     "Name": "测试-持续回血%",
     "Desc": "回复血量上限10%点/3秒",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      1000
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "1000"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 15000,
     "TriggerInterval": 3000,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -215,16 +383,31 @@
     "Id": 8013,
     "Name": "测试-持续回护盾",
     "Desc": "加100盾/2秒",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      100
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "100"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 10000,
     "TriggerInterval": 2000,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0
@@ -233,16 +416,31 @@
     "Id": 8014,
     "Name": "测试-持续回护盾%",
     "Desc": "加10%盾/2秒",
-    "StartEvents": [
-      1001
+    "StartAEs": [
+      "1001"
     ],
-    "EndEvents": [
-      1000
+    "StartAEParams": [
+      [
+        1001
+      ]
+    ],
+    "EndAEs": [
+      "1000"
+    ],
+    "EndAEParams": [
+      [
+        1001
+      ]
     ],
     "Duration": 10000,
     "TriggerInterval": 2000,
-    "TriggerEvents": [
-      0
+    "IntervalAEs": [
+      "0"
+    ],
+    "IntervalAEParams": [
+      [
+        1001
+      ]
     ],
     "MaxLayer": 1,
     "Goup": 0

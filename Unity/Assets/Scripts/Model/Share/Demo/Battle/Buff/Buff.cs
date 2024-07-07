@@ -20,29 +20,29 @@ namespace ET
         OverlayAddLayerRefreshTime,
         OnlyAddTime,
     }
-    
+
     [ChildOf(typeof(BuffComponent))]
-    public class Buff:Entity,IAwake<int>, IFixedUpdate, IDestroy,ITransfer
+    public class Buff : Entity, IAwake<int>, IFixedUpdate, IDestroy, ITransfer
     {
         [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();
 
         public long LifeTimer;
         public long IntervalTimer;
-        
+
         /// <summary>
         /// buff表id
         /// </summary>
         public int BuffId;
 
         public long StartTime { get; set; }
-        
+
         public long NextTriggerTime { get; set; }
-        
-        
+
         public uint LayerCount { get; set; }
 
         private BuffConfig buffConfig;
+
         public BuffConfig BuffConfig
         {
             get
@@ -52,7 +52,5 @@ namespace ET
                 return this.buffConfig;
             }
         }
-
-
     }
 }

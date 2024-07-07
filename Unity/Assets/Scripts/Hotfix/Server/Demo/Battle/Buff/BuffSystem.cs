@@ -39,13 +39,13 @@ namespace ET.Server
         [EntitySystem]
         private static void Destroy(this Buff self)
         {
-            if (self.BuffConfig?.EndEvents?.Count > 0)
-            {
-                foreach (int eventId in self.BuffConfig.EndEvents)
-                {
-                    // self.CreateActionEvent(eventId);
-                }
-            }
+            // if (self.BuffConfig?.EndEvents?.Count > 0)
+            // {
+            //     foreach (int eventId in self.BuffConfig.EndEvents)
+            //     {
+            //         // self.CreateActionEvent(eventId);
+            //     }
+            // }
         }
 
         public static void LifeTimeout(this Buff self)
@@ -64,13 +64,13 @@ namespace ET.Server
 
         public static void InitBuff(this Buff self)
         {
-            if (self.BuffConfig?.EndEvents?.Count > 0)
-            {
-                foreach (int eventId in self.BuffConfig.StartEvents)
-                {
-                    // self.CreateActionEvent(eventId);
-                }
-            }
+            // if (self.BuffConfig?.EndEvents?.Count > 0)
+            // {
+            //     foreach (int eventId in self.BuffConfig.StartEvents)
+            //     {
+            //         // self.CreateActionEvent(eventId);
+            //     }
+            // }
 
             //初始默认触发一次buff效果
             // self.TriggerBuff();
@@ -86,13 +86,13 @@ namespace ET.Server
         {
             //如果buff携带可触发技能事件，则触发事件
 
-            if (self.BuffConfig?.TriggerEvents?.Count > 0)
-            {
-                foreach (int eventId in self.BuffConfig.TriggerEvents)
-                {
-                    // self.CreateActionEvent(eventId);
-                }
-            }
+            // if (self.BuffConfig?.TriggerEvents?.Count > 0)
+            // {
+            //     foreach (int eventId in self.BuffConfig.TriggerEvents)
+            //     {
+            //         // self.CreateActionEvent(eventId);
+            //     }
+            // }
         }
 
         /// <summary>
