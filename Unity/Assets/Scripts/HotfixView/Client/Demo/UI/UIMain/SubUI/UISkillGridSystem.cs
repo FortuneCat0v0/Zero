@@ -38,7 +38,7 @@ namespace ET.Client
             }
 
             long cd = self.Skill.GetCurrentCD();
-            self.CDText.text = cd <= 0 ? string.Empty : (cd / 1000).ToString();
+            self.CDText.text = cd <= 0 ? string.Empty : $"{cd / 1000f:0.#}";
 
             self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.Skill.GetCD();
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Server
 {
@@ -74,7 +75,6 @@ namespace ET.Server
             }
         }
 
-        
         public static int CalcuateDamageValue(Unit attackUnit, Unit TargetUnit)
         {
             int damage = attackUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.AttackDamage);
@@ -99,8 +99,7 @@ namespace ET.Server
             // 实际护甲=护甲数X（1-护甲削减）X（1-百分比穿透）-固定穿甲
             // 假如护甲数为100，护甲削减10%，百分比穿透10%，固定穿甲10点，
             // 实际护甲=100X（1-10%）X（1-10%）-10=71
-            
-            
+
             if (damage > 0)
             {
                 //扣掉护甲值
@@ -111,6 +110,26 @@ namespace ET.Server
 
             //Log.Debug($"造成伤害值：{damage}");
             return damage;
+        }
+
+        public static void SpellSkill(this Unit unit, int skillConfigId, long targetUnitId, float3 position, float3 direction)
+        {
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            // 这里可以做一些数据校验
+
+            direction = new(direction.x, 0, direction.z);
+
+            if (skillComponent.SpellSkill(skillConfigId, targetUnitId, position, direction))
+            {
+                M2C_SpellSkill m2CSpellSkill = M2C_SpellSkill.Create();
+                m2CSpellSkill.UnitId = unit.Id;
+                m2CSpellSkill.SkillConfigId = skillConfigId;
+                m2CSpellSkill.TargetUnitId = targetUnitId;
+                m2CSpellSkill.Position = position;
+                m2CSpellSkill.Direction = direction;
+
+                MapMessageHelper.Broadcast(unit, m2CSpellSkill);
+            }
         }
     }
 }
