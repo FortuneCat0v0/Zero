@@ -10,8 +10,9 @@ namespace ET.Server
     /// </summary>
     public class AE_RangeDamage : AActionEvent
     {
-        public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
+        public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
+            Skill skill = entity as Skill;
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 

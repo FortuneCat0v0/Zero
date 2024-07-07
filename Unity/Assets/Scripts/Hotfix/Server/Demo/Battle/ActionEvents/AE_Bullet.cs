@@ -9,9 +9,10 @@ namespace ET.Server
     /// </summary>
     public class AE_Bullet : AActionEvent
     {
-        public override async ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken)
+        public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
             Log.Info("触发子弹事件");
+            Skill skill = entity as Skill;
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 

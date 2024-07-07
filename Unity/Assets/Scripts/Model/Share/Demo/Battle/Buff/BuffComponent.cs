@@ -5,9 +5,12 @@ using MongoDB.Bson.Serialization.Options;
 namespace ET
 {
     [ComponentOf(typeof(Unit))]
-    public class BuffComponent : Entity, IAwake, ITransfer, IDestroy
+    public class BuffComponent : Entity, IAwake, IDeserialize, ITransfer, IDestroy
     {
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, EntityRef<Buff>> BuffDic = new();
+        [BsonIgnore]
+        public Unit Unit => this.GetParent<Unit>();
+
+        [BsonIgnore]
+        public Dictionary<int, Buff> BuffDict { get; set; } = new();
     }
 }

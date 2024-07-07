@@ -22,18 +22,9 @@ namespace ET
     }
 
     [ChildOf(typeof(BuffComponent))]
-    public class Buff : Entity, IAwake<int>, IFixedUpdate, IDestroy, ITransfer
+    public class Buff : Entity, IAwake, IAwake<int>, IDestroy, ITransfer, ISerializeToEntity
     {
-        [BsonIgnore]
-        public Unit Unit => this.GetParent<Unit>();
-
-        public long LifeTimer;
-        public long IntervalTimer;
-
-        /// <summary>
-        /// buff表id
-        /// </summary>
-        public int BuffId;
+        public int BuffConfigId { get; set; }
 
         public long StartTime { get; set; }
 
@@ -41,15 +32,21 @@ namespace ET
 
         public uint LayerCount { get; set; }
 
+        [BsonIgnore]
+        public Unit Unit => this.GetParent<Unit>();
+
+        [BsonIgnore]
+        public long Timer;
+
+        [BsonIgnore]
         private BuffConfig buffConfig;
 
+        [BsonIgnore]
         public BuffConfig BuffConfig
         {
             get
             {
-                if (this.buffConfig == null)
-                    this.buffConfig = BuffConfigCategory.Instance.Get(this.BuffId);
-                return this.buffConfig;
+                return this.buffConfig ??= BuffConfigCategory.Instance.Get(this.BuffConfigId);
             }
         }
     }

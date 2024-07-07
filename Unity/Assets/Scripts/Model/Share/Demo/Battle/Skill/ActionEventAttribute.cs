@@ -9,6 +9,6 @@ namespace ET
     [ActionEvent]
     public abstract class AActionEvent : HandlerObject
     {
-        public abstract ETTask Execute(Skill skill, List<int> param, ETCancellationToken cancellationToken);
+        public abstract ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken = null);
     }
 }

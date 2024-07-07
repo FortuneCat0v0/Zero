@@ -68,22 +68,14 @@ namespace ET.Server
 
             self.CurrentActionEventIndex++;
 
-            string actionEventName = self.SkillConfig.AEsServer[self.CurrentActionEventIndex];
-            AActionEvent actionEvent = ActionEventDispatcherComponent.Instance.Get(actionEventName);
-
-            if (actionEvent == null)
-            {
-                Log.Error($"not found actionEvent: {actionEventName}");
-                return;
-            }
-
             if (self.CancellationToken == null)
             {
                 ETCancellationToken cancellationToken = new();
                 self.CancellationToken = cancellationToken;
             }
 
-            actionEvent.Execute(self, self.SkillConfig.AEParamsServer[self.CurrentActionEventIndex], self.CancellationToken).Coroutine();
+            ActionEventDispatcherComponent.Instance.Trigger(self, self.SkillConfig.AEsServer[self.CurrentActionEventIndex],
+                self.SkillConfig.AEParamsServer[self.CurrentActionEventIndex], self.CancellationToken);
         }
 
         public static void EndSpell(this Skill self)

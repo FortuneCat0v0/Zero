@@ -16,59 +16,52 @@ namespace ET
         [EntitySystem]
         private static void Destroy(this BuffComponent self)
         {
-            foreach (KeyValuePair<int, EntityRef<Buff>> valuePair in self.BuffDic)
-            {
-                Buff buff = valuePair.Value;
-                if (buff == null)
-                    continue;
-                self.Remove(buff.Id);
-            }
-
-            self.BuffDic.Clear();
         }
 
-        private static void AddBuffS(this BuffComponent self, List<int> buffIds)
+        [EntitySystem]
+        private static void Deserialize(this BuffComponent self)
         {
-            foreach (int buffId in buffIds)
+            foreach (Entity entity in self.Children.Values)
             {
-                self.AddBuff(buffId);
+                Buff buff = entity as Buff;
+                self.BuffDict.Add(buff.BuffConfigId, buff);
             }
         }
 
-        /// <summary>
-        /// 添加buff
-        /// </summary>
-        public static bool AddBuff(this BuffComponent self, int buffId = 0)
+        public static bool AddBuff(this BuffComponent self, int buffConfigId)
         {
-            Buff buff = null;
-
-            if (!self.BuffDic.TryGetValue(buffId, out EntityRef<Buff> buffRef))
+            if (!self.BuffDict.ContainsKey(buffConfigId))
             {
-                buff = self.AddChild<Buff, int>(buffId);
+                BuffConfig buffConfig = BuffConfigCategory.Instance.Get(buffConfigId);
+                if (buffConfig == null)
+                {
+                    Log.Error($"配置表不存在buff {buffConfigId}");
+                    return false;
+                }
+
+                Buff buff = self.AddChild<Buff, int>(buffConfigId);
                 buff.LayerCount = 1;
+
+                self.BuffDict.Add(buffConfigId, buff);
+
+                return true;
             }
 
-            self.BuffDic[buffId] = buff;
-            return true;
+            Log.Error($"已经存在buff configId:{buffConfigId}");
+            return false;
         }
 
-        public static bool RemoveBuff(this BuffComponent self, int buffId = 0)
+        public static bool RemoveBuff(this BuffComponent self, int buffConfigId)
         {
-            if (!self.BuffDic.TryGetValue(buffId, out EntityRef<Buff> buffRef))
+            if (!self.BuffDict.ContainsKey(buffConfigId))
             {
                 return false;
             }
 
-            Buff buff = self.BuffDic[buffId];
-            self.BuffDic.Remove(buffId);
-            self.Remove(buff.Id);
+            Buff buff = self.BuffDict[buffConfigId];
+            self.BuffDict.Remove(buffConfigId);
+            buff.Dispose();
             return true;
-        }
-
-        public static void Remove(this BuffComponent self, long id)
-        {
-            Buff buff = self.GetChild<Buff>(id);
-            buff?.Dispose();
         }
     }
 }
