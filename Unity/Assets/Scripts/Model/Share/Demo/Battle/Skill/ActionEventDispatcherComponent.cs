@@ -24,16 +24,9 @@ namespace ET
             }
         }
 
-        public AActionEvent Get(string key)
-        {
-            this.actionEvents.TryGetValue(key, out var aaiHandler);
-            return aaiHandler;
-        }
-
         public void Trigger(Entity entity, string actionEventName, List<int> param, ETCancellationToken cancellationToken = null)
         {
-            AActionEvent actionEvent = ActionEventDispatcherComponent.Instance.Get(actionEventName);
-
+            this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
             if (actionEvent == null)
             {
                 Log.Error($"not found actionEvent: {actionEventName}");
