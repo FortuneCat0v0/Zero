@@ -51,6 +51,14 @@ namespace ET.Client
             self.GMInput = rc.Get<GameObject>("GMInput");
             self.GMSendBtn = rc.Get<GameObject>("GMSendBtn");
             self.GMSendBtn.GetComponent<Button>().AddListener(self.OnGMSendBtn);
+
+            self.PingText = rc.Get<GameObject>("PingText");
+        }
+
+        [EntitySystem]
+        private static void Update(this UIMainComponent self)
+        {
+            self.PingText.GetComponent<TMP_Text>().text = $"{TimeInfo.Instance.Ping}ms";
         }
 
         private static void OnGMSendBtn(this UIMainComponent self)

@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [ComponentOf(typeof(UI))]
-    public class UIMainComponent : Entity, IAwake
+    public class UIMainComponent : Entity, IAwake, IUpdate
     {
         public GameObject RotateAngleDragPanel;
         public float DRAG_TO_ANGLE = 0.5f;
@@ -31,5 +31,7 @@ namespace ET.Client
 
         public GameObject GMInput;
         public GameObject GMSendBtn;
+
+        public GameObject PingText;
     }
 }
