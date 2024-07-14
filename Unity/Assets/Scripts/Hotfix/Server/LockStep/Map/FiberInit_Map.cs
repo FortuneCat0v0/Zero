@@ -18,7 +18,6 @@ namespace ET.Server
             root.AddComponent<RoomManagerComponent>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
-            root.AddComponent<CollisionListenerComponent>();
             root.AddComponent<CollisionWorldComponent>();
             root.AddComponent<MonsterManagerComponent>();
 

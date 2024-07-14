@@ -46,7 +46,7 @@ namespace ET.Server
             {
                 for (int i = 0; i < self.BuffConfig.EndAEs.Count; i++)
                 {
-                    ActionEventDispatcherComponent.Instance.Trigger(self, self.BuffConfig.EndAEs[i], self.BuffConfig.EndAEParams[i]);
+                    ActionEventDispatcherComponent.Instance.HandleExecute(self, self.BuffConfig.EndAEs[i], self.BuffConfig.EndAEParams[i]);
                 }
             }
 
@@ -69,7 +69,7 @@ namespace ET.Server
                 {
                     for (int i = 0; i < self.BuffConfig.IntervalAEs.Count; i++)
                     {
-                        ActionEventDispatcherComponent.Instance.Trigger(self, self.BuffConfig.IntervalAEs[i], self.BuffConfig.IntervalAEParams[i]);
+                        ActionEventDispatcherComponent.Instance.HandleExecute(self, self.BuffConfig.IntervalAEs[i], self.BuffConfig.IntervalAEParams[i]);
                     }
                 }
 
@@ -98,7 +98,7 @@ namespace ET.Server
             {
                 for (int i = 0; i < self.BuffConfig.StartAEs.Count; i++)
                 {
-                    ActionEventDispatcherComponent.Instance.Trigger(self, self.BuffConfig.StartAEs[i], self.BuffConfig.StartAEParams[i]);
+                    ActionEventDispatcherComponent.Instance.HandleExecute(self, self.BuffConfig.StartAEs[i], self.BuffConfig.StartAEParams[i]);
                 }
             }
 

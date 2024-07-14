@@ -54,6 +54,8 @@ namespace ET.Server
                     unitInfo.SkillGridDict.Add(keyValuePairIntInt);
                 }
             }
+            
+            unitInfo.ERoleCamp = (int)unit.GetComponent<RoleCastComponent>().RoleCamp;
 
             return unitInfo;
         }

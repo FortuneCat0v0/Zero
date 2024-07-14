@@ -15,7 +15,8 @@ namespace ET.Server
         private static void Awake(this CollisionWorldComponent self)
         {
             self.World = CollisionHelper.CreateWorld(new Vector2(0, 0));
-            self.World.SetContactListener(self.GetParent<Scene>().GetComponent<CollisionListenerComponent>());
+            CollisionListenerComponent collisionListener = self.Root().AddComponent<CollisionListenerComponent>();
+            self.World.SetContactListener(collisionListener);
         }
 
         /// <summary>

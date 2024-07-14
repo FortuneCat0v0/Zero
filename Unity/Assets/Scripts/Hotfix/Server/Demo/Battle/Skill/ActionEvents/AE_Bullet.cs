@@ -20,10 +20,49 @@ namespace ET.Server
             {
                 quaternion rotatedQuaternion = quaternion.LookRotation(skill.Direction, math.up());
 
-                UnitFactory.CreateBullet(root, IdGenerater.Instance.GenerateId(), skill, param[1], rotatedQuaternion);
+                UnitFactory.CreateBullet(root, skill, param[1], rotatedQuaternion);
             }
 
             await ETTask.CompletedTask;
+        }
+
+        public override void HandleCollisionStart(Unit a, Unit b)
+        {
+            RoleCastComponent aRole = a.GetComponent<RoleCastComponent>();
+            ColliderComponent aColliderComponent = a.GetComponent<ColliderComponent>();
+            Unit aBelongToUnit = aColliderComponent.BelongToUnit;
+
+            RoleCastComponent bRole = b.GetComponent<RoleCastComponent>();
+            ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
+            Unit bBelongToUnit = bColliderComponent.BelongToUnit;
+
+            ERoleCast roleCast = aRole.GetRoleCastToTarget(b);
+            ERoleTag roleTag = bRole.RoleTag;
+
+            switch (roleCast)
+            {
+                case ERoleCast.Friendly:
+                    break;
+                case ERoleCast.Adverse:
+                    switch (roleTag)
+                    {
+                        case ERoleTag.Hero:
+                            BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Bullet);
+                            break;
+                    }
+
+                    break;
+                case ERoleCast.Neutral:
+                    break;
+            }
+        }
+
+        public override void HandleCollisionSustain(Unit a, Unit b)
+        {
+        }
+
+        public override void HandleCollisionEnd(Unit a, Unit b)
+        {
         }
     }
 }

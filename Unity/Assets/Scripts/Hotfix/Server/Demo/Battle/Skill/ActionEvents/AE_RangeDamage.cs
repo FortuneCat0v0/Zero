@@ -36,5 +36,17 @@ namespace ET.Server
 
             await ETTask.CompletedTask;
         }
+
+        public override void HandleCollisionStart(Unit a, Unit b)
+        {
+        }
+
+        public override void HandleCollisionSustain(Unit a, Unit b)
+        {
+        }
+
+        public override void HandleCollisionEnd(Unit a, Unit b)
+        {
+        }
     }
 }

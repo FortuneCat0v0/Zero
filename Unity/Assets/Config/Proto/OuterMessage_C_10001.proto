@@ -69,6 +69,7 @@ message UnitInfo
 	MoveInfo MoveInfo = 7;
 	repeated SkillInfo SkillInfos = 8;
 	repeated KeyValuePair_Int_Int SkillGridDict = 9;
+	int32 ERoleCamp = 10;
 }
 
 message M2C_CreateUnits // IMessage

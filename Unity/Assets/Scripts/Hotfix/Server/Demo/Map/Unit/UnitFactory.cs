@@ -28,15 +28,16 @@ namespace ET.Server
             unit.AddComponent<EquipmentComponent>();
             unit.AddComponent<SkillComponent>();
             unit.AddComponent<BuffComponent>();
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.None, ERoleTag.Hero);
 
             return unit;
         }
 
-        public static Unit CreateMonster(Scene scene, long id, float3 position)
+        public static Unit CreateMonster(Scene scene, float3 position)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit monster = unitComponent.AddChildWithId<Unit, int>(id, 2001);
+            Unit monster = unitComponent.AddChild<Unit, int>(2001);
             monster.AddComponent<MoveComponent>();
             monster.Position = position;
 
@@ -51,8 +52,8 @@ namespace ET.Server
             monster.AddComponent<AOIEntity, int, float3>(9 * 1000, monster.Position);
 
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(monster.ConfigId);
-            monster.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
-                new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, monster);
+            // monster.AddComponent<ColliderComponent>().AddCollider(unitConfig.ColliderType,
+            //     new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, monster);
 
             monster.AddComponent<PathfindingComponent, string>("TestMap");
             monster.AddComponent<XunLuoPathComponent>();
@@ -60,11 +61,11 @@ namespace ET.Server
             return monster;
         }
 
-        public static Unit CreateBullet(Scene root, long id, Skill ownerSkill, int config, quaternion quaternion)
+        public static Unit CreateBullet(Scene root, Skill ownerSkill, int config, quaternion quaternion)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
             Unit owner = ownerSkill.OwnerUnit;
-            Unit bullet = unitComponent.AddChildWithId<Unit, int>(id, config);
+            Unit bullet = unitComponent.AddChild<Unit, int>(config);
             unitComponent.Add(bullet);
 
             NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
@@ -86,11 +87,27 @@ namespace ET.Server
             bullet.AddComponent<AOIEntity, int, float3>(9 * 1000, bullet.Position); // 添加AOI后会自动通知范围内玩家生成子弹
 
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(bullet.ConfigId);
-            bullet.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
-                new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, bullet);
+            // bullet.AddComponent<ColliderComponent>()
+            //         .AddCollider(unitConfig.ColliderType, new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, bullet);
             bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
 
             return bullet;
+        }
+
+        public static Unit CreateSpecialColliderUnit(Scene root, CreateSkillColliderArgs createSkillColliderArgs)
+        {
+            UnitComponent unitComponent = root.GetComponent<UnitComponent>();
+
+            //为碰撞体新建一个Unit
+            Unit unit = unitComponent.AddChild<Unit, int>(6001);
+            unit.Position = createSkillColliderArgs.BelontToUnit.Position;
+
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createSkillColliderArgs.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
+                ERoleTag.SkillCollision);
+
+            unit.AddComponent<ColliderComponent, CreateSkillColliderArgs>(createSkillColliderArgs);
+
+            return unit;
         }
     }
 }

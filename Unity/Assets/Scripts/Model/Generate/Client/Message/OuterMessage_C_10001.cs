@@ -296,6 +296,9 @@ namespace ET
         [MemoryPackOrder(8)]
         public List<KeyValuePair_Int_Int> SkillGridDict { get; set; } = new();
 
+        [MemoryPackOrder(9)]
+        public int ERoleCamp { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -312,6 +315,7 @@ namespace ET
             this.MoveInfo = default;
             this.SkillInfos.Clear();
             this.SkillGridDict.Clear();
+            this.ERoleCamp = default;
 
             ObjectPool.Instance.Recycle(this);
         }

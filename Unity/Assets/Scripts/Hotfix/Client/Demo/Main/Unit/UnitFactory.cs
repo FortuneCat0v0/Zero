@@ -43,9 +43,11 @@ namespace ET.Client
                 skillComponent.SkillGridDict[keyValuePairIntInt.Key] = keyValuePairIntInt.Value;
             }
 
-            unit.AddComponent<ObjectWait>();
+            unit.AddComponent<BuffComponent>();
 
-            // unit.AddComponent<XunLuoPathComponent>();
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>((ERoleCamp)unitInfo.ERoleCamp, ERoleTag.Hero);
+
+            unit.AddComponent<ObjectWait>();
 
             EventSystem.Instance.Publish(unit.Scene(), new AfterUnitCreate() { Unit = unit });
             return unit;

@@ -31,12 +31,6 @@ namespace ET
         public Unit Unit;
     }
 
-    public struct OnCollisionContact
-    {
-        public Contact contact;
-        public bool isEnd;
-    }
-
     public struct HitResult
     {
         public Unit FromUnit;

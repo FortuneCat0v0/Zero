@@ -72,7 +72,7 @@ namespace ET.Client
                 self.CancellationToken = cancellationToken;
             }
 
-            ActionEventDispatcherComponent.Instance.Trigger(self, self.SkillConfig.AEsClient[self.CurrentActionEventIndex],
+            ActionEventDispatcherComponent.Instance.HandleExecute(self, self.SkillConfig.AEsClient[self.CurrentActionEventIndex],
                 self.SkillConfig.AEParamsClient[self.CurrentActionEventIndex], self.CancellationToken);
         }
 

@@ -53,7 +53,7 @@ namespace ET.Server
 
             for (int i = monsterCount; i < 5; i++)
             {
-                UnitFactory.CreateMonster(self.Scene(), IdGenerater.Instance.GenerateId(), new float3(i * 1.5f, 0, 0));
+                UnitFactory.CreateMonster(self.Root(), new float3(i * 1.5f, 0, 0));
             }
         }
     }

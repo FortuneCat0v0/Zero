@@ -13,18 +13,23 @@ namespace ET.Server
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 
-            // 也许要加一个配置判断技能结束要不要 cancellationToken
-
-            TimerComponent timerComponent = root.GetComponent<TimerComponent>();
-            while (true)
+            UnitFactory.CreateSpecialColliderUnit(root, new CreateSkillColliderArgs()
             {
-                if (cancellationToken.IsCancel())
-                {
-                    return;
-                }
+            });
 
-                await timerComponent.WaitAsync(param[0], cancellationToken);
-            }
+            await ETTask.CompletedTask;
+        }
+
+        public override void HandleCollisionStart(Unit a, Unit b)
+        {
+        }
+
+        public override void HandleCollisionSustain(Unit a, Unit b)
+        {
+        }
+
+        public override void HandleCollisionEnd(Unit a, Unit b)
+        {
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ET
             }
         }
 
-        public void Trigger(Entity entity, string actionEventName, List<int> param, ETCancellationToken cancellationToken = null)
+        public void HandleExecute(Entity entity, string actionEventName, List<int> param, ETCancellationToken cancellationToken = null)
         {
             this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
             if (actionEvent == null)
@@ -34,6 +34,45 @@ namespace ET
             }
 
             actionEvent.Execute(entity, param, cancellationToken).Coroutine();
+        }
+
+        public void HandleCollisionStart(Unit a, Unit b)
+        {
+            string actionEventName = a.GetComponent<ColliderComponent>().CollisionHandlerName;
+            this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
+            if (actionEvent == null)
+            {
+                Log.Error($"not found actionEvent: {actionEventName}");
+                return;
+            }
+
+            actionEvent.HandleCollisionStart(a, b);
+        }
+
+        public void HandleCollisionSustain(Unit a, Unit b)
+        {
+            string actionEventName = a.GetComponent<ColliderComponent>().CollisionHandlerName;
+            this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
+            if (actionEvent == null)
+            {
+                Log.Error($"not found actionEvent: {actionEventName}");
+                return;
+            }
+
+            actionEvent.HandleCollisionSustain(a, b);
+        }
+
+        public void HandleCollisionEnd(Unit a, Unit b)
+        {
+            string actionEventName = a.GetComponent<ColliderComponent>().CollisionHandlerName;
+            this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
+            if (actionEvent == null)
+            {
+                Log.Error($"not found actionEvent: {actionEventName}");
+                return;
+            }
+
+            actionEvent.HandleCollisionStart(a, b);
         }
     }
 }

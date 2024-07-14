@@ -13,6 +13,7 @@ namespace ET
     {
         Circle = 1,
         Box = 2,
+        Polygon = 3,
     }
 
 } 

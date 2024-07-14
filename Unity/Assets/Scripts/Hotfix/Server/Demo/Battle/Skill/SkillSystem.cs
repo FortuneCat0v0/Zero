@@ -74,7 +74,7 @@ namespace ET.Server
                 self.CancellationToken = cancellationToken;
             }
 
-            ActionEventDispatcherComponent.Instance.Trigger(self, self.SkillConfig.AEsServer[self.CurrentActionEventIndex],
+            ActionEventDispatcherComponent.Instance.HandleExecute(self, self.SkillConfig.AEsServer[self.CurrentActionEventIndex],
                 self.SkillConfig.AEParamsServer[self.CurrentActionEventIndex], self.CancellationToken);
         }
 

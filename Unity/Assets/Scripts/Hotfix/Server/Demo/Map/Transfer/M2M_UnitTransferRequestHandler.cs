@@ -68,8 +68,9 @@ namespace ET.Server
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
 
             UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
-            unit.AddComponent<CollisionComponent>().AddCollider(unitConfig.ColliderType,
-                new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, unit);
+            Log.Warning("注意传送后的碰撞体要重新添加");
+            // unit.AddComponent<ColliderComponent>().AddCollider(unitConfig.ColliderType,
+            //     new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, unit);
 
             // 解锁location，可以接收发给Unit的消息
             await scene.Root().GetComponent<LocationProxyComponent>().UnLock(LocationType.Unit, unit.Id, request.OldActorId, unit.GetActorId());
