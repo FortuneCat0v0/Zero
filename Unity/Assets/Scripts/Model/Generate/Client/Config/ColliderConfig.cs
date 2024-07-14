@@ -26,9 +26,7 @@ public sealed partial class ColliderConfig: Bright.Config.BeanBase
         Radius = _buf.ReadFloat();
         HX = _buf.ReadFloat();
         HY = _buf.ReadFloat();
-        Angle = _buf.ReadFloat();
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Points = new System.Collections.Generic.List<System.Numerics.Vector2>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Numerics.Vector2 _e0;  _e0 = _buf.ReadVector2(); Points.Add(_e0);}}
-        PointCount = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FinalPoints = new System.Collections.Generic.List<System.Collections.Generic.List<System.Numerics.Vector2>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<System.Numerics.Vector2> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<System.Numerics.Vector2>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { System.Numerics.Vector2 _e1;  _e1 = _buf.ReadVector2(); _e0.Add(_e1);}} FinalPoints.Add(_e0);}}
         PostInit();
     }
 
@@ -70,17 +68,9 @@ public sealed partial class ColliderConfig: Bright.Config.BeanBase
     /// </summary>
     public float HY { get; private set; }
     /// <summary>
-    /// 旋转角度
-    /// </summary>
-    public float Angle { get; private set; }
-    /// <summary>
     /// 碰撞体所包含的顶点信息(顺时针),可能由多个多边形组成
     /// </summary>
-    public System.Collections.Generic.List<System.Numerics.Vector2> Points { get; private set; }
-    /// <summary>
-    /// 总顶点数
-    /// </summary>
-    public int PointCount { get; private set; }
+    public System.Collections.Generic.List<System.Collections.Generic.List<System.Numerics.Vector2>> FinalPoints { get; private set; }
 
     public const int __ID__ = -1222308746;
     public override int GetTypeId() => __ID__;
@@ -105,9 +95,7 @@ public sealed partial class ColliderConfig: Bright.Config.BeanBase
         + "Radius:" + Radius + ","
         + "HX:" + HX + ","
         + "HY:" + HY + ","
-        + "Angle:" + Angle + ","
-        + "Points:" + Bright.Common.StringUtil.CollectionToString(Points) + ","
-        + "PointCount:" + PointCount + ","
+        + "FinalPoints:" + Bright.Common.StringUtil.CollectionToString(FinalPoints) + ","
         + "}";
     }
     

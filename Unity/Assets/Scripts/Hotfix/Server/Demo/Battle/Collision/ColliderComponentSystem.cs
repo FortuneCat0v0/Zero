@@ -27,6 +27,7 @@ namespace ET.Server
             self.CollisionHandlerName = "ActionEvent...";
             self.SyncPosToBelongUnit = args.FollowUnitPos;
             self.SyncRotToBelongUnit = args.FollowUnitRot;
+            self.ColliderConfig = ColliderConfigCategory.Instance.Get(args.ColliderConfigId);
 
             Unit selfUnit = self.GetParent<Unit>();
             if (args.FollowUnitPos)
@@ -52,16 +53,6 @@ namespace ET.Server
         }
 
         [EntitySystem]
-        private static void Awake(this ColliderComponent self, ColliderDataStructureBase args)
-        {
-            self.WorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
-        }
-
-        /// <summary>
-        /// 每帧更新，同步位置、旋转等信息
-        /// </summary>
-        /// <param name="self"></param>
-        [EntitySystem]
         private static void FixedUpdate(this ColliderComponent self)
         {
             Unit unit = self.GetParent<Unit>();
@@ -85,38 +76,29 @@ namespace ET.Server
             self.WorldComponent.AddBodyTobeDestroyed(self.Body);
         }
 
-        /// <summary>
-        /// 碰撞组件添加碰撞器
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="colliderType"></param>
-        /// <param name="vec2"></param>
-        /// <param name="offset"></param>
-        /// <param name="isSensor"></param>
-        /// <param name="userData"></param>
-        /// <param name="angle"></param>
         public static void CreateCollider(this ColliderComponent self)
         {
-            // Unit unit = self.GetParent<Unit>();
-            // self.Body = self.WorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
-            // switch (self.ccolliderType)
-            // {
-            //     case EColliderType.Circle:
-            //         self.Body.CreateCircleFixture(vec2.X, Vector2.Zero, true, unit);
-            //
-            //         break;
-            //     case EColliderType.Box:
-            //         self.Body.CreateBoxFixture(vec2.X, vec2.Y, Vector2.Zero, angle, true, unit);
-            //
-            //         break;
-            //     case EColliderType.Polygon:
-            //         foreach (var verxtPoint in b2SPolygonColliderDataStructure.finalPoints)
-            //         {
-            //             self.Body.CreatePolygonFixture(verxtPoint, true, unit);
-            //         }
-            //
-            //         break;
-            // }
+            Unit unit = self.GetParent<Unit>();
+            self.Body = self.WorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
+            switch (self.ColliderConfig.ColliderType)
+            {
+                case EColliderType.Circle:
+                    self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset, self.ColliderConfig.IsSensor, unit);
+
+                    break;
+                case EColliderType.Box:
+                    self.Body.CreateBoxFixture(self.ColliderConfig.HX, self.ColliderConfig.HY, self.ColliderConfig.Offset, 0,
+                        self.ColliderConfig.IsSensor, unit);
+
+                    break;
+                case EColliderType.Polygon:
+                    foreach (var verxtPoint in self.ColliderConfig.FinalPoints)
+                    {
+                        self.Body.CreatePolygonFixture(verxtPoint, self.ColliderConfig.IsSensor, unit);
+                    }
+
+                    break;
+            }
         }
 
         /// <summary>

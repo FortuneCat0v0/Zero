@@ -17,42 +17,13 @@ namespace ET
         public bool FollowUnitPos;
         public bool FollowUnitRot;
         public float3 TargetPos;
-
-        public EColliderType ColliderType;
-        public bool isSensor;
         public float3 Offset;
-
-        // 矩形碰撞体的数据
-        public float hx;
-        public float hy;
         public float Angle;
-
-        // 圆形碰撞体的数据
-        public float Radius;
-
-        // 多边形碰撞体的数据
-        public List<List<Vector2>> FinalPoints;
-        public int PointCount;
-    }
-
-    public struct CreateHeroColliderArgs
-    {
-        public Unit Unit;
-        public ColliderDataStructureBase B2SColliderDataStructureBase;
-        public string CollisionHandler;
-        public bool FollowUnit;
-    }
-
-    public struct ColliderDataStructureBase
-    {
-        public long id;
-        public bool isSensor;
-        public EColliderType b2SColliderType;
-        public Vector2 finalOffset;
+        public int ColliderConfigId;
     }
 
     [ComponentOf(typeof(Unit))]
-    public class ColliderComponent : Entity, IAwake, IAwake<CreateSkillColliderArgs>, IAwake<ColliderDataStructureBase>, IFixedUpdate, IDestroy
+    public class ColliderComponent : Entity, IAwake, IAwake<CreateSkillColliderArgs>, IFixedUpdate, IDestroy
     {
         /// <summary>
         /// 所归属的Unit，也就是产出碰撞体的Unit，
@@ -70,6 +41,8 @@ namespace ET
         public bool SyncPosToBelongUnit;
 
         public bool SyncRotToBelongUnit;
+
+        public ColliderConfig ColliderConfig;
 
         public List<int> Params;
         public long LastTriggerTime;
