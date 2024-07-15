@@ -18,7 +18,7 @@ namespace ET.Client
                     EffectConfigId = param[0],
                     TargetUnitId = skill.TargetUnitId,
                     Position = skill.Position,
-                    Direction = skill.Direction
+                    Angle = skill.Angle
                 }
             });
             await ETTask.CompletedTask;

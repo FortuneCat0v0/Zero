@@ -14,8 +14,8 @@ namespace ET.Client
                 return;
             }
 
-            unit.Rotation = quaternion.LookRotation(message.Direction, math.up());
-            unit.GetComponent<SkillComponent>().SpllSkill(message.SkillConfigId, message.TargetUnitId, message.Position, message.Direction);
+            unit.Rotation = quaternion.RotateY(message.Angle);
+            unit.GetComponent<SkillComponent>().SpllSkill(message.SkillConfigId, message.TargetUnitId, message.Position, message.Angle);
 
             await ETTask.CompletedTask;
         }

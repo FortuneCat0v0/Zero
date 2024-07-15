@@ -112,21 +112,19 @@ namespace ET.Server
             return damage;
         }
 
-        public static void SpellSkill(this Unit unit, int skillConfigId, long targetUnitId, float3 position, float3 direction)
+        public static void SpellSkill(this Unit unit, int skillConfigId, long targetUnitId, float3 position, float angle)
         {
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
             // 这里可以做一些数据校验
 
-            direction = new(direction.x, 0, direction.z);
-
-            if (skillComponent.SpellSkill(skillConfigId, targetUnitId, position, direction))
+            if (skillComponent.SpellSkill(skillConfigId, targetUnitId, position, angle))
             {
                 M2C_SpellSkill m2CSpellSkill = M2C_SpellSkill.Create();
                 m2CSpellSkill.UnitId = unit.Id;
                 m2CSpellSkill.SkillConfigId = skillConfigId;
                 m2CSpellSkill.TargetUnitId = targetUnitId;
                 m2CSpellSkill.Position = position;
-                m2CSpellSkill.Direction = direction;
+                m2CSpellSkill.Angle = angle;
 
                 MapMessageHelper.Broadcast(unit, m2CSpellSkill);
             }

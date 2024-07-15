@@ -11,19 +11,21 @@ using Unity.Mathematics;
 
 namespace ET
 {
-    public struct CreateSkillColliderArgs
+    public struct CreateColliderArgs
     {
         public Unit BelontToUnit;
         public bool FollowUnitPos;
         public bool FollowUnitRot;
-        public float3 TargetPos;
         public float3 Offset;
+        public float3 TargetPos;
         public float Angle;
         public int ColliderConfigId;
+        public string ActionEvent;
+        public List<int> Params;
     }
 
     [ComponentOf(typeof(Unit))]
-    public class ColliderComponent : Entity, IAwake, IAwake<CreateSkillColliderArgs>, IFixedUpdate, IDestroy
+    public class ColliderComponent : Entity, IAwake, IAwake<CreateColliderArgs>, IFixedUpdate, IDestroy
     {
         /// <summary>
         /// 所归属的Unit，也就是产出碰撞体的Unit，
@@ -36,14 +38,13 @@ namespace ET
 
         public Body Body;
 
-        public string CollisionHandlerName { get; set; }
-
         public bool SyncPosToBelongUnit;
 
         public bool SyncRotToBelongUnit;
 
         public ColliderConfig ColliderConfig;
 
+        public string ActionEvent { get; set; }
         public List<int> Params;
         public long LastTriggerTime;
     }

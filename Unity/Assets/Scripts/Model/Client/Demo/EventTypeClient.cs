@@ -56,7 +56,7 @@ namespace ET.Client
         public int EffectConfigId;
         public long TargetUnitId;
         public float3 Position;
-        public float3 Direction;
+        public float Angle;
     }
 
     public struct PlayEffect

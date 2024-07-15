@@ -2,6 +2,10 @@
 
 namespace ET.Server
 {
+    /// <summary>
+    /// 为自身添加Buff
+    /// 参数：BuffConfigId
+    /// </summary>
     public class AE_AddBuff : AActionEvent
     {
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)

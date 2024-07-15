@@ -92,7 +92,7 @@ namespace ET.Client
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
 
             long targetUnitId = 0;
-            skillComponent.TrySpellSkill(self.SkillGridType, skillIndicatorComponent.GetDirection(), skillIndicatorComponent.GetPosition(),
+            skillComponent.TrySpellSkill(self.SkillGridType, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetPosition(),
                 targetUnitId);
 
             self.SkillIndicatorComponent.HideIndicator();

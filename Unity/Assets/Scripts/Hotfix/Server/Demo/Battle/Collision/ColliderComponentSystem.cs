@@ -20,14 +20,15 @@ namespace ET.Server
         }
 
         [EntitySystem]
-        private static void Awake(this ColliderComponent self, CreateSkillColliderArgs args)
+        private static void Awake(this ColliderComponent self, CreateColliderArgs args)
         {
             self.WorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
             self.BelongToUnit = args.BelontToUnit;
-            self.CollisionHandlerName = "ActionEvent...";
             self.SyncPosToBelongUnit = args.FollowUnitPos;
             self.SyncRotToBelongUnit = args.FollowUnitRot;
             self.ColliderConfig = ColliderConfigCategory.Instance.Get(args.ColliderConfigId);
+            self.ActionEvent = args.ActionEvent;
+            self.Params = args.Params;
 
             Unit selfUnit = self.GetParent<Unit>();
             if (args.FollowUnitPos)

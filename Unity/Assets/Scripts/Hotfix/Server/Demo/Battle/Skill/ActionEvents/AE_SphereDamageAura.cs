@@ -13,7 +13,7 @@ namespace ET.Server
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 
-            UnitFactory.CreateSpecialColliderUnit(root, new CreateSkillColliderArgs()
+            UnitFactory.CreateSpecialColliderUnit(root, new CreateColliderArgs()
             {
             });
 

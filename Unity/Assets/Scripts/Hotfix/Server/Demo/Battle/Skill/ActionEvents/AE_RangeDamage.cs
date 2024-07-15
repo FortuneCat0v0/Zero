@@ -6,7 +6,8 @@ using Unity.Mathematics;
 namespace ET.Server
 {
     /// <summary>
-    /// 执行范围伤害技能事件
+    /// 以自身为中心的范围伤害
+    /// 参数：半径(万分比)，伤害
     /// </summary>
     public class AE_RangeDamage : AActionEvent
     {

@@ -40,7 +40,7 @@ namespace ET
         public float3 Position { get; set; }
 
         [BsonIgnore]
-        public float3 Direction { get; set; }
+        public float Angle { get; set; }
 
         [BsonIgnore]
         public long Timer;

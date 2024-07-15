@@ -27,11 +27,5 @@ namespace ET.Server
         private static void Destroy(this BulletComponent self)
         {
         }
-
-        public static void Init(this BulletComponent self, Skill skill, Unit owner)
-        {
-            self.OwnerSkill = skill;
-            self.OwnerUnit = owner;
-        }
     }
 }

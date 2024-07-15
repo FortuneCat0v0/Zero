@@ -2140,7 +2140,7 @@ namespace ET
         public Unity.Mathematics.float3 Position { get; set; }
 
         [MemoryPackOrder(4)]
-        public Unity.Mathematics.float3 Direction { get; set; }
+        public float Angle { get; set; }
 
         public override void Dispose()
         {
@@ -2153,7 +2153,7 @@ namespace ET
             this.SkillConfigId = default;
             this.TargetUnitId = default;
             this.Position = default;
-            this.Direction = default;
+            this.Angle = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2181,7 +2181,7 @@ namespace ET
         public Unity.Mathematics.float3 Position { get; set; }
 
         [MemoryPackOrder(4)]
-        public Unity.Mathematics.float3 Direction { get; set; }
+        public float Angle { get; set; }
 
         public override void Dispose()
         {
@@ -2194,7 +2194,7 @@ namespace ET
             this.SkillConfigId = default;
             this.TargetUnitId = default;
             this.Position = default;
-            this.Direction = default;
+            this.Angle = default;
 
             ObjectPool.Instance.Recycle(this);
         }

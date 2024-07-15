@@ -96,10 +96,10 @@ namespace ET.Client
         /// </summary>
         /// <param name="self"></param>
         /// <param name="skillConfigId"></param>
-        /// <param name="direction"></param>
+        /// <param name="angle"></param>
         /// <param name="position"></param>
         /// <param name="targetUnitId"></param>
-        public static void SpllSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float3 direction)
+        public static void SpllSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float angle)
         {
             Log.Debug($"释放技能 {skillConfigId}");
 
@@ -111,11 +111,10 @@ namespace ET.Client
                 return;
             }
 
-            skill.StartSpell(targetUnitId, position, direction);
+            skill.StartSpell(targetUnitId, position, angle);
         }
 
-        public static void TrySpellSkill(this SkillComponent self, ESkillGridType skillGridType, float3 direction,
-        float3 position, long targetUnitId)
+        public static void TrySpellSkill(this SkillComponent self, ESkillGridType skillGridType, float angle, float3 position, long targetUnitId)
         {
             Log.Debug($"尝试释放技能 ESkillGridType : {skillGridType}");
 
@@ -136,7 +135,7 @@ namespace ET.Client
             c2MSpellSkill.SkillConfigId = skill.SkillConfigId;
             c2MSpellSkill.TargetUnitId = targetUnitId;
             c2MSpellSkill.Position = position;
-            c2MSpellSkill.Direction = direction;
+            c2MSpellSkill.Angle = angle;
             self.Root().GetComponent<ClientSenderComponent>().Send(c2MSpellSkill);
         }
     }

@@ -6,6 +6,7 @@ namespace ET.Server
 {
     /// <summary>
     /// 技能发射子弹
+    /// 参数：数量，子弹的UnitConfigId
     /// </summary>
     public class AE_Bullet : AActionEvent
     {
@@ -18,9 +19,18 @@ namespace ET.Server
 
             for (int i = 0; i < param[0]; i++)
             {
-                quaternion rotatedQuaternion = quaternion.LookRotation(skill.Direction, math.up());
-
-                UnitFactory.CreateBullet(root, skill, param[1], rotatedQuaternion);
+                UnitFactory.CreateBullet(root, param[1], new CreateColliderArgs()
+                {
+                    BelontToUnit = owner,
+                    FollowUnitPos = false,
+                    FollowUnitRot = false,
+                    Offset = default,
+                    TargetPos = owner.Position,
+                    Angle = skill.Angle,
+                    ColliderConfigId = 1001,
+                    ActionEvent = "AE_Bullet",
+                    Params = default
+                });
             }
 
             await ETTask.CompletedTask;

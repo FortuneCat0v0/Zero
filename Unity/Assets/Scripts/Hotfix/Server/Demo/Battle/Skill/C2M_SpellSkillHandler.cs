@@ -7,7 +7,7 @@ namespace ET.Server
     {
         protected override async ETTask Run(Unit unit, C2M_SpellSkill message)
         {
-            unit.SpellSkill(message.SkillConfigId, message.TargetUnitId, message.Position, message.Direction);
+            unit.SpellSkill(message.SkillConfigId, message.TargetUnitId, message.Position, message.Angle);
 
             await ETTask.CompletedTask;
         }

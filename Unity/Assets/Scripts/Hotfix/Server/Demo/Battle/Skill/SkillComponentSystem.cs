@@ -120,7 +120,7 @@ namespace ET.Server
             return self.SkillDict.Values.ToList();
         }
 
-        public static bool SpellSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float3 direction)
+        public static bool SpellSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float angle)
         {
             Skill skill = self.GetSkillByConfigId(skillConfigId);
 
@@ -135,7 +135,7 @@ namespace ET.Server
                 return false;
             }
 
-            skill.StartSpell(targetUnitId, position, direction);
+            skill.StartSpell(targetUnitId, position, angle);
             return true;
         }
     }

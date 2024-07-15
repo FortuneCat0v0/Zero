@@ -22,14 +22,15 @@ namespace ET.Server
             numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
             unitComponent.Add(unit);
-            // 加入aoi
-            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+            
             unit.AddComponent<BagComponent>();
             unit.AddComponent<EquipmentComponent>();
             unit.AddComponent<SkillComponent>();
             unit.AddComponent<BuffComponent>();
-            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.None, ERoleTag.Hero);
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Player, ERoleTag.Hero);
 
+            // 加入aoi
+            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;
         }
 
@@ -37,75 +38,83 @@ namespace ET.Server
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit monster = unitComponent.AddChild<Unit, int>(2001);
-            monster.AddComponent<MoveComponent>();
-            monster.Position = position;
+            Unit unit = unitComponent.AddChild<Unit, int>(2001);
+            unit.AddComponent<MoveComponent>();
+            unit.Position = position;
 
-            NumericComponent numericComponent = monster.AddComponent<NumericComponent>();
+            NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.SpeedBase, 6f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
             numericComponent.Set(NumericType.Hp, 100, false);
             numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
-            unitComponent.Add(monster);
+            unitComponent.Add(unit);
 
-            monster.AddComponent<AOIEntity, int, float3>(9 * 1000, monster.Position);
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Monster, ERoleTag.Hero);
+            unit.AddComponent<ColliderComponent, CreateColliderArgs>(new CreateColliderArgs()
+            {
+                BelontToUnit = unit,
+                FollowUnitPos = true,
+                FollowUnitRot = true,
+                Offset = default,
+                TargetPos = default,
+                Angle = default,
+                ColliderConfigId = 1001,
+                ActionEvent = default,
+                Params = default
+            });
 
-            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(monster.ConfigId);
-            // monster.AddComponent<ColliderComponent>().AddCollider(unitConfig.ColliderType,
-            //     new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, monster);
-
-            monster.AddComponent<PathfindingComponent, string>("TestMap");
-            monster.AddComponent<XunLuoPathComponent>();
-            monster.AddComponent<AIComponent, int>(2);
-            return monster;
+            unit.AddComponent<PathfindingComponent, string>("TestMap");
+            unit.AddComponent<XunLuoPathComponent>();
+            unit.AddComponent<AIComponent, int>(2);
+            
+            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+            return unit;
         }
 
-        public static Unit CreateBullet(Scene root, Skill ownerSkill, int config, quaternion quaternion)
+        public static Unit CreateBullet(Scene root, int config, CreateColliderArgs createColliderArgs)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
-            Unit owner = ownerSkill.OwnerUnit;
-            Unit bullet = unitComponent.AddChild<Unit, int>(config);
-            unitComponent.Add(bullet);
+            Unit unit = unitComponent.AddChild<Unit, int>(config);
+            unitComponent.Add(unit);
 
-            NumericComponent numericComponent = bullet.AddComponent<NumericComponent>();
+            NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.SpeedBase, 10f, false); // 速度是10米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
             numericComponent.Set(NumericType.AttackDamageBase, 10, false);
 
-            bullet.Position = owner.Position;
-            bullet.Rotation = quaternion;
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderArgs.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
+                ERoleTag.SkillCollision);
 
-            bullet.AddComponent<MoveComponent>();
+            unit.AddComponent<ColliderComponent, CreateColliderArgs>(createColliderArgs);
+
+            unit.AddComponent<MoveComponent>();
             int time = 5;
-            float3 targetPoint = bullet.Position + bullet.Forward * numericComponent.GetAsFloat(NumericType.Speed) * time;
+            float3 targetPoint = unit.Position + unit.Forward * numericComponent.GetAsFloat(NumericType.Speed) * time;
             List<float3> paths = new List<float3>();
-            paths.Add(bullet.Position);
+            paths.Add(unit.Position);
             paths.Add(targetPoint);
-            bullet.GetComponent<MoveComponent>().MoveToAsync(paths, numericComponent.GetAsFloat(NumericType.Speed)).Coroutine();
+            unit.GetComponent<MoveComponent>().MoveToAsync(paths, numericComponent.GetAsFloat(NumericType.Speed)).Coroutine();
 
-            bullet.AddComponent<AOIEntity, int, float3>(9 * 1000, bullet.Position); // 添加AOI后会自动通知范围内玩家生成子弹
+            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position); // 添加AOI后会自动通知范围内玩家生成子弹
 
-            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(bullet.ConfigId);
-            // bullet.AddComponent<ColliderComponent>()
-            //         .AddCollider(unitConfig.ColliderType, new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, bullet);
-            bullet.AddComponent<BulletComponent>().Init(ownerSkill, owner);
+            unit.AddComponent<BulletComponent>();
 
-            return bullet;
+            return unit;
         }
 
-        public static Unit CreateSpecialColliderUnit(Scene root, CreateSkillColliderArgs createSkillColliderArgs)
+        public static Unit CreateSpecialColliderUnit(Scene root, CreateColliderArgs createColliderArgs)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
             //为碰撞体新建一个Unit
             Unit unit = unitComponent.AddChild<Unit, int>(6001);
-            unit.Position = createSkillColliderArgs.BelontToUnit.Position;
+            unit.Position = createColliderArgs.BelontToUnit.Position;
 
-            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createSkillColliderArgs.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderArgs.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
                 ERoleTag.SkillCollision);
 
-            unit.AddComponent<ColliderComponent, CreateSkillColliderArgs>(createSkillColliderArgs);
+            unit.AddComponent<ColliderComponent, CreateColliderArgs>(createColliderArgs);
 
             return unit;
         }

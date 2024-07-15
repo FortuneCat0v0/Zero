@@ -86,20 +86,20 @@ namespace ET.Server
 
             self.TargetUnitId = 0;
             self.Position = default;
-            self.Direction = default;
+            self.Angle = default;
 
             self.SpellEndTime = TimeInfo.Instance.ServerNow();
             self.Root().GetComponent<TimerComponent>().Remove(ref self.Timer);
         }
 
-        public static void StartSpell(this Skill self, long targetUnitId, float3 position, float3 direction)
+        public static void StartSpell(this Skill self, long targetUnitId, float3 position, float angle)
         {
             self.SkillState = ESkillState.Execute;
             self.CurrentActionEventIndex = -1;
 
             self.TargetUnitId = targetUnitId;
             self.Position = position;
-            self.Direction = direction;
+            self.Angle = angle;
 
             self.SpellStartTime = TimeInfo.Instance.ServerNow();
             self.Timer = self.Root().GetComponent<TimerComponent>().NewFrameTimer(TimerInvokeType.SkillTimer_Server, self);

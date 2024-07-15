@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ET.Client
@@ -54,7 +55,7 @@ namespace ET.Client
                             self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Unit);
                             self.EffectGo.transform.position = self.EffectData.Position;
                             self.EffectGo.transform.localScale = Vector3.one;
-                            self.EffectGo.transform.rotation = Quaternion.LookRotation(self.EffectData.Direction);
+                            self.EffectGo.transform.rotation = quaternion.RotateY(self.EffectData.Angle);
                             break;
                         }
                         case EEffectType.BindUnit:
@@ -69,7 +70,7 @@ namespace ET.Client
                             self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Unit);
                             self.EffectGo.transform.position = self.EffectData.Position;
                             self.EffectGo.transform.localScale = Vector3.one;
-                            self.EffectGo.transform.rotation = Quaternion.LookRotation(self.EffectData.Direction);
+                            self.EffectGo.transform.rotation = quaternion.RotateY(self.EffectData.Angle);
                             break;
                         }
                     }

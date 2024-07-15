@@ -38,11 +38,16 @@ namespace ET
 
         public void HandleCollisionStart(Unit a, Unit b)
         {
-            string actionEventName = a.GetComponent<ColliderComponent>().CollisionHandlerName;
+            string actionEventName = a.GetComponent<ColliderComponent>().ActionEvent;
+
+            if (string.IsNullOrEmpty(actionEventName))
+            {
+                return;
+            }
+
             this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
             if (actionEvent == null)
             {
-                Log.Error($"not found actionEvent: {actionEventName}");
                 return;
             }
 
@@ -51,7 +56,13 @@ namespace ET
 
         public void HandleCollisionSustain(Unit a, Unit b)
         {
-            string actionEventName = a.GetComponent<ColliderComponent>().CollisionHandlerName;
+            string actionEventName = a.GetComponent<ColliderComponent>().ActionEvent;
+
+            if (string.IsNullOrEmpty(actionEventName))
+            {
+                return;
+            }
+
             this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
             if (actionEvent == null)
             {
@@ -64,7 +75,14 @@ namespace ET
 
         public void HandleCollisionEnd(Unit a, Unit b)
         {
-            string actionEventName = a.GetComponent<ColliderComponent>().CollisionHandlerName;
+            string actionEventName = a.GetComponent<ColliderComponent>().ActionEvent;
+
+            if (string.IsNullOrEmpty(actionEventName))
+            {
+                Log.Debug($"unitA {a.Id} Contact unitB {b.Id} but UnitA ActionEvent is null");
+                return;
+            }
+
             this.actionEvents.TryGetValue(actionEventName, out AActionEvent actionEvent);
             if (actionEvent == null)
             {

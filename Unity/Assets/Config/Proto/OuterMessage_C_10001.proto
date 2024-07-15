@@ -479,7 +479,7 @@ message C2M_SpellSkill // ILocationMessage
 	int32 SkillConfigId = 2;
 	int64 TargetUnitId = 3;
 	Unity.Mathematics.float3 Position = 4;
-	Unity.Mathematics.float3 Direction = 5;
+	float Angle = 5;
 }
 
 message M2C_SpellSkill // IMessage
@@ -488,7 +488,7 @@ message M2C_SpellSkill // IMessage
 	int32 SkillConfigId = 2;
 	int64 TargetUnitId = 3;
 	Unity.Mathematics.float3 Position = 4;
-	Unity.Mathematics.float3 Direction = 5;
+	float Angle = 5;
 }
 
 message SkillInfo
