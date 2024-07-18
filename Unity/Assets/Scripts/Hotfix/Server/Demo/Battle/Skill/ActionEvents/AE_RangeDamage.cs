@@ -7,7 +7,7 @@ namespace ET.Server
 {
     /// <summary>
     /// 以自身为中心的范围伤害
-    /// 参数：半径(万分比)，伤害
+    /// 参数：伤害
     /// </summary>
     public class AE_RangeDamage : AActionEvent
     {
