@@ -17,8 +17,10 @@ namespace ET
         public bool FollowUnitPos;
         public bool FollowUnitRot;
         public float3 Offset;
+
         public float3 TargetPos;
         public float Angle;
+
         public int ColliderConfigId;
         public string ActionEvent;
         public List<int> Params;
@@ -47,5 +49,6 @@ namespace ET
         public string ActionEvent { get; set; }
         public List<int> Params;
         public long LastTriggerTime;
+        public List<long> Units;
     }
 }

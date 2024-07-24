@@ -6,7 +6,7 @@ namespace ET.Server
 {
     /// <summary>
     /// 技能发射子弹
-    /// 参数：数量，子弹的UnitConfigId
+    /// 参数：数量，子弹的UnitConfigId，伤害
     /// </summary>
     public class AE_Bullet : AActionEvent
     {
