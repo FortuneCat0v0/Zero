@@ -58,6 +58,48 @@ namespace ET
             self.Insert(nt, value, isPublicEvent);
         }
 
+        /// <summary>
+        /// 调整数值
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="nt"></param>
+        /// <param name="value"></param>
+        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
+        public static void ModifyValue(this NumericComponent self, int nt, float value, bool isPublicEvent = true)
+        {
+            long oldValue = self.GetByKey(nt);
+            long newValue = oldValue + (long)(value * 10000);
+            self.Insert(nt, newValue, isPublicEvent);
+        }
+
+        /// <summary>
+        /// 调整数值
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="nt"></param>
+        /// <param name="value"></param>
+        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
+        public static void ModifyValue(this NumericComponent self, int nt, int value, bool isPublicEvent = true)
+        {
+            long oldValue = self.GetByKey(nt);
+            long newValue = oldValue + value;
+            self.Insert(nt, newValue, isPublicEvent);
+        }
+
+        /// <summary>
+        /// 调整数值
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="nt"></param>
+        /// <param name="value"></param>
+        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
+        public static void ModifyValue(this NumericComponent self, int nt, long value, bool isPublicEvent = true)
+        {
+            long oldValue = self.GetByKey(nt);
+            long newValue = oldValue + value;
+            self.Insert(nt, newValue, isPublicEvent);
+        }
+
         public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent)
         {
             long oldValue = self.GetByKey(numericType);
