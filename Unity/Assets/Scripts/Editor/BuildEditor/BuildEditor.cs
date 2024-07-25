@@ -16,14 +16,6 @@ namespace ET
         Linux
     }
 
-    public enum ConfigFolder
-    {
-        Localhost,
-        Release,
-        RouterTest,
-        Benchmark
-    }
-
     /// <summary>
     /// ET菜单顺序
     /// </summary>
@@ -41,7 +33,6 @@ namespace ET
     {
         private PlatformType activePlatform;
         private PlatformType platformType;
-        private ConfigFolder configFolder;
         private bool clearFolder;
         private BuildOptions buildOptions;
 
@@ -127,12 +118,11 @@ namespace ET
             EditorGUILayout.BeginHorizontal();
             try
             {
-                this.configFolder = (ConfigFolder)EditorGUILayout.EnumPopup(this.configFolder, GUILayout.Width(200f));
                 if (GUILayout.Button("ExcelExporter"))
                 {
                     // ToolsEditor.ExcelExporter();
 
-                    ToolsEditor.ExcelExporter(this.globalConfig.CodeMode, this.configFolder);
+                    ToolsEditor.ExcelExporter();
 
                     const string clientProtoDir = "../Unity/Assets/Bundles/Config/GameConfig";
                     if (Directory.Exists(clientProtoDir))
