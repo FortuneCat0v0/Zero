@@ -14,11 +14,11 @@
 
 
 
-![image](https://github.com/FortuneCat0v0/Zero/blob/develop/202024-07-26%20233550.png)
+![image](https://github.com/FortuneCat0v0/Zero/blob/ef21e3c05882132b7a007590c2a3e38057ea7bb4/Document/Imgs/2024-07-26%20233550.png)
 
 
 
-![image](https://github.com/FortuneCat0v0/Zero/blob/develop/202024-07-26%20233550.png)
+![image](https://github.com/FortuneCat0v0/Zero/blob/ef21e3c05882132b7a007590c2a3e38057ea7bb4/Document/Imgs/2024-07-26%20233835.png)
 
 ## Main
 #### 基于C#双端框架[ET框架](https://github.com/egametang/ET)，版本是8.1。
