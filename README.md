@@ -14,11 +14,11 @@
 
 
 
-![屏幕截图 2024-07-26 233550](.\Document\Imgs\屏幕截图 2024-07-26 233550.png)
+![image](https://github.com/FortuneCat0v0/Zero/blob/develop/202024-07-26%20233550.png)
 
 
 
-![屏幕截图 2024-07-26 233835](F:\UnityProjects\Zero\Document\Imgs\屏幕截图 2024-07-26 233835.png)
+![image](https://github.com/FortuneCat0v0/Zero/blob/develop/202024-07-26%20233550.png)
 
 ## Main
 #### 基于C#双端框架[ET框架](https://github.com/egametang/ET)，版本是8.1。
