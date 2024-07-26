@@ -16,9 +16,9 @@ namespace ET
             return this.AIConfigs[aiConfigId];
         }
 
-        partial void PostResolve()
+        partial void PostInit()
         {
-            foreach (var kv in this.GetAll())
+            foreach (var kv in this.DataMap)
             {
                 SortedDictionary<int, AIConfig> aiNodeConfig;
                 if (!this.AIConfigs.TryGetValue(kv.Value.AIConfigId, out aiNodeConfig))

@@ -84,18 +84,18 @@ namespace ET.Server
             switch (self.ColliderConfig.ColliderType)
             {
                 case EColliderType.Circle:
-                    self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset, self.ColliderConfig.IsSensor, unit);
+                    self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset.NewVector2(), self.ColliderConfig.IsSensor, unit);
 
                     break;
                 case EColliderType.Box:
-                    self.Body.CreateBoxFixture(self.ColliderConfig.HX, self.ColliderConfig.HY, self.ColliderConfig.Offset, 0,
+                    self.Body.CreateBoxFixture(self.ColliderConfig.HX, self.ColliderConfig.HY, self.ColliderConfig.Offset.NewVector2(), 0,
                         self.ColliderConfig.IsSensor, unit);
 
                     break;
                 case EColliderType.Polygon:
                     foreach (var verxtPoint in self.ColliderConfig.FinalPoints)
                     {
-                        self.Body.CreatePolygonFixture(verxtPoint, self.ColliderConfig.IsSensor, unit);
+                        self.Body.CreatePolygonFixture(verxtPoint.NewListVector2(), self.ColliderConfig.IsSensor, unit);
                     }
 
                     break;

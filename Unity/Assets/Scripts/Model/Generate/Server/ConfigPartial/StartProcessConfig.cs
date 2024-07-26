@@ -2,7 +2,6 @@ using System.Net;
 
 namespace ET
 {
-    [EnableClass]
     public partial class StartProcessConfig
     {
         public string InnerIP => this.StartMachineConfig.InnerIP;
@@ -27,7 +26,7 @@ namespace ET
 
         public StartMachineConfig StartMachineConfig => StartMachineConfigCategory.Instance.Get(this.MachineId);
 
-        partial void PostResolve()
+        partial void PostInit()
         {
         }
     }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using YooAsset;
 
@@ -33,7 +31,6 @@ namespace ET
     {
         private PlatformType activePlatform;
         private PlatformType platformType;
-        private bool clearFolder;
         private BuildOptions buildOptions;
 
         private GlobalConfig globalConfig;
@@ -115,30 +112,10 @@ namespace ET
                 return;
             }
 
-            EditorGUILayout.BeginHorizontal();
-            try
+            if (GUILayout.Button("ExcelExporter"))
             {
-                if (GUILayout.Button("ExcelExporter"))
-                {
-                    // ToolsEditor.ExcelExporter();
-
-                    ToolsEditor.ExcelExporter();
-
-                    const string clientProtoDir = "../Unity/Assets/Bundles/Config/GameConfig";
-                    if (Directory.Exists(clientProtoDir))
-                    {
-                        Directory.Delete(clientProtoDir, true);
-                    }
-
-                    FileHelper.CopyDirectory("../Config/Excel/c/GameConfig", clientProtoDir);
-
-                    AssetDatabase.Refresh();
-                    return;
-                }
-            }
-            finally
-            {
-                EditorGUILayout.EndHorizontal();
+                ToolsEditor.ExcelExporter();
+                return;
             }
 
             if (GUILayout.Button("Proto2CS"))

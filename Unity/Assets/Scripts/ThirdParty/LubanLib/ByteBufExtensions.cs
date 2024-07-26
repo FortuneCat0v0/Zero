@@ -1,6 +1,5 @@
-﻿
-#if UNITY
-namespace Bright.Serialization
+﻿#if UNITY
+namespace Luban
 {
     public static class ByteBufExtensions
     {

@@ -21,9 +21,9 @@ namespace ET.Server
             // 若数据库中没有数据，从配置表中获取并存入数据库。实际商业游戏有后台配置
             if (servers == null || servers.Count <= 0)
             {
-                var serverInfoConfigs = ServerInfoConfigCategory.Instance.GetAll();
+                var serverInfoConfigs = ServerInfoConfigCategory.Instance.DataList;
 
-                foreach (ServerInfoConfig info in serverInfoConfigs.Values)
+                foreach (ServerInfoConfig info in serverInfoConfigs)
                 {
                     GameServer newServer = self.AddChildWithId<GameServer>(info.Id);
                     newServer.ServerName = info.ServerName;

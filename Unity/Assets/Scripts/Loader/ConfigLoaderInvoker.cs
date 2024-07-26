@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Bright.Serialization;
+using Luban;
 using UnityEngine;
 using YooAsset;
 
@@ -53,7 +53,7 @@ namespace ET
                     }
                     else
                     {
-                        configFilePath = $"../Config/Excel/{ct}/GameConfig/{configType.Name.ToLower()}.bytes";
+                        configFilePath = $"../Config/Excel/{ct}/{configType.Name.ToLower()}.bytes";
                     }
 
                     output[configType] = new ByteBuf(File.ReadAllBytes(configFilePath));
@@ -64,7 +64,7 @@ namespace ET
                 foreach (Type type in configTypes)
                 {
                     TextAsset v = await ResourcesComponent.Instance.LoadAssetAsync<TextAsset>(
-                        $"Assets/Bundles/Config/GameConfig/{type.Name.ToLower()}.bytes");
+                        $"Assets/Bundles/Config/{type.Name.ToLower()}.bytes");
                     output[type] = new ByteBuf(v.bytes);
                 }
             }
@@ -113,7 +113,7 @@ namespace ET
             }
             else
             {
-                configFilePath = $"../Config/Excel/{ct}/GameConfig/{configName}.bytes";
+                configFilePath = $"../Config/Excel/{ct}/{configName}.bytes";
             }
 
             await ETTask.CompletedTask;

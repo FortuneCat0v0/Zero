@@ -44,9 +44,9 @@ namespace ET
             return this.ClientScenesByName[zone][name];
         }
 
-        partial void PostResolve()
+        partial void PostInit()
         {
-            foreach (StartSceneConfig startSceneConfig in this.GetAll().Values)
+            foreach (StartSceneConfig startSceneConfig in this.DataList)
             {
                 this.ProcessScenes.Add(startSceneConfig.Process, startSceneConfig);
                 
@@ -92,8 +92,7 @@ namespace ET
             }
         }
     }
-
-    [EnableClass]
+    
     public partial class StartSceneConfig
     {
         public ActorId ActorId;
@@ -148,7 +147,7 @@ namespace ET
             }
         }
 
-        partial void PostResolve()
+        partial void PostInit()
         {
             this.ActorId = new ActorId(this.Process, this.Id, 1);
             this.Type = EnumHelper.FromString<SceneType>(this.SceneType);
