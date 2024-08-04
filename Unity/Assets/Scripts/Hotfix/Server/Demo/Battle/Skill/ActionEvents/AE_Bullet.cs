@@ -16,10 +16,11 @@ namespace ET.Server
             Skill skill = entity as Skill;
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
+            
 
             for (int i = 0; i < param[0]; i++)
             {
-                UnitFactory.CreateBullet(root, param[1], new CreateColliderArgs()
+                UnitFactory.CreateBullet(root,  new CreateColliderArgs()
                 {
                     BelontToUnit = owner,
                     FollowUnitPos = false,

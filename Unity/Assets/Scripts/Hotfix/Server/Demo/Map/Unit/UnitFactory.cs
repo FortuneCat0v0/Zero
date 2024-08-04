@@ -72,10 +72,10 @@ namespace ET.Server
             return unit;
         }
 
-        public static Unit CreateBullet(Scene root, int config, CreateColliderArgs createColliderArgs)
+        public static Unit CreateBullet(Scene root, CreateColliderArgs createColliderArgs)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
-            Unit unit = unitComponent.AddChild<Unit, int>(config);
+            Unit unit = unitComponent.AddChild<Unit, int>(5001);
             unitComponent.Add(unit);
 
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
