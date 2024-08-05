@@ -26,6 +26,6 @@ namespace ET
     [CreateAssetMenu(menuName = Strings.MenuPrefix + "AnimGroup", order = Strings.AssetMenuOrder + 1)]
     public class AnimGroup : ScriptableObject
     {
-        public List<MotionTransition> Animations;
+        public MotionTransition[] Animations;
     }
 }

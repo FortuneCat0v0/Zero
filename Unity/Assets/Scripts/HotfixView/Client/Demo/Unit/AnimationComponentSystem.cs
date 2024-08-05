@@ -48,17 +48,30 @@ namespace ET.Client
                 return;
             }
 
-            if (animData.AnimGroup.Animations.Count == 0)
+            if (animData.AnimGroup.Animations.Length == 0)
             {
                 Log.Error($"{animData.AnimGroup.name} 没有添加动画片段！！！");
 
                 return;
             }
 
-            foreach (MotionTransition motionTransition in animData.AnimGroup.Animations)
+            // ！！！克隆一个ScriptableObject，不然直接引用的是同一个，设置OnEnd会出问题
+            self.AnimGroup = UnityEngine.Object.Instantiate(animData.AnimGroup);
+            foreach (MotionTransition motionTransition in self.AnimGroup.Animations)
             {
                 self.ClipTransitions.Add(motionTransition.StateName, motionTransition);
             }
+
+            // 处理动画结束
+            // if (animData.AnimGroup.name == "Role_FaShi")
+            // {
+            //     // 动画播放完毕后还没通知下一个State则自动转到Idle
+            //     self.SetOnEnd("Act_1", () => { self.Play("Idle"); });
+            // }
+            // else
+            // {
+            //     // ....
+            // }
         }
 
         public static void Play(this AnimationComponent self, string name, float speed = 1f)
