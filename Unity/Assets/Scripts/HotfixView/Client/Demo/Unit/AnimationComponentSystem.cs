@@ -21,6 +21,7 @@ namespace ET.Client
         public static void UpdateAnimData(this AnimationComponent self, GameObject go)
         {
             self.Animancer = null;
+            self.AnimGroup = null;
             self.ClipTransitions.Clear();
             self.CurrentAnimation = string.Empty;
 
@@ -55,23 +56,28 @@ namespace ET.Client
                 return;
             }
 
-            // ！！！克隆一个ScriptableObject，不然直接引用的是同一个，设置OnEnd会出问题
+            // ！！！复制一个ScriptableObject，不然直接引用的是同一个，设置OnEnd会出问题
             self.AnimGroup = UnityEngine.Object.Instantiate(animData.AnimGroup);
             foreach (MotionTransition motionTransition in self.AnimGroup.Animations)
             {
                 self.ClipTransitions.Add(motionTransition.StateName, motionTransition);
+                self.SetAutoTransition(motionTransition);
+            }
+        }
+
+        private static void SetAutoTransition(this AnimationComponent self, MotionTransition motionTransition)
+        {
+            if (string.IsNullOrEmpty(motionTransition.NextStateName))
+            {
+                return;
             }
 
-            // 处理动画结束
-            // if (animData.AnimGroup.name == "Role_FaShi")
-            // {
-            //     // 动画播放完毕后还没通知下一个State则自动转到Idle
-            //     self.SetOnEnd("Act_1", () => { self.Play("Idle"); });
-            // }
-            // else
-            // {
-            //     // ....
-            // }
+            motionTransition.Events.OnEnd = () =>
+            {
+                Log.Debug($"{motionTransition.StateName} 播放完毕,自动切换为 {motionTransition.NextStateName}");
+
+                self.Play(motionTransition.NextStateName);
+            };
         }
 
         public static void Play(this AnimationComponent self, string name, float speed = 1f)

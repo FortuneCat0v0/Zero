@@ -11,7 +11,7 @@ namespace ET
         private string assetName = "New AnimGroup";
         private string folderPath = "Assets/Res/AnimGroup";
 
-        [MenuItem("Tools/Generate AnimGroup")]
+        [MenuItem("Tools/Animancer/Generate AnimGroup")]
         private static void ShowWindow()
         {
             var window = GetWindow<AnimGroupTool>("Generate AnimGroup");
@@ -54,11 +54,11 @@ namespace ET
 
             if (GUILayout.Button("Generate"))
             {
-                GenerateOrUpdateAnimationStateData();
+                this.GenerateOrUpdateAnimGroup();
             }
         }
 
-        private void GenerateOrUpdateAnimationStateData()
+        private void GenerateOrUpdateAnimGroup()
         {
             if (this.animatorController == null)
             {
@@ -97,6 +97,7 @@ namespace ET
                 var state = states[i].state;
                 animGroup.Animations[i] = new MotionTransition()
                 {
+                    NextStateName = GetNextStateName(state),
                     StateName = state.name,
                     Clip = state.motion as AnimationClip
                 };
@@ -107,6 +108,19 @@ namespace ET
             AssetDatabase.SaveAssets();
 
             Log.Debug("AnimGroup generated at " + path);
+        }
+
+        private string GetNextStateName(AnimatorState state)
+        {
+            foreach (var transition in state.transitions)
+            {
+                if (transition.conditions.Length == 0 && transition.hasExitTime)
+                {
+                    return transition.destinationState.name;
+                }
+            }
+
+            return null;
         }
     }
 }

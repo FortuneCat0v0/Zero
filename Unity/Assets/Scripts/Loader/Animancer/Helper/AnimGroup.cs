@@ -8,15 +8,16 @@ namespace ET
     [Serializable]
     public class MotionTransition : ClipTransition
     {
-        [SerializeField, Tooltip("Should Root Motion be enabled when this animation plays?")]
-        private bool _ApplyRootMotion;
+        public bool ApplyRootMotion;
+
+        public string NextStateName;
 
         public string StateName;
 
         public override void Apply(AnimancerState state)
         {
             base.Apply(state);
-            state.Root.Component.Animator.applyRootMotion = _ApplyRootMotion;
+            state.Root.Component.Animator.applyRootMotion = ApplyRootMotion;
         }
     }
 
