@@ -20,10 +20,7 @@ namespace ET.Client
         public GameObject StartArea;
         public GameObject Joystick;
         public GameObject JoystickBottom;
-        public GameObject PositionFocus0;
-        public GameObject PositionFocus1;
-        public GameObject PositionFocus2;
-        public GameObject PositionFocus3;
+        public GameObject PositionFocus;
         public GameObject JoystickThumb;
 
         public Image JoystickBottomImg;

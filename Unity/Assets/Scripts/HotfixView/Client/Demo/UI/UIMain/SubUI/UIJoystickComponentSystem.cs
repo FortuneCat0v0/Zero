@@ -1,6 +1,4 @@
-﻿using System;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -21,10 +19,7 @@ namespace ET.Client
             self.StartArea = rc.Get<GameObject>("StartArea");
             self.Joystick = rc.Get<GameObject>("Joystick");
             self.JoystickBottom = rc.Get<GameObject>("JoystickBottom");
-            self.PositionFocus0 = rc.Get<GameObject>("PositionFocus0");
-            self.PositionFocus1 = rc.Get<GameObject>("PositionFocus1");
-            self.PositionFocus2 = rc.Get<GameObject>("PositionFocus2");
-            self.PositionFocus3 = rc.Get<GameObject>("PositionFocus3");
+            self.PositionFocus = rc.Get<GameObject>("PositionFocus");
             self.JoystickThumb = rc.Get<GameObject>("JoystickThumb");
 
             self.JoystickBottomImg = self.JoystickBottom.GetComponent<Image>();
@@ -109,10 +104,7 @@ namespace ET.Client
             self.JoystickBottomImg.color = newColor;
             self.JoystickThumbImg.color = newColor;
 
-            self.PositionFocus0.SetActive(false);
-            self.PositionFocus1.SetActive(false);
-            self.PositionFocus2.SetActive(false);
-            self.PositionFocus3.SetActive(false);
+            self.PositionFocus.SetActive(false);
         }
 
         /// <summary>
@@ -137,10 +129,9 @@ namespace ET.Client
 
             self.Direction = (self.NewPoint - self.OldPoint).normalized;
 
-            self.PositionFocus0.SetActive(self.Direction.x < 0 && self.Direction.y > 0);
-            self.PositionFocus1.SetActive(self.Direction.x > 0 && self.Direction.y > 0);
-            self.PositionFocus2.SetActive(self.Direction.x > 0 && self.Direction.y < 0);
-            self.PositionFocus3.SetActive(self.Direction.x < 0 && self.Direction.y < 0);
+            float angle = Mathf.Atan2(self.Direction.y, self.Direction.x) * Mathf.Rad2Deg;
+            self.PositionFocus.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, angle - 135);
+            self.PositionFocus.SetActive(true);
 
             self.Direction.z = self.Direction.y;
             self.Direction.y = 0;
