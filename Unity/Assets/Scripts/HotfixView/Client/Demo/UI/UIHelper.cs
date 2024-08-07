@@ -91,7 +91,6 @@ namespace ET.Client
         public static void IsSelected(this Toggle toggle, bool isSelected)
         {
             toggle.isOn = isSelected;
-            toggle.onValueChanged?.Invoke(isSelected);
         }
 
         #endregion
