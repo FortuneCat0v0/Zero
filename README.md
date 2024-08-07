@@ -48,12 +48,20 @@
 
 - [x] 基于时间轴和事件的战斗框架设计
 
-- [x] 接入[Box2dSharp](https://github.com/Zonciu/Box2DSharp)），用于碰撞检测使用
+- [x] 接入[Box2dSharp](https://github.com/Zonciu/Box2DSharp)，用于服务端碰撞检测
 
 - [x] 音效、技能特效
 
 - [x] 血条、伤害飘字
 
 - [x] TapTap登录、实名验证
+
+- [x] 接入Animancer动画控制方案
+
+- [ ] 坐骑系统
+
+- [ ] 皮肤系统
+
+- [ ] 剧情、对话系统
 
   ​           
