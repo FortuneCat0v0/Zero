@@ -107,6 +107,47 @@ namespace ET.Client
             return dictionary;
         }
 
+        public static async ETTask<Dictionary<string, T>> LoadSubAssetsAsync<T>(this ResourcesLoaderComponent self, string location)
+                where T : UnityEngine.Object
+        {
+            HandleBase handler;
+            if (!self.handlers.TryGetValue(location, out handler))
+            {
+                handler = self.package.LoadSubAssetsAsync<T>(location);
+                await handler.Task;
+                self.handlers.Add(location, handler);
+            }
+
+            Dictionary<string, T> dictionary = new Dictionary<string, T>();
+            foreach (UnityEngine.Object assetObj in ((SubAssetsHandle)handler).AllAssetObjects)
+            {
+                T t = assetObj as T;
+                dictionary.Add(t.name, t);
+            }
+
+            return dictionary;
+        }
+
+        public static Dictionary<string, T> LoadSubAssetsSync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
+        {
+            HandleBase handler;
+            if (!self.handlers.TryGetValue(location, out handler))
+            {
+                handler = self.package.LoadSubAssetsSync<T>(location);
+
+                self.handlers.Add(location, handler);
+            }
+
+            Dictionary<string, T> dictionary = new Dictionary<string, T>();
+            foreach (UnityEngine.Object assetObj in ((SubAssetsHandle)handler).AllAssetObjects)
+            {
+                T t = assetObj as T;
+                dictionary.Add(t.name, t);
+            }
+
+            return dictionary;
+        }
+
         public static async ETTask LoadSceneAsync(this ResourcesLoaderComponent self, string location, LoadSceneMode loadSceneMode)
         {
             using CoroutineLock coroutineLock = await self.Root().GetComponent<CoroutineLockComponent>()
