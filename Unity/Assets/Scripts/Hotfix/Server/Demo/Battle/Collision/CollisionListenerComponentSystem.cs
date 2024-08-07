@@ -41,8 +41,8 @@ namespace ET.Server
                     continue;
                 }
 
-                ActionEventDispatcherComponent.Instance.HandleCollisionSustain(unitA, unitB);
-                ActionEventDispatcherComponent.Instance.HandleCollisionSustain(unitB, unitA);
+                CollisionHandlerDispatcherComponent.Instance.HandleCollisionSustain(unitA, unitB);
+                CollisionHandlerDispatcherComponent.Instance.HandleCollisionSustain(unitB, unitA);
             }
         }
     }

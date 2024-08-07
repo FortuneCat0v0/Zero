@@ -30,8 +30,8 @@ namespace ET
 
             this.CollisionRecorder.Add((unitA.Id, unitB.Id));
 
-            ActionEventDispatcherComponent.Instance.HandleCollisionStart(unitA, unitB);
-            ActionEventDispatcherComponent.Instance.HandleCollisionStart(unitB, unitA);
+            CollisionHandlerDispatcherComponent.Instance.HandleCollisionStart(unitA, unitB);
+            CollisionHandlerDispatcherComponent.Instance.HandleCollisionStart(unitB, unitA);
         }
 
         public void EndContact(Contact contact)
@@ -48,8 +48,8 @@ namespace ET
                 return;
             }
 
-            ActionEventDispatcherComponent.Instance.HandleCollisionEnd(unitA, unitB);
-            ActionEventDispatcherComponent.Instance.HandleCollisionEnd(unitB, unitA);
+            CollisionHandlerDispatcherComponent.Instance.HandleCollisionEnd(unitA, unitB);
+            CollisionHandlerDispatcherComponent.Instance.HandleCollisionEnd(unitB, unitA);
         }
 
         public void PreSolve(Contact contact, in Manifold oldManifold)

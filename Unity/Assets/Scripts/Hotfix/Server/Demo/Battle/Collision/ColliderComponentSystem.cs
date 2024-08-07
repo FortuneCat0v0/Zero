@@ -27,7 +27,7 @@ namespace ET.Server
             self.SyncPosToBelongUnit = args.FollowUnitPos;
             self.SyncRotToBelongUnit = args.FollowUnitRot;
             self.ColliderConfig = ColliderConfigCategory.Instance.Get(args.ColliderConfigId);
-            self.ActionEvent = args.ActionEvent;
+            self.CollisionHandler = args.ActionEvent;
             self.Params = args.Params;
 
             Unit selfUnit = self.GetParent<Unit>();

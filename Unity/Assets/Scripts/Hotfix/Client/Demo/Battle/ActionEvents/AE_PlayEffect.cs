@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-    public class AE_PlayEffect : AActionEvent
+    public class AE_PlayEffect : ActionEvent
     {
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
@@ -22,18 +22,6 @@ namespace ET.Client
                 }
             });
             await ETTask.CompletedTask;
-        }
-
-        public override void HandleCollisionStart(Unit a, Unit b)
-        {
-        }
-
-        public override void HandleCollisionSustain(Unit a, Unit b)
-        {
-        }
-
-        public override void HandleCollisionEnd(Unit a, Unit b)
-        {
         }
     }
 }

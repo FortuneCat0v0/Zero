@@ -46,7 +46,7 @@ namespace ET
 
         public ColliderConfig ColliderConfig;
 
-        public string ActionEvent { get; set; }
+        public string CollisionHandler { get; set; }
         public List<int> Params;
         public long LastTriggerTime;
         public List<long> Units;

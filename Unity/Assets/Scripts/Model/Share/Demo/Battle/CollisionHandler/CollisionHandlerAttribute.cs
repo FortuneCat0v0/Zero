@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace ET
+﻿namespace ET
 {
-    public class ActionEventAttribute : BaseAttribute
+    public class CollisionHandlerAttribute : BaseAttribute
     {
     }
 
-    [ActionEvent]
-    public abstract class AActionEvent : HandlerObject
+    [CollisionHandler]
+    public abstract class CollisionHandler : HandlerObject
     {
-        public abstract ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken = null);
-
         /// <summary>
         /// a是碰撞者自身，b是碰撞到的目标
         /// </summary>
