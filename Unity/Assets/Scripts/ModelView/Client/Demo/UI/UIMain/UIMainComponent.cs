@@ -25,6 +25,9 @@ namespace ET.Client
         public GameObject UIJoystick;
         public UIJoystickComponent UIJoystickComponent { get; set; }
 
+        public GameObject UIMiniMap;
+        public UIMiniMapComponent UIMiniMapComponent { get; set; }
+
         public GameObject UISkillGrid_0;
         public GameObject UISkillGrid_1;
         public GameObject UISkillGrid_2;

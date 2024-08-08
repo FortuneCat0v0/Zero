@@ -41,6 +41,9 @@ namespace ET.Client
             self.UIJoystick = rc.Get<GameObject>("UIJoystick");
             self.UIJoystickComponent = self.AddComponent<UIJoystickComponent, GameObject>(self.UIJoystick);
 
+            self.UIMiniMap = rc.Get<GameObject>("UIMiniMap");
+            self.UIMiniMapComponent = self.AddComponent<UIMiniMapComponent, GameObject>(self.UIMiniMap);
+
             self.UISkillGrid_0 = rc.Get<GameObject>("UISkillGrid_0");
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillGridType.SkillGrid0);
             self.UISkillGrid_1 = rc.Get<GameObject>("UISkillGrid_1");

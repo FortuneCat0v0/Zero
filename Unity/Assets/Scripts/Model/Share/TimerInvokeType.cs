@@ -24,5 +24,6 @@
         public const int SkillTimer_Server = 308;
         public const int EffectTimer = 309;
         public const int BuffTimer = 310;
+        public const int MiniMapTimer = 311;
     }
 }
