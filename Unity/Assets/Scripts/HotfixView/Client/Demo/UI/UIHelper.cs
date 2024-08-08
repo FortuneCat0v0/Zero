@@ -90,6 +90,14 @@ namespace ET.Client
 
         public static void IsSelected(this Toggle toggle, bool isSelected)
         {
+            // Toggle Group 的 Allow Switch Off 默认设置为false时，会自动设置第一个Toggle.isOn = true，不触发回调
+            // Toggle.isOn 只有改变才会触发回调，如果Toggle.isOn原本为true，那么isSelected=true不会触发回调
+            // 所以这里要主动去触发下，但是要避免一种情况，Toggle.isOn由false->ture的时候不要主动触发，否则会触发2次
+            if (toggle.isOn && isSelected)
+            {
+                toggle.onValueChanged?.Invoke(true);
+            }
+
             toggle.isOn = isSelected;
         }
 
