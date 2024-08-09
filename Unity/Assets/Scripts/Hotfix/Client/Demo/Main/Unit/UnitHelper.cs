@@ -20,5 +20,11 @@
             Scene currentScene = root.GetComponent<CurrentScenesComponent>().Scene;
             return currentScene.GetComponent<UnitComponent>().Get(unitId);
         }
+
+        public static bool IsMyUnit(this Unit unit)
+        {
+            PlayerComponent playerComponent = unit.Root().GetComponent<PlayerComponent>();
+            return unit.Id == playerComponent.MyId;
+        }
     }
 }

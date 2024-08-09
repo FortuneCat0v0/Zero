@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -8,6 +9,9 @@ namespace ET.Client
         public GameObject GameObject;
         public GameObject MapCamera;
         public GameObject RawImage;
+        public GameObject UIMapMarker;
+
+        public Dictionary<long, GameObject> UIMapMarkers = new();
 
         public float ScaleRateX;
         public float ScaleRateY;
