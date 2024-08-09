@@ -125,6 +125,28 @@ namespace ET.Client
             }
         }
 
+        // 连线
+        // public static void SetLine(this UIMiniMapComponent self, Vector2 startPoint, Vector2 endPoint)
+        // {
+        //     // 角度计算
+        //     Vector2 dir = endPoint - startPoint;
+        //     Vector2 dirV2 = new Vector2(dir.x, dir.y);
+        //     float angle = Vector2.SignedAngle(dirV2, Vector2.down);
+        //
+        //     var lineImage = Instantiate(lineImagePre, lineTransform.transform);
+        //
+        //     // 距离长度，偏转设置
+        //     line.transform.Rotate(0, 0, angle);
+        //     line.transform.localRotation = Quaternion.AngleAxis(-angle, Vector3.forward);
+        //     float distance = Vector2.Distance(endPoint, startPoint);
+        //
+        //     line.rectTransform.sizeDelta = new Vector2(4f, Mathf.Max(1, distance));
+        //
+        //     // 设置位置
+        //     dir = endPoint + startPoint;
+        //     lineImage.GetComponent<RectTransform>().position = new Vector3((float)(dir.x * 0.5f), (float)(dir.y * 0.5f), 0f);
+        // }
+
         private static GameObject GetUIMapMarker(this UIMiniMapComponent self, long unitId)
         {
             if (self.UIMapMarkers.TryGetValue(unitId, out GameObject marker))
