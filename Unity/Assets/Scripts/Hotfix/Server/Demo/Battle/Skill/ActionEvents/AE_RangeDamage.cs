@@ -6,8 +6,8 @@ using Unity.Mathematics;
 namespace ET.Server
 {
     /// <summary>
-    /// 以自身为中心的持续范围伤害
-    /// 参数：伤害半径(万分比)，间隔，伤害
+    /// 范围伤害技能
+    /// 参数：ColliderConfigId，伤害
     /// </summary>
     public class AE_RangeDamage : ActionEvent
     {
@@ -17,7 +17,7 @@ namespace ET.Server
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 
-            Unit colliderUnit = UnitFactory.CreateSpecialColliderUnit(root, new CreateColliderArgs()
+            Unit colliderUnit = UnitFactory.CreateColliderUnit(root, new CreateColliderParams()
             {
                 BelontToUnit = owner,
                 FollowUnitPos = true,
@@ -25,119 +25,23 @@ namespace ET.Server
                 Offset = default,
                 TargetPos = default,
                 Angle = default,
-                ColliderConfigId = 1001,
-                ActionEvent = "AE_RangeDamage",
-                Params = new List<int>() { }
+                ColliderConfigId = param[0],
+                Skill = skill,
+                CollisionHandler = nameof(CH_Normal),
+                Params = new() { param[1] }
             });
 
             TimerComponent timerComponent = root.GetComponent<TimerComponent>();
-            for (int i = 0; i < 10000; ++i) //为了防止死循环，不用while(true)
+            for (int i = 0; i < 100; ++i) //！！！为了防止死循环，禁止while(true)！！！
             {
                 if (cancellationToken.IsCancel())
                 {
                     // 打断技能
                     await timerComponent.WaitAsync(500, cancellationToken);
-                    colliderUnit?.Dispose();
+                    colliderUnit?.Dispose(); // ？？这里考虑是否要给碰撞体传入一个最大存在时间，到了时间就自动销毁
                     return;
                 }
             }
         }
-
-        // public override void HandleCollisionStart(Unit a, Unit b)
-        // {
-        //     RoleCastComponent aRole = a.GetComponent<RoleCastComponent>();
-        //     ColliderComponent aColliderComponent = a.GetComponent<ColliderComponent>();
-        //     Unit aBelongToUnit = aColliderComponent.BelongToUnit;
-        //
-        //     RoleCastComponent bRole = b.GetComponent<RoleCastComponent>();
-        //     ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
-        //     Unit bBelongToUnit = bColliderComponent.BelongToUnit;
-        //
-        //     ERoleCast roleCast = aRole.GetRoleCastToTarget(b);
-        //     ERoleTag roleTag = bRole.RoleTag;
-        //
-        //     switch (roleCast)
-        //     {
-        //         case ERoleCast.Friendly:
-        //             break;
-        //         case ERoleCast.Adverse:
-        //             switch (roleTag)
-        //             {
-        //                 case ERoleTag.Hero:
-        //                     // 想想是放在Collider上，还是放在SKill上，Skill从新启动之前初始化---------------
-        //                     // aColliderComponent.Params
-        //                     
-        //                     
-        //                     BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Bullet);
-        //                     break;
-        //             }
-        //
-        //             break;
-        //         case ERoleCast.Neutral:
-        //             break;
-        //     }
-        // }
-        //
-        // public override void HandleCollisionSustain(Unit a, Unit b)
-        // {
-        //     RoleCastComponent aRole = a.GetComponent<RoleCastComponent>();
-        //     ColliderComponent aColliderComponent = a.GetComponent<ColliderComponent>();
-        //     Unit aBelongToUnit = aColliderComponent.BelongToUnit;
-        //
-        //     RoleCastComponent bRole = b.GetComponent<RoleCastComponent>();
-        //     ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
-        //     Unit bBelongToUnit = bColliderComponent.BelongToUnit;
-        //
-        //     ERoleCast roleCast = aRole.GetRoleCastToTarget(b);
-        //     ERoleTag roleTag = bRole.RoleTag;
-        //
-        //     switch (roleCast)
-        //     {
-        //         case ERoleCast.Friendly:
-        //             break;
-        //         case ERoleCast.Adverse:
-        //             switch (roleTag)
-        //             {
-        //                 case ERoleTag.Hero:
-        //                     BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Bullet);
-        //                     break;
-        //             }
-        //
-        //             break;
-        //         case ERoleCast.Neutral:
-        //             break;
-        //     }
-        // }
-        //
-        // public override void HandleCollisionEnd(Unit a, Unit b)
-        // {
-        //     RoleCastComponent aRole = a.GetComponent<RoleCastComponent>();
-        //     ColliderComponent aColliderComponent = a.GetComponent<ColliderComponent>();
-        //     Unit aBelongToUnit = aColliderComponent.BelongToUnit;
-        //
-        //     RoleCastComponent bRole = b.GetComponent<RoleCastComponent>();
-        //     ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
-        //     Unit bBelongToUnit = bColliderComponent.BelongToUnit;
-        //
-        //     ERoleCast roleCast = aRole.GetRoleCastToTarget(b);
-        //     ERoleTag roleTag = bRole.RoleTag;
-        //
-        //     switch (roleCast)
-        //     {
-        //         case ERoleCast.Friendly:
-        //             break;
-        //         case ERoleCast.Adverse:
-        //             switch (roleTag)
-        //             {
-        //                 case ERoleTag.Hero:
-        //                     BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Bullet);
-        //                     break;
-        //             }
-        //
-        //             break;
-        //         case ERoleCast.Neutral:
-        //             break;
-        //     }
-        // }
     }
 }

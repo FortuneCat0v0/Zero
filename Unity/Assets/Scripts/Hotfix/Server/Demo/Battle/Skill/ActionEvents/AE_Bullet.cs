@@ -6,7 +6,7 @@ namespace ET.Server
 {
     /// <summary>
     /// 技能发射子弹
-    /// 参数：数量，子弹的UnitConfigId，伤害
+    /// 参数：数量，伤害
     /// </summary>
     public class AE_Bullet : ActionEvent
     {
@@ -19,7 +19,7 @@ namespace ET.Server
 
             for (int i = 0; i < param[0]; i++)
             {
-                UnitFactory.CreateBullet(root, new CreateColliderArgs()
+                UnitFactory.CreateBullet(root, new CreateColliderParams()
                 {
                     BelontToUnit = owner,
                     FollowUnitPos = false,
@@ -28,43 +28,13 @@ namespace ET.Server
                     TargetPos = owner.Position,
                     Angle = skill.Angle,
                     ColliderConfigId = 1001,
-                    ActionEvent = "AE_Bullet",
-                    Params = default
+                    Skill = skill,
+                    CollisionHandler = nameof(CH_Normal),
+                    Params = new() { param[1] }
                 });
             }
 
             await ETTask.CompletedTask;
         }
-
-        // public override void HandleCollisionStart(Unit a, Unit b)
-        // {
-        //     RoleCastComponent aRole = a.GetComponent<RoleCastComponent>();
-        //     ColliderComponent aColliderComponent = a.GetComponent<ColliderComponent>();
-        //     Unit aBelongToUnit = aColliderComponent.BelongToUnit;
-        //
-        //     RoleCastComponent bRole = b.GetComponent<RoleCastComponent>();
-        //     ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
-        //     Unit bBelongToUnit = bColliderComponent.BelongToUnit;
-        //
-        //     ERoleCast roleCast = aRole.GetRoleCastToTarget(b);
-        //     ERoleTag roleTag = bRole.RoleTag;
-        //
-        //     switch (roleCast)
-        //     {
-        //         case ERoleCast.Friendly:
-        //             break;
-        //         case ERoleCast.Adverse:
-        //             switch (roleTag)
-        //             {
-        //                 case ERoleTag.Hero:
-        //                     BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Bullet);
-        //                     break;
-        //             }
-        //
-        //             break;
-        //         case ERoleCast.Neutral:
-        //             break;
-        //     }
-        // }
     }
 }

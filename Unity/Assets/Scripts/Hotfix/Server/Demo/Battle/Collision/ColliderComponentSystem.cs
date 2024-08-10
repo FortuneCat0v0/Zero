@@ -16,37 +16,38 @@ namespace ET.Server
         [EntitySystem]
         private static void Awake(this ColliderComponent self)
         {
-            self.WorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
+            self.CollisionWorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
         }
 
         [EntitySystem]
-        private static void Awake(this ColliderComponent self, CreateColliderArgs args)
+        private static void Awake(this ColliderComponent self, CreateColliderParams createColliderParams)
         {
-            self.WorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
-            self.BelongToUnit = args.BelontToUnit;
-            self.SyncPosToBelongUnit = args.FollowUnitPos;
-            self.SyncRotToBelongUnit = args.FollowUnitRot;
-            self.ColliderConfig = ColliderConfigCategory.Instance.Get(args.ColliderConfigId);
-            self.CollisionHandler = args.ActionEvent;
-            self.Params = args.Params;
+            self.CollisionWorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
+            self.BelongToUnit = createColliderParams.BelontToUnit;
+            self.SyncPosToBelongUnit = createColliderParams.FollowUnitPos;
+            self.SyncRotToBelongUnit = createColliderParams.FollowUnitRot;
+            self.ColliderConfig = ColliderConfigCategory.Instance.Get(createColliderParams.ColliderConfigId);
+            self.Skill = createColliderParams.Skill;
+            self.CollisionHandler = createColliderParams.CollisionHandler;
+            self.Params = createColliderParams.Params;
 
             Unit selfUnit = self.GetParent<Unit>();
-            if (args.FollowUnitPos)
+            if (createColliderParams.FollowUnitPos)
             {
-                selfUnit.Position = self.BelongToUnit.Position + args.Offset;
+                selfUnit.Position = createColliderParams.BelontToUnit.Position + createColliderParams.Offset;
             }
             else
             {
-                selfUnit.Position = args.TargetPos;
+                selfUnit.Position = createColliderParams.TargetPos;
             }
 
-            if (args.FollowUnitRot)
+            if (createColliderParams.FollowUnitRot)
             {
-                selfUnit.Rotation = self.BelongToUnit.Rotation;
+                selfUnit.Rotation = createColliderParams.BelontToUnit.Rotation;
             }
             else
             {
-                selfUnit.Rotation = quaternion.Euler(new float3(0, args.Angle, 0));
+                selfUnit.Rotation = quaternion.Euler(new float3(0, createColliderParams.Angle, 0));
             }
 
             self.CreateCollider();
@@ -58,14 +59,15 @@ namespace ET.Server
         {
             Unit unit = self.GetParent<Unit>();
 
+            Unit belongToUnit = self.BelongToUnit;
             if (self.SyncPosToBelongUnit)
             {
-                unit.Position = self.BelongToUnit.Position;
+                unit.Position = belongToUnit.Position;
             }
 
             if (self.SyncRotToBelongUnit)
             {
-                unit.Rotation = self.BelongToUnit.Rotation;
+                unit.Rotation = belongToUnit.Rotation;
             }
 
             self.SyncBody();
@@ -74,17 +76,20 @@ namespace ET.Server
         [EntitySystem]
         private static void Destroy(this ColliderComponent self)
         {
-            self.WorldComponent.AddBodyTobeDestroyed(self.Body);
+            CollisionWorldComponent collisionWorldComponent = self.CollisionWorldComponent;
+            collisionWorldComponent.AddBodyTobeDestroyed(self.Body);
         }
 
         public static void CreateCollider(this ColliderComponent self)
         {
             Unit unit = self.GetParent<Unit>();
-            self.Body = self.WorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
+            CollisionWorldComponent collisionWorldComponent = self.CollisionWorldComponent;
+            self.Body = collisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
             switch (self.ColliderConfig.ColliderType)
             {
                 case EColliderType.Circle:
-                    self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset.NewVector2(), self.ColliderConfig.IsSensor, unit);
+                    self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset.NewVector2(), self.ColliderConfig.IsSensor,
+                        unit);
 
                     break;
                 case EColliderType.Box:
