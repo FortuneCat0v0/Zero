@@ -12,6 +12,7 @@ namespace ET.Client
         public GameObject UIMapMarker;
 
         public Dictionary<long, GameObject> UIMapMarkers = new();
+        public List<GameObject> UIMapMarkerPool = new();
 
         public float ScaleRateX;
         public float ScaleRateY;

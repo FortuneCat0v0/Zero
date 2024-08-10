@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ET.Client
@@ -92,13 +93,15 @@ namespace ET.Client
         public static void UpdateMapMarker(this UIMiniMapComponent self)
         {
             List<Unit> allUnit = self.Scene().GetComponent<UnitComponent>().GetAll();
-
+            List<long> unitIds = self.UIMapMarkers.Keys.ToList();
             foreach (Unit unit in allUnit)
             {
                 if (unit.Type() != EUnitType.Player && unit.Type() != EUnitType.Monster && unit.Type() != EUnitType.NPC)
                 {
                     continue;
                 }
+
+                unitIds.Remove(unit.Id);
 
                 Vector3 unitPos = new Vector3(unit.Position.x, unit.Position.z, 0f);
                 Vector3 uiPos = self.GetWordToUIPositon(unitPos);
@@ -122,6 +125,15 @@ namespace ET.Client
                 {
                     rc.Get<GameObject>("AllyMarker").SetActive(true);
                 }
+            }
+
+            foreach (long id in unitIds)
+            {
+                GameObject go = self.UIMapMarkers[id];
+                go.HideChildren();
+                go.SetActive(false);
+                self.UIMapMarkerPool.Add(go);
+                self.UIMapMarkers.Remove(id);
             }
         }
 
@@ -154,7 +166,17 @@ namespace ET.Client
                 return marker;
             }
 
-            GameObject go = UnityEngine.Object.Instantiate(self.UIMapMarker, self.UIMapMarker.transform.parent, true);
+            GameObject go;
+            if (self.UIMapMarkerPool.Count > 0)
+            {
+                go = self.UIMapMarkerPool[0];
+                self.UIMapMarkerPool.RemoveAt(0);
+            }
+            else
+            {
+                go = UnityEngine.Object.Instantiate(self.UIMapMarker, self.UIMapMarker.transform.parent, true);
+            }
+
             go.transform.localScale = Vector3.one;
             go.SetActive(true);
             self.UIMapMarkers.Add(unitId, go);
