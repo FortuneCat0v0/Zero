@@ -26,7 +26,7 @@ namespace ET.Server
                     FollowUnitRot = false,
                     Offset = default,
                     TargetPos = owner.Position,
-                    Angle = skill.Angle,
+                    Angle = skill.Angle + i * (-1 ^ i) * 10,
                     ColliderConfigId = 1001,
                     Skill = skill,
                     CollisionHandler = nameof(CH_Normal),

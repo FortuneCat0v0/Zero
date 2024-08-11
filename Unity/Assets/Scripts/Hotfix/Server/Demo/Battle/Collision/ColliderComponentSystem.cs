@@ -47,7 +47,7 @@ namespace ET.Server
             }
             else
             {
-                selfUnit.Rotation = quaternion.Euler(new float3(0, createColliderParams.Angle, 0));
+                selfUnit.Rotation = quaternion.Euler(0, math.radians(createColliderParams.Angle), 0);
             }
 
             self.CreateCollider();
