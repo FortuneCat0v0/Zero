@@ -12,7 +12,7 @@ namespace ET.Server
             UnitInfo unitInfo = UnitInfo.Create();
             unitInfo.UnitId = unit.Id;
             unitInfo.ConfigId = unit.ConfigId;
-            unitInfo.Type = (int)unit.Type();
+            unitInfo.EUnitType = (int)unit.UnitType;
             unitInfo.Position = unit.Position;
             unitInfo.Forward = unit.Forward;
 

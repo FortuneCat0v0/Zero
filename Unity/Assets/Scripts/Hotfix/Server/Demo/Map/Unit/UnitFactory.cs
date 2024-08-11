@@ -11,7 +11,7 @@ namespace ET.Server
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChildWithId<Unit, int>(id, 1001);
+            Unit unit = unitComponent.AddChildWithId<Unit, EUnitType, int>(id, EUnitType.Player, 1001);
             unit.AddComponent<MoveComponent>();
             unit.Position = new float3(-10, 0, -10);
 
@@ -38,7 +38,7 @@ namespace ET.Server
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChild<Unit, int>(2001);
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Monster, 1001);
             unit.AddComponent<MoveComponent>();
             unit.Position = position;
 
@@ -76,7 +76,7 @@ namespace ET.Server
         public static Unit CreateBullet(Scene root, CreateColliderParams createColliderParams)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
-            Unit unit = unitComponent.AddChild<Unit, int>(5001);
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Bullet, 1001);
             unitComponent.Add(unit);
 
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -108,7 +108,7 @@ namespace ET.Server
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
             //为碰撞体新建一个Unit
-            Unit unit = unitComponent.AddChild<Unit, int>(6001);
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Collider, 1001);
             unit.Position = createColliderParams.BelontToUnit.Position;
 
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,

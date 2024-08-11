@@ -9,7 +9,7 @@
             await ETTask.CompletedTask;
             AOIEntity a = args.A;
             AOIEntity b = args.B;
-            if (a.Unit.Type() != EUnitType.Player)
+            if (a.Unit.UnitType != EUnitType.Player)
             {
                 return;
             }

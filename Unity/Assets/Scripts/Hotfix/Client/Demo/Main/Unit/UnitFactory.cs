@@ -7,7 +7,7 @@ namespace ET.Client
         public static Unit Create(Scene currentScene, UnitInfo unitInfo)
         {
             UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
-            Unit unit = unitComponent.AddChildWithId<Unit, int>(unitInfo.UnitId, unitInfo.ConfigId);
+            Unit unit = unitComponent.AddChildWithId<Unit, EUnitType, int>(unitInfo.UnitId, (EUnitType)unitInfo.EUnitType, unitInfo.ConfigId);
             unitComponent.Add(unit);
 
             unit.Position = unitInfo.Position;

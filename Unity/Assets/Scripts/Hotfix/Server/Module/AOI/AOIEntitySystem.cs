@@ -103,9 +103,9 @@ namespace ET.Server
                 return;
             }
 
-            if (self.Unit.Type() == EUnitType.Player)
+            if (self.Unit.UnitType == EUnitType.Player)
             {
-                if (enter.Unit.Type() == EUnitType.Player)
+                if (enter.Unit.UnitType == EUnitType.Player)
                 {
                     self.SeeUnits.Add(enter.Id, enter);
                     enter.BeSeeUnits.Add(self.Id, self);
@@ -121,7 +121,7 @@ namespace ET.Server
             }
             else
             {
-                if (enter.Unit.Type() == EUnitType.Player)
+                if (enter.Unit.UnitType == EUnitType.Player)
                 {
                     self.SeeUnits.Add(enter.Id, enter);
                     enter.BeSeeUnits.Add(self.Id, self);
@@ -151,13 +151,13 @@ namespace ET.Server
             }
 
             self.SeeUnits.Remove(leave.Id);
-            if (leave.Unit.Type() == EUnitType.Player)
+            if (leave.Unit.UnitType == EUnitType.Player)
             {
                 self.SeePlayers.Remove(leave.Id);
             }
 
             leave.BeSeeUnits.Remove(self.Id);
-            if (self.Unit.Type() == EUnitType.Player)
+            if (self.Unit.UnitType == EUnitType.Player)
             {
                 leave.BeSeePlayers.Remove(self.Id);
             }

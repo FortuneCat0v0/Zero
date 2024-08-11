@@ -15,7 +15,7 @@
             }
             else
             {
-                if (args.Unit.Type() == EUnitType.Player)
+                if (args.Unit.UnitType == EUnitType.Player)
                 {
                     MapMessageHelper.SendToClient(args.Unit, m2CNoticeUnitNumeric);
                 }

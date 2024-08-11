@@ -273,10 +273,10 @@ namespace ET
         public long UnitId { get; set; }
 
         [MemoryPackOrder(1)]
-        public int ConfigId { get; set; }
+        public int EUnitType { get; set; }
 
         [MemoryPackOrder(2)]
-        public int Type { get; set; }
+        public int ConfigId { get; set; }
 
         [MemoryPackOrder(3)]
         public Unity.Mathematics.float3 Position { get; set; }
@@ -307,8 +307,8 @@ namespace ET
             }
 
             this.UnitId = default;
+            this.EUnitType = default;
             this.ConfigId = default;
-            this.Type = default;
             this.Position = default;
             this.Forward = default;
             this.KV.Clear();

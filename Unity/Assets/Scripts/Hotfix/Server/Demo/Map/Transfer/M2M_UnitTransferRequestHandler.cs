@@ -67,7 +67,6 @@ namespace ET.Server
             // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
 
-            UnitConfig unitConfig = UnitConfigCategory.Instance.Get(unit.ConfigId);
             Log.Warning("注意传送后的碰撞体要重新添加");
             // unit.AddComponent<ColliderComponent>().AddCollider(unitConfig.ColliderType,
             //     new Vector2(unitConfig.ColliderParams[0], 0), Vector2.Zero, true, unit);

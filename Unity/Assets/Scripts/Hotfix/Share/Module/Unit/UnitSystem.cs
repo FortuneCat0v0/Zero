@@ -4,19 +4,10 @@ namespace ET
     public static partial class UnitSystem
     {
         [EntitySystem]
-        private static void Awake(this Unit self, int configId)
+        private static void Awake(this Unit self, EUnitType unitType, int configId)
         {
+            self.UnitType = unitType;
             self.ConfigId = configId;
-        }
-
-        public static UnitConfig Config(this Unit self)
-        {
-            return UnitConfigCategory.Instance.Get(self.ConfigId);
-        }
-
-        public static EUnitType Type(this Unit self)
-        {
-            return self.Config().Type;
         }
     }
 }

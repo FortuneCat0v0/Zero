@@ -61,8 +61,8 @@ message MoveInfo
 message UnitInfo
 {
 	int64 UnitId = 1;
-	int32 ConfigId = 2;
-	int32 Type = 3;
+	int32 EUnitType = 2;
+	int32 ConfigId = 3;
 	Unity.Mathematics.float3 Position = 4;
 	Unity.Mathematics.float3 Forward = 5;
 	map<int32, int64> KV = 6;

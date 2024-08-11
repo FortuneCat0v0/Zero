@@ -22,7 +22,7 @@ namespace ET.Client
 
             ReferenceCollector rc = unitRoot.GetComponent<ReferenceCollector>();
             GameObject model;
-            if (unit.Type() == EUnitType.Player)
+            if (unit.UnitType == EUnitType.Player)
             {
                 model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("AngelSlime"));
                 model.transform.SetParent(unitRoot.transform);
@@ -36,7 +36,7 @@ namespace ET.Client
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
-            else if (unit.Type() == EUnitType.Monster)
+            else if (unit.UnitType == EUnitType.Monster)
             {
                 model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("PowerSlime"));
                 model.transform.SetParent(unitRoot.transform);
@@ -50,7 +50,7 @@ namespace ET.Client
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
-            else if (unit.Type() == EUnitType.Bullet)
+            else if (unit.UnitType == EUnitType.Bullet)
             {
                 model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("Bullet"));
                 model.transform.SetParent(unitRoot.transform);

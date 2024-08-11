@@ -96,7 +96,7 @@ namespace ET.Client
             List<long> unitIds = self.UIMapMarkers.Keys.ToList();
             foreach (Unit unit in allUnit)
             {
-                if (unit.Type() != EUnitType.Player && unit.Type() != EUnitType.Monster && unit.Type() != EUnitType.NPC)
+                if (unit.UnitType != EUnitType.Player && unit.UnitType != EUnitType.Monster && unit.UnitType != EUnitType.NPC)
                 {
                     continue;
                 }
@@ -113,15 +113,15 @@ namespace ET.Client
                 {
                     rc.Get<GameObject>("MyMarker").SetActive(true);
                 }
-                else if (unit.Type() == EUnitType.Player)
+                else if (unit.UnitType == EUnitType.Player)
                 {
                     rc.Get<GameObject>("NeutralMarker").SetActive(true);
                 }
-                else if (unit.Type() == EUnitType.Monster)
+                else if (unit.UnitType == EUnitType.Monster)
                 {
                     rc.Get<GameObject>("EnemyMarker").SetActive(true);
                 }
-                else if (unit.Type() == EUnitType.NPC)
+                else if (unit.UnitType == EUnitType.NPC)
                 {
                     rc.Get<GameObject>("AllyMarker").SetActive(true);
                 }
