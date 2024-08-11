@@ -30,7 +30,7 @@ namespace ET.Client
                 model.transform.localEulerAngles = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
-                unit.AddComponent<AnimatorComponent, GameObject>(model);
+                unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(unitRoot.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
@@ -44,7 +44,7 @@ namespace ET.Client
                 model.transform.localEulerAngles = Vector3.zero;
 
                 unit.GetComponent<GameObjectComponent>().ModelGo = model;
-                unit.AddComponent<AnimatorComponent, GameObject>(model);
+                unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(unitRoot.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();

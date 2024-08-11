@@ -3,28 +3,6 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
-    public class MoveStart_Animator : AEvent<Scene, MoveStart>
-    {
-        protected override async ETTask Run(Scene scene, MoveStart args)
-        {
-            args.Unit.GetComponent<AnimatorComponent>()?.SetFloatValue("yVelocity", 1f);
-
-            await ETTask.CompletedTask;
-        }
-    }
-
-    [Event(SceneType.Current)]
-    public class MoveStop_Animator : AEvent<Scene, MoveStop>
-    {
-        protected override async ETTask Run(Scene scene, MoveStop args)
-        {
-            args.Unit.GetComponent<AnimatorComponent>()?.SetFloatValue("yVelocity", 0);
-
-            await ETTask.CompletedTask;
-        }
-    }
-
     [EntitySystemOf(typeof(AnimatorComponent))]
     [FriendOf(typeof(AnimatorComponent))]
     public static partial class AnimatorComponentSystem

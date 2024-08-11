@@ -4,6 +4,28 @@ using UnityEngine;
 
 namespace ET.Client
 {
+    [Event(SceneType.Current)]
+    public class MoveStart_Animator : AEvent<Scene, MoveStart>
+    {
+        protected override async ETTask Run(Scene scene, MoveStart args)
+        {
+            args.Unit.GetComponent<AnimationComponent>()?.Play("Crawl_Forward");
+
+            await ETTask.CompletedTask;
+        }
+    }
+
+    [Event(SceneType.Current)]
+    public class MoveStop_Animator : AEvent<Scene, MoveStop>
+    {
+        protected override async ETTask Run(Scene scene, MoveStop args)
+        {
+            args.Unit.GetComponent<AnimationComponent>()?.Play("Idle");
+
+            await ETTask.CompletedTask;
+        }
+    }
+
     [FriendOf(typeof(AnimationComponent))]
     [EntitySystemOf(typeof(AnimationComponent))]
     public static partial class AnimationComponentSystem
@@ -49,7 +71,7 @@ namespace ET.Client
                 return;
             }
 
-            if (animData.AnimGroup.Animations.Length == 0)
+            if (animData.AnimGroup.Animations.Count == 0)
             {
                 Log.Error($"{animData.AnimGroup.name} 没有添加动画片段！！！");
 

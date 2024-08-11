@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Animancer;
+﻿using ET;
 using UnityEngine;
 
-namespace ET
+namespace Animancer
 {
     public class AnimData : MonoBehaviour
     {

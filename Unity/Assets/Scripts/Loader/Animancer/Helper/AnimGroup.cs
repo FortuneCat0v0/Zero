@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Animancer;
 using UnityEngine;
 
-namespace ET
+namespace Animancer
 {
     [Serializable]
     public class MotionTransition : ClipTransition
@@ -27,6 +26,6 @@ namespace ET
     [CreateAssetMenu(menuName = Strings.MenuPrefix + "AnimGroup", order = Strings.AssetMenuOrder + 1)]
     public class AnimGroup : ScriptableObject
     {
-        public MotionTransition[] Animations;
+        public List<MotionTransition> Animations;
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
-namespace ET
+namespace Animancer
 {
     public class AnimGroupTool : EditorWindow
     {
@@ -45,7 +45,7 @@ namespace ET
                     }
                     else
                     {
-                        Log.Error("Selected folder is not within the Unity project.");
+                        Debug.LogError("Selected folder is not within the Unity project.");
                     }
                 }
             }
@@ -62,19 +62,19 @@ namespace ET
         {
             if (this.animatorController == null)
             {
-                Log.Error("请选择AnimatorController");
+                Debug.LogError("请选择AnimatorController");
                 return;
             }
 
             if (string.IsNullOrEmpty(this.assetName))
             {
-                Log.Error("请输入生成Asset的名字");
+                Debug.LogError("请输入生成Asset的名字");
                 return;
             }
 
             if (string.IsNullOrEmpty(folderPath) || !folderPath.StartsWith("Assets"))
             {
-                Log.Error("请输入正确的文件路径");
+                Debug.LogError("请输入正确的文件路径");
                 return;
             }
 
@@ -90,24 +90,63 @@ namespace ET
 
             // 更新并填充 ScriptableObject
             var states = animatorController.layers[0].stateMachine.states;
-            animGroup.Animations = new MotionTransition[states.Length];
+            animGroup.Animations = new();
 
             for (int i = 0; i < states.Length; i++)
             {
                 var state = states[i].state;
-                animGroup.Animations[i] = new MotionTransition()
+                var motion = state.motion;
+
+                if (motion is BlendTree blendTree)
                 {
-                    NextStateName = GetNextStateName(state),
-                    StateName = state.name,
-                    Clip = state.motion as AnimationClip
-                };
+                    var blendTreeClips = GetAnimationClipsFromBlendTree(blendTree);
+                    foreach (var clip in blendTreeClips)
+                    {
+                        animGroup.Animations.Add(new MotionTransition()
+                        {
+                            StateName = clip.name,
+                            Clip = clip
+                        });
+                    }
+                }
+                else
+                {
+                    animGroup.Animations.Add(new MotionTransition()
+                    {
+                        NextStateName = GetNextStateName(state),
+                        StateName = state.name,
+                        Clip = motion as AnimationClip
+                    });
+                }
             }
 
             // 保存 ScriptableObject
             EditorUtility.SetDirty(animGroup);
             AssetDatabase.SaveAssets();
 
-            Log.Debug("AnimGroup generated at " + path);
+            Debug.LogError("AnimGroup generated at " + path);
+        }
+
+        private AnimationClip[] GetAnimationClipsFromBlendTree(BlendTree blendTree)
+        {
+            var clips = new List<AnimationClip>();
+            ExtractClipsFromBlendTreeRecursive(blendTree, clips);
+            return clips.ToArray();
+        }
+
+        private void ExtractClipsFromBlendTreeRecursive(BlendTree blendTree, List<AnimationClip> clips)
+        {
+            foreach (var child in blendTree.children)
+            {
+                if (child.motion is AnimationClip clip)
+                {
+                    clips.Add(clip);
+                }
+                else if (child.motion is BlendTree childBlendTree)
+                {
+                    ExtractClipsFromBlendTreeRecursive(childBlendTree, clips);
+                }
+            }
         }
 
         private string GetNextStateName(AnimatorState state)
@@ -116,6 +155,12 @@ namespace ET
             {
                 if (transition.conditions.Length == 0 && transition.hasExitTime)
                 {
+                    // 下一个状态是Exit
+                    if (transition.destinationState == null)
+                    {
+                        continue;
+                    }
+
                     return transition.destinationState.name;
                 }
             }
