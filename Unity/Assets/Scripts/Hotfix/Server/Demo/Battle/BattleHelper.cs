@@ -4,7 +4,7 @@ using Unity.Mathematics;
 
 namespace ET.Server
 {
-    [NumericWatcher(SceneType.Map, NumericType.Fortune | NumericType.Armor)]
+    [NumericWatcher(SceneType.Map, NumericType.Fortune)]
     public class NumericWatcher_AddAttributePoint : INumericWatcher
     {
         public void Run(Unit unit, NumericChange args)
@@ -78,18 +78,18 @@ namespace ET.Server
         public static int CalcuateDamageValue(Unit attackUnit, Unit TargetUnit)
         {
             int damage = attackUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.AttackDamage);
-            int dodge = TargetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Dodge);
-            int aromr = TargetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Armor);
+            // int dodge = TargetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Dodge);
+            // int aromr = TargetUnit.GetComponent<NumericComponent>().GetAsInt(NumericType.Armor);
 
             // 随机 0 - 100%  根据敏捷值进行闪避
-            int rate = RandomHelper.RandomNumber(0, 1000000);
-            Log.Debug("Rate:  " + rate.ToString());
-            if (rate < dodge)
-            {
-                //躲避成功
-                Log.Debug("闪避成功");
-                damage = 0;
-            }
+            // int rate = RandomHelper.RandomNumber(0, 1000000);
+            // Log.Debug("Rate:  " + rate.ToString());
+            // if (rate < dodge)
+            // {
+            //     //躲避成功
+            //     Log.Debug("闪避成功");
+            //     damage = 0;
+            // }
 
             // 免伤（物理）=护甲/（护甲+100）X100%
             // 假如潘森的护甲是40，潘森的物理免伤=40/140X100%=29%。在敌方没有任何护甲穿透的情况下，100点攻击力只能出现81点伤害。
@@ -100,13 +100,13 @@ namespace ET.Server
             // 假如护甲数为100，护甲削减10%，百分比穿透10%，固定穿甲10点，
             // 实际护甲=100X（1-10%）X（1-10%）-10=71
 
-            if (damage > 0)
-            {
-                //扣掉护甲值
-                damage = damage - aromr;
-                //造成最小的1点伤害值
-                damage = damage <= 0 ? 1 : damage;
-            }
+            // if (damage > 0)
+            // {
+            //     //扣掉护甲值
+            //     damage = damage - aromr;
+            //     //造成最小的1点伤害值
+            //     damage = damage <= 0 ? 1 : damage;
+            // }
 
             //Log.Debug($"造成伤害值：{damage}");
             return damage;
