@@ -57,5 +57,12 @@
 
             return $"Assets/Bundles/Icon/ItemQualityIcon/{fileName}.png";
         }
+
+        public static string GetTextPath(string text)
+        {
+            string prefabPath = $"Assets/Bundles/Text/{text}.txt";
+
+            return prefabPath;
+        }
     }
 }
