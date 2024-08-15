@@ -29,19 +29,9 @@ namespace ET.Server
                 Skill = skill,
                 CollisionHandler = nameof(CH_Normal),
                 Params = new() { param[1] }
-            });
+            }, 500);
 
-            TimerComponent timerComponent = root.GetComponent<TimerComponent>();
-            for (int i = 0; i < 100; ++i) //！！！为了防止死循环，禁止while(true)！！！
-            {
-                if (cancellationToken.IsCancel())
-                {
-                    // 打断技能
-                    await timerComponent.WaitAsync(500, cancellationToken);
-                    colliderUnit?.Dispose(); // ？？这里考虑是否要给碰撞体传入一个最大存在时间，到了时间就自动销毁
-                    return;
-                }
-            }
+            await ETTask.CompletedTask;
         }
     }
 }

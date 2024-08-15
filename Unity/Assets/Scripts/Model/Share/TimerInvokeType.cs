@@ -25,5 +25,7 @@
         public const int EffectTimer = 309;
         public const int BuffTimer = 310;
         public const int MiniMapTimer = 311;
+        public const int ColliderTimeout = 312;
+        public const int ColliderCancellationToken = 313;
     }
 }

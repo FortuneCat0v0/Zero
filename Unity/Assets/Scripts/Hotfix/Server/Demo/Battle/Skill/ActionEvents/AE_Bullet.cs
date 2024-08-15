@@ -17,6 +17,7 @@ namespace ET.Server
             Scene root = skill.Root();
             Unit owner = skill.OwnerUnit;
 
+            TimerComponent timerComponent = root.GetComponent<TimerComponent>();
             for (int i = 0; i < param[0]; i++)
             {
                 UnitFactory.CreateBullet(root, new CreateColliderParams()
@@ -32,9 +33,14 @@ namespace ET.Server
                     CollisionHandler = nameof(CH_Normal),
                     Params = new() { param[1] }
                 });
-            }
 
-            await ETTask.CompletedTask;
+                if (cancellationToken.IsCancel())
+                {
+                    return;
+                }
+
+                await timerComponent.WaitAsync(500, cancellationToken);
+            }
         }
     }
 }

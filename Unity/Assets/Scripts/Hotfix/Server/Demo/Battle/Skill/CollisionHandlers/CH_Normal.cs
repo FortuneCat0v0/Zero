@@ -2,6 +2,7 @@
 {
     /// <summary>
     /// 普通范围伤害
+    /// 参数：伤害
     /// </summary>
     public class CH_Normal : CollisionHandler
     {

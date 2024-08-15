@@ -103,13 +103,25 @@ namespace ET.Server
             return unit;
         }
 
-        public static Unit CreateColliderUnit(Scene root, CreateColliderParams createColliderParams)
+        public static Unit CreateColliderUnit(Scene root, CreateColliderParams createColliderParams,
+        long lifeTime = 0,
+        ETCancellationToken cancellationToken = null)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
             //为碰撞体新建一个Unit
             Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Collider, 1001);
             unit.Position = createColliderParams.BelontToUnit.Position;
+
+            if (lifeTime > 0)
+            {
+                unit.AddComponent<ColliderTimeoutComponent, long>(lifeTime);
+            }
+
+            if (cancellationToken != null)
+            {
+                unit.AddComponent<ColliderCancellationTokenComponent, ETCancellationToken>(cancellationToken);
+            }
 
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
                 ERoleTag.SkillCollision);

@@ -76,6 +76,7 @@ namespace ET.Server
         [EntitySystem]
         private static void Destroy(this ColliderComponent self)
         {
+            Log.Warning("Destroy 碰撞体");
             CollisionWorldComponent collisionWorldComponent = self.CollisionWorldComponent;
             collisionWorldComponent.AddBodyTobeDestroyed(self.Body);
         }
