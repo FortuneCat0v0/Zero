@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -26,117 +27,67 @@ namespace ET.Client
 
         private static async ETTask InitMaskWordText(this MaskWordComponent self, string maskword, string split)
         {
-            var path_1 = AssetPathHelper.GetTextPath(maskword);
-            TextAsset textAsset3 = await self.Root().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<TextAsset>(path_1);
-            self.MaskWord = textAsset3.text;
+            string path = AssetPathHelper.GetTextPath(maskword);
+            TextAsset textAsset = await self.Root().GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<TextAsset>(path);
+            self.MaskWord = textAsset.text;
             self.sensitiveWordsArray = Regex.Split(self.MaskWord, split, RegexOptions.IgnoreCase);
 
-            foreach (string s in self.sensitiveWordsArray)
+            foreach (string word in self.sensitiveWordsArray)
             {
-                if (string.IsNullOrEmpty(s))
-                    continue;
-                if (self.keyDict.ContainsKey(s[0]))
-                    self.keyDict[s[0]].Add(s.Trim(new char[] { '\r' }));
-                else
-                    self.keyDict.Add(s[0], new List<string> { s.Trim(new char[] { '\r' }) });
+                if (string.IsNullOrWhiteSpace(word)) continue;
+
+                char key = word[0];
+                string trimmedWord = word.Trim('\r');
+
+                if (!self.keyDict.ContainsKey(key))
+                {
+                    self.keyDict[key] = new List<string>();
+                }
+
+                self.keyDict[key].Add(trimmedWord);
             }
         }
 
-        //判断一个字符串是否包含敏感词，包括含的话将其替换为*
-        public static bool IsContainSensitiveWords(this MaskWordComponent self, string text)
+        public static bool IsContainSensitiveWords(this MaskWordComponent self, ref string text, out string sensitiveWords)
         {
-            bool isFind = false;
-            if (null == self.sensitiveWordsArray || string.IsNullOrEmpty(text))
-                return isFind;
+            sensitiveWords = string.Empty;
+            if (self.sensitiveWordsArray == null || string.IsNullOrEmpty(text))
+                return false;
 
-            int len = text.Length;
-            bool isOK = true;
-            for (int i = 0; i < len; i++)
+            StringBuilder sb = new StringBuilder(text.Length);
+            bool found = false;
+
+            for (int i = 0; i < text.Length; i++)
             {
-                if (!self.keyDict.ContainsKey(text[i]))
+                if (self.keyDict.TryGetValue(text[i], out var wordList))
                 {
-                    continue;
-                }
-
-                foreach (string s in self.keyDict[text[i]])
-                {
-                    isOK = true;
-                    int j = i;
-                    foreach (char c in s)
+                    bool matched = false;
+                    foreach (string word in wordList)
                     {
-                        if (j >= len || c != text[j++])
+                        if (text.AsSpan(i).StartsWith(word))
                         {
-                            isOK = false;
+                            sb.Append('*', word.Length);
+                            sensitiveWords += word;
+                            i += word.Length - 1;
+                            matched = true;
+                            found = true;
                             break;
                         }
                     }
 
-                    if (isOK)
-                    {
-                        isFind = true;
-                        i += s.Length - 1;
-                        break;
-                    }
-                }
-
-                if (isFind)
-                {
-                    break;
-                }
-            }
-
-            return isFind;
-        }
-
-        //判断一个字符串是否包含敏感词，包括含的话将其替换为*
-        public static bool IsContainSensitiveWords(this MaskWordComponent self, ref string text, out string SensitiveWords)
-        {
-            bool isFind = false;
-            SensitiveWords = "";
-            if (null == self.sensitiveWordsArray || string.IsNullOrEmpty(text))
-                return isFind;
-
-            int len = text.Length;
-            StringBuilder sb = new StringBuilder(len);
-            bool isOK = true;
-            for (int i = 0; i < len; i++)
-            {
-                if (self.keyDict.ContainsKey(text[i]))
-                {
-                    foreach (string s in self.keyDict[text[i]])
-                    {
-                        isOK = true;
-                        int j = i;
-                        foreach (char c in s)
-                        {
-                            if (j >= len || c != text[j++])
-                            {
-                                isOK = false;
-                                break;
-                            }
-                        }
-
-                        if (isOK)
-                        {
-                            SensitiveWords += s;
-                            isFind = true;
-                            i += s.Length - 1;
-                            sb.Append('*', s.Length);
-                            break;
-                        }
-                    }
-
-                    if (!isOK)
+                    if (!matched)
                         sb.Append(text[i]);
                 }
                 else
+                {
                     sb.Append(text[i]);
+                }
             }
 
-            if (isFind)
+            if (found)
                 text = sb.ToString();
 
-            return isFind;
+            return found;
         }
     }
 }
