@@ -71,6 +71,7 @@
         SkillGrid0,
         SkillGrid1,
         SkillGrid2,
+        SkillGrid3,
     }
 
     public enum EOperateStatus : byte

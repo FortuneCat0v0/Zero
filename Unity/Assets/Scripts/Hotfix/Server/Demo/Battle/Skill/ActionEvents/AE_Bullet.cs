@@ -30,7 +30,7 @@ namespace ET.Server
                     Angle = skill.Angle + i * (-1 ^ i) * 10,
                     ColliderConfigId = 1001,
                     Skill = skill,
-                    CollisionHandler = nameof(CH_Normal),
+                    CollisionHandler = nameof(CH_SimpleArea),
                     Params = new() { param[1] }
                 });
 

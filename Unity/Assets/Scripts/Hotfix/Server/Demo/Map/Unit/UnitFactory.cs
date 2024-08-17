@@ -103,8 +103,7 @@ namespace ET.Server
             return unit;
         }
 
-        public static Unit CreateColliderUnit(Scene root, CreateColliderParams createColliderParams,
-        long lifeTime = 0,
+        public static Unit CreateColliderUnit(Scene root, CreateColliderParams createColliderParams, long lifeTime = 0,
         ETCancellationToken cancellationToken = null)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();

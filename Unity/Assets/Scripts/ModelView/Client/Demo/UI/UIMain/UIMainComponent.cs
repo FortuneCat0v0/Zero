@@ -31,6 +31,7 @@ namespace ET.Client
         public GameObject UISkillGrid_0;
         public GameObject UISkillGrid_1;
         public GameObject UISkillGrid_2;
+        public GameObject UISkillGrid_3;
 
         public GameObject GMInput;
         public GameObject GMSendBtn;

@@ -43,7 +43,9 @@ namespace ET
         public EntityRef<Skill> Skill;
         public string CollisionHandler { get; set; }
         public List<int> Params { get; set; }
-        public long LastTriggerTime;
+
+        //-----------执行时-------------
         public List<long> UnitIds { get; set; } = new();
+        public Dictionary<long, long> UnitLastTriggerTimeDict { get; set; } = new();
     }
 }

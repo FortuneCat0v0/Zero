@@ -1,10 +1,10 @@
 ﻿namespace ET.Server
 {
     /// <summary>
-    /// 普通范围伤害
+    /// 一次性的、即时的范围检测
     /// 参数：伤害
     /// </summary>
-    public class CH_Normal : CollisionHandler
+    public class CH_SimpleArea : CollisionHandler
     {
         public override void HandleCollisionStart(Unit a, Unit b)
         {

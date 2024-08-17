@@ -50,6 +50,8 @@ namespace ET.Client
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillGridType.SkillGrid1);
             self.UISkillGrid_2 = rc.Get<GameObject>("UISkillGrid_2");
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_2).SetSkill(ESkillGridType.SkillGrid2);
+            self.UISkillGrid_3 = rc.Get<GameObject>("UISkillGrid_3");
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_3).SetSkill(ESkillGridType.SkillGrid3);
 
             self.GMInput = rc.Get<GameObject>("GMInput");
             self.GMSendBtn = rc.Get<GameObject>("GMSendBtn");
