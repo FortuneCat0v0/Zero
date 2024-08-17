@@ -1,6 +1,4 @@
-﻿using MemoryPack;
-
-namespace ET
+﻿namespace ET
 {
     [Message(1)]
     public class A2NetInner_Message: MessageObject, IMessage

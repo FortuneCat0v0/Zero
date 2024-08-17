@@ -1,6 +1,3 @@
-using System;
-using System.Net;
-
 namespace ET.Server
 {
     [Event(SceneType.Main)]

@@ -1,5 +1,3 @@
-using System;
-
 namespace ET.Client
 {
     [MessageHandler(SceneType.LockStep)]

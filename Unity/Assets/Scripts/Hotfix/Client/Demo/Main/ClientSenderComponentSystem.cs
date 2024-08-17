@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
     [EntitySystemOf(typeof(ClientSenderComponent))]
     [FriendOf(typeof(ClientSenderComponent))]

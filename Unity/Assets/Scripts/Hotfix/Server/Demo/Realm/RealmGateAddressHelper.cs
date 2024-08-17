@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
 namespace ET.Server
 {
 	public static partial class RealmGateAddressHelper

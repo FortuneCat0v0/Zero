@@ -1,7 +1,4 @@
-﻿using Box2DSharp.Collision.Collider;
-using Box2DSharp.Dynamics.Contacts;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [FriendOf(typeof(CollisionListenerComponent))]
     [EntitySystemOf(typeof(CollisionListenerComponent))]

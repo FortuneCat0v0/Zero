@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System;
+﻿using System;
 using Unity.Mathematics;
 
 namespace ET
@@ -73,12 +72,12 @@ namespace ET
 
         public static float RadToDeg(float radians)
         {
-            return (float)(radians * 180 / System.Math.PI);
+            return (float)(radians * 180 / Math.PI);
         }
 
         public static float DegToRad(float degrees)
         {
-            return (float)(degrees * System.Math.PI / 180);
+            return (float)(degrees * Math.PI / 180);
         }
 
         public static float Angle(float3 a, float3 b)

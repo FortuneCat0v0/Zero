@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageHandler(SceneType.LoginCenter)]
     public class G2L_AddLoginRecordHandler: MessageHandler<Scene, G2L_AddLoginRecord, L2G_AddLoginRecord>

@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using Luban;
 
 namespace ET
@@ -19,14 +21,14 @@ namespace ET
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             Desc = _buf.ReadString();
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);StartAEs = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); StartAEs.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);StartAEParams = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} StartAEParams.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EndAEs = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EndAEs.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EndAEParams = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} EndAEParams.Add(_e0);}}
+            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);StartAEs = new List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); StartAEs.Add(_e0);}}
+            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);StartAEParams = new List<List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { List<int> _e0;  {int n1 = Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} StartAEParams.Add(_e0);}}
+            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);EndAEs = new List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); EndAEs.Add(_e0);}}
+            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);EndAEParams = new List<List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { List<int> _e0;  {int n1 = Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} EndAEParams.Add(_e0);}}
             Duration = _buf.ReadInt();
             TriggerInterval = _buf.ReadInt();
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);IntervalAEs = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); IntervalAEs.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);IntervalAEParams = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} IntervalAEParams.Add(_e0);}}
+            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);IntervalAEs = new List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); IntervalAEs.Add(_e0);}}
+            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);IntervalAEParams = new List<List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { List<int> _e0;  {int n1 = Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} IntervalAEParams.Add(_e0);}}
             MaxLayer = _buf.ReadInt();
             Goup = _buf.ReadInt();
 
@@ -56,22 +58,22 @@ namespace ET
         /// <summary>
         /// 开始事件
         /// </summary>
-        public readonly System.Collections.Generic.List<string> StartAEs;
+        public readonly List<string> StartAEs;
 
         /// <summary>
         /// 开始事件参数
         /// </summary>
-        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> StartAEParams;
+        public readonly List<List<int>> StartAEParams;
 
         /// <summary>
         /// 结束事件
         /// </summary>
-        public readonly System.Collections.Generic.List<string> EndAEs;
+        public readonly List<string> EndAEs;
 
         /// <summary>
         /// 结束事件参数
         /// </summary>
-        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> EndAEParams;
+        public readonly List<List<int>> EndAEParams;
 
         /// <summary>
         /// 持续时间
@@ -86,12 +88,12 @@ namespace ET
         /// <summary>
         /// 间隔事件
         /// </summary>
-        public readonly System.Collections.Generic.List<string> IntervalAEs;
+        public readonly List<string> IntervalAEs;
 
         /// <summary>
         /// 间隔事件参数
         /// </summary>
-        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> IntervalAEParams;
+        public readonly List<List<int>> IntervalAEParams;
 
         /// <summary>
         /// 最大叠加层数
@@ -113,14 +115,14 @@ namespace ET
             + "Id:" + Id + ","
             + "Name:" + Name + ","
             + "Desc:" + Desc + ","
-            + "StartAEs:" + Luban.StringUtil.CollectionToString(StartAEs) + ","
-            + "StartAEParams:" + Luban.StringUtil.CollectionToString(StartAEParams) + ","
-            + "EndAEs:" + Luban.StringUtil.CollectionToString(EndAEs) + ","
-            + "EndAEParams:" + Luban.StringUtil.CollectionToString(EndAEParams) + ","
+            + "StartAEs:" + StringUtil.CollectionToString(StartAEs) + ","
+            + "StartAEParams:" + StringUtil.CollectionToString(StartAEParams) + ","
+            + "EndAEs:" + StringUtil.CollectionToString(EndAEs) + ","
+            + "EndAEParams:" + StringUtil.CollectionToString(EndAEParams) + ","
             + "Duration:" + Duration + ","
             + "TriggerInterval:" + TriggerInterval + ","
-            + "IntervalAEs:" + Luban.StringUtil.CollectionToString(IntervalAEs) + ","
-            + "IntervalAEParams:" + Luban.StringUtil.CollectionToString(IntervalAEParams) + ","
+            + "IntervalAEs:" + StringUtil.CollectionToString(IntervalAEs) + ","
+            + "IntervalAEParams:" + StringUtil.CollectionToString(IntervalAEParams) + ","
             + "MaxLayer:" + MaxLayer + ","
             + "Goup:" + Goup + ","
             + "}";

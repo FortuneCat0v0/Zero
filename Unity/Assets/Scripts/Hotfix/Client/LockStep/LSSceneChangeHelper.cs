@@ -1,3 +1,5 @@
+using ET.Client.WaitType;
+
 namespace ET.Client
 {
 
@@ -17,7 +19,7 @@ namespace ET.Client
             root.GetComponent<ClientSenderComponent>().Send(C2Room_ChangeSceneFinish.Create());
             
             // 等待Room2C_EnterMap消息
-            WaitType.Wait_Room2C_Start waitRoom2CStart = await root.GetComponent<ObjectWait>().Wait<WaitType.Wait_Room2C_Start>();
+            Wait_Room2C_Start waitRoom2CStart = await root.GetComponent<ObjectWait>().Wait<Wait_Room2C_Start>();
 
             room.LSWorld = new LSWorld(SceneType.LockStepClient);
             room.Init(waitRoom2CStart.Message.UnitInfo, waitRoom2CStart.Message.StartTime);

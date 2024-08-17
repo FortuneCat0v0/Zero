@@ -1,6 +1,4 @@
-﻿using Box2DSharp.Dynamics.Contacts;
-
-namespace ET
+﻿namespace ET
 {
     public struct SceneChangeStart
     {

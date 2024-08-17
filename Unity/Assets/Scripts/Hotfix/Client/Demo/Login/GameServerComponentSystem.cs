@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
     [FriendOf(typeof(GameServer))]
     [FriendOf(typeof(GameServerComponent))]

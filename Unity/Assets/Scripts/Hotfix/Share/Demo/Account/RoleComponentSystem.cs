@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace ET
+﻿namespace ET
 {
     [FriendOf(typeof(RoleComponent))]
     [EntitySystemOf(typeof(RoleComponent))]

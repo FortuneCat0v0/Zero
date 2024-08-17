@@ -1,3 +1,5 @@
+using System;
+
 namespace ET.Server
 {
     // 这里为什么能定义class呢？因为这里只有逻辑，热重载后新的handler替换旧的，仍然没有问题
@@ -12,7 +14,7 @@ namespace ET.Server
             {
                 await this.Run(robotCase);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Log.Error($"{robotCase.Zone()} {e}");
                 Log.Console($"RobotCase Error {this.GetType().FullName}:\n\t{e}");

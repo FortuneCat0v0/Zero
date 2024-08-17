@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
 	/// <summary>
 	/// 管理Scene上的UI

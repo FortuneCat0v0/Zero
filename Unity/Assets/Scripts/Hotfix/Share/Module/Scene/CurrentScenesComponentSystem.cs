@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET
+﻿namespace ET
 {
     public static partial class CurrentScenesComponentSystem
     {

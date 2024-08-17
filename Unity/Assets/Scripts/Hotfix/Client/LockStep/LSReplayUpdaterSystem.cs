@@ -1,5 +1,3 @@
-using System;
-
 namespace ET.Client
 {
     [EntitySystemOf(typeof(LSReplayUpdater))]

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageHandler(SceneType.Gate)]
     [FriendOf(typeof(SessionPlayerComponent))]

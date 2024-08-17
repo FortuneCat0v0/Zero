@@ -1,6 +1,5 @@
 using System;
 
-
 namespace ET.Client
 {
     public static partial class EnterMapHelper

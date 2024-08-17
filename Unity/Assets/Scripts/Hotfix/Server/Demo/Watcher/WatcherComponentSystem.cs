@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Diagnostics;
 
 namespace ET.Server
@@ -18,7 +17,7 @@ namespace ET.Server
                 {
                     continue;
                 }
-                System.Diagnostics.Process process = WatcherHelper.StartProcess(startProcessConfig.Id);
+                Process process = WatcherHelper.StartProcess(startProcessConfig.Id);
                 self.Processes.Add(startProcessConfig.Id, process);
             }
         }

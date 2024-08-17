@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [Invoke((long)SceneType.Match)]
     public class FiberInit_Match: AInvokeHandler<FiberInit, ETTask>

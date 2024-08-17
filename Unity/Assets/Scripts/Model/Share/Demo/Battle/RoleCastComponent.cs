@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System;
+
+namespace ET
 {
     public enum ERoleCast
     {
@@ -7,7 +9,7 @@
         Neutral //中立
     }
 
-    [System.Flags]
+    [Flags]
     public enum ERoleCamp
     {
         Player = 0b0000001,

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [Invoke((long)SceneType.BenchmarkClient)]
     public class NetComponentOnReadInvoker_BenchmarkClient: AInvokeHandler<NetComponentOnRead>

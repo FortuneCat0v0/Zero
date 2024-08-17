@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using MongoDB.Bson;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     public static partial class TransferHelper
     {
@@ -9,7 +6,7 @@ namespace ET.Server
         {
             await unit.Fiber().WaitFrameFinish();
 
-            await TransferHelper.Transfer(unit, sceneInstanceId, sceneName);
+            await Transfer(unit, sceneInstanceId, sceneName);
         }
         
 

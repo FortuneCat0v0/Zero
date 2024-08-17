@@ -8,7 +8,7 @@ namespace ET.Server
     public static partial class CellSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.Server.Cell self)
+        private static void Awake(this Cell self)
         {
 
         }

@@ -1,5 +1,3 @@
-using System;
-using ET.Client;
 using TrueSync;
 
 namespace ET

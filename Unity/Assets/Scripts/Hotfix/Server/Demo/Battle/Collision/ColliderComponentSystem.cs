@@ -1,10 +1,5 @@
-﻿using Box2DSharp.Collision.Collider;
+﻿using System.Numerics;
 using Box2DSharp.Collision.Shapes;
-using Box2DSharp.Common;
-using Box2DSharp.Dynamics;
-using Box2DSharp.Dynamics.Contacts;
-using System.Collections.Generic;
-using System.Numerics;
 using Unity.Mathematics;
 
 namespace ET.Server

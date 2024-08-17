@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [FriendOf(typeof(PlayerComponent))]
     public static partial class PlayerComponentSystem

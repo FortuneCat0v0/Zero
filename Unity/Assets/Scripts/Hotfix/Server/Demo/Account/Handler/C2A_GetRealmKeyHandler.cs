@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageSessionHandler(SceneType.Account)]
     public class C2A_GetRealmKeyHandler : MessageSessionHandler<C2A_GetRealmKey, A2C_GetRealmKey>

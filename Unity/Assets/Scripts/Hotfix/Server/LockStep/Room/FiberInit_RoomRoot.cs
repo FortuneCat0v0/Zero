@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [Invoke((long)SceneType.RoomRoot)]
     public class FiberInit_RoomRoot: AInvokeHandler<FiberInit, ETTask>

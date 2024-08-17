@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [EntitySystemOf(typeof(LockInfo))]
     [FriendOf(typeof(LockInfo))]

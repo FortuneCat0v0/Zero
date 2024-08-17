@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [EntitySystemOf(typeof(BulletComponent))]
     [FriendOf(typeof(BulletComponent))]

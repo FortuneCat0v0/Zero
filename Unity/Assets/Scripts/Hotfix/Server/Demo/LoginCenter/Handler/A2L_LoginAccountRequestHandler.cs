@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageHandler(SceneType.LoginCenter)]
     public class A2L_LoginAccountRequestHandler : MessageHandler<Scene, A2L_LoginAccountRequest, L2A_LoginAccountResponse>

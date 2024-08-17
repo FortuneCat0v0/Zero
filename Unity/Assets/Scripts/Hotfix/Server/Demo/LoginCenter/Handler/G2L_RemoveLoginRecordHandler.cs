@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageHandler(SceneType.LoginCenter)]
     public class G2L_RemoveLoginRecordHandler: MessageHandler<Scene, G2L_RemoveLoginRecord, L2G_RemoveLoginRecord>

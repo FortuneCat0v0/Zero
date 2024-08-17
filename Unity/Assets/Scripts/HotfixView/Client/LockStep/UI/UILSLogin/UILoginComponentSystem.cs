@@ -5,7 +5,7 @@ namespace ET.Client
 {
     [EntitySystemOf(typeof(UILSLoginComponent))]
     [FriendOf(typeof(UILoginComponent))]
-    [FriendOfAttribute(typeof(ET.Client.UILSLoginComponent))]
+    [FriendOfAttribute(typeof(UILSLoginComponent))]
     public static partial class UILSLoginComponentSystem
     {
         [EntitySystem]

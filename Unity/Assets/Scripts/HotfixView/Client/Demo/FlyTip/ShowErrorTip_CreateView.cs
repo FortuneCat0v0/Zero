@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
     [Event(SceneType.Demo)]
     public class ShowErrorTip_CreateView : AEvent<Scene, ShowErrorTip>

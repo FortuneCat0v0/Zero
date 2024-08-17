@@ -1,5 +1,3 @@
-using System;
-
 namespace ET.Server
 {
     [EntitySystemOf(typeof(MessageLocationSender))]

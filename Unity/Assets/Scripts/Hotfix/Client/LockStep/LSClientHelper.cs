@@ -48,7 +48,7 @@ namespace ET.Client
             for (int i = room.AuthorityFrame + 1; i <= room.PredictionFrame; ++i)
             {
                 OneFrameInputs oneFrameInputs = frameBuffer.FrameInputs(i);
-                LSClientHelper.CopyOtherInputsTo(room, authorityFrameInput, oneFrameInputs); // 重新预测消息
+                CopyOtherInputsTo(room, authorityFrameInput, oneFrameInputs); // 重新预测消息
                 room.Update(oneFrameInputs);
             }
             

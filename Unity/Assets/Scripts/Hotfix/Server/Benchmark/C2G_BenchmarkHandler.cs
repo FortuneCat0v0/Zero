@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageSessionHandler(SceneType.BenchmarkServer)]
     public class C2G_BenchmarkHandler: MessageSessionHandler<C2G_Benchmark, G2C_Benchmark>

@@ -1,6 +1,4 @@
-﻿using Unity.Mathematics;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageLocationHandler(SceneType.Map)]
     public class C2M_SpellSkillHandler : MessageLocationHandler<Unit, C2M_SpellSkill>

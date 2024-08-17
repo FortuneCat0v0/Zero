@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [Invoke((long)SceneType.Location)]
     public class FiberInit_Location: AInvokeHandler<FiberInit, ETTask>

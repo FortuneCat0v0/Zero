@@ -1,5 +1,3 @@
-using TrueSync;
-
 namespace ET.Client
 {
     [ComponentOf(typeof(Room))]

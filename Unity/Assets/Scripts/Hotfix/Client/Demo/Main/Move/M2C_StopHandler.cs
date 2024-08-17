@@ -1,6 +1,4 @@
-﻿using Unity.Mathematics;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
     [MessageHandler(SceneType.Demo)]
     public class M2C_StopHandler : MessageHandler<Scene, M2C_Stop>

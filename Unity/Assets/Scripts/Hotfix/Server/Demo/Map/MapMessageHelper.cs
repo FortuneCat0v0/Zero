@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 
 namespace ET.Server
 {
@@ -9,14 +8,14 @@ namespace ET.Server
         {
             M2C_CreateUnits createUnits = M2C_CreateUnits.Create();
             createUnits.Units.Add(UnitHelper.CreateUnitInfo(sendUnit));
-            MapMessageHelper.SendToClient(unit, createUnits);
+            SendToClient(unit, createUnits);
         }
 
         public static void NoticeUnitRemove(Unit unit, Unit sendUnit)
         {
             M2C_RemoveUnits removeUnits = M2C_RemoveUnits.Create();
             removeUnits.Units.Add(sendUnit.Id);
-            MapMessageHelper.SendToClient(unit, removeUnits);
+            SendToClient(unit, removeUnits);
         }
 
         public static void Broadcast(Unit unit, IMessage message)

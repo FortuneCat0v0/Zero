@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
 namespace ET

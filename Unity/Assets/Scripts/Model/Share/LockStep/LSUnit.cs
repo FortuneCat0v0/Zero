@@ -1,4 +1,3 @@
-using System;
 using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;

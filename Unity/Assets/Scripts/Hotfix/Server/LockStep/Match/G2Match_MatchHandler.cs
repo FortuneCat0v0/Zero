@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace ET.Server
+﻿namespace ET.Server
 {
 	[MessageHandler(SceneType.Match)]
 	public class G2Match_MatchHandler : MessageHandler<Scene, G2Match_Match, Match2G_Match>

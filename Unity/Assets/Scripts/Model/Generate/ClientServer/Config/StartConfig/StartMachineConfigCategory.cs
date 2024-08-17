@@ -7,8 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using Luban;
 using System.Collections.Generic;
+using Luban;
 
 namespace ET
 {

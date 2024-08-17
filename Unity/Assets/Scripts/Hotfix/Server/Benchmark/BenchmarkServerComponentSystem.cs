@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [EntitySystemOf(typeof(BenchmarkServerComponent))]
     public static partial class BenchmarkServerComponentSystem

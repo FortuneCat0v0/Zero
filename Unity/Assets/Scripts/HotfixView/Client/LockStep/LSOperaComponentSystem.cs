@@ -8,7 +8,7 @@ namespace ET.Client
     public static partial class LSOperaComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.LSOperaComponent self)
+        private static void Awake(this LSOperaComponent self)
         {
 
         }

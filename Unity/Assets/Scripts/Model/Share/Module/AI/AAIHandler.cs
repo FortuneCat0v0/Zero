@@ -1,5 +1,3 @@
-using System;
-
 namespace ET.Server
 {
     public class AIHandlerAttribute: BaseAttribute

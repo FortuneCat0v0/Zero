@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ET
+﻿namespace ET
 {
     [FriendOf(typeof(SkillComponent))]
     [FriendOf(typeof(BuffComponent))]

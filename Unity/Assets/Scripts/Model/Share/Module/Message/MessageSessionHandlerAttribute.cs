@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET
+﻿namespace ET
 {
     public class MessageSessionHandlerAttribute: BaseAttribute
     {

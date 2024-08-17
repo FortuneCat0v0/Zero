@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
     [FriendOf(typeof(RouterAddressComponent))]
     [MessageHandler(SceneType.NetClient)]

@@ -14,7 +14,7 @@ namespace ET.Client
         private static void Awake(this MaskWordComponent self)
         {
             MaskWordComponent.Instance = self;
-            self.InitMaskWord().Coroutine();
+            // self.InitMaskWord().Coroutine();
         }
 
         private static async ETTask InitMaskWord(this MaskWordComponent self)

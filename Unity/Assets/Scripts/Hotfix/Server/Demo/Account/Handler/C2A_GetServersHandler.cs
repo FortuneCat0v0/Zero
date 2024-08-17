@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [FriendOf(typeof(GameServerComponent))]
     [MessageSessionHandler(SceneType.Account)]

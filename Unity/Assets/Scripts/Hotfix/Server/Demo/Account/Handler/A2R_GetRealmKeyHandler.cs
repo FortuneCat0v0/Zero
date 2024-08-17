@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ET.Server
+﻿namespace ET.Server
 {
     [MessageHandler(SceneType.Realm)]
     public class A2R_GetRealmKeyHandler : MessageHandler<Scene, A2R_GetRealmKey, R2A_GetRealmKey>

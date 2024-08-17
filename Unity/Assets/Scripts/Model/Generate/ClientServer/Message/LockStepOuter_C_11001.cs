@@ -1,5 +1,8 @@
-using MemoryPack;
 using System.Collections.Generic;
+using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
+using TrueSync;
 
 namespace ET
 {
@@ -138,10 +141,10 @@ namespace ET
         public long PlayerId { get; set; }
 
         [MemoryPackOrder(1)]
-        public TrueSync.TSVector Position { get; set; }
+        public TSVector Position { get; set; }
 
         [MemoryPackOrder(2)]
-        public TrueSync.TSQuaternion Rotation { get; set; }
+        public TSQuaternion Rotation { get; set; }
 
         public override void Dispose()
         {
@@ -232,7 +235,7 @@ namespace ET
             return ObjectPool.Instance.Fetch(typeof(OneFrameInputs), isFromPool) as OneFrameInputs;
         }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         [MemoryPackOrder(1)]
         public Dictionary<long, LSInput> Inputs { get; set; } = new();
         public override void Dispose()

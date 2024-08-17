@@ -1,5 +1,6 @@
 using System;
 using MemoryPack;
+using TrueSync;
 
 namespace ET
 {
@@ -7,7 +8,7 @@ namespace ET
     public partial struct LSInput
     {
         [MemoryPackOrder(0)]
-        public TrueSync.TSVector2 V;
+        public TSVector2 V;
 
         [MemoryPackOrder(1)]
         public int Button;

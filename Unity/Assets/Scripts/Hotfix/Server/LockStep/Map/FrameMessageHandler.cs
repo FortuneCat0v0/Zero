@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace ET.Server
 {
     [MessageHandler(SceneType.RoomRoot)]
