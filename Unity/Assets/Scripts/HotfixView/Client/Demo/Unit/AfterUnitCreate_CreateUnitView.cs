@@ -11,12 +11,12 @@ namespace ET.Client
 
             // Unit View层
 
-            unit.AddComponent<EffectComponent>();
-
             if (unit.UnitType == EUnitType.Player)
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("AngelSlime").GameObject;
                 unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
+
+                unit.AddComponent<UnitTransformComponent>();
 
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(model.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
@@ -27,6 +27,8 @@ namespace ET.Client
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("PowerSlime").GameObject;
                 unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
 
+                unit.AddComponent<UnitTransformComponent>();
+
                 HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(model.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
@@ -35,6 +37,8 @@ namespace ET.Client
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("Bullet").GameObject;
             }
+
+            unit.AddComponent<EffectComponent>();
 
             // 碰撞体显示
             // CollisionViewComponent collisionViewComponent = unit.AddComponent<CollisionViewComponent, GameObject>(model);
