@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [Event(SceneType.Current)]
-    public class ChangePosition_SyncGameObjectPos: AEvent<Scene, ChangePosition>
+    public class ChangePosition_SyncGameObjectPos : AEvent<Scene, ChangePosition>
     {
         protected override async ETTask Run(Scene scene, ChangePosition args)
         {
@@ -14,7 +14,7 @@ namespace ET.Client
                 return;
             }
 
-            Transform transform = gameObjectComponent.UnitGo.transform;
+            Transform transform = gameObjectComponent.GameObject.transform;
             transform.position = unit.Position;
             await ETTask.CompletedTask;
         }

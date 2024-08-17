@@ -25,7 +25,7 @@ namespace ET.Client
 
             self.GameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(),
                 $"Assets/Bundles/Effect/SkillIndicator/SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}.prefab");
-            self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().UnitGo
+            self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().GameObject
                     .transform);
             self.GameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
             self.Vector2 = Vector2.zero;

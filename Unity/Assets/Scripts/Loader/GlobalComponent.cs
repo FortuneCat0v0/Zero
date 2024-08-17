@@ -8,6 +8,8 @@ namespace ET
         [EntitySystem]
         public static void Awake(this GlobalComponent self)
         {
+            GlobalComponent.Instance = self;
+
             self.Global = GameObject.Find("/Global").transform;
             self.MainCamera = GameObject.Find("/Global/MainCamera").transform;
             self.UICamera = GameObject.Find("/Global/UICamera").transform;
@@ -22,6 +24,9 @@ namespace ET
     [ComponentOf(typeof(Scene))]
     public class GlobalComponent : Entity, IAwake
     {
+        [StaticField]
+        public static GlobalComponent Instance;
+
         public Transform Global { get; set; }
         public Transform MainCamera { get; set; }
         public Transform UICamera { get; set; }

@@ -3,9 +3,8 @@ using UnityEngine;
 namespace ET.Client
 {
     [ComponentOf(typeof(Unit))]
-    public class GameObjectComponent : Entity, IAwake, IDestroy
+    public class GameObjectComponent : Entity, IAwake<string>, IDestroy
     {
-        public GameObject UnitGo { get; set; }
-        public GameObject ModelGo { get; set; }
+        public GameObject GameObject { get; set; }
     }
 }

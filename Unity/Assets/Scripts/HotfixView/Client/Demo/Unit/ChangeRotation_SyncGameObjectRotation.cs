@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ET.Client
 {
     [Event(SceneType.Current)]
-    public class ChangeRotation_SyncGameObjectRotation: AEvent<Scene, ChangeRotation>
+    public class ChangeRotation_SyncGameObjectRotation : AEvent<Scene, ChangeRotation>
     {
         protected override async ETTask Run(Scene scene, ChangeRotation args)
         {
@@ -13,7 +13,8 @@ namespace ET.Client
             {
                 return;
             }
-            Transform transform = gameObjectComponent.UnitGo.transform;
+
+            Transform transform = gameObjectComponent.GameObject.transform;
             transform.rotation = unit.Rotation;
             await ETTask.CompletedTask;
         }

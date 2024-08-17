@@ -1,25 +1,22 @@
-﻿namespace ET.Client
+﻿using UnityEngine;
+
+namespace ET.Client
 {
     [EntitySystemOf(typeof(GameObjectComponent))]
     public static partial class GameObjectComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this GameObjectComponent self)
+        private static void Awake(this GameObjectComponent self, string name)
         {
+            GameObject gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Scene(), AssetPathHelper.GetUnitPath(name));
+            gameObject.transform.SetParent(GlobalComponent.Instance.Unit);
+            self.GameObject = gameObject;
         }
 
         [EntitySystem]
         private static void Destroy(this GameObjectComponent self)
         {
-            if (self.UnitGo != null)
-            {
-                GameObjectPoolHelper.ReturnObjectToPool(self.UnitGo);
-            }
-
-            if (self.ModelGo != null)
-            {
-                GameObjectPoolHelper.ReturnObjectToPool(self.ModelGo);
-            }
+            GameObjectPoolHelper.ReturnObjectToPool(self.GameObject);
         }
     }
 }

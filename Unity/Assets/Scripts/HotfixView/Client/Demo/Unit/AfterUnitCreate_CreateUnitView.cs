@@ -8,55 +8,32 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, AfterUnitCreate args)
         {
             Unit unit = args.Unit;
-            ResourcesLoaderComponent resourcesLoaderComponent = scene.GetComponent<ResourcesLoaderComponent>();
 
             // Unit View层
-            GlobalComponent globalComponent = scene.Root().GetComponent<GlobalComponent>();
-            GameObject unitRoot = GameObjectPoolHelper.GetObjectFromPoolSync(scene, "Assets/Bundles/Unit/Unit.prefab");
-            unitRoot.transform.SetParent(globalComponent.Unit);
-            unitRoot.transform.position = unit.Position;
 
             unit.AddComponent<EffectComponent>();
-            unit.AddComponent<GameObjectComponent>().UnitGo = unitRoot;
 
-            ReferenceCollector rc = unitRoot.GetComponent<ReferenceCollector>();
-            GameObject model;
             if (unit.UnitType == EUnitType.Player)
             {
-                model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("AngelSlime"));
-                model.transform.SetParent(unitRoot.transform);
-                model.transform.localPosition = Vector3.zero;
-                model.transform.localEulerAngles = Vector3.zero;
-
-                unit.GetComponent<GameObjectComponent>().ModelGo = model;
+                GameObject model = unit.AddComponent<GameObjectComponent, string>("AngelSlime").GameObject;
                 unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
 
-                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(unitRoot.transform);
+                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(model.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.UnitType == EUnitType.Monster)
             {
-                model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("PowerSlime"));
-                model.transform.SetParent(unitRoot.transform);
-                model.transform.localPosition = Vector3.zero;
-                model.transform.localEulerAngles = Vector3.zero;
-
-                unit.GetComponent<GameObjectComponent>().ModelGo = model;
+                GameObject model = unit.AddComponent<GameObjectComponent, string>("PowerSlime").GameObject;
                 unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
 
-                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(unitRoot.transform);
+                HeadInfosComponent headInfosComponent = unit.AddComponent<HeadInfosComponent, Transform>(model.transform);
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.UnitType == EUnitType.Bullet)
             {
-                model = GameObjectPoolHelper.GetObjectFromPoolSync(scene, AssetPathHelper.GetUnitPath("Bullet"));
-                model.transform.SetParent(unitRoot.transform);
-                model.transform.localPosition = Vector3.zero;
-                model.transform.localEulerAngles = Vector3.zero;
-
-                unit.GetComponent<GameObjectComponent>().ModelGo = model;
+                GameObject model = unit.AddComponent<GameObjectComponent, string>("Bullet").GameObject;
             }
 
             // 碰撞体显示
