@@ -15,6 +15,7 @@ namespace ET
             self.UICamera = GameObject.Find("/Global/UICamera").transform;
             self.UI = GameObject.Find("/Global/UI").transform;
             self.Unit = GameObject.Find("/Global/Unit").transform;
+            self.Effect = GameObject.Find("/Global/Effect").transform;
             self.Audio = GameObject.Find("/Global/Audio").transform;
 
             self.GlobalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
@@ -32,6 +33,8 @@ namespace ET
         public Transform UICamera { get; set; }
         public Transform UI { get; set; }
         public Transform Unit { get; set; }
+
+        public Transform Effect { get; set; }
         public Transform Audio { get; set; }
 
         public GlobalConfig GlobalConfig { get; set; }

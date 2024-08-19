@@ -22,6 +22,7 @@ namespace ET
             Life = _buf.ReadInt();
             FollowUnit = _buf.ReadBool();
             UnitPosType = (EUnitPosType)_buf.ReadInt();
+            SyncRot = _buf.ReadBool();
 
             PostInit();
         }
@@ -57,9 +58,14 @@ namespace ET
         public readonly bool FollowUnit;
 
         /// <summary>
-        /// 绑定位置
+        /// 跟随的位置
         /// </summary>
         public readonly EUnitPosType UnitPosType;
+
+        /// <summary>
+        /// 同步旋转
+        /// </summary>
+        public readonly bool SyncRot;
 
         public const int __ID__ = -682668973;
 
@@ -74,6 +80,7 @@ namespace ET
             + "Life:" + Life + ","
             + "FollowUnit:" + FollowUnit + ","
             + "UnitPosType:" + UnitPosType + ","
+            + "SyncRot:" + SyncRot + ","
             + "}";
         }
 

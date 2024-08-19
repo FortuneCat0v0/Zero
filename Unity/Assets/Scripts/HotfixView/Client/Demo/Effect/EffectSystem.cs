@@ -23,13 +23,24 @@ namespace ET.Client
 
             if (self.EffectConfig.FollowUnit)
             {
-                self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().GameObject.transform);
-                self.EffectGo.transform.localPosition = Vector3.zero;
-                self.EffectGo.transform.localScale = Vector3.one;
+                if (self.EffectConfig.SyncRot)
+                {
+                    self.EffectGo.transform.SetParent(self.OwnerUnit.GetComponent<GameObjectComponent>().GameObject.transform);
+                    self.EffectGo.transform.localPosition = Vector3.zero;
+                    self.EffectGo.transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Effect);
+                    self.EffectGo.transform.position = Vector3.zero;
+                    self.EffectGo.transform.localScale = Vector3.one;
+                    self.AddComponent<SyncPosComponent, Transform, Transform>(self.EffectGo.transform,
+                        self.OwnerUnit.GetComponent<GameObjectComponent>().GameObject.transform);
+                }
             }
             else
             {
-                self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Unit);
+                self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Effect);
                 self.EffectGo.transform.position = self.EffectData.Position;
                 self.EffectGo.transform.localScale = Vector3.one;
                 self.EffectGo.transform.rotation = quaternion.Euler(0, math.radians(self.EffectData.Angle), 0);
