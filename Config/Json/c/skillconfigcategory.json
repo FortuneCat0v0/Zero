@@ -187,5 +187,43 @@
     "SkillIndicatorParams": [
       0
     ]
+  },
+  {
+    "Id": 10004,
+    "Level": 1,
+    "SkillAbstractType": 2,
+    "Name": "1级",
+    "Desc": "某个区域范围持续伤害",
+    "CD": 8000,
+    "Life": 500,
+    "AEsServer": [
+      "AE_SphereDamageAura"
+    ],
+    "AEParamsServer": [
+      [
+        1002,
+        5000,
+        500,
+        5
+      ]
+    ],
+    "AETriggerPercentServer": [
+      10
+    ],
+    "AEsClient": [
+      "AE_PlaySound"
+    ],
+    "AEParamsClient": [
+      [
+        10002
+      ]
+    ],
+    "AETriggerPercentClient": [
+      0
+    ],
+    "SkillIndicatorType": 2,
+    "SkillIndicatorParams": [
+      0
+    ]
   }
 ]

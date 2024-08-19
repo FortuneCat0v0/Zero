@@ -112,12 +112,12 @@ namespace ET.Server
 
             if (lifeTime > 0)
             {
-                unit.AddComponent<ColliderTimeoutComponent, long>(lifeTime);
+                unit.AddComponent<TimeoutComponent, long>(lifeTime);
             }
 
             if (cancellationToken != null)
             {
-                unit.AddComponent<ColliderCancellationTokenComponent, ETCancellationToken>(cancellationToken);
+                unit.AddComponent<CancellationComponent, ETCancellationToken>(cancellationToken);
             }
 
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,

@@ -54,7 +54,6 @@ namespace ET.Client
     public struct EffectData
     {
         public int EffectConfigId;
-        public long TargetUnitId;
         public float3 Position;
         public float Angle;
     }
@@ -62,7 +61,7 @@ namespace ET.Client
     public struct PlayEffect
     {
         public Unit Unit;
-        public long EffectId;
+        public long EffectId; // 可能要通过Id拿到表现层的特效，状态做一些调整，先留着吧
         public EffectData EffectData;
     }
 

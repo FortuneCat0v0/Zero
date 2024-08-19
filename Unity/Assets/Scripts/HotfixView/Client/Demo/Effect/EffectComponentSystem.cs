@@ -41,11 +41,11 @@
 
         public static void RemoveEffect(this EffectComponent self, long effectId)
         {
-            if (self.Children.ContainsKey(effectId))
-            {
-                Effect effect = self.Children[effectId] as Effect;
-                effect.Dispose();
-            }
+            // if (self.Children.ContainsKey(effectId))
+            // {
+            //     Effect effect = self.Children[effectId] as Effect;
+            //     effect.Dispose();
+            // }
         }
     }
 }

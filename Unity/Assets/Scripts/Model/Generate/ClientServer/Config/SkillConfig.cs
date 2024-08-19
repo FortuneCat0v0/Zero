@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using Luban;
 
 namespace ET
@@ -25,14 +23,14 @@ namespace ET
             Desc = _buf.ReadString();
             CD = _buf.ReadInt();
             Life = _buf.ReadInt();
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);AEsServer = new List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsServer.Add(_e0);}}
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);AEParamsServer = new List<List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { List<int> _e0;  {int n1 = Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsServer.Add(_e0);}}
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentServer = new List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentServer.Add(_e0);}}
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);AEsClient = new List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsClient.Add(_e0);}}
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);AEParamsClient = new List<List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { List<int> _e0;  {int n1 = Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsClient.Add(_e0);}}
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentClient = new List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentClient.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEsServer = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsServer.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEParamsServer = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsServer.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentServer = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentServer.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEsClient = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsClient.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEParamsClient = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsClient.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentClient = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentClient.Add(_e0);}}
             SkillIndicatorType = (ESkillIndicatorType)_buf.ReadInt();
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
 
             PostInit();
         }
@@ -80,32 +78,32 @@ namespace ET
         /// <summary>
         /// 行为事件(服务端)
         /// </summary>
-        public readonly List<string> AEsServer;
+        public readonly System.Collections.Generic.List<string> AEsServer;
 
         /// <summary>
         /// 行为事件参数(服务端)
         /// </summary>
-        public readonly List<List<int>> AEParamsServer;
+        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> AEParamsServer;
 
         /// <summary>
         /// 行为事件触发百分比(服务端)
         /// </summary>
-        public readonly List<int> AETriggerPercentServer;
+        public readonly System.Collections.Generic.List<int> AETriggerPercentServer;
 
         /// <summary>
         /// 行为事件(客户端)
         /// </summary>
-        public readonly List<string> AEsClient;
+        public readonly System.Collections.Generic.List<string> AEsClient;
 
         /// <summary>
         /// 行为事件参数(客户端)
         /// </summary>
-        public readonly List<List<int>> AEParamsClient;
+        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> AEParamsClient;
 
         /// <summary>
         /// 行为事件触发百分比(客户端)
         /// </summary>
-        public readonly List<int> AETriggerPercentClient;
+        public readonly System.Collections.Generic.List<int> AETriggerPercentClient;
 
         /// <summary>
         /// 技能指示器类型
@@ -115,7 +113,7 @@ namespace ET
         /// <summary>
         /// 技能指示器参数
         /// </summary>
-        public readonly List<float> SkillIndicatorParams;
+        public readonly System.Collections.Generic.List<float> SkillIndicatorParams;
 
         public const int __ID__ = -844226349;
 
@@ -131,14 +129,14 @@ namespace ET
             + "Desc:" + Desc + ","
             + "CD:" + CD + ","
             + "Life:" + Life + ","
-            + "AEsServer:" + StringUtil.CollectionToString(AEsServer) + ","
-            + "AEParamsServer:" + StringUtil.CollectionToString(AEParamsServer) + ","
-            + "AETriggerPercentServer:" + StringUtil.CollectionToString(AETriggerPercentServer) + ","
-            + "AEsClient:" + StringUtil.CollectionToString(AEsClient) + ","
-            + "AEParamsClient:" + StringUtil.CollectionToString(AEParamsClient) + ","
-            + "AETriggerPercentClient:" + StringUtil.CollectionToString(AETriggerPercentClient) + ","
+            + "AEsServer:" + Luban.StringUtil.CollectionToString(AEsServer) + ","
+            + "AEParamsServer:" + Luban.StringUtil.CollectionToString(AEParamsServer) + ","
+            + "AETriggerPercentServer:" + Luban.StringUtil.CollectionToString(AETriggerPercentServer) + ","
+            + "AEsClient:" + Luban.StringUtil.CollectionToString(AEsClient) + ","
+            + "AEParamsClient:" + Luban.StringUtil.CollectionToString(AEParamsClient) + ","
+            + "AETriggerPercentClient:" + Luban.StringUtil.CollectionToString(AETriggerPercentClient) + ","
             + "SkillIndicatorType:" + SkillIndicatorType + ","
-            + "SkillIndicatorParams:" + StringUtil.CollectionToString(SkillIndicatorParams) + ","
+            + "SkillIndicatorParams:" + Luban.StringUtil.CollectionToString(SkillIndicatorParams) + ","
             + "}";
         }
 

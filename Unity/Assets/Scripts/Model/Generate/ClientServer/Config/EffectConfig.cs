@@ -20,8 +20,8 @@ namespace ET
             Desc = _buf.ReadString();
             AssetPath = _buf.ReadString();
             Life = _buf.ReadInt();
-            EffectType = (EEffectType)_buf.ReadInt();
-            BindPoint = _buf.ReadString();
+            FollowUnit = _buf.ReadBool();
+            UnitPosType = (EUnitPosType)_buf.ReadInt();
 
             PostInit();
         }
@@ -52,14 +52,14 @@ namespace ET
         public readonly int Life;
 
         /// <summary>
-        /// 特效类型
+        /// 是否跟随物体
         /// </summary>
-        public readonly EEffectType EffectType;
+        public readonly bool FollowUnit;
 
         /// <summary>
         /// 绑定位置
         /// </summary>
-        public readonly string BindPoint;
+        public readonly EUnitPosType UnitPosType;
 
         public const int __ID__ = -682668973;
 
@@ -72,8 +72,8 @@ namespace ET
             + "Desc:" + Desc + ","
             + "AssetPath:" + AssetPath + ","
             + "Life:" + Life + ","
-            + "EffectType:" + EffectType + ","
-            + "BindPoint:" + BindPoint + ","
+            + "FollowUnit:" + FollowUnit + ","
+            + "UnitPosType:" + UnitPosType + ","
             + "}";
         }
 

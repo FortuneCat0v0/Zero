@@ -16,11 +16,11 @@ namespace ET.Client
                 EffectData = new EffectData()
                 {
                     EffectConfigId = param[0],
-                    TargetUnitId = skill.TargetUnitId,
                     Position = skill.Position,
                     Angle = skill.Angle
                 }
             });
+
             await ETTask.CompletedTask;
         }
     }

@@ -22,10 +22,9 @@
         public const int RefreshMonsterInMap = 306;
         public const int SkillTimer_Client = 307;
         public const int SkillTimer_Server = 308;
-        public const int EffectTimer = 309;
-        public const int BuffTimer = 310;
-        public const int MiniMapTimer = 311;
-        public const int ColliderTimeout = 312;
-        public const int ColliderCancellationToken = 313;
+        public const int BuffTimer = 309;
+        public const int MiniMapTimer = 310;
+        public const int TimeoutTimer = 311;
+        public const int CancellationTimer = 312;
     }
 }

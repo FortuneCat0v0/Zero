@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using Luban;
 
 namespace ET
@@ -26,7 +24,7 @@ namespace ET
             Radius = _buf.ReadFloat();
             HX = _buf.ReadFloat();
             HY = _buf.ReadFloat();
-            {int n0 = Math.Min(_buf.ReadSize(), _buf.Size);FinalPoints = new List<List<vector2>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { List<vector2> _e0;  {int n1 = Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new List<vector2>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { vector2 _e1;  _e1 = vector2.Deserializevector2(_buf); _e0.Add(_e1);}} FinalPoints.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FinalPoints = new System.Collections.Generic.List<System.Collections.Generic.List<vector2>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<vector2> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<vector2>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { vector2 _e1;  _e1 = vector2.Deserializevector2(_buf); _e0.Add(_e1);}} FinalPoints.Add(_e0);}}
 
             PostInit();
         }
@@ -79,7 +77,7 @@ namespace ET
         /// <summary>
         /// 碰撞体所包含的顶点信息(顺时针),可能由多个多边形组成
         /// </summary>
-        public readonly List<List<vector2>> FinalPoints;
+        public readonly System.Collections.Generic.List<System.Collections.Generic.List<vector2>> FinalPoints;
 
         public const int __ID__ = -1222308746;
 
@@ -96,7 +94,7 @@ namespace ET
             + "Radius:" + Radius + ","
             + "HX:" + HX + ","
             + "HY:" + HY + ","
-            + "FinalPoints:" + StringUtil.CollectionToString(FinalPoints) + ","
+            + "FinalPoints:" + Luban.StringUtil.CollectionToString(FinalPoints) + ","
             + "}";
         }
 
