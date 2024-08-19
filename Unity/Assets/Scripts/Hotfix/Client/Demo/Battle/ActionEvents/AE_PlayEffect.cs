@@ -2,6 +2,10 @@
 
 namespace ET.Client
 {
+    /// <summary>
+    /// 播放特效
+    /// 参数：EffectConfigId
+    /// </summary>
     public class AE_PlayEffect : ActionEvent
     {
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
