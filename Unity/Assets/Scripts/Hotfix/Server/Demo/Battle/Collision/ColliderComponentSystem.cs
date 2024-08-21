@@ -123,7 +123,19 @@ namespace ET.Server
         private static void SyncBody(this ColliderComponent self)
         {
             Unit selfUnit = self.GetParent<Unit>();
-            self.Body.SetTransform(new Vector2(selfUnit.Position.x, selfUnit.Position.z), MathHelper.Angle(new float3(0, 0, 1), selfUnit.Forward));
+
+            self.SetColliderBodyPos(new Vector2(selfUnit.Position.x, selfUnit.Position.z));
+            self.SetColliderBodyAngle(MathHelper.GetYAngle(selfUnit.Rotation));
+        }
+
+        public static void SetColliderBodyPos(this ColliderComponent self, Vector2 pos)
+        {
+            self.Body.SetTransform(pos, self.Body.GetAngle());
+        }
+
+        public static void SetColliderBodyAngle(this ColliderComponent self, float angle)
+        {
+            self.Body.SetTransform(self.Body.GetPosition(), angle);
         }
 
         public static void SetColliderBodyState(this ColliderComponent self, bool state)

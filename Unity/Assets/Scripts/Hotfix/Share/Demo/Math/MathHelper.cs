@@ -10,86 +10,62 @@ namespace ET
             return self / 1000f;
         }
 
-        public static float3 Normalized(this float3 self)
+        /// <summary>
+        /// 将向量的长度增加指定的值
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="lengthIncrease"></param>
+        /// <returns></returns>
+        public static float3 IncreaseLength(float3 vector, float lengthIncrease)
         {
-            float num = (float)Math.Sqrt((double)self.x * (double)self.x + (double)self.y * (double)self.y + (double)self.z * (double)self.z);
-            return (double)num > 9.999999747378752E-06 ? self / num : float3.zero;
-        }
+            // 计算原始向量的长度
+            float originalLength = math.length(vector);
 
-        public static float SqrMagnitude(this float3 self)
-        {
-            return (float)((double)self.x * (double)self.x + (double)self.y * (double)self.y + (double)self.z * (double)self.z);
-        }
+            // 新的长度是原始长度加上增加的值
+            float newLength = originalLength + lengthIncrease;
 
-        public static float Length(this float3 self)
-        {
-            return (float)Math.Sqrt((double)self.x * (double)self.x + (double)self.y * (double)self.y + (double)self.z * (double)self.z);
-        }
-
-        public static float3 IncreaseLength(float3 vector, float increase)
-        {
-            float originalLength = vector.Length();
-
-            float newLength = originalLength + increase;
-
+            // 计算缩放因子
             float scale = newLength / originalLength;
 
-            return new float3(vector.x * scale, vector.y * scale, vector.z * scale);
+            // 返回新的向量
+            return vector * scale;
         }
 
-        public static float Distance(float3 value1, float3 value2)
-        {
-            float num1 = value1.x - value2.x;
-            float num2 = value1.y - value2.y;
-            float num3 = value1.y - value2.y;
-            return (float)Math.Sqrt((double)num1 * (double)num1 + (double)num2 * (double)num2 + (double)num3 * (double)num3);
-        }
-
-        //
-        // Summary:
-        //     The well-known 3.14159265358979... value (Read Only).
-        public const float PI = (float)Math.PI;
-
-        //
-        // Summary:
-        //     A representation of positive infinity (Read Only).
-        public const float Infinity = float.PositiveInfinity;
-
-        //
-        // Summary:
-        //     A representation of negative infinity (Read Only).
-        public const float NegativeInfinity = float.NegativeInfinity;
-
-        //
-        // Summary:
-        //     Degrees-to-radians conversion constant (Read Only).
-        public const float Deg2Rad = (float)Math.PI / 180f;
-
-        //
-        // Summary:
-        //     Radians-to-degrees conversion constant (Read Only).
-        public const float Rad2Deg = 57.29578f;
-
-        public static float RadToDeg(float radians)
-        {
-            return (float)(radians * 180 / Math.PI);
-        }
-
-        public static float DegToRad(float degrees)
-        {
-            return (float)(degrees * Math.PI / 180);
-        }
-
+        /// <summary>
+        /// 两个三维向量之间的夹角
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns>度数</returns>
         public static float Angle(float3 a, float3 b)
         {
-            float angle = math.acos(math.dot(a, b)) * Rad2Deg;
-            return angle;
+            // 计算两个向量的单位向量
+            float3 aNorm = math.normalize(a);
+            float3 bNorm = math.normalize(b);
+
+            // 计算点积
+            float dotProduct = math.dot(aNorm, bNorm);
+
+            // 计算夹角 (弧度)
+            float angleRad = math.acos(dotProduct);
+
+            // 将弧度转换为度数
+            float angleDeg = math.degrees(angleRad);
+
+            return angleDeg;
         }
 
-        public static float Dot(float3 vector1, float3 vector2)
+        /// <summary>
+        /// 从四元数中提取绕Y轴的旋转角度
+        /// </summary>
+        /// <param name="rotation"></param>
+        /// <returns>度数</returns>
+        public static float GetYAngle(quaternion rotation)
         {
-            return (float)(vector1.x * (double)vector2.x + vector1.y * (double)vector2.y +
-                vector1.z * (double)vector2.z);
+            float siny_cosp = 2f * (rotation.value.w * rotation.value.y + rotation.value.x * rotation.value.z);
+            float cosy_cosp = 1f - 2f * (rotation.value.y * rotation.value.y + rotation.value.z * rotation.value.z);
+            float yaw = math.atan2(siny_cosp, cosy_cosp);
+            return math.degrees(yaw);
         }
     }
 }

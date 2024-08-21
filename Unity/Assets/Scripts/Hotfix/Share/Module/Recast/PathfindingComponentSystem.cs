@@ -107,7 +107,7 @@ namespace ET
             float3 endPoint = result[^1];
 
             float3 AB = endPoint - startPoint;
-            float AB_squared = AB.SqrMagnitude();
+            float AB_squared = math.dot(AB, AB);
             for (int i = result.Count - 2; i > 0; i--)
             {
                 float3 point = result[i];
@@ -115,13 +115,13 @@ namespace ET
                 float3 AP = point - startPoint;
 
                 // 投影长度的平方
-                float AP_dot_AB = MathHelper.Dot(AP, AB);
+                float AP_dot_AB = math.dot(AP, AB);
 
                 // 投影点
                 float3 projection = startPoint + (AP_dot_AB / AB_squared) * AB;
 
                 // 点到直线的距离
-                float distance = MathHelper.Distance(point, projection);
+                float distance = math.distance(point, projection);
 
                 if (distance <= epsilon)
                 {
@@ -134,22 +134,6 @@ namespace ET
             }
         }
 
-        // 将向量的长度增加指定的值
-        private static float3 IncreaseLength(float3 vector, float lengthIncrease)
-        {
-            // 计算原始向量的长度
-            float originalLength = vector.Length();
-
-            // 新的长度是原始长度加上增加的值
-            float newLength = originalLength + lengthIncrease;
-
-            // 计算缩放因子
-            float scale = newLength / originalLength;
-
-            // 返回新的向量
-            return vector * scale;
-        }
-
         // 计算新的点B的位置
         private static float3 CalculateNewB(float3 pointA, float3 pointB, float distanceChange)
         {
@@ -157,10 +141,44 @@ namespace ET
             float3 vectorAB = pointB - pointA;
 
             // 增加向量的长度
-            float3 newVectorAB = IncreaseLength(vectorAB, distanceChange);
+            float3 newVectorAB = MathHelper.IncreaseLength(vectorAB, distanceChange);
 
             // 计算新的点B的位置
             return pointA + newVectorAB;
+        }
+
+        public static float3 GetCanChongJiPath(this PathfindingComponent self, float3 start, float3 target)
+        {
+            using var list = ListComponent<float3>.Create();
+            float3 dir = math.normalize(target - start);
+            float3 tmm = start;
+
+            int max = 0;
+            while (max < 10)
+            {
+                float3 next = tmm + (1f * dir);
+                self.Find(start, next, list);
+                if (list.Count == 0 || list.Count == 1)
+                {
+                    break;
+                }
+
+                if (math.abs(list[^1].x - next.x) > 0.1f || math.abs(list[^1].z - next.z) > 0.1f)
+                {
+                    break;
+                }
+
+                if (math.distance(next, target) <= 1f)
+                {
+                    break;
+                }
+
+                tmm = next;
+
+                max++;
+            }
+
+            return tmm;
         }
     }
 }
