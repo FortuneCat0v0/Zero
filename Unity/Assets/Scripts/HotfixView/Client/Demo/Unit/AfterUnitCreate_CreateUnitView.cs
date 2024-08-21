@@ -33,7 +33,7 @@ namespace ET.Client
                 NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 headInfosComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.Hp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
             }
-            else if (unit.UnitType == EUnitType.Bullet)
+            else if (unit.UnitType == EUnitType.Skill)
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("Bullet").GameObject;
             }

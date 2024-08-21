@@ -17,11 +17,7 @@ namespace ET
 
         NPC = 3,
 
-        Bullet = 4,
-
-        Food = 5,
-
-        Collider = 6,
+        Skill = 4,
 
     }
 }

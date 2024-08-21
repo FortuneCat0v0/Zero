@@ -74,7 +74,7 @@ namespace ET.Server
         public static Unit CreateBullet(Scene root, CreateColliderParams createColliderParams)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Bullet, 1001);
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
             unitComponent.Add(unit);
 
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
@@ -107,7 +107,7 @@ namespace ET.Server
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
             //为碰撞体新建一个Unit
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Collider, 1001);
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
             unit.Position = createColliderParams.BelontToUnit.Position;
 
             if (lifeTime > 0)
