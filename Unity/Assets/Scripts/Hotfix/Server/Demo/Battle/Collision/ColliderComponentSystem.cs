@@ -125,7 +125,7 @@ namespace ET.Server
             Unit selfUnit = self.GetParent<Unit>();
 
             self.SetColliderBodyPos(new Vector2(selfUnit.Position.x, selfUnit.Position.z));
-            self.SetColliderBodyAngle(selfUnit.Rotation.ToEulerAngles().y);
+            self.SetColliderBodyAngle(MathHelper.QuaternionToEuler(selfUnit.Rotation).y);
         }
 
         public static void SetColliderBodyPos(this ColliderComponent self, Vector2 pos)

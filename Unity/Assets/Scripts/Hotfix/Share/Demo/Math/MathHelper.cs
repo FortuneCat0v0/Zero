@@ -56,52 +56,90 @@ namespace ET
         }
 
         /// <summary>
-        /// 从四元数提取欧拉角（以度为单位）。
+        /// 将四元数转换为欧拉角（以度为单位）。
         /// </summary>
-        /// <param name="q">需要转换的四元数</param>
+        /// <param name="quat">输入的四元数</param>
         /// <returns>返回的欧拉角（以度为单位）</returns>
-        public static float3 ToEulerAngles(this quaternion q)
+        public static float3 QuaternionToEuler(quaternion quat)
         {
-            return math.degrees(ToEulerRad(q));
+            // 将四元数转换为旋转矩阵
+            float3x3 matrix = QuaternionToMatrix(quat);
+
+            // 从旋转矩阵提取欧拉角（以弧度为单位）
+            float3 euler = MatrixToEuler(matrix);
+
+            // 将弧度转换为度数
+            return math.degrees(euler);
         }
 
         /// <summary>
-        /// 从四元数提取欧拉角（以弧度为单位）。
+        /// 将四元数转换为旋转矩阵。
         /// </summary>
-        /// <param name="q">需要转换的四元数</param>
+        /// <param name="q">输入的四元数</param>
+        /// <returns>返回的旋转矩阵</returns>
+        private static float3x3 QuaternionToMatrix(quaternion q)
+        {
+            float x = q.value.x * 2.0f;
+            float y = q.value.y * 2.0f;
+            float z = q.value.z * 2.0f;
+            float xx = q.value.x * x;
+            float yy = q.value.y * y;
+            float zz = q.value.z * z;
+            float xy = q.value.x * y;
+            float xz = q.value.x * z;
+            float yz = q.value.y * z;
+            float wx = q.value.w * x;
+            float wy = q.value.w * y;
+            float wz = q.value.w * z;
+
+            float3x3 m = new float3x3
+            {
+                c0 = new float3(1.0f - (yy + zz), xy + wz, xz - wy),
+                c1 = new float3(xy - wz, 1.0f - (xx + zz), yz + wx),
+                c2 = new float3(xz + wy, yz - wx, 1.0f - (xx + yy))
+            };
+
+            return m;
+        }
+
+        /// <summary>
+        /// 从旋转矩阵中提取欧拉角（以弧度为单位）。
+        /// </summary>
+        /// <param name="matrix">输入的旋转矩阵</param>
         /// <returns>返回的欧拉角（以弧度为单位）</returns>
-        private static float3 ToEulerRad(quaternion q)
+        private static float3 MatrixToEuler(float3x3 matrix)
         {
-            // 计算旋转矩阵的各个元素
-            float sinr_cosp = 2 * (q.value.w * q.value.x + q.value.y * q.value.z);
-            float cosr_cosp = 1 - 2 * (q.value.x * q.value.x + q.value.y * q.value.y);
-            float roll = math.atan2(sinr_cosp, cosr_cosp);
-
-            float sinp = 2 * (q.value.w * q.value.y - q.value.z * q.value.x);
-            float pitch;
-            if (math.abs(sinp) >= 1)
-                pitch = math.PI / 2 * math.sign(sinp); // 使用90度，如果超出范围
+            float3 v = float3.zero;
+            if (matrix.c2.y < 0.999f)
+            {
+                if (matrix.c2.y > -0.999f)
+                {
+                    v.x = math.asin(-matrix.c2.y);
+                    v.y = math.atan2(matrix.c2.x, matrix.c2.z);
+                    v.z = math.atan2(matrix.c0.y, matrix.c1.y);
+                }
+                else
+                {
+                    v.x = math.PI / 2f;
+                    v.y = math.atan2(matrix.c0.z, matrix.c0.x);
+                    v.z = 0.0f;
+                }
+            }
             else
-                pitch = math.asin(sinp);
+            {
+                v.x = -math.PI / 2f;
+                v.y = math.atan2(-matrix.c0.z, matrix.c0.x);
+                v.z = 0.0f;
+            }
 
-            float siny_cosp = 2 * (q.value.w * q.value.z + q.value.x * q.value.y);
-            float cosy_cosp = 1 - 2 * (q.value.y * q.value.y + q.value.z * q.value.z);
-            float yaw = math.atan2(siny_cosp, cosy_cosp);
-
-            return new float3(roll, pitch, yaw);
+            return v;
         }
 
         /// <summary>
-        /// 计算点 A 和点 B 在 XZ 平面的夹角（以度为单位）。
+        /// 向量在 XZ 平面的夹角（以度为单位）。
         /// </summary>
-        /// <param name="pointA">点 A 的坐标</param>
-        /// <param name="pointB">点 B 的坐标</param>
-        /// <returns>返回点 A 和点 B 在 XZ 平面的夹角（以度为单位）</returns>
-        public static float GetAngleBetweenPointsXZ(float3 pointA, float3 pointB)
+        public static float GetDirectionAngle(float3 direction)
         {
-            // 计算从 A 到 B 的向量
-            float3 direction = pointB - pointA;
-
             // 计算角度（以弧度为单位）
             float angleRad = math.atan2(direction.z, direction.x);
 
