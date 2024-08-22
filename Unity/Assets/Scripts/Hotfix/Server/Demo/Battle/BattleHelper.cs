@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace ET.Server
 {
-    [NumericWatcher(SceneType.Map, NumericType.Fortune)]
+    [NumericWatcher(SceneType.Map, NumericType.NowHp)]
     public class NumericWatcher_AddAttributePoint : INumericWatcher
     {
         public void Run(Unit unit, NumericChange args)
@@ -42,8 +42,8 @@ namespace ET.Server
                 case EHitFromType.Skill_Normal:
                 {
                     int dmg = damage;
-                    int finalHp = to.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
-                    to.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp);
+                    int finalHp = to.GetComponent<NumericComponent>().GetAsInt(NumericType.NowHp) - dmg;
+                    to.GetComponent<NumericComponent>().Set(NumericType.NowHp, finalHp);
                     if (finalHp <= 0)
                     {
                         // 死亡发事件通知
@@ -58,8 +58,8 @@ namespace ET.Server
                 case EHitFromType.Skill_Bullet:
                 {
                     int dmg = from.GetComponent<NumericComponent>().GetAsInt(NumericType.AttackDamage);
-                    int finalHp = to.GetComponent<NumericComponent>().GetAsInt(NumericType.Hp) - dmg;
-                    to.GetComponent<NumericComponent>().Set(NumericType.Hp, finalHp);
+                    int finalHp = to.GetComponent<NumericComponent>().GetAsInt(NumericType.NowHp) - dmg;
+                    to.GetComponent<NumericComponent>().Set(NumericType.NowHp, finalHp);
                     if (finalHp <= 0)
                     {
                         // 死亡发事件通知

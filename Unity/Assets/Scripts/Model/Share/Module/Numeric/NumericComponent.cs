@@ -41,18 +41,6 @@ namespace ET
         /// <param name="nt"></param>
         /// <param name="value"></param>
         /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
-        public static void Set(this NumericComponent self, int nt, int value, bool isPublicEvent = true)
-        {
-            self.Insert(nt, value, isPublicEvent);
-        }
-
-        /// <summary>
-        /// 设置数值
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="nt"></param>
-        /// <param name="value"></param>
-        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
         public static void Set(this NumericComponent self, int nt, long value, bool isPublicEvent = true)
         {
             self.Insert(nt, value, isPublicEvent);
@@ -79,20 +67,6 @@ namespace ET
         /// <param name="nt"></param>
         /// <param name="value"></param>
         /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
-        public static void Adjust(this NumericComponent self, int nt, int value, bool isPublicEvent = true)
-        {
-            long oldValue = self.GetByKey(nt);
-            long newValue = oldValue + value;
-            self.Insert(nt, newValue, isPublicEvent);
-        }
-
-        /// <summary>
-        /// 调整数值
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="nt"></param>
-        /// <param name="value"></param>
-        /// <param name="isPublicEvent">为true 若值变化发送事件，为false 不发送事件</param>
         public static void Adjust(this NumericComponent self, int nt, long value, bool isPublicEvent = true)
         {
             long oldValue = self.GetByKey(nt);
@@ -100,7 +74,7 @@ namespace ET
             self.Insert(nt, newValue, isPublicEvent);
         }
 
-        public static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent)
+        private static void Insert(this NumericComponent self, int numericType, long value, bool isPublicEvent)
         {
             long oldValue = self.GetByKey(numericType);
             if (oldValue == value)
@@ -127,16 +101,16 @@ namespace ET
             }
         }
 
-        public static long GetByKey(this NumericComponent self, int key)
+        private static long GetByKey(this NumericComponent self, int key)
         {
             long value = 0;
             self.NumericDic.TryGetValue(key, out value);
             return value;
         }
 
-        public static void Update(this NumericComponent self, int numericType, bool isPublicEvent)
+        private static void Update(this NumericComponent self, int numericType, bool isPublicEvent)
         {
-            int final = (int)numericType / 10;
+            int final = numericType / 10;
             int bas = final * 10 + 1;
             int add = final * 10 + 2;
             int pct = final * 10 + 3;
@@ -166,13 +140,5 @@ namespace ET
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<int, long> NumericDic = new();
-
-        public long this[int numericType]
-        {
-            get
-            {
-                return this.GetByKey(numericType);
-            }
-        }
     }
 }
