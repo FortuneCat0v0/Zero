@@ -38,6 +38,10 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this AnimationComponent self)
         {
+            if (self.AnimGroup != null)
+            {
+                UnityEngine.Object.DestroyImmediate(self.AnimGroup);
+            }
         }
 
         public static void UpdateAnimData(this AnimationComponent self, GameObject go)
@@ -79,6 +83,11 @@ namespace ET.Client
             }
 
             // ！！！复制一个ScriptableObject，不然直接引用的是同一个，设置OnEnd会出问题
+            if (self.AnimGroup != null)
+            {
+                UnityEngine.Object.DestroyImmediate(self.AnimGroup);
+            }
+
             self.AnimGroup = UnityEngine.Object.Instantiate(animData.AnimGroup);
             foreach (MotionTransition motionTransition in self.AnimGroup.Animations)
             {
