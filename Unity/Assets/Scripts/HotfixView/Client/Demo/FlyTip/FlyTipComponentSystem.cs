@@ -12,6 +12,8 @@ namespace ET.Client
         private static void Awake(this FlyTipComponent self)
         {
             FlyTipComponent.Instance = self;
+
+            self.OnAwake().Coroutine();
         }
 
         [EntitySystem]
@@ -40,6 +42,12 @@ namespace ET.Client
             }
         }
 
+        private static async ETTask OnAwake(this FlyTipComponent self)
+        {
+            UI ui = await UIHelper.Create(self.Root(), UIType.UIFlyTip, UILayer.High);
+            self.Panel = ui.GameObject.transform;
+        }
+
         public static void ShowFlyTip(this FlyTipComponent self, string str)
         {
             self.FlyTipQueue.Enqueue(str);
@@ -49,7 +57,7 @@ namespace ET.Client
         {
             Vector3 startPos = new(0, -200, 0);
             GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
-            go.transform.SetParent(self.Root().GetComponent<UIGlobalComponent>().GetLayer((int)UILayer.High));
+            go.transform.SetParent(self.Panel);
             self.FlyTips.Add(go);
             go.SetActive(true);
 

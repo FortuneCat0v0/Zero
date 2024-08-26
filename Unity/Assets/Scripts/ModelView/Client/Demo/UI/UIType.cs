@@ -13,5 +13,6 @@
         public const string UIMain = "UIMain";
         public const string UIBag = "UIBag";
         public const string UISettings = "UISettings";
+        public const string UIFlyTip = "UIFlyTip";
     }
 }

@@ -14,5 +14,7 @@ namespace ET.Client
 
         [StaticField]
         public static FlyTipComponent Instance;
+
+        public Transform Panel;
     }
 }
