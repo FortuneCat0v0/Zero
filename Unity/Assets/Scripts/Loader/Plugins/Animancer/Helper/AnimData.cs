@@ -1,5 +1,4 @@
-﻿using ET;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Animancer
 {

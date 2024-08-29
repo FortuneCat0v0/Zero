@@ -19,6 +19,9 @@ namespace ET.Client
             self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.Drag, EventTriggerType.Drag);
             self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.EndDrag, EventTriggerType.EndDrag);
 
+            self.Btn_GM = rc.Get<GameObject>("Btn_GM");
+            self.Btn_GM.GetComponent<Button>().AddListener(() => { UIHelper.Create(self.Scene(), UIType.UIGM, UILayer.Mid).Coroutine(); });
+
             self.SettingsBtn = rc.Get<GameObject>("SettingsBtn");
             self.SettingsBtn.GetComponent<Button>().AddListenerAsync(self.OnSettingsBtn);
 
@@ -53,10 +56,6 @@ namespace ET.Client
             self.UISkillGrid_3 = rc.Get<GameObject>("UISkillGrid_3");
             self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_3).SetSkill(ESkillGridType.SkillGrid3);
 
-            self.GMInput = rc.Get<GameObject>("GMInput");
-            self.GMSendBtn = rc.Get<GameObject>("GMSendBtn");
-            self.GMSendBtn.GetComponent<Button>().AddListener(self.OnGMSendBtn);
-
             self.PingText = rc.Get<GameObject>("PingText");
         }
 
@@ -64,20 +63,6 @@ namespace ET.Client
         private static void Update(this UIMainComponent self)
         {
             self.PingText.GetComponent<TMP_Text>().text = $"{TimeInfo.Instance.Ping}ms";
-        }
-
-        private static void OnGMSendBtn(this UIMainComponent self)
-        {
-            string message = self.GMInput.GetComponent<TMP_InputField>().text;
-            if (string.IsNullOrEmpty(message))
-            {
-                return;
-            }
-
-            C2M_GM c2MGm = C2M_GM.Create();
-            c2MGm.GMMessage = message;
-            self.Root().GetComponent<ClientSenderComponent>().Call(c2MGm).Coroutine();
-            self.GMInput.GetComponent<TMP_InputField>().text = "";
         }
 
         private static async ETTask OnSettingsBtn(this UIMainComponent self)

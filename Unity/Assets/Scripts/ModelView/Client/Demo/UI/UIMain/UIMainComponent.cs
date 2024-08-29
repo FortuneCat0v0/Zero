@@ -11,6 +11,8 @@ namespace ET.Client
         public float AngleX;
         public float AngleY;
 
+        public GameObject Btn_GM;
+        
         public GameObject SettingsBtn;
 
         public GameObject LBShrinkBtn;
@@ -32,9 +34,6 @@ namespace ET.Client
         public GameObject UISkillGrid_1;
         public GameObject UISkillGrid_2;
         public GameObject UISkillGrid_3;
-
-        public GameObject GMInput;
-        public GameObject GMSendBtn;
 
         public GameObject PingText;
     }
