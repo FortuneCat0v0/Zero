@@ -515,3 +515,17 @@ message M2C_HitResult // IMessage
 	int32 HitResultType = 3;
 	int32 Value = 4;
 }
+
+// ResponseType M2C_Recharge
+message C2M_Recharge // ILocationRequest
+{
+	int32 RpcId = 1;
+	int32 Num = 2;
+}
+
+message M2C_Recharge // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

@@ -2315,6 +2315,69 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.C2M_Recharge)]
+    [ResponseType(nameof(M2C_Recharge))]
+    public partial class C2M_Recharge : MessageObject, ILocationRequest
+    {
+        public static C2M_Recharge Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_Recharge), isFromPool) as C2M_Recharge;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Num { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Num = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_Recharge)]
+    public partial class M2C_Recharge : MessageObject, ILocationResponse
+    {
+        public static M2C_Recharge Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_Recharge), isFromPool) as M2C_Recharge;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -2384,5 +2447,7 @@ namespace ET
         public const ushort SkillInfo = 10066;
         public const ushort M2C_SkillUpdateOp = 10067;
         public const ushort M2C_HitResult = 10068;
+        public const ushort C2M_Recharge = 10069;
+        public const ushort M2C_Recharge = 10070;
     }
 }

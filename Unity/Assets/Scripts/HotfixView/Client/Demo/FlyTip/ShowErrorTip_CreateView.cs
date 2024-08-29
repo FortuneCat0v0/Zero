@@ -37,6 +37,7 @@
                 ErrorCode.ERR_EquipItemError => string.Empty,
                 ErrorCode.ERR_AddBagItemError => string.Empty,
                 ErrorCode.ERR_AddMapItemError => string.Empty,
+                ErrorCode.ERR_RechargeError => "充值金额错误",
                 _ => string.Empty
             };
 

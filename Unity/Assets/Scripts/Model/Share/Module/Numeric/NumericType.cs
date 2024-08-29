@@ -31,10 +31,14 @@ namespace ET
         public const int AttackDamageFinalAdd = AttackDamage * 10 + 4;
         public const int AttackDamageFinalPct = AttackDamage * 10 + 5;
 
-        public const int ________ = 3000; // 小于此值的类型是通过公式计算得出的结果，不可以直接修改
+        public const int ________ = 3000; //小于此值的类型是通过公式计算得出的结果，不可以直接修改
 
         public const int NowHp = 3001; //生命值
         public const int AOI = 3002;
+
+        public const int RechargeAmount = 8001; //充值金额
+        public const int Gold = 8010; //金块
+        public const int Silk = 8011; //丝绸
 
         public const int Max = 10000;
     }
