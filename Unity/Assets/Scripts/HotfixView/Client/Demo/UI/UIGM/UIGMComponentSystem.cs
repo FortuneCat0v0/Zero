@@ -73,8 +73,7 @@ namespace ET.Client
         {
             Vector2 mousePosition = eventData.position;
 
-            return mousePosition.x >= 0 && mousePosition.x <= Screen.width &&
-                    mousePosition.y >= 0 && mousePosition.y <= Screen.height;
+            return mousePosition.x >= 0 && mousePosition.x <= Screen.width && mousePosition.y >= 0 && mousePosition.y <= Screen.height;
         }
     }
 }

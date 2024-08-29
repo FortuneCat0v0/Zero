@@ -40,14 +40,6 @@ namespace ET
 
         public SkillConfig Get(int Id, int Level) => _dataMapUnion.TryGetValue((Id, Level), out SkillConfig __v) ? __v : null;
 
-        public void ResolveRef(Tables tables)
-        {
-            foreach(var _v in _dataList)
-            {
-                _v.ResolveRef(tables);
-            }
-        }
-
         partial void PostInit();
     }
 }
