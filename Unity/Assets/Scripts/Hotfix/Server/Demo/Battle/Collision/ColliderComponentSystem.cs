@@ -73,7 +73,7 @@ namespace ET.Server
         {
             Log.Warning("Destroy 碰撞体");
             CollisionWorldComponent collisionWorldComponent = self.CollisionWorldComponent;
-            collisionWorldComponent.AddBodyTobeDestroyed(self.Body);
+            collisionWorldComponent?.AddBodyTobeDestroyed(self.Body);
         }
 
         public static void CreateCollider(this ColliderComponent self)
