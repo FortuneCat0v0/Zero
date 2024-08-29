@@ -74,9 +74,9 @@ namespace ET.Client
                 return;
             }
 
-            C2M_GMCMD c2MGmcmd = C2M_GMCMD.Create();
-            c2MGmcmd.CMDMessage = message;
-            self.Root().GetComponent<ClientSenderComponent>().Send(c2MGmcmd);
+            C2M_GM c2MGm = C2M_GM.Create();
+            c2MGm.GMMessage = message;
+            self.Root().GetComponent<ClientSenderComponent>().Call(c2MGm).Coroutine();
             self.GMInput.GetComponent<TMP_InputField>().text = "";
         }
 

@@ -1909,19 +1909,20 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.C2M_GMCMD)]
-    public partial class C2M_GMCMD : MessageObject, ILocationMessage
+    [Message(OuterMessage.C2M_GM)]
+    [ResponseType(nameof(M2C_GM))]
+    public partial class C2M_GM : MessageObject, ILocationRequest
     {
-        public static C2M_GMCMD Create(bool isFromPool = false)
+        public static C2M_GM Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2M_GMCMD), isFromPool) as C2M_GMCMD;
+            return ObjectPool.Instance.Fetch(typeof(C2M_GM), isFromPool) as C2M_GM;
         }
 
         [MemoryPackOrder(0)]
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public string CMDMessage { get; set; }
+        public string GMMessage { get; set; }
 
         public override void Dispose()
         {
@@ -1931,7 +1932,40 @@ namespace ET
             }
 
             this.RpcId = default;
-            this.CMDMessage = default;
+            this.GMMessage = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_GM)]
+    public partial class M2C_GM : MessageObject, ILocationResponse
+    {
+        public static M2C_GM Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_GM), isFromPool) as M2C_GM;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2436,18 +2470,19 @@ namespace ET
         public const ushort G2C_LoginGameGate = 10055;
         public const ushort C2G_EnterGame = 10056;
         public const ushort G2C_EnterGame = 10057;
-        public const ushort C2M_GMCMD = 10058;
-        public const ushort AttributeEntryInfo = 10059;
-        public const ushort ItemInfo = 10060;
-        public const ushort M2C_NoticeUnitNumeric = 10061;
-        public const ushort M2C_AllItems = 10062;
-        public const ushort M2C_ItemUpdateOp = 10063;
-        public const ushort C2M_SpellSkill = 10064;
-        public const ushort M2C_SpellSkill = 10065;
-        public const ushort SkillInfo = 10066;
-        public const ushort M2C_SkillUpdateOp = 10067;
-        public const ushort M2C_HitResult = 10068;
-        public const ushort C2M_Recharge = 10069;
-        public const ushort M2C_Recharge = 10070;
+        public const ushort C2M_GM = 10058;
+        public const ushort M2C_GM = 10059;
+        public const ushort AttributeEntryInfo = 10060;
+        public const ushort ItemInfo = 10061;
+        public const ushort M2C_NoticeUnitNumeric = 10062;
+        public const ushort M2C_AllItems = 10063;
+        public const ushort M2C_ItemUpdateOp = 10064;
+        public const ushort C2M_SpellSkill = 10065;
+        public const ushort M2C_SpellSkill = 10066;
+        public const ushort SkillInfo = 10067;
+        public const ushort M2C_SkillUpdateOp = 10068;
+        public const ushort M2C_HitResult = 10069;
+        public const ushort C2M_Recharge = 10070;
+        public const ushort M2C_Recharge = 10071;
     }
 }

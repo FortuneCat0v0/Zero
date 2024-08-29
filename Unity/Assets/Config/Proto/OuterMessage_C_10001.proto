@@ -428,10 +428,18 @@ message G2C_EnterGame // ISessionResponse
 	int64 MyId = 4;
 }
 
-message C2M_GMCMD // ILocationMessage
+// ResponseType M2C_GM
+message C2M_GM // ILocationRequest
 {
 	int32 RpcId = 1;
-	string CMDMessage = 2;
+	string GMMessage = 2;
+}
+
+message M2C_GM // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
 }
 
 message AttributeEntryInfo
