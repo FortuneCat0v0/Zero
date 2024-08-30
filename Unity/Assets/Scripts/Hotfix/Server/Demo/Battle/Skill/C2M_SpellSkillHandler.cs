@@ -5,7 +5,7 @@
     {
         protected override async ETTask Run(Unit unit, C2M_SpellSkill message)
         {
-            unit.SpellSkill(message.SkillConfigId, message.TargetUnitId, message.Position, message.Angle);
+            unit.SpellSkill(message.SkillConfigId, message.TargetUnitId, message.Angle, message.Distance);
 
             await ETTask.CompletedTask;
         }

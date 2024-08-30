@@ -13,7 +13,7 @@ namespace ET.Client
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
         }
 
-        public static void ShowIndicator(this SkillIndicatorComponent self, long targetUnitId, SkillConfig skillconfig)
+        public static void ShowIndicator(this SkillIndicatorComponent self, Vector2 vector2, SkillConfig skillconfig)
         {
             self.SkillConfig = skillconfig;
             if (self.GameObject != null)
@@ -84,14 +84,14 @@ namespace ET.Client
             Unit myUnit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             Vector3 unitPosition = myUnit.Position;
 
-            if (self.SkillConfig.SkillIndicatorType == ESkillIndicatorType.Circle ||
-                self.SkillConfig.SkillIndicatorType == ESkillIndicatorType.TargetOnly)
-            {
-            }
-
             float angle = 90 - Mathf.Atan2(self.Vector2.y, self.Vector2.x) * Mathf.Rad2Deg;
             angle += self.MainCamera.transform.eulerAngles.y;
-            Quaternion qua = Quaternion.Euler(0, angle, 0);
+
+            float distance = self.Vector2.magnitude * self.DistanceFactor;
+            if (distance > self.SkillConfig.SkillIndicatorParams[0])
+            {
+                distance = self.SkillConfig.SkillIndicatorParams[0];
+            }
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
@@ -99,26 +99,41 @@ namespace ET.Client
                 case ESkillIndicatorType.TargetOnly:
                 {
                     // 锁定最近的怪物。。
+                    // 修改TargetComponent
+
+                    // 这里的Angle是要计算目标与自己
+                    self.Angle = 0;
+                    self.Distance = 0;
                     break;
                 }
                 case ESkillIndicatorType.Circle:
                 {
-                    rc.Get<GameObject>("Circle").transform.localPosition =
-                            qua * Vector3.forward * (self.SkillConfig.SkillIndicatorParams[0] * vector2.magnitude);
+                    rc.Get<GameObject>("Circle").transform.localPosition = Quaternion.Euler(0, angle, 0) * Vector3.forward * distance;
+
+                    self.Angle = angle;
+                    self.Distance = distance;
                     break;
                 }
                 case ESkillIndicatorType.Umbrella:
                 {
-                    rc.Get<GameObject>("Umbrella").transform.LookAt(qua * Vector3.forward + unitPosition);
+                    rc.Get<GameObject>("Umbrella").transform.rotation = Quaternion.Euler(0, angle, 0);
+
+                    self.Angle = angle;
+                    self.Distance = 0;
                     break;
                 }
                 case ESkillIndicatorType.Range:
                 {
+                    self.Angle = 0;
+                    self.Distance = 0;
                     break;
                 }
                 case ESkillIndicatorType.SingleLine:
                 {
-                    rc.Get<GameObject>("Line").transform.rotation = qua;
+                    rc.Get<GameObject>("Line").transform.rotation = Quaternion.Euler(0, angle, 0);
+
+                    self.Angle = angle;
+                    self.Distance = 0;
                     break;
                 }
             }
@@ -136,35 +151,12 @@ namespace ET.Client
 
         public static float GetAngle(this SkillIndicatorComponent self)
         {
-            if (self.IndicatorGameObject != null)
-            {
-                return self.IndicatorGameObject.transform.eulerAngles.y;
-            }
-
-            Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            if (unit != null)
-            {
-                Quaternion rotation = unit.Rotation;
-                return rotation.eulerAngles.y;
-            }
-
-            return default;
+            return self.Angle;
         }
 
-        public static float3 GetPosition(this SkillIndicatorComponent self)
+        public static float GetDistance(this SkillIndicatorComponent self)
         {
-            if (self.IndicatorGameObject != null)
-            {
-                return self.IndicatorGameObject.transform.position;
-            }
-
-            Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            if (unit != null)
-            {
-                return unit.Position;
-            }
-
-            return default;
+            return self.Distance;
         }
     }
 }

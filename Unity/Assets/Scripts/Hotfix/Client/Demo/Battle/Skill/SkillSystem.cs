@@ -29,7 +29,7 @@ namespace ET.Client
         }
 
         [EntitySystem]
-        private static void Awake(this Skill self, int skillId, int skillLevel)
+        private static void Awake(this Skill self, int skillId)
         {
         }
 
@@ -91,14 +91,14 @@ namespace ET.Client
             self.Root().GetComponent<TimerComponent>().Remove(ref self.Timer);
         }
 
-        public static void StartSpell(this Skill self, long targetUnitId, float3 position, float angle)
+        public static void StartSpell(this Skill self, long targetUnitId, float angle, float3 position)
         {
             self.SkillState = ESkillState.Execute;
             self.CurrentActionEventIndex = -1;
 
             self.TargetUnitId = targetUnitId;
-            self.Position = position;
             self.Angle = angle;
+            self.Position = position;
 
             self.SpellStartTime = TimeInfo.Instance.ServerNow();
             self.Timer = self.Root().GetComponent<TimerComponent>().NewFrameTimer(TimerInvokeType.SkillTimer_Client, self);
@@ -133,7 +133,6 @@ namespace ET.Client
         public static void FromMessage(this Skill self, SkillInfo skillInfo)
         {
             self.SkillConfigId = skillInfo.SkillConfigId;
-            self.SkillLevel = skillInfo.SkillLevel;
             self.SpellStartTime = skillInfo.SpellStartTime;
             self.SpellEndTime = skillInfo.SpellEndTime;
         }

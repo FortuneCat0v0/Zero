@@ -63,9 +63,7 @@ namespace ET.Client
                 return;
             }
 
-            // 先锁定一个敌人
-            long targetUnitId = 0;
-            self.SkillIndicatorComponent.ShowIndicator(targetUnitId, self.Skill.SkillConfig);
+            self.SkillIndicatorComponent.ShowIndicator(pdata.delta, self.Skill.SkillConfig);
         }
 
         private static void OnDrag(this UISkillGrid self, PointerEventData pdata)
@@ -91,8 +89,7 @@ namespace ET.Client
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
 
             long targetUnitId = 0;
-            skillComponent.TrySpellSkill(self.SkillGridType, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetPosition(),
-                targetUnitId);
+            skillComponent.TrySpellSkill(self.SkillGridType, targetUnitId, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetDistance());
 
             self.SkillIndicatorComponent.HideIndicator();
         }

@@ -22,8 +22,9 @@ namespace ET.Server
 
             // 测试
             self.SkillGridDict[0] = 10001;
-            self.SkillGridDict[1] = 10002;
-            self.SkillGridDict[2] = 10003;
+            self.SkillGridDict[1] = 10011;
+            self.SkillGridDict[2] = 10021;
+            self.SkillGridDict[3] = 10031;
         }
 
         [EntitySystem]
@@ -41,24 +42,24 @@ namespace ET.Server
             }
         }
 
-        public static bool AddSkill(this SkillComponent self, int skillConfigId, int skillLevel = 1)
+        public static bool AddSkill(this SkillComponent self, int skillConfigId)
         {
             if (!self.SkillDict.ContainsKey(skillConfigId))
             {
-                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skillConfigId, skillLevel);
+                SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skillConfigId);
                 if (skillConfig == null)
                 {
-                    Log.Error($"配置表不存在技能 {skillConfigId} {skillLevel}");
+                    Log.Error($"配置表不存在技能 {skillConfigId}");
                     return false;
                 }
 
-                Skill skill = self.AddChild<Skill, int, int>(skillConfigId, skillLevel);
+                Skill skill = self.AddChild<Skill, int>(skillConfigId);
                 self.SkillDict.Add(skillConfigId, skill);
 
                 return true;
             }
 
-            Log.Error($"已经存在技能 configId:{skillConfigId} lv:{skillLevel}");
+            Log.Error($"已经存在技能 configId:{skillConfigId}");
             return false;
         }
 

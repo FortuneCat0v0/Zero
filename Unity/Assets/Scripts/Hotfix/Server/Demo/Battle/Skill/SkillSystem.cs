@@ -29,10 +29,9 @@ namespace ET.Server
         }
 
         [EntitySystem]
-        private static void Awake(this Skill self, int skillConfigId, int skillLevel)
+        private static void Awake(this Skill self, int skillConfigId)
         {
             self.SkillConfigId = skillConfigId;
-            self.SkillLevel = skillLevel;
         }
 
         [EntitySystem]
@@ -136,7 +135,6 @@ namespace ET.Server
             SkillInfo skillInfo = SkillInfo.Create();
             skillInfo.Id = self.Id;
             skillInfo.SkillConfigId = self.SkillConfigId;
-            skillInfo.SkillLevel = self.SkillLevel;
             skillInfo.SpellStartTime = self.SpellStartTime;
             skillInfo.SpellEndTime = self.SpellEndTime;
 

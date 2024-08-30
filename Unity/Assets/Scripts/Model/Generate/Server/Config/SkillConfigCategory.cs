@@ -15,32 +15,31 @@ namespace ET
     [Config]
     public partial class SkillConfigCategory : Singleton<SkillConfigCategory>
     {
+        private readonly Dictionary<int, SkillConfig> _dataMap;
         private readonly List<SkillConfig> _dataList;
-
-        private Dictionary<(int, int), SkillConfig> _dataMapUnion;
 
         public SkillConfigCategory(ByteBuf _buf)
         {
+            _dataMap = new Dictionary<int, SkillConfig>();
             _dataList = new List<SkillConfig>();
 
-            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            for (int n = _buf.ReadSize(); n > 0; --n)
             {
                 SkillConfig _v;
                 _v = SkillConfig.DeserializeSkillConfig(_buf);
                 _dataList.Add(_v);
+                _dataMap.Add(_v.Id, _v);
             }
-            _dataMapUnion = new Dictionary<(int, int), SkillConfig>();
-            foreach(var _v in _dataList)
-            {
-                _dataMapUnion.Add((_v.Id, _v.Level), _v);
-            }
+
+            PostInit();
         }
 
+        public Dictionary<int, SkillConfig> DataMap => _dataMap;
         public List<SkillConfig> DataList => _dataList;
 
-        public SkillConfig Get(int Id, int Level) => _dataMapUnion.TryGetValue((Id, Level), out SkillConfig __v) ? __v : null;
-
-
+        public SkillConfig GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
+        public SkillConfig Get(int key) => _dataMap[key];
+        public SkillConfig this[int key] => _dataMap[key];
 
         partial void PostInit();
     }

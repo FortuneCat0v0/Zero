@@ -22,7 +22,7 @@
             else if (cmd[0] == ".AddSkill")
             {
                 SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-                skillComponent.AddSkill(int.Parse(cmd[1]), int.Parse(cmd[2]));
+                skillComponent.AddSkill(int.Parse(cmd[1]));
             }
             else if (cmd[0] == ".UpSkill")
             {

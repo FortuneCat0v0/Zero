@@ -111,10 +111,18 @@ namespace ET.Server
             return damage;
         }
 
-        public static void SpellSkill(this Unit unit, int skillConfigId, long targetUnitId, float3 position, float angle)
+        public static void SpellSkill(this Unit unit, int skillConfigId, long targetUnitId, float angle, float distance)
         {
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            // 这里可以做一些数据校验
+
+            SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skillConfigId);
+            if (distance > skillConfig.SkillIndicatorParams[0])
+            {
+                distance = skillConfig.SkillIndicatorParams[0];
+            }
+
+            quaternion rotation = quaternion.Euler(0, math.radians(angle), 0);
+            float3 position = unit.Position + math.mul(rotation, math.forward()) + distance;
 
             if (skillComponent.SpellSkill(skillConfigId, targetUnitId, position, angle))
             {
@@ -129,10 +137,10 @@ namespace ET.Server
             }
         }
 
-        public static void AddSkill(this Unit unit, int skillConfigId, int skillLevel)
+        public static void AddSkill(this Unit unit, int skillConfigId)
         {
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            if (skillComponent.AddSkill(skillConfigId, skillLevel))
+            if (skillComponent.AddSkill(skillConfigId))
             {
                 Skill skill = skillComponent.GetSkillByConfigId(skillConfigId);
 

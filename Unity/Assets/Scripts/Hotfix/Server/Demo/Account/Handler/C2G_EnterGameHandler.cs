@@ -96,9 +96,10 @@ namespace ET.Server
                         // WorkFlow 玩家Unit上线后的初始化操作
                         // unit.GetComponent<NumericComponent>().SetNoEvent(NumericType.MaxBagCapacity, 30);
                         SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-                        skillComponent.AddSkill(10001, 1);
-                        skillComponent.AddSkill(10002, 1);
-                        skillComponent.AddSkill(10003, 1);
+                        skillComponent.AddSkill(10001);
+                        skillComponent.AddSkill(10011);
+                        skillComponent.AddSkill(10021);
+                        skillComponent.AddSkill(10031);
 
                         response.MyId = player.Id;
 

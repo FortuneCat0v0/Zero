@@ -2171,10 +2171,10 @@ namespace ET
         public long TargetUnitId { get; set; }
 
         [MemoryPackOrder(3)]
-        public Unity.Mathematics.float3 Position { get; set; }
+        public float Angle { get; set; }
 
         [MemoryPackOrder(4)]
-        public float Angle { get; set; }
+        public float Distance { get; set; }
 
         public override void Dispose()
         {
@@ -2186,8 +2186,8 @@ namespace ET
             this.RpcId = default;
             this.SkillConfigId = default;
             this.TargetUnitId = default;
-            this.Position = default;
             this.Angle = default;
+            this.Distance = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2212,10 +2212,10 @@ namespace ET
         public long TargetUnitId { get; set; }
 
         [MemoryPackOrder(3)]
-        public Unity.Mathematics.float3 Position { get; set; }
+        public float Angle { get; set; }
 
         [MemoryPackOrder(4)]
-        public float Angle { get; set; }
+        public Unity.Mathematics.float3 Position { get; set; }
 
         public override void Dispose()
         {
@@ -2227,8 +2227,8 @@ namespace ET
             this.UnitId = default;
             this.SkillConfigId = default;
             this.TargetUnitId = default;
-            this.Position = default;
             this.Angle = default;
+            this.Position = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2250,12 +2250,9 @@ namespace ET
         public int SkillConfigId { get; set; }
 
         [MemoryPackOrder(2)]
-        public int SkillLevel { get; set; }
-
-        [MemoryPackOrder(3)]
         public long SpellStartTime { get; set; }
 
-        [MemoryPackOrder(4)]
+        [MemoryPackOrder(3)]
         public long SpellEndTime { get; set; }
 
         public override void Dispose()
@@ -2267,7 +2264,6 @@ namespace ET
 
             this.Id = default;
             this.SkillConfigId = default;
-            this.SkillLevel = default;
             this.SpellStartTime = default;
             this.SpellEndTime = default;
 

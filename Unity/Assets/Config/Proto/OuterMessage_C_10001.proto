@@ -486,8 +486,9 @@ message C2M_SpellSkill // ILocationMessage
 	int32 RpcId = 1;
 	int32 SkillConfigId = 2;
 	int64 TargetUnitId = 3;
-	Unity.Mathematics.float3 Position = 4;
-	float Angle = 5;
+	float Angle = 4;
+	float Distance = 5;
+	
 }
 
 message M2C_SpellSkill // IMessage
@@ -495,17 +496,16 @@ message M2C_SpellSkill // IMessage
 	int64 UnitId = 1;
 	int32 SkillConfigId = 2;
 	int64 TargetUnitId = 3;
-	Unity.Mathematics.float3 Position = 4;
-	float Angle = 5;
+	float Angle = 4;
+	Unity.Mathematics.float3 Position = 5;
 }
 
 message SkillInfo
 {
 	int64 Id = 1;
 	int32 SkillConfigId = 2;
-	int32 SkillLevel = 3;
-	int64 SpellStartTime = 4;
-	int64 SpellEndTime = 5;
+	int64 SpellStartTime = 3;
+	int64 SpellEndTime = 4;
 }
 
 message M2C_SkillUpdateOp // IMessage

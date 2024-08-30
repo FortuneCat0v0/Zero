@@ -18,6 +18,7 @@ namespace ET
         {
             Id = _buf.ReadInt();
             Level = _buf.ReadInt();
+            NextSkill = _buf.ReadInt();
             SkillAbstractType = (ESkillAbstractType)_buf.ReadInt();
             Name = _buf.ReadString();
             Desc = _buf.ReadString();
@@ -49,6 +50,11 @@ namespace ET
         /// 技能等级
         /// </summary>
         public readonly int Level;
+
+        /// <summary>
+        /// 下一个技能
+        /// </summary>
+        public readonly int NextSkill;
 
         /// <summary>
         /// 技能抽象类型
@@ -124,6 +130,7 @@ namespace ET
             return "{ "
             + "Id:" + Id + ","
             + "Level:" + Level + ","
+            + "NextSkill:" + NextSkill + ","
             + "SkillAbstractType:" + SkillAbstractType + ","
             + "Name:" + Name + ","
             + "Desc:" + Desc + ","

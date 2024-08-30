@@ -19,11 +19,9 @@ namespace ET
     }
 
     [ChildOf]
-    public class Skill : Entity, IAwake, IAwake<int, int>, IDestroy, ISerializeToEntity
+    public class Skill : Entity, IAwake, IAwake<int>, IDestroy, ISerializeToEntity
     {
         public int SkillConfigId { get; set; }
-
-        public int SkillLevel { get; set; }
 
         public long SpellStartTime { get; set; }
 
@@ -36,10 +34,10 @@ namespace ET
         public long TargetUnitId { get; set; }
 
         [BsonIgnore]
-        public float3 Position { get; set; }
+        public float Angle { get; set; }
 
         [BsonIgnore]
-        public float Angle { get; set; }
+        public float3 Position { get; set; }
 
         [BsonIgnore]
         public long Timer;
@@ -60,12 +58,12 @@ namespace ET
             {
                 if (this.skillConfig == null)
                 {
-                    this.skillConfig = SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
+                    this.skillConfig = SkillConfigCategory.Instance.Get(this.SkillConfigId);
                 }
 
-                if (this.skillConfig.Id != this.SkillConfigId || this.skillConfig.Level != this.SkillLevel)
+                if (this.skillConfig.Id != this.SkillConfigId)
                 {
-                    this.skillConfig = SkillConfigCategory.Instance.Get(this.SkillConfigId, this.SkillLevel);
+                    this.skillConfig = SkillConfigCategory.Instance.Get(this.SkillConfigId);
                 }
 
                 return this.skillConfig;
