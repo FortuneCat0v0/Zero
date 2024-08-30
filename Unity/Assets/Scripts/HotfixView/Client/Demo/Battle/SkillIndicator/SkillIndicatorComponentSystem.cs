@@ -13,14 +13,13 @@ namespace ET.Client
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
         }
 
-        public static void ShowIndicator(this SkillIndicatorComponent self, Vector2 vector2, SkillConfig skillconfig)
+        public static void ShowIndicator(this SkillIndicatorComponent self, SkillConfig skillconfig)
         {
             self.SkillConfig = skillconfig;
             if (self.GameObject != null)
             {
                 GameObjectPoolHelper.ReturnObjectToPool(self.GameObject);
                 self.GameObject = null;
-                self.IndicatorGameObject = null;
             }
 
             self.GameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(),
@@ -29,19 +28,24 @@ namespace ET.Client
                     .transform);
             self.GameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
             self.Vector2 = Vector2.zero;
+            self.Angle = MathHelper.QuaternionToEulerAngle_Y(UnitHelper.GetMyUnitFromClientScene(self.Root()).Rotation);
+            self.Distance = 0;
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
                 case ESkillIndicatorType.TargetOnly:
                 {
-                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    rc.Get<GameObject>("Range").transform.localScale =
+                            new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
                 case ESkillIndicatorType.Circle:
                 {
-                    // rc.Get<GameObject>("Circle").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    rc.Get<GameObject>("Circle").transform.localScale =
+                            new Vector3(self.SkillConfig.SkillIndicatorParams[1], 1, self.SkillConfig.SkillIndicatorParams[1]);
+                    rc.Get<GameObject>("Range").transform.localScale =
+                            new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
                 case ESkillIndicatorType.Umbrella:
@@ -52,14 +56,15 @@ namespace ET.Client
                 }
                 case ESkillIndicatorType.Range:
                 {
-                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    rc.Get<GameObject>("Range").transform.localScale =
+                            new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
                 case ESkillIndicatorType.SingleLine:
                 {
-                    // rc.Get<GameObject>("Line").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("Range").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[1];
-                    self.IndicatorGameObject = rc.Get<GameObject>("Line");
+                    rc.Get<GameObject>("Line").transform.localScale = new Vector3(1, 1, self.SkillConfig.SkillIndicatorParams[1]);
+                    rc.Get<GameObject>("Range").transform.localScale =
+                            new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
             }
@@ -82,7 +87,6 @@ namespace ET.Client
             }
 
             Unit myUnit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            Vector3 unitPosition = myUnit.Position;
 
             float angle = 90 - Mathf.Atan2(self.Vector2.y, self.Vector2.x) * Mathf.Rad2Deg;
             angle += self.MainCamera.transform.eulerAngles.y;
@@ -124,7 +128,7 @@ namespace ET.Client
                 }
                 case ESkillIndicatorType.Range:
                 {
-                    self.Angle = 0;
+                    self.Angle = MathHelper.QuaternionToEulerAngle_Y(myUnit.Rotation);
                     self.Distance = 0;
                     break;
                 }

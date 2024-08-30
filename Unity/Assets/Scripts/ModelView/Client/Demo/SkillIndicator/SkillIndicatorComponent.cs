@@ -12,7 +12,6 @@ namespace ET.Client
         public float DistanceFactor = 0.05f;
 
         public GameObject GameObject;
-        public GameObject IndicatorGameObject;
 
         public Camera MainCamera;
     }

@@ -63,7 +63,7 @@ namespace ET.Client
                 return;
             }
 
-            self.SkillIndicatorComponent.ShowIndicator(pdata.delta, self.Skill.SkillConfig);
+            self.SkillIndicatorComponent.ShowIndicator(self.Skill.SkillConfig);
         }
 
         private static void OnDrag(this UISkillGrid self, PointerEventData pdata)
