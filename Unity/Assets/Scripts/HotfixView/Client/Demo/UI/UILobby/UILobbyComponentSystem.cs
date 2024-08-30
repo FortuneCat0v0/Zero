@@ -15,12 +15,12 @@ namespace ET.Client
             self.enterMap = rc.Get<GameObject>("EnterMap");
             self.enterMap.GetComponent<Button>().onClick.AddListener(() => { self.EnterMap().Coroutine(); });
         }
-        
+
         public static async ETTask EnterMap(this UILobbyComponent self)
         {
             Scene root = self.Root();
             await EnterMapHelper.EnterMapAsync(root);
-            UIHelper.Remove(root, UIType.UILobby);
+            root.GetComponent<UIComponent>().Remove(UIType.UILobby);
         }
     }
 }

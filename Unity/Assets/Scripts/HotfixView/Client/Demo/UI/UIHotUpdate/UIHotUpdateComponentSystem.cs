@@ -9,7 +9,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, StartHotUpDate args)
         {
-            UI ui = await UIHelper.Create(scene, UIType.UIHotUpdate, UILayer.Mid);
+            UI ui = await scene.GetComponent<UIComponent>().Create(UIType.UIHotUpdate, UILayer.Mid);
             ui.GetComponent<UIHotUpdateComponent>().ShowPackageVersion(args.PackageVersion);
         }
     }

@@ -18,7 +18,7 @@ namespace ET.Client
 
         private static void OnCloseBtn(this UISettingsComponent self)
         {
-            UIHelper.Remove(self.Scene(), UIType.UISettings);
+            self.Scene().GetComponent<UIComponent>().Remove(UIType.UISettings);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ET.Client
             self.Img_Top.GetComponent<EventTrigger>().AddEventTrigger(self.OnDrag, EventTriggerType.Drag);
             self.Img_Top.GetComponent<EventTrigger>().AddEventTrigger(self.OnEndDrag, EventTriggerType.EndDrag);
 
-            self.Btn_Close.GetComponent<Button>().AddListener(() => { UIHelper.Remove(self.Scene(), UIType.UIGM); });
+            self.Btn_Close.GetComponent<Button>().AddListener(() => { self.Scene().GetComponent<UIComponent>().Remove(UIType.UIGM); });
         }
 
         private static void OnBeginDrag(this UIGMComponent self, PointerEventData eventData)

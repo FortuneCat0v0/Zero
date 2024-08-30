@@ -18,7 +18,8 @@ namespace ET.Client
 
             scene.GetComponent<AudioComponent>().PlayMusic("MainCity.ogg");
 
-            await UIHelper.Create(scene, UIType.UIMain, UILayer.Mid);
+            UIComponent uiComponent = scene.GetComponent<UIComponent>();
+            await uiComponent.Create(UIType.UIMain, UILayer.Mid);
         }
     }
 }

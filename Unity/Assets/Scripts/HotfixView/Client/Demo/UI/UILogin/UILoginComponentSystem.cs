@@ -125,8 +125,9 @@ namespace ET.Client
                 return;
             }
 
-            UIHelper.Create(self.Scene(), UIType.UIServer, UILayer.Mid).Coroutine();
-            UIHelper.Remove(self.Scene(), UIType.UILogin);
+            UIComponent uiComponent = self.Scene().GetComponent<UIComponent>();
+            uiComponent.Create(UIType.UIServer, UILayer.Mid).Coroutine();
+            uiComponent.Remove(UIType.UILogin);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace ET.Client
 
         private static async ETTask OnAwake(this FlyTipComponent self)
         {
-            UI ui = await UIHelper.Create(self.Root(), UIType.UIFlyTip, UILayer.High);
+            UI ui = await self.Root().GetComponent<UIComponent>().Create(UIType.UIFlyTip, UILayer.High);
             self.Panel = ui.GameObject.transform;
         }
 

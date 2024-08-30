@@ -20,7 +20,10 @@ namespace ET.Client
             self.RotateAngleDragPanel.GetComponent<EventTrigger>().AddEventTrigger(self.EndDrag, EventTriggerType.EndDrag);
 
             self.Btn_GM = rc.Get<GameObject>("Btn_GM");
-            self.Btn_GM.GetComponent<Button>().AddListener(() => { UIHelper.Create(self.Scene(), UIType.UIGM, UILayer.Mid).Coroutine(); });
+            self.Btn_GM.GetComponent<Button>().AddListener(() =>
+            {
+                self.Scene().GetComponent<UIComponent>().Create(UIType.UIGM, UILayer.Mid).Coroutine();
+            });
 
             self.SettingsBtn = rc.Get<GameObject>("SettingsBtn");
             self.SettingsBtn.GetComponent<Button>().AddListenerAsync(self.OnSettingsBtn);

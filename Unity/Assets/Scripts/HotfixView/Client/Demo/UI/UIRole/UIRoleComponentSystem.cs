@@ -87,14 +87,14 @@ namespace ET.Client
 
             errorCode = await LoginHelper.EnterGame(self.Scene(), PlayerPrefs.GetString("Account", string.Empty),
                 PlayerPrefs.GetString("Password", string.Empty));
+
             if (errorCode != ErrorCode.ERR_Success)
             {
                 Log.Error(errorCode.ToString());
                 return;
             }
 
-            UIHelper.Remove(self.Scene(), UIType.UIRole);
-            await ETTask.CompletedTask;
+            self.Scene().GetComponent<UIComponent>().Remove(UIType.UIRole);
         }
 
         private static async ETTask UpdateRoleList(this UIRoleComponent self)
