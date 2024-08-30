@@ -56,7 +56,7 @@ namespace ET.Client
         private static void SpawnFlyTip(this FlyTipComponent self, string str)
         {
             Vector3 startPos = new(0, -200, 0);
-            GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/Other/FlyTip.prefab");
+            GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/UIFlyTip/FlyTip.prefab");
             go.transform.SetParent(self.Panel);
             self.FlyTips.Add(go);
             go.SetActive(true);
