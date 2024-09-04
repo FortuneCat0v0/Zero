@@ -10,7 +10,7 @@ namespace ET
     /// <summary>
     /// 来自Xenko的固定时间间隔刷新器
     /// </summary>
-    public class FixedUpdate : Singleton<FixedUpdate>, ISingletonAwake<Action>
+    public class FixedUpdateTool
     {
         private GameTime _updateTime;
         private TimerTick _playTimer;

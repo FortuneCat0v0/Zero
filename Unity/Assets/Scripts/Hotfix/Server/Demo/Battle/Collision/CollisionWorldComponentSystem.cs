@@ -28,6 +28,11 @@ namespace ET.Server
         [EntitySystem]
         private static void FixedUpdate(this CollisionWorldComponent self)
         {
+            if (self.World == null)
+            {
+                return;
+            }
+
             foreach (var body in self.BodyToDestroy)
             {
                 self.World.DestroyBody(body);

@@ -51,6 +51,8 @@ namespace ET
 
         private readonly Queue<ETTask> frameFinishTasks = new();
         
+        public FixedUpdateTool FixedUpdateTool;
+        
         internal Fiber(int id, int zone, SceneType sceneType, string name)
         {
             this.Id = id;
@@ -64,6 +66,9 @@ namespace ET
             this.Log = new NLogger(sceneType.ToString(), this.Process, this.Id);
 #endif
             this.Root = new Scene(this, id, 1, sceneType, name);
+            
+            this.FixedUpdateTool = new FixedUpdateTool();
+            this.FixedUpdateTool.Awake(this.FixedUpdate);
         }
 
         internal void Update()
@@ -76,6 +81,8 @@ namespace ET
             {
                 this.Log.Error(e);
             }
+
+            this.FixedUpdateTool.Tick();
         }
         
         internal void LateUpdate()
@@ -128,6 +135,8 @@ namespace ET
                 return;
             }
             this.IsDisposed = true;
+
+            this.FixedUpdateTool = null;
             
             this.Root.Dispose();
         }

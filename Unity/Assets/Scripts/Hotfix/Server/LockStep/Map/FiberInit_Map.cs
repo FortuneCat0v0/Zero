@@ -18,7 +18,7 @@
             root.AddComponent<MessageLocationSenderComponent>();
             root.AddComponent<CollisionListenerComponent>();
             root.AddComponent<CollisionWorldComponent>();
-            // root.AddComponent<MonsterManagerComponent>();
+            root.AddComponent<MonsterManagerComponent>();
 
             await ETTask.CompletedTask;
         }
