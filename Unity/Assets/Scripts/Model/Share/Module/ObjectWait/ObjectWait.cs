@@ -34,10 +34,14 @@ namespace ET
         [EntitySystem]
         private static void Destroy(this ObjectWait self)
         {
-            foreach (object v in self.tcss.Values.ToArray())
+            foreach(var p in self.tcss)
             {
-                ((IDestroyRun) v).SetResult();
+                foreach(object v in p.Value)
+                {
+                    ((IDestroyRun)v).SetResult();
+                }
             }
+            self.tcss.Clear();
         }
 
         private interface IDestroyRun
