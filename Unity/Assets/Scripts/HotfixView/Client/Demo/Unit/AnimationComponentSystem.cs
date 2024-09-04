@@ -38,17 +38,16 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this AnimationComponent self)
         {
-            if (self.AnimGroup != null)
-            {
-                UnityEngine.Object.DestroyImmediate(self.AnimGroup);
-            }
+            self.Animancer = null;
+            self.AnimGroup = null;
+            self.CurrentAnimation = null;
         }
 
         public static void UpdateAnimData(this AnimationComponent self, GameObject go)
         {
             self.Animancer = null;
-            self.ClipTransitions.Clear();
-            self.CurrentAnimation = string.Empty;
+            self.AnimGroup = null;
+            self.CurrentAnimation = null;
 
             // 使用Animancer的话Animator不要添加Controller
             Animator animator = go.GetComponentInChildren<Animator>();
@@ -74,69 +73,51 @@ namespace ET.Client
                 return;
             }
 
-            if (animData.AnimGroup.Animations.Count == 0)
+            if (animData.AnimGroup.AnimInfos.Count == 0)
             {
                 Log.Error($"{animData.AnimGroup.name} 没有添加动画片段！！！");
 
                 return;
             }
 
-            // ！！！复制一个ScriptableObject，不然直接引用的是同一个，设置OnEnd会出问题
-            if (self.AnimGroup != null)
-            {
-                UnityEngine.Object.DestroyImmediate(self.AnimGroup);
-            }
+            self.AnimGroup = animData.AnimGroup;
 
-            self.AnimGroup = UnityEngine.Object.Instantiate(animData.AnimGroup);
-            foreach (MotionTransition motionTransition in self.AnimGroup.Animations)
-            {
-                self.ClipTransitions.Add(motionTransition.StateName, motionTransition);
-                self.SetAutoTransition(motionTransition);
-            }
-        }
-
-        private static void SetAutoTransition(this AnimationComponent self, MotionTransition motionTransition)
-        {
-            if (string.IsNullOrEmpty(motionTransition.NextStateName))
-            {
-                return;
-            }
-
-            motionTransition.Events.OnEnd = () =>
-            {
-                Log.Debug($"{motionTransition.StateName} 播放完毕,自动切换为 {motionTransition.NextStateName}");
-
-                self.Play(motionTransition.NextStateName);
-            };
+            self.Play("Idle");
         }
 
         public static void Play(this AnimationComponent self, string name, float speed = 1f)
         {
-            if (self.ClipTransitions.ContainsKey(name))
+            AnimInfo animInfo = null;
+            foreach (AnimInfo a in self.AnimGroup.AnimInfos)
             {
-                self.CurrentAnimation = name;
-                self.Animancer.Playable.Speed = speed;
-
-                self.Animancer.Play(self.ClipTransitions[name]);
-
-                Log.Debug($"播放动画 {name}");
+                if (a.StateName == name)
+                {
+                    animInfo = a;
+                    break;
+                }
             }
-            else
+
+            if (animInfo == null)
             {
                 Log.Error($"动画 {name} 未加载");
-            }
-        }
 
-        public static void SetOnEnd(this AnimationComponent self, string name, Action action)
-        {
-            if (self.ClipTransitions.ContainsKey(name))
-            {
-                self.ClipTransitions[name].Events.OnEnd = action;
+                return;
             }
-            else
+
+            self.CurrentAnimation = name;
+            self.Animancer.Playable.Speed = speed;
+
+            Log.Debug($"播放动画 {name}");
+
+            self.Animancer.Play(animInfo.AnimationClip, 0.25f, FadeMode.FromStart).Events.OnEnd = () =>
             {
-                Log.Error($"动画 {name} 未加载");
-            }
+                if (!string.IsNullOrEmpty(animInfo.NextStateName))
+                {
+                    Log.Debug($"{animInfo.StateName} 播放完毕,自动切换为 {animInfo.NextStateName}");
+
+                    self.Play(animInfo.NextStateName);
+                }
+            };
         }
     }
 }

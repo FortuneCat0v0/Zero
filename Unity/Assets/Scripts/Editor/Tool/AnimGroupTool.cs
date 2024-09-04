@@ -90,7 +90,7 @@ namespace Animancer
 
             // 更新并填充 ScriptableObject
             var states = animatorController.layers[0].stateMachine.states;
-            animGroup.Animations = new();
+            animGroup.AnimInfos = new();
 
             for (int i = 0; i < states.Length; i++)
             {
@@ -102,20 +102,20 @@ namespace Animancer
                     var blendTreeClips = GetAnimationClipsFromBlendTree(blendTree);
                     foreach (var clip in blendTreeClips)
                     {
-                        animGroup.Animations.Add(new MotionTransition()
+                        animGroup.AnimInfos.Add(new AnimInfo()
                         {
                             StateName = clip.name,
-                            Clip = clip
+                            AnimationClip = clip
                         });
                     }
                 }
                 else
                 {
-                    animGroup.Animations.Add(new MotionTransition()
+                    animGroup.AnimInfos.Add(new AnimInfo()
                     {
-                        NextStateName = GetNextStateName(state),
                         StateName = state.name,
-                        Clip = motion as AnimationClip
+                        AnimationClip = motion as AnimationClip,
+                        NextStateName = GetNextStateName(state)
                     });
                 }
             }
@@ -124,7 +124,7 @@ namespace Animancer
             EditorUtility.SetDirty(animGroup);
             AssetDatabase.SaveAssets();
 
-            Debug.LogError("AnimGroup generated at " + path);
+            Debug.Log("AnimGroup generated at " + path);
         }
 
         private AnimationClip[] GetAnimationClipsFromBlendTree(BlendTree blendTree)

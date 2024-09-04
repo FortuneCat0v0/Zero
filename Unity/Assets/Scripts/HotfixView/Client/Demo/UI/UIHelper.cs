@@ -134,10 +134,10 @@ namespace ET.Client
 
             button.onClick.AddListener(() =>
             {
-                if (UIEventComponent.Instance.IsClicked)
-                {
-                    return;
-                }
+                // if (UIEventComponent.Instance.IsClicked)
+                // {
+                //     return;
+                // }
 
                 clickAcionAsync().Coroutine();
             });

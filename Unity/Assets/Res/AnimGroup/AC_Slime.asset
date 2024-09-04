@@ -12,255 +12,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1ccaf882e41cd4d9cc3acea406739c, type: 3}
   m_Name: AC_Slime
   m_EditorClassIdentifier: 
-  Animations:
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 5539831331247536789, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: Jump
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -2282109422027931986, guid: 17a650f2b198edd48b1b166b7572dece,
+  AnimInfos:
+  - StateName: Jump
+    AnimationClip: {fileID: 5539831331247536789, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Jump_Forward
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -222633757076909063, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: Jump_Right
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 2369923379169141058, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: Jump_Left
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 8642923574173190465, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: Jump_Back
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -3100369314251171874, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Jump_Forward
+    AnimationClip: {fileID: -2282109422027931986, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Idle
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -3401365350015097940, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Jump_Right
+    AnimationClip: {fileID: -222633757076909063, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Crawl_Forward
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -6118759284317175125, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Jump_Left
+    AnimationClip: {fileID: 2369923379169141058, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Crawl_Right
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -3309298982849533483, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Jump_Back
+    AnimationClip: {fileID: 8642923574173190465, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Crawl_Left
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 1789588580391972804, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: Crawl_Back
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 7666019288946695810, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: Stun
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 4549403699866924110, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: TakeDamage_Forward
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -8041991969996379210, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Idle
+    AnimationClip: {fileID: -3100369314251171874, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: TakeDamage_Right
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 5576602529911187527, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
-    NextStateName: 
-    StateName: TakeDamage_Left
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -2277510305409726846, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Crawl_Forward
+    AnimationClip: {fileID: -3401365350015097940, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: TakeDamage_Back
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -2516013265382948196, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Crawl_Right
+    AnimationClip: {fileID: -6118759284317175125, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Attack
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 8395649043086323461, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
+  - StateName: Crawl_Left
+    AnimationClip: {fileID: -3309298982849533483, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
     NextStateName: 
-    StateName: Attack_03
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 989712619511347958, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
+  - StateName: Crawl_Back
+    AnimationClip: {fileID: 1789588580391972804, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
     NextStateName: 
-    StateName: Attack_02
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 8086731055106896646, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
+  - StateName: Stun
+    AnimationClip: {fileID: 7666019288946695810, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: TakeDamage_Forward
+    AnimationClip: {fileID: 4549403699866924110, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: TakeDamage_Right
+    AnimationClip: {fileID: -8041991969996379210, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: TakeDamage_Left
+    AnimationClip: {fileID: 5576602529911187527, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: TakeDamage_Back
+    AnimationClip: {fileID: -2277510305409726846, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: Attack
+    AnimationClip: {fileID: -2516013265382948196, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: Attack_03
+    AnimationClip: {fileID: 8395649043086323461, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: Attack_02
+    AnimationClip: {fileID: 989712619511347958, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
+    NextStateName: 
+  - StateName: Idle_02
+    AnimationClip: {fileID: 8086731055106896646, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
     NextStateName: Crawl_BlendTree
-    StateName: Idle_02
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: -2143518449635549511, guid: 17a650f2b198edd48b1b166b7572dece,
+  - StateName: Swell
+    AnimationClip: {fileID: -2143518449635549511, guid: 17a650f2b198edd48b1b166b7572dece,
       type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
     NextStateName: 
-    StateName: Swell
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 4348485665485846014, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
+  - StateName: Death
+    AnimationClip: {fileID: 4348485665485846014, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
     NextStateName: 
-    StateName: Death
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 7769419075285740307, guid: 17a650f2b198edd48b1b166b7572dece, type: 3}
-    _Speed: 1
-    _NormalizedStartTime: NaN
-    ApplyRootMotion: 0
+  - StateName: Cheer
+    AnimationClip: {fileID: 7769419075285740307, guid: 17a650f2b198edd48b1b166b7572dece,
+      type: 3}
     NextStateName: 
-    StateName: Cheer

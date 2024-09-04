@@ -5,19 +5,11 @@ using UnityEngine;
 namespace Animancer
 {
     [Serializable]
-    public class MotionTransition : ClipTransition
+    public class AnimInfo
     {
-        public bool ApplyRootMotion;
-
-        public string NextStateName;
-
         public string StateName;
-
-        public override void Apply(AnimancerState state)
-        {
-            base.Apply(state);
-            state.Root.Component.Animator.applyRootMotion = ApplyRootMotion;
-        }
+        public AnimationClip AnimationClip;
+        public string NextStateName;
     }
 
     /// <summary>
@@ -26,6 +18,6 @@ namespace Animancer
     [CreateAssetMenu(menuName = Strings.MenuPrefix + "AnimGroup", order = Strings.AssetMenuOrder + 1)]
     public class AnimGroup : ScriptableObject
     {
-        public List<MotionTransition> Animations;
+        public List<AnimInfo> AnimInfos;
     }
 }

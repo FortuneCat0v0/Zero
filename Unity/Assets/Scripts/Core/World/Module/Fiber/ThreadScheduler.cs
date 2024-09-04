@@ -48,7 +48,6 @@ namespace ET
                 
                 fiber.Update();
                 fiber.LateUpdate();
-                fiber.FixedUpdate();
                 long timeNow = (DateTime.UtcNow.Ticks - this.dt1970.Ticks);
                 this.totalTicksSinceStart += (timeNow - this.lastTimeTicks);
                 this.lastTimeTicks = timeNow;
