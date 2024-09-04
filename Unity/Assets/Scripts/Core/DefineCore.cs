@@ -5,21 +5,9 @@ namespace ET
         [StaticField]
         public static float FixedDeltaTime = 1f / LogicFrame;
 
-        // #if UNITY_EDITOR
-        //         [StaticField]
-        //         public static int LogicFrame = 50;
-        // #else
-        //         [StaticField]
-        //         public static int LogicFrame = 20;
-        // #endif
-
         [StaticField]
-        public static int LogicFrame = 20;
+        public static int LogicFrame = 30;
 
-        /// <summary>
-        /// you can alse use dynamic calculate below
-        /// TimeSpan.TicksPerSecond / DefineCore.LogicFrame
-        /// </summary>
         [StaticField]
         public static int FixedDeltaTicks
         {
