@@ -24,7 +24,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// }} 
 
 	// {{ AOT generic types
-	// Animancer.AnimancerTransition<object>
 	// ET.AEvent<object,ET.AfterCreateClientScene>
 	// ET.AEvent<object,ET.AfterUnitCreate>
 	// ET.AEvent<object,ET.AppStartInitFinish>
@@ -807,7 +806,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Func<object>
 	// System.IEquatable<ushort>
 	// System.Linq.Buffer<ET.RpcInfo>
-	// System.Linq.Buffer<object>
 	// System.Linq.Enumerable.Iterator<ET.vector2>
 	// System.Linq.Enumerable.Iterator<ET.vector3>
 	// System.Linq.Enumerable.Iterator<System.Numerics.Vector2>
@@ -1423,7 +1421,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Collections.Generic.IEnumerable<System.Numerics.Vector2> System.Linq.Enumerable.Select<ET.vector2,System.Numerics.Vector2>(System.Collections.Generic.IEnumerable<ET.vector2>,System.Func<ET.vector2,System.Numerics.Vector2>)
 		// System.Collections.Generic.IEnumerable<System.Numerics.Vector3> System.Linq.Enumerable.Select<ET.vector3,System.Numerics.Vector3>(System.Collections.Generic.IEnumerable<ET.vector3>,System.Func<ET.vector3,System.Numerics.Vector3>)
 		// ET.RpcInfo[] System.Linq.Enumerable.ToArray<ET.RpcInfo>(System.Collections.Generic.IEnumerable<ET.RpcInfo>)
-		// object[] System.Linq.Enumerable.ToArray<object>(System.Collections.Generic.IEnumerable<object>)
 		// System.Collections.Generic.List<System.Numerics.Vector2> System.Linq.Enumerable.ToList<System.Numerics.Vector2>(System.Collections.Generic.IEnumerable<System.Numerics.Vector2>)
 		// System.Collections.Generic.List<System.Numerics.Vector3> System.Linq.Enumerable.ToList<System.Numerics.Vector3>(System.Collections.Generic.IEnumerable<System.Numerics.Vector3>)
 		// System.Collections.Generic.List<long> System.Linq.Enumerable.ToList<long>(System.Collections.Generic.IEnumerable<long>)
@@ -1487,7 +1484,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object UnityEngine.GameObject.GetComponentInChildren<object>()
 		// object UnityEngine.GameObject.GetComponentInChildren<object>(bool)
 		// object[] UnityEngine.GameObject.GetComponentsInChildren<object>(bool)
-		// object UnityEngine.Object.Instantiate<object>(object)
 		// object UnityEngine.Object.Instantiate<object>(object,UnityEngine.Transform)
 		// object UnityEngine.Object.Instantiate<object>(object,UnityEngine.Transform,bool)
 		// YooAsset.AllAssetsHandle YooAsset.ResourcePackage.LoadAllAssetsAsync<object>(string,uint)
