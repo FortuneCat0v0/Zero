@@ -105,7 +105,8 @@ namespace Animancer
                         animGroup.AnimInfos.Add(new AnimInfo()
                         {
                             StateName = clip.name,
-                            AnimationClip = clip
+                            AnimationClip = clip,
+                            Speed = state.speed
                         });
                     }
                 }

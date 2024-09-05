@@ -10,7 +10,7 @@ namespace ET
 
         public List<Body> BodyToDestroy = new();
 
-        public int VelocityIteration = 10;
-        public int PositionIteration = 10;
+        public int VelocityIteration = 8;
+        public int PositionIteration = 3;
     }
 }
