@@ -85,7 +85,7 @@ namespace ET.Client
             self.Play("Idle");
         }
 
-        public static void Play(this AnimationComponent self, string name, float speed = 1f)
+        public static void Play(this AnimationComponent self, string name, float speed = 0)
         {
             AnimInfo animInfo = null;
             foreach (AnimInfo a in self.AnimGroup.AnimInfos)
@@ -105,19 +105,22 @@ namespace ET.Client
             }
 
             self.CurrentAnimation = name;
-            self.Animancer.Playable.Speed = speed;
+            self.Animancer.Playable.Speed = speed != 0 ? speed : animInfo.Speed;
 
             Log.Debug($"播放动画 {name}");
 
-            self.Animancer.Play(animInfo.AnimationClip, 0.25f, FadeMode.FromStart).Events.OnEnd = () =>
+            if (!string.IsNullOrEmpty(animInfo.NextStateName))
             {
-                if (!string.IsNullOrEmpty(animInfo.NextStateName))
+                self.Animancer.Play(animInfo.AnimationClip, 0.25f, FadeMode.FromStart).Events.OnEnd = () =>
                 {
                     Log.Debug($"{animInfo.StateName} 播放完毕,自动切换为 {animInfo.NextStateName}");
-
                     self.Play(animInfo.NextStateName);
-                }
-            };
+                };
+            }
+            else
+            {
+                self.Animancer.Play(animInfo.AnimationClip, 0.25f, FadeMode.FromStart);
+            }
         }
     }
 }

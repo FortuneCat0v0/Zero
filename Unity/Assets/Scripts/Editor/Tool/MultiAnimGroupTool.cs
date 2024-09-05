@@ -171,6 +171,7 @@ namespace ET
                                 {
                                     StateName = state.name,
                                     AnimationClip = motion as AnimationClip,
+                                    Speed = state.speed,
                                     NextStateName = GetNextStateName(state)
                                 });
                             }
