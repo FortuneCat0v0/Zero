@@ -85,7 +85,17 @@ namespace ET.Client
             self.Play("Idle");
         }
 
-        public static void Play(this AnimationComponent self, string name, float speed = 0)
+        /// <summary>
+        /// 播放动画
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="name"></param>
+        /// <param name="fadeMode">
+        /// FadeMode.FixedDuration 一般用于等待、行走等循环动画 或 播放期间不会重新播放。此模式下，若想重复一个动作，而该动作仍在运行时，不会有变化。
+        /// FadeMode.FromStart 一般用于攻击动画。当想要重复一个动作，而该动作仍在运行时使用。如平A动画未结束又重新平A。
+        /// </param>
+        /// <param name="speed"></param>
+        public static void Play(this AnimationComponent self, string name, FadeMode fadeMode = FadeMode.FixedDuration, float speed = 0)
         {
             AnimInfo animInfo = null;
             foreach (AnimInfo a in self.AnimGroup.AnimInfos)
@@ -111,7 +121,7 @@ namespace ET.Client
 
             if (!string.IsNullOrEmpty(animInfo.NextStateName))
             {
-                self.Animancer.Play(animInfo.AnimationClip, 0.25f, FadeMode.FromStart).Events.OnEnd = () =>
+                self.Animancer.Play(animInfo.AnimationClip, 0.25f, fadeMode).Events.OnEnd = () =>
                 {
                     Log.Debug($"{animInfo.StateName} 播放完毕,自动切换为 {animInfo.NextStateName}");
                     self.Play(animInfo.NextStateName);
@@ -119,7 +129,7 @@ namespace ET.Client
             }
             else
             {
-                self.Animancer.Play(animInfo.AnimationClip, 0.25f, FadeMode.FromStart);
+                self.Animancer.Play(animInfo.AnimationClip, 0.25f, fadeMode);
             }
         }
     }
