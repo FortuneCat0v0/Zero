@@ -56,6 +56,10 @@
             <Link>NativeCollection/%(RecursiveDir)%(FileName)%(Extension)</Link>
         </Compile>
 
+        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\RVO2\**\*.cs">
+            <Link>RVO2/%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </Compile>
+
         <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\DotRecast\**\*.cs">
             <Link>DotRecast/%(RecursiveDir)%(FileName)%(Extension)</Link>
         </Compile>
