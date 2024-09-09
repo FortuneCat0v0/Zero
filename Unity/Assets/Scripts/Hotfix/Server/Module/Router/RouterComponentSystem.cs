@@ -209,7 +209,7 @@ namespace ET.Server
                     self.Cache.WriteTo(0, KcpProtocalType.RouterReconnectSYN);
                     self.Cache.WriteTo(1, outerConn);
                     self.Cache.WriteTo(5, innerConn);
-                    self.InnerSocket.Send(self.Cache, 0, 9, routerNode.InnerIpEndPoint);
+                    self.InnerSocket.Send(self.Cache, 0, 9, routerNode.InnerIpEndPoint, ChannelType.Connect);
 
                     if (!routerNode.CheckOuterCount(timeNow))
                     {
@@ -288,7 +288,7 @@ namespace ET.Server
                     self.Cache.WriteTo(0, KcpProtocalType.RouterACK);
                     self.Cache.WriteTo(1, routerNode.InnerConn);
                     self.Cache.WriteTo(5, routerNode.OuterConn);
-                    routerNode.KcpTransport.Send(self.Cache, 0, 9, routerNode.SyncIpEndPoint);
+                    routerNode.KcpTransport.Send(self.Cache, 0, 9, routerNode.SyncIpEndPoint, ChannelType.Accept);
 
                     if (!routerNode.CheckOuterCount(timeNow))
                     {
@@ -339,7 +339,7 @@ namespace ET.Server
                     byte[] addressBytes = ipEndPoint.ToString().ToByteArray();
                     Array.Copy(addressBytes, 0, self.Cache, 9, addressBytes.Length);
                     Log.Info($"kcp router syn: {outerConn} {innerConn} {routerNode.InnerIpEndPoint} {routerNode.OuterIpEndPoint}");
-                    self.InnerSocket.Send(self.Cache, 0, 9 + addressBytes.Length, routerNode.InnerIpEndPoint);
+                    self.InnerSocket.Send(self.Cache, 0, 9 + addressBytes.Length, routerNode.InnerIpEndPoint, ChannelType.Connect);
 
                     if (!routerNode.CheckOuterCount(timeNow))
                     {
@@ -376,7 +376,7 @@ namespace ET.Server
 
                     routerNode.LastRecvOuterTime = timeNow;
                     Log.Info($"kcp router outer fin: {outerConn} {innerConn} {routerNode.InnerIpEndPoint}");
-                    self.InnerSocket.Send(self.Cache, 0, messageLength, routerNode.InnerIpEndPoint);
+                    self.InnerSocket.Send(self.Cache, 0, messageLength, routerNode.InnerIpEndPoint, ChannelType.Connect);
 
                     if (!routerNode.CheckOuterCount(timeNow))
                     {
@@ -426,7 +426,7 @@ namespace ET.Server
                     
                     routerNode.LastRecvOuterTime = timeNow;
 
-                    self.InnerSocket.Send(self.Cache, 0, messageLength, routerNode.InnerIpEndPoint);
+                    self.InnerSocket.Send(self.Cache, 0, messageLength, routerNode.InnerIpEndPoint, ChannelType.Connect);
 
                     if (!routerNode.CheckOuterCount(timeNow))
                     {
@@ -486,7 +486,7 @@ namespace ET.Server
                     self.Cache.WriteTo(1, routerNode.InnerConn);
                     self.Cache.WriteTo(5, routerNode.OuterConn);
                     Log.Info($"kcp router RouterAck: {outerConn} {innerConn} {routerNode.SyncIpEndPoint}");
-                    routerNode.KcpTransport.Send(self.Cache, 0, 9, routerNode.SyncIpEndPoint);
+                    routerNode.KcpTransport.Send(self.Cache, 0, 9, routerNode.SyncIpEndPoint, ChannelType.Accept);
                     break;
                 }
 
@@ -509,7 +509,7 @@ namespace ET.Server
                     routerNode.LastRecvInnerTime = timeNow;
                     // 转发出去
                     Log.Info($"kcp router ack: {outerConn} {innerConn} {routerNode.OuterIpEndPoint}");
-                    routerNode.KcpTransport.Send(self.Cache, 0, messageLength, routerNode.OuterIpEndPoint);
+                    routerNode.KcpTransport.Send(self.Cache, 0, messageLength, routerNode.OuterIpEndPoint, ChannelType.Accept);
                     break;
                 }
                 case KcpProtocalType.FIN: // 断开
@@ -545,7 +545,7 @@ namespace ET.Server
 
                     routerNode.LastRecvInnerTime = timeNow;
                     Log.Info($"kcp router inner fin: {outerConn} {innerConn} {routerNode.OuterIpEndPoint}");
-                    routerNode.KcpTransport.Send(self.Cache, 0, messageLength, routerNode.OuterIpEndPoint);
+                    routerNode.KcpTransport.Send(self.Cache, 0, messageLength, routerNode.OuterIpEndPoint, ChannelType.Accept);
 
                     break;
                 }
@@ -582,7 +582,7 @@ namespace ET.Server
                     }
 
                     routerNode.LastRecvInnerTime = timeNow;
-                    routerNode.KcpTransport.Send(self.Cache, 0, messageLength, routerNode.OuterIpEndPoint);
+                    routerNode.KcpTransport.Send(self.Cache, 0, messageLength, routerNode.OuterIpEndPoint, ChannelType.Accept);
                     break;
                 }
             }
