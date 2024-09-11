@@ -7,6 +7,8 @@
         public const int LateUpdate = 1;
         public const int FixedUpdate = 2;
         public const int Load = 3;
-        public const int Max = 4;
+        public const int UIEvent = 4;
+        public const int Dynamic = 5;
+        public const int Max = 6;
     }
 }

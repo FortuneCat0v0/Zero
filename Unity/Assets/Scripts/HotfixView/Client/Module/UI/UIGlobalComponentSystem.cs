@@ -10,13 +10,13 @@ namespace ET.Client
         [EntitySystem]
         public static void Awake(this UIGlobalComponent self)
         {
-            GameObject uiRoot = GameObject.Find("/Global/UI");
-            ReferenceCollector referenceCollector = uiRoot.GetComponent<ReferenceCollector>();
-
-            self.UILayers.Add((int)UILayer.Hidden, referenceCollector.Get<GameObject>(UILayer.Hidden.ToString()).transform);
-            self.UILayers.Add((int)UILayer.Low, referenceCollector.Get<GameObject>(UILayer.Low.ToString()).transform);
-            self.UILayers.Add((int)UILayer.Mid, referenceCollector.Get<GameObject>(UILayer.Mid.ToString()).transform);
-            self.UILayers.Add((int)UILayer.High, referenceCollector.Get<GameObject>(UILayer.High.ToString()).transform);
+            // GameObject uiRoot = self.Root().GetComponent<GlobalComponent>().UI.gameObject;
+            // ReferenceCollector referenceCollector = uiRoot.GetComponent<ReferenceCollector>();
+            //
+            // self.UILayers.Add((int)UILayer.Hidden, referenceCollector.Get<GameObject>(UILayer.Hidden.ToString()).transform);
+            // self.UILayers.Add((int)UILayer.Low, referenceCollector.Get<GameObject>(UILayer.Low.ToString()).transform);
+            // self.UILayers.Add((int)UILayer.Mid, referenceCollector.Get<GameObject>(UILayer.Mid.ToString()).transform);
+            // self.UILayers.Add((int)UILayer.High, referenceCollector.Get<GameObject>(UILayer.High.ToString()).transform);
         }
 
         public static async ETTask<UI> OnCreate(this UIGlobalComponent self, UIComponent uiComponent, string uiType, UILayer uiLayer)

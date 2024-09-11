@@ -25,7 +25,7 @@ namespace ET.Client
             self.JoystickBottomImg = self.JoystickBottom.GetComponent<Image>();
             self.JoystickThumbImg = self.JoystickThumb.GetComponent<Image>();
             self.RectTransform = self.StartArea.GetComponent<RectTransform>();
-            self.UICamera = self.Root().GetComponent<GlobalComponent>().UICamera.GetComponent<Camera>();
+            // self.UICamera = self.Root().GetComponent<GlobalComponent>().UICamera.GetComponent<Camera>();
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
             self.MyUnit = UnitHelper.GetMyUnitFromCurrentScene(self.Scene());
             self.MoveComponent = self.MyUnit.GetComponent<MoveComponent>();

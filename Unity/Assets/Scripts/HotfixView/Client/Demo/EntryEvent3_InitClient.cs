@@ -1,3 +1,5 @@
+using YIUIFramework;
+
 namespace ET.Client
 {
     [FriendOf(typeof(ResourcesLoaderComponent))]
@@ -6,27 +8,34 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, EntryEvent3 args)
         {
-            GlobalComponent globalComponent = root.AddComponent<GlobalComponent>();
-            root.AddComponent<UIGlobalComponent>();
-            root.AddComponent<UIComponent>();
+            root.AddComponent<GlobalComponent>();
             root.AddComponent<ResourcesLoaderComponent>();
             root.AddComponent<CurrentScenesComponent>();
             root.AddComponent<PlayerComponent>();
-            root.AddComponent<FlyTipComponent>();
-            root.AddComponent<AccountComponent>();
-            root.AddComponent<GameServerComponent>();
-            root.AddComponent<RoleComponent>();
-            root.AddComponent<SkillIndicatorComponent>();
-            root.AddComponent<BagComponent>();
-            root.AddComponent<EquipmentComponent>();
-            root.AddComponent<MaskWordComponent>();
+            // root.AddComponent<FlyTipComponent>();
+            // root.AddComponent<AccountComponent>();
+            // root.AddComponent<GameServerComponent>();
+            // root.AddComponent<RoleComponent>();
+            // root.AddComponent<SkillIndicatorComponent>();
+            // root.AddComponent<BagComponent>();
+            // root.AddComponent<EquipmentComponent>();
+            // root.AddComponent<MaskWordComponent>();
 
             // 根据配置修改掉Main Fiber的SceneType
-            SceneType sceneType = EnumHelper.FromString<SceneType>(globalComponent.GlobalConfig.AppType.ToString());
+            SceneType sceneType = EnumHelper.FromString<SceneType>(root.GetComponent<GlobalComponent>().GlobalConfig.AppType.ToString());
             root.SceneType = sceneType;
 
+            // YIUI初始化
+            YIUIBindHelper.InternalGameGetUIBindVoFunc = YIUICodeGenerated.YIUIBindProvider.Get;
+            await root.AddComponent<YIUIMgrComponent>().Initialize();
+            // 根据需求自行处理 在editor下自动打开  也可以根据各种外围配置 或者 GM等级打开
+            if (Define.IsEditor)
+            {
+                root.AddComponent<GMCommandComponent>();
+            }
+
             // 热更流程
-            StartHotUpdate(root).Coroutine();
+            // StartHotUpdate(root).Coroutine();
 
             await ETTask.CompletedTask;
         }
