@@ -13,10 +13,10 @@ namespace ET.Client
             root.AddComponent<CurrentScenesComponent>();
             root.AddComponent<PlayerComponent>();
             // root.AddComponent<FlyTipComponent>();
-            // root.AddComponent<AccountComponent>();
-            // root.AddComponent<GameServerComponent>();
-            // root.AddComponent<RoleComponent>();
-            // root.AddComponent<SkillIndicatorComponent>();
+            root.AddComponent<AccountComponent>();
+            root.AddComponent<GameServerComponent>();
+            root.AddComponent<RoleComponent>();
+            root.AddComponent<SkillIndicatorComponent>();
             // root.AddComponent<BagComponent>();
             // root.AddComponent<EquipmentComponent>();
             // root.AddComponent<MaskWordComponent>();
@@ -35,7 +35,7 @@ namespace ET.Client
             }
 
             // 热更流程
-            // StartHotUpdate(root).Coroutine();
+            StartHotUpdate(root).Coroutine();
 
             await ETTask.CompletedTask;
         }
