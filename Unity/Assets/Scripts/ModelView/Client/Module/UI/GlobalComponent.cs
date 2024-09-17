@@ -10,10 +10,8 @@ namespace ET.Client
         public Transform UICamera { get; set; }
         public Transform YIUICanvasRoot { get; set; }
         public Transform Unit { get; set; }
-
         public Transform Effect { get; set; }
         public Transform Audio { get; set; }
-
         public GlobalConfig GlobalConfig { get; set; }
     }
 }

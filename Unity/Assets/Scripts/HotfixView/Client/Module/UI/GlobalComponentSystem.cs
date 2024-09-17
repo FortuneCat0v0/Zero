@@ -16,7 +16,6 @@ namespace ET.Client
             self.Unit = GameObject.Find("/Global/Unit").transform;
             self.Effect = GameObject.Find("/Global/Effect").transform;
             self.Audio = GameObject.Find("/Global/Audio").transform;
-
             self.GlobalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
         }
     }
