@@ -8,8 +8,10 @@ namespace ET.Client
         public GameObject GameObject;
         public Transform Transform;
         public EntityRef<Unit> Unit;
-        public Vector3 Position;
-        public Quaternion Rotation;
-        public float t;
+        public Vector3 StartPosition;
+        public Quaternion StartRotation;
+        public Vector3 TargetPosition;
+        public Quaternion TargetRotation;
+        public float T;
     }
 }

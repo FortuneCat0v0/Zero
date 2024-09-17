@@ -19,17 +19,20 @@ namespace ET.Client
         {
             Unit unit = self.Unit;
             Vector3 unitPos = unit.Position;
+            Quaternion unitRot = unit.Rotation;
 
-            if (unitPos != self.Position)
+            if (unitPos != self.TargetPosition || unitRot != self.TargetRotation)
             {
-                self.t = 0;
-                self.Position = unitPos;
-                self.Rotation = unit.Rotation;
+                self.T = 0;
+                self.StartPosition = self.Transform.position;
+                self.StartRotation = self.Transform.rotation;
+                self.TargetPosition = unitPos;
+                self.TargetRotation = unit.Rotation;
             }
 
-            self.t += Time.deltaTime;
-            self.Transform.rotation = Quaternion.Lerp(self.Transform.rotation, self.Rotation, self.t / DefineCore.FixedDeltaTime);
-            self.Transform.position = Vector3.Lerp(self.Transform.position, self.Position, self.t / DefineCore.FixedDeltaTime);
+            self.T += Time.deltaTime;
+            self.Transform.position = Vector3.Lerp(self.StartPosition, self.TargetPosition, self.T / DefineCore.FixedDeltaTime);
+            self.Transform.rotation = Quaternion.Lerp(self.StartRotation, self.TargetRotation, self.T / DefineCore.FixedDeltaTime);
         }
     }
 }
