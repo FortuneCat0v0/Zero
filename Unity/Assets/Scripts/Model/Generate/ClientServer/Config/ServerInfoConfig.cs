@@ -37,9 +37,15 @@ namespace ET
         /// </summary>
         public readonly string ServerName;
 
-        public const int __ID__ = -1669631661;
 
+        public const int __ID__ = -1669631661;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+        }
 
         public override string ToString()
         {

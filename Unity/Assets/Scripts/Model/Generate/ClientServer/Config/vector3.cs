@@ -33,6 +33,15 @@ namespace ET
 
         public readonly float Z;
 
+
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+        }
+
         public override string ToString()
         {
             return "{ "

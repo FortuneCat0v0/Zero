@@ -20,11 +20,11 @@ namespace ET
             ColliderType = (EColliderType)_buf.ReadInt();
             Desc = _buf.ReadString();
             IsSensor = _buf.ReadBool();
-            Offset = vector2.Deserializevector2(_buf);
+            Offset = ExternalTypeUtil.NewVector2(vector2.Deserializevector2(_buf));
             Radius = _buf.ReadFloat();
             HX = _buf.ReadFloat();
             HY = _buf.ReadFloat();
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FinalPoints = new System.Collections.Generic.List<System.Collections.Generic.List<vector2>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<vector2> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<vector2>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { vector2 _e1;  _e1 = vector2.Deserializevector2(_buf); _e0.Add(_e1);}} FinalPoints.Add(_e0);}}
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FinalPoints = new System.Collections.Generic.List<System.Collections.Generic.List<System.Numerics.Vector2>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<System.Numerics.Vector2> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<System.Numerics.Vector2>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { System.Numerics.Vector2 _e1;  _e1 = ExternalTypeUtil.NewVector2(vector2.Deserializevector2(_buf)); _e0.Add(_e1);}} FinalPoints.Add(_e0);}}
 
             PostInit();
         }
@@ -57,7 +57,7 @@ namespace ET
         /// <summary>
         /// 偏移
         /// </summary>
-        public readonly vector2 Offset;
+        public readonly System.Numerics.Vector2 Offset;
 
         /// <summary>
         /// 半径
@@ -77,11 +77,24 @@ namespace ET
         /// <summary>
         /// 碰撞体所包含的顶点信息(顺时针),可能由多个多边形组成
         /// </summary>
-        public readonly System.Collections.Generic.List<System.Collections.Generic.List<vector2>> FinalPoints;
+        public readonly System.Collections.Generic.List<System.Collections.Generic.List<System.Numerics.Vector2>> FinalPoints;
+
 
         public const int __ID__ = -1222308746;
-
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {

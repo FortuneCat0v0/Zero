@@ -43,9 +43,16 @@ namespace ET
         /// </summary>
         public readonly string AssetName;
 
-        public const int __ID__ = 1647377048;
 
+        public const int __ID__ = 1647377048;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+        }
 
         public override string ToString()
         {

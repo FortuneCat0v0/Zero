@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class BuffConfigCategory : Singleton<BuffConfigCategory>
+    public partial class BuffConfigCategory : Singleton<BuffConfigCategory>, IConfig
     {
         private readonly Dictionary<int, BuffConfig> _dataMap;
         private readonly List<BuffConfig> _dataList;
@@ -37,9 +37,24 @@ namespace ET
         public Dictionary<int, BuffConfig> DataMap => _dataMap;
         public List<BuffConfig> DataList => _dataList;
 
-        public BuffConfig GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-        public BuffConfig Get(int key) => _dataMap[key];
-        public BuffConfig this[int key] => _dataMap[key];
+        public BuffConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public BuffConfig Get(int key)
+        {
+            if (_dataMap.TryGetValue(key,out var v))
+            {
+                return v;
+            }
+            ConfigLog.Error(this,key);
+            return null;
+        }
+
+        public void ResolveRef()
+        {
+            foreach(var _v in _dataList)
+            {
+                _v.ResolveRef();
+            }
+        }
 
         partial void PostInit();
     }

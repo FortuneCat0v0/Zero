@@ -1,12 +1,12 @@
 set WORKSPACE=..\..
 
-set LUBAN_DLL=%WORKSPACE%\Tools\Luban\Luban\Luban.dll
+set LUBAN_DLL=%WORKSPACE%\Tools\Luban\LubanRelease\Luban.dll
 set CONF_ROOT=%WORKSPACE%\Unity\Assets\Config\Excel
 
 ::Client
 dotnet %LUBAN_DLL% ^
     --customTemplateDir CustomTemplate ^
-    -t Client ^
+    -t client ^
     -c cs-bin ^
     -d bin ^
     -d json ^
@@ -28,7 +28,7 @@ if %ERRORLEVEL% NEQ 0 (
 ::Server
 dotnet %LUBAN_DLL% ^
     --customTemplateDir CustomTemplate ^
-    -t All ^
+    -t all ^
     -c cs-bin ^
     -d bin ^
     -d json ^
@@ -50,11 +50,11 @@ if %ERRORLEVEL% NEQ 0 (
 ::StartConfig Release
 dotnet %LUBAN_DLL% ^
     --customTemplateDir CustomTemplate ^
-    -t Release ^
+    -t all ^
     -c cs-bin ^
     -d bin ^
     -d json ^
-    --conf %CONF_ROOT%\StartConfig\__luban__.conf ^
+    --conf %CONF_ROOT%\StartConfig\Release\__luban__.conf ^
     -x outputCodeDir=%WORKSPACE%\Unity\Assets\Scripts\Model\Generate\Server\Config\StartConfig ^
     -x bin.outputDataDir=%WORKSPACE%\Config\Excel\s\StartConfig\Release ^
     -x json.outputDataDir=%WORKSPACE%\Config\Json\s\StartConfig\Release ^
@@ -72,10 +72,10 @@ if %ERRORLEVEL% NEQ 0 (
 ::StartConfig Benchmark
 dotnet %LUBAN_DLL% ^
     --customTemplateDir CustomTemplate ^
-    -t Benchmark ^
+    -t all ^
     -d bin ^
     -d json ^
-    --conf %CONF_ROOT%\StartConfig\__luban__.conf ^
+    --conf %CONF_ROOT%\StartConfig\Benchmark\__luban__.conf ^
     -x bin.outputDataDir=%WORKSPACE%\Config\Excel\s\StartConfig\Benchmark ^
     -x json.outputDataDir=%WORKSPACE%\Config\Json\s\StartConfig\Benchmark ^
     
@@ -91,10 +91,10 @@ if %ERRORLEVEL% NEQ 0 (
 ::StartConfig Localhost
 dotnet %LUBAN_DLL% ^
     --customTemplateDir CustomTemplate ^
-    -t Localhost ^
+    -t all ^
     -d bin ^
     -d json ^
-    --conf %CONF_ROOT%\StartConfig\__luban__.conf ^
+    --conf %CONF_ROOT%\StartConfig\Localhost\__luban__.conf ^
     -x bin.outputDataDir=%WORKSPACE%\Config\Excel\s\StartConfig\Localhost ^
     -x json.outputDataDir=%WORKSPACE%\Config\Json\s\StartConfig\Localhost ^
     
@@ -110,18 +110,14 @@ if %ERRORLEVEL% NEQ 0 (
 ::StartConfig RouterTest
 dotnet %LUBAN_DLL% ^
     --customTemplateDir CustomTemplate ^
-    -t RouterTest ^
+    -t all ^
     -d bin ^
     -d json ^
-    --conf %CONF_ROOT%\StartConfig\__luban__.conf ^
+    --conf %CONF_ROOT%\StartConfig\RouterTest\__luban__.conf ^
     -x bin.outputDataDir=%WORKSPACE%\Config\Excel\s\StartConfig\RouterTest ^
     -x json.outputDataDir=%WORKSPACE%\Config\Json\s\StartConfig\RouterTest ^
     
 
 echo ==================== StartConfig : GenRouterTestFinish ====================
 
-if %ERRORLEVEL% NEQ 0 (
-    echo An error occurred, press any key to exit.
-    pause
-    exit /b
-)
+pause

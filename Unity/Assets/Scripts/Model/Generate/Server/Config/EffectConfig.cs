@@ -67,9 +67,20 @@ namespace ET
         /// </summary>
         public readonly bool SyncRot;
 
-        public const int __ID__ = -682668973;
 
+        public const int __ID__ = -682668973;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {

@@ -103,9 +103,26 @@ namespace ET
         /// </summary>
         public readonly int Goup;
 
-        public const int __ID__ = -1370631787;
 
+        public const int __ID__ = -1370631787;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {

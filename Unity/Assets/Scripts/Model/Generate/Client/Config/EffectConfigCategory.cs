@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class EffectConfigCategory : Singleton<EffectConfigCategory>
+    public partial class EffectConfigCategory : Singleton<EffectConfigCategory>, IConfig
     {
         private readonly Dictionary<int, EffectConfig> _dataMap;
         private readonly List<EffectConfig> _dataList;
@@ -37,9 +37,24 @@ namespace ET
         public Dictionary<int, EffectConfig> DataMap => _dataMap;
         public List<EffectConfig> DataList => _dataList;
 
-        public EffectConfig GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-        public EffectConfig Get(int key) => _dataMap[key];
-        public EffectConfig this[int key] => _dataMap[key];
+        public EffectConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public EffectConfig Get(int key)
+        {
+            if (_dataMap.TryGetValue(key,out var v))
+            {
+                return v;
+            }
+            ConfigLog.Error(this,key);
+            return null;
+        }
+
+        public void ResolveRef()
+        {
+            foreach(var _v in _dataList)
+            {
+                _v.ResolveRef();
+            }
+        }
 
         partial void PostInit();
     }

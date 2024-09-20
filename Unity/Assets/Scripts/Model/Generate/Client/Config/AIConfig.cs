@@ -61,9 +61,19 @@ namespace ET
         /// </summary>
         public readonly int[] NodeParams;
 
-        public const int __ID__ = -294143606;
 
+        public const int __ID__ = -294143606;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {

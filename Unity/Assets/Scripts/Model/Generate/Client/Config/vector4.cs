@@ -36,6 +36,16 @@ namespace ET
 
         public readonly float W;
 
+
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+        }
+
         public override string ToString()
         {
             return "{ "

@@ -79,9 +79,22 @@ namespace ET
         /// </summary>
         public readonly System.Collections.Generic.List<System.Collections.Generic.List<vector2>> FinalPoints;
 
-        public const int __ID__ = -1222308746;
 
+        public const int __ID__ = -1222308746;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {

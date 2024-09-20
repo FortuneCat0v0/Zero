@@ -121,9 +121,29 @@ namespace ET
         /// </summary>
         public readonly System.Collections.Generic.List<float> SkillIndicatorParams;
 
-        public const int __ID__ = -844226349;
 
+        public const int __ID__ = -844226349;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {

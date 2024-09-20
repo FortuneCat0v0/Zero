@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class SkillConfigCategory : Singleton<SkillConfigCategory>
+    public partial class SkillConfigCategory : Singleton<SkillConfigCategory>, IConfig
     {
         private readonly Dictionary<int, SkillConfig> _dataMap;
         private readonly List<SkillConfig> _dataList;
@@ -37,9 +37,24 @@ namespace ET
         public Dictionary<int, SkillConfig> DataMap => _dataMap;
         public List<SkillConfig> DataList => _dataList;
 
-        public SkillConfig GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : null;
-        public SkillConfig Get(int key) => _dataMap[key];
-        public SkillConfig this[int key] => _dataMap[key];
+        public SkillConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public SkillConfig Get(int key)
+        {
+            if (_dataMap.TryGetValue(key,out var v))
+            {
+                return v;
+            }
+            ConfigLog.Error(this,key);
+            return null;
+        }
+
+        public void ResolveRef()
+        {
+            foreach(var _v in _dataList)
+            {
+                _v.ResolveRef();
+            }
+        }
 
         partial void PostInit();
     }

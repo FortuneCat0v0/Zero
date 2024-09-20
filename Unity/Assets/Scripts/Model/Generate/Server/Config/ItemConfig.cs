@@ -55,9 +55,20 @@ namespace ET
 
         public readonly string Description;
 
-        public const int __ID__ = -764023723;
 
+        public const int __ID__ = -764023723;
         public override int GetTypeId() => __ID__;
+
+        public  void ResolveRef()
+        {
+            
+            
+            
+            
+            
+            
+            
+        }
 
         public override string ToString()
         {
