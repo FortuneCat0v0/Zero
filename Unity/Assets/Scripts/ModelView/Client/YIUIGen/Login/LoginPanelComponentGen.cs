@@ -21,6 +21,8 @@ namespace ET.Client
         public YIUIWindowComponent UIWindow => u_UIWindow;
         public EntityRef<YIUIPanelComponent> u_UIPanel;
         public YIUIPanelComponent UIPanel => u_UIPanel;
+        public UnityEngine.UI.InputField u_ComAccountInput;
+        public UnityEngine.UI.InputField u_ComPasswordInput;
         public UITaskEventP0 u_EventLogin;
         public UITaskEventHandleP0 u_EventLoginHandle;
         public UIEventP1<string> u_EventAccount;

@@ -83,8 +83,6 @@ namespace ET.Client
                 return;
             }
 
-            FlyTipComponent.Instance.ShowFlyTip("好好");
-
             errorCode = await LoginHelper.EnterGame(self.Scene(), PlayerPrefs.GetString("Account", string.Empty),
                 PlayerPrefs.GetString("Password", string.Empty));
 

@@ -12,9 +12,6 @@ namespace ET.Client
 
         public long Interval = 400;
 
-        [StaticField]
-        public static FlyTipComponent Instance;
-
         public Transform Panel;
     }
 }

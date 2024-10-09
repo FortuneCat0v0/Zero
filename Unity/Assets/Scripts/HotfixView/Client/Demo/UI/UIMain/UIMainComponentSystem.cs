@@ -71,7 +71,7 @@ namespace ET.Client
         private static async ETTask OnSettingsBtn(this UIMainComponent self)
         {
             // await UIHelper.Create(self.Scene(), UIType.UISettings, UILayer.Mid);
-            FlyTipComponent.Instance.ShowFlyTip("背包界面暂未开放");
+            Log.Error("背包界面暂未开放");
             await ETTask.CompletedTask;
         }
 
@@ -94,37 +94,37 @@ namespace ET.Client
         private static async ETTask OnBagBtn(this UIMainComponent self)
         {
             // await UIHelper.Create(self.Scene(), UIType.UIBag, UILayer.Mid);
-            FlyTipComponent.Instance.ShowFlyTip("背包界面暂未开放");
+            Log.Error("背包界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnPetBtn(this UIMainComponent self)
         {
-            FlyTipComponent.Instance.ShowFlyTip("宠物界面暂未开放");
+            Log.Error("宠物界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnSkillBtn(this UIMainComponent self)
         {
-            FlyTipComponent.Instance.ShowFlyTip("技能界面暂未开放");
+            Log.Error("技能界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnTaskBtn(this UIMainComponent self)
         {
-            FlyTipComponent.Instance.ShowFlyTip("任务界面暂未开放");
+            Log.Error("任务界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnSocialBtn(this UIMainComponent self)
         {
-            FlyTipComponent.Instance.ShowFlyTip("社交界面暂未开放");
+            Log.Error("社交界面暂未开放");
             await ETTask.CompletedTask;
         }
 
         private static async ETTask OnAchievementBtn(this UIMainComponent self)
         {
-            FlyTipComponent.Instance.ShowFlyTip("成就界面暂未开放");
+            Log.Error("成就界面暂未开放");
             await ETTask.CompletedTask;
         }
 

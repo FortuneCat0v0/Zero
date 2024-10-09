@@ -6,5 +6,6 @@ namespace ET.Client
     {
         public string Account = "";
         public string Password = "";
+        public string TapTapOpenid;
     }
 }

@@ -37,6 +37,8 @@ namespace ET.Client
             self.UIPanel.Priority = 0;
             self.UIPanel.CachePanelTime = 10;
 
+            self.u_ComAccountInput = self.UIBase.ComponentTable.FindComponent<UnityEngine.UI.InputField>("u_ComAccountInput");
+            self.u_ComPasswordInput = self.UIBase.ComponentTable.FindComponent<UnityEngine.UI.InputField>("u_ComPasswordInput");
             self.u_EventLogin = self.UIBase.EventTable.FindEvent<UITaskEventP0>("u_EventLogin");
             self.u_EventLoginHandle = self.u_EventLogin.Add(self.OnEventLoginAction);
             self.u_EventAccount = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventAccount");

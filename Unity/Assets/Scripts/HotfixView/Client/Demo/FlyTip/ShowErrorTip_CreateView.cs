@@ -43,7 +43,7 @@
 
             if (!string.IsNullOrEmpty(str))
             {
-                FlyTipComponent.Instance.ShowFlyTip(str);
+                Log.Error(str);
             }
 
             await ETTask.CompletedTask;
