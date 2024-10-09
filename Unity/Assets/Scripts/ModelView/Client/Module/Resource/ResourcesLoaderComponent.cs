@@ -233,7 +233,7 @@ namespace ET.Client
             return ErrorCode.ERR_Success;
         }
 
-        public static async ETTask<int> DonwloadWebFilesAsync(this ResourcesLoaderComponent self,
+        public static async ETTask<int> DownloadWebFilesAsync(this ResourcesLoaderComponent self,
         DownloaderOperation.OnStartDownloadFile onStartDownloadFileCallback = null,
         DownloaderOperation.OnDownloadProgress onDownloadProgress = null,
         DownloaderOperation.OnDownloadError onDownloadError = null,

@@ -12,18 +12,7 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, StartHotUpDate args)
         {
             HotUpdatePanelComponent hotUpdatePanelComponent = await YIUIMgrComponent.Inst.Root.OpenPanelAsync<HotUpdatePanelComponent>();
-            // hotUpdatePanelComponent.ShowPackageVersion(args.PackageVersion);
-        }
-    }
-
-    [Event(SceneType.Demo)]
-    public class HaveDownloader_TipUI : AEvent<Scene, HaveDownloader>
-    {
-        protected override async ETTask Run(Scene scene, HaveDownloader args)
-        {
-            UI ui = scene.GetComponent<UIComponent>().Get(UIType.UIHotUpdate);
-            ui.GetComponent<UIHotUpdateComponent>().ShowTipPanel(args.TotalDownloadBytes);
-            await ETTask.CompletedTask;
+            hotUpdatePanelComponent.ShowPackageVersion(args.PackageVersion);
         }
     }
 
@@ -32,8 +21,8 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, OnPatchDownloadProgress args)
         {
-            UI ui = scene.GetComponent<UIComponent>().Get(UIType.UIHotUpdate);
-            ui.GetComponent<UIHotUpdateComponent>()?.OnPatchDownloadProgress(args.TotalDownloadCount,
+            HotUpdatePanelComponent hotUpdatePanelComponent = YIUIMgrComponent.Inst.GetPanel<HotUpdatePanelComponent>();
+            hotUpdatePanelComponent.OnPatchDownloadProgress(args.TotalDownloadCount,
                 args.CurrentDownloadCount,
                 args.TotalDownloadSizeBytes,
                 args.CurrentDownloadSizeBytes);
@@ -42,25 +31,23 @@ namespace ET.Client
     }
 
     [Event(SceneType.Demo)]
-    public class OnPatchDownlodFailed_ShowFaileInfo : AEvent<Scene, OnPatchDownlodFailed>
+    public class OnPatchDownloadFailed_ShowFailedInfo : AEvent<Scene, OnPatchDownloadFailed>
     {
-        protected override async ETTask Run(Scene scene, OnPatchDownlodFailed args)
+        protected override async ETTask Run(Scene scene, OnPatchDownloadFailed args)
         {
-            Log.Error($"下载资源失败: {args.FileName} {args.Error}");
-            UI ui = scene.GetComponent<UIComponent>().Get(UIType.UIHotUpdate);
-            ui.GetComponent<UIHotUpdateComponent>().ProgressText.GetComponent<TMP_Text>().text = $"下载资源失败: {args.FileName} {args.Error}";
+            HotUpdatePanelComponent hotUpdatePanelComponent = YIUIMgrComponent.Inst.GetPanel<HotUpdatePanelComponent>();
+            hotUpdatePanelComponent.ShowTip($"下载资源失败: {args.FileName} {args.Error}");
             await ETTask.CompletedTask;
         }
     }
 
-    [FriendOf(typeof(UIHotUpdateComponent))]
     [Event(SceneType.Demo)]
-    public class OnPatchDownlodOver_Reset : AEvent<Scene, OnPatchDownlodOver>
+    public class OnPatchDownloadOver_Reset : AEvent<Scene, OnPatchDownloadOver>
     {
-        protected override async ETTask Run(Scene scene, OnPatchDownlodOver args)
+        protected override async ETTask Run(Scene scene, OnPatchDownloadOver args)
         {
-            UI ui = scene.GetComponent<UIComponent>().Get(UIType.UIHotUpdate);
-            ui.GetComponent<UIHotUpdateComponent>().ProgressText.GetComponent<TMP_Text>().text = "资源更新完成，请重启游戏";
+            HotUpdatePanelComponent hotUpdatePanelComponent = YIUIMgrComponent.Inst.GetPanel<HotUpdatePanelComponent>();
+            hotUpdatePanelComponent.ShowTip("资源更新完成，请重启游戏");
             await ETTask.CompletedTask;
         }
     }
@@ -88,5 +75,22 @@ namespace ET.Client
         #region YIUIEvent开始
 
         #endregion YIUIEvent结束
+
+        public static void OnPatchDownloadProgress(this HotUpdatePanelComponent self, int totalDownloadCount, int currentDownloadCount,
+        long totalDownloadBytes, long currentDownloadBytes)
+        {
+            self.u_ComProgressBarImg.fillAmount = currentDownloadBytes * 1f / totalDownloadBytes;
+            self.u_ComProgressTxt.text = $"下载资源 {currentDownloadBytes / 1048576f:0.##}/{totalDownloadBytes / 1048576f:0.##} MB";
+        }
+
+        public static void ShowPackageVersion(this HotUpdatePanelComponent self, string packageVersion)
+        {
+            self.u_ComPackageVersionTxt.text = $"当前资源版本：{packageVersion}";
+        }
+
+        public static void ShowTip(this HotUpdatePanelComponent self, string tip)
+        {
+            self.u_ComProgressTxt.text = tip;
+        }
     }
 }

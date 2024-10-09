@@ -7,11 +7,6 @@ namespace ET.Client
         public string PackageVersion;
     }
 
-    public struct HaveDownloader
-    {
-        public long TotalDownloadBytes;
-    }
-
     public struct OnPatchDownloadProgress
     {
         public int CurrentDownloadCount;
@@ -20,13 +15,13 @@ namespace ET.Client
         public long TotalDownloadSizeBytes;
     }
 
-    public struct OnPatchDownlodFailed
+    public struct OnPatchDownloadFailed
     {
         public string FileName;
         public string Error;
     }
 
-    public struct OnPatchDownlodOver
+    public struct OnPatchDownloadOver
     {
         public bool IsSucceed;
     }

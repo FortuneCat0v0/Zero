@@ -2,7 +2,6 @@
 using UnityEngine;
 using YIUIFramework;
 using System.Collections.Generic;
-using TMPro;
 
 namespace ET.Client
 {
@@ -25,5 +24,6 @@ namespace ET.Client
         public TMPro.TextMeshProUGUI u_ComPackageVersionTxt;
         public TMPro.TextMeshProUGUI u_ComProgressTxt;
         public UnityEngine.UI.Image u_ComProgressBarImg;
+
     }
 }

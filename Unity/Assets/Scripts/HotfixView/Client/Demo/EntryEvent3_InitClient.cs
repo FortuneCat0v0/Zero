@@ -73,8 +73,41 @@ namespace ET.Client
             // Downloader不为空，说明有需要下载的资源
             if (resourcesLoaderComponent.Downloader != null)
             {
-                EventSystem.Instance.Publish(root,
-                    new HaveDownloader() { TotalDownloadBytes = resourcesLoaderComponent.Downloader.TotalDownloadBytes });
+                // 下载资源
+                Log.Info(
+                    $"Count: {resourcesLoaderComponent.Downloader.TotalDownloadCount}, Bytes: {resourcesLoaderComponent.Downloader.TotalDownloadBytes}");
+                errorCode = await resourcesLoaderComponent.DownloadWebFilesAsync(
+                    // 开始下载回调
+                    null,
+
+                    // 下载进度回调
+                    (totalDownloadCount, currentDownloadCount, totalDownloadBytes, currentDownloadBytes) =>
+                    {
+                        // 更新进度条
+                        EventSystem.Instance.Publish(root,
+                            new OnPatchDownloadProgress()
+                            {
+                                TotalDownloadCount = totalDownloadCount,
+                                CurrentDownloadCount = currentDownloadCount,
+                                TotalDownloadSizeBytes = totalDownloadBytes,
+                                CurrentDownloadSizeBytes = currentDownloadBytes
+                            });
+                    },
+
+                    // 下载失败回调
+                    (fileName, error) =>
+                    {
+                        // 下载失败
+                        EventSystem.Instance.Publish(root, new OnPatchDownloadFailed() { FileName = fileName, Error = error });
+                    },
+
+                    // 下载完成回调
+                    (isSucceed) =>
+                    {
+                        // 提示重启游戏
+                        EventSystem.Instance.Publish(root, new OnPatchDownloadOver() { IsSucceed = isSucceed });
+                        // GameObject.Find("Global").GetComponent<Init>().Restart().Coroutine();
+                    });
             }
             else
             {

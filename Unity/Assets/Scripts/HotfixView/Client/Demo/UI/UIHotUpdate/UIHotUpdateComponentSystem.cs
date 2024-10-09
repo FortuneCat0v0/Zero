@@ -22,7 +22,7 @@ namespace ET.Client
 
             self.StartDownloadBtn.GetComponent<Button>().AddListener(() =>
             {
-                HotUpdateHelper.DownloadPatch(self.Root()).Coroutine();
+                // HotUpdateHelper.DownloadPatch(self.Root()).Coroutine();
                 self.TipPanel.SetActive(false);
             });
 
