@@ -11,8 +11,10 @@ namespace ET.Client
         [EntitySystem]
         private static void YIUIInitialize(this LoginPanelComponent self)
         {
-            self.u_ComAccountInput.text = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Account, string.Empty);
-            self.u_ComPasswordInput.text = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Password, string.Empty);
+            self.Account = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Account, string.Empty);
+            self.Password = PlayerPrefsHelper.GetString(PlayerPrefsHelper.Password, string.Empty);
+            self.u_ComAccountInput.text = self.Account;
+            self.u_ComPasswordInput.text = self.Password;
         }
 
         [EntitySystem]
@@ -135,7 +137,7 @@ namespace ET.Client
                 return;
             }
 
-            Log.Error("登录成功，开始获取游戏服务器列表");
+            Log.Warning("登录成功，开始获取游戏服务器列表");
             await YIUIMgrComponent.Inst.ClosePanelAsync<LoginPanelComponent>(false, true);
             // await YIUIMgrComponent.Inst.Root.OpenPanelAsync<GameServerPanelComponent>();
         }

@@ -4,8 +4,8 @@ namespace ET.Client
 {
     public partial class LoginPanelComponent : Entity
     {
-        public string Account = "";
-        public string Password = "";
+        public string Account;
+        public string Password;
         public string TapTapOpenid;
     }
 }
