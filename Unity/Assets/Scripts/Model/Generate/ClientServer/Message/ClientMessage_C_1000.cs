@@ -100,12 +100,6 @@ namespace ET
         [MemoryPackOrder(1)]
         public int OwnerFiberId { get; set; }
 
-        [MemoryPackOrder(2)]
-        public string Account { get; set; }
-
-        [MemoryPackOrder(3)]
-        public string Password { get; set; }
-
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -115,8 +109,6 @@ namespace ET
 
             this.RpcId = default;
             this.OwnerFiberId = default;
-            this.Account = default;
-            this.Password = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -183,12 +175,6 @@ namespace ET
         [MemoryPackOrder(5)]
         public long RoleId { get; set; }
 
-        [MemoryPackOrder(6)]
-        public string Account { get; set; }
-
-        [MemoryPackOrder(7)]
-        public string Password { get; set; }
-
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -202,8 +188,6 @@ namespace ET
             this.RealmKey = default;
             this.RealmAddress = default;
             this.RoleId = default;
-            this.Account = default;
-            this.Password = default;
 
             ObjectPool.Instance.Recycle(this);
         }

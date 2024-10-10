@@ -25,8 +25,6 @@ message Main2NetClient_ConnectAccount // IRequest
 {
 	int32 RpcId = 1;
 	int32 OwnerFiberId = 2;
-	string Account = 3;
-	string Password = 4;
 }
 
 message NetClient2Main_ConnectAccount // IResponse
@@ -45,8 +43,6 @@ message Main2NetClient_EnterGame // IRequest
 	string RealmKey = 4;
 	string RealmAddress = 5;
 	int64 RoleId = 6;
-	string Account = 7;
-	string Password = 8;
 }
 
 message NetClient2Main_EnterGame // IResponse

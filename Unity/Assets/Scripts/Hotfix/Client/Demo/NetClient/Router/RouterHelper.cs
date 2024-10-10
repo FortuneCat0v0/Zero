@@ -6,9 +6,9 @@ namespace ET.Client
     public static partial class RouterHelper
     {
         // 注册router
-        public static async ETTask<Session> CreateRouterSession(this NetComponent netComponent, IPEndPoint address, string account, string password)
+        public static async ETTask<Session> CreateRouterSession(this NetComponent netComponent, IPEndPoint address)
         {
-            uint localConn = (uint)(account.GetLongHashCode() ^ password.GetLongHashCode() ^ RandomGenerator.RandUInt32());
+            uint localConn = RandomGenerator.RandUInt32();
             (uint recvLocalConn, IPEndPoint routerAddress) = await GetRouterAddress(netComponent, address, localConn, 0);
 
             if (recvLocalConn == 0)

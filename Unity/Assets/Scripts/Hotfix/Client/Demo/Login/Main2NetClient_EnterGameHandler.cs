@@ -14,8 +14,7 @@
             C2R_LoginRealm c2RLoginRealm = C2R_LoginRealm.Create();
             c2RLoginRealm.AccountId = request.AccountId;
             c2RLoginRealm.RealmTokenKey = request.RealmKey;
-            using (Session session = await RouterHelper.CreateRouterSession(netComponent, NetworkHelper.ToIPEndPoint(request.RealmAddress),
-                       request.Account, request.Password))
+            using (Session session = await RouterHelper.CreateRouterSession(netComponent, NetworkHelper.ToIPEndPoint(request.RealmAddress)))
             {
                 r2CLoginRealm = await session.Call(c2RLoginRealm) as R2C_LoginRealm;
             }
@@ -26,8 +25,7 @@
             }
 
             // 开始连接Gate
-            Session gateSession = await RouterHelper.CreateRouterSession(netComponent, NetworkHelper.ToIPEndPoint(r2CLoginRealm.GateAddress),
-                request.Account, request.Password);
+            Session gateSession = await RouterHelper.CreateRouterSession(netComponent, NetworkHelper.ToIPEndPoint(r2CLoginRealm.GateAddress));
             gateSession.AddComponent<ClientSessionErrorComponent>();
             root.GetComponent<SessionComponent>().Session = gateSession;
 

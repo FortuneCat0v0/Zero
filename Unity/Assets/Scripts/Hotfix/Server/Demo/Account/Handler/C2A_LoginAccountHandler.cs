@@ -111,7 +111,7 @@ namespace ET.Server
                     root.GetComponent<AccountSessionComponent>().Add(account.Id, session.Id);
                     session.AddComponent<AccountCheckOutTimeComponent, long>(account.Id);
 
-                    string token = TimeInfo.Instance.ServerNow() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
+                    string token = TimeInfo.Instance.ServerNow() + RandomGenerator.RandomNumber(int.MinValue, int.MaxValue).ToString();
                     root.GetComponent<TokenComponent>().Remove(account.Id);
                     root.GetComponent<TokenComponent>().Add(account.Id, token);
 

@@ -24,7 +24,7 @@ namespace ET.Client
             IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
 
             R2C_Login r2CLogin;
-            using (Session session = await netComponent.CreateRouterSession(realmAddress, account, password))
+            using (Session session = await netComponent.CreateRouterSession(realmAddress))
             {
                 C2R_Login c2RLogin = C2R_Login.Create();
                 c2RLogin.Account = account;
@@ -33,7 +33,7 @@ namespace ET.Client
             }
 
             // 创建一个gate Session,并且保存到SessionComponent中
-            Session gateSession = await netComponent.CreateRouterSession(NetworkHelper.ToIPEndPoint(r2CLogin.Address), account, password);
+            Session gateSession = await netComponent.CreateRouterSession(NetworkHelper.ToIPEndPoint(r2CLogin.Address));
             gateSession.AddComponent<ClientSessionErrorComponent>();
             root.AddComponent<SessionComponent>().Session = gateSession;
             C2G_LoginGate c2GLoginGate = C2G_LoginGate.Create();

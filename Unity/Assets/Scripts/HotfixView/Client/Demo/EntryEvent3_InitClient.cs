@@ -17,8 +17,8 @@ namespace ET.Client
             root.AddComponent<GameServerComponent>();
             root.AddComponent<RoleComponent>();
             root.AddComponent<SkillIndicatorComponent>();
-            // root.AddComponent<BagComponent>();
-            // root.AddComponent<EquipmentComponent>();
+            root.AddComponent<BagComponent>();
+            root.AddComponent<EquipmentComponent>();
             // root.AddComponent<MaskWordComponent>();
 
             // 根据配置修改掉Main Fiber的SceneType

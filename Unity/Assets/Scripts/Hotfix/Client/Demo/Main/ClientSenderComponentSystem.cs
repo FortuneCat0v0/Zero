@@ -33,15 +33,13 @@
             self.Dispose();
         }
 
-        public static async ETTask ConnectAccountAsync(this ClientSenderComponent self, string account, string password)
+        public static async ETTask ConnectAccountAsync(this ClientSenderComponent self)
         {
             self.fiberId = await FiberManager.Instance.Create(SchedulerType.ThreadPool, 0, SceneType.NetClient, "");
             self.netClientActorId = new ActorId(self.Fiber().Process, self.fiberId);
 
             Main2NetClient_ConnectAccount request = Main2NetClient_ConnectAccount.Create();
             request.OwnerFiberId = self.Fiber().Id;
-            request.Account = account;
-            request.Password = password;
             NetClient2Main_ConnectAccount response =
                     await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, request) as NetClient2Main_ConnectAccount;
 
@@ -49,7 +47,7 @@
         }
 
         public static async ETTask<long> EnterGameAsync(this ClientSenderComponent self, long accountId, string realmKey, string realmAddress,
-        long roleId, string account, string password)
+        long roleId)
         {
             Main2NetClient_EnterGame main2NetClientEnterGame = Main2NetClient_EnterGame.Create();
             main2NetClientEnterGame.OwnerFiberId = self.Fiber().Id;
@@ -57,8 +55,6 @@
             main2NetClientEnterGame.RealmKey = realmKey;
             main2NetClientEnterGame.RealmAddress = realmAddress;
             main2NetClientEnterGame.RoleId = roleId;
-            main2NetClientEnterGame.Account = account;
-            main2NetClientEnterGame.Password = password;
             NetClient2Main_EnterGame response =
                     await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientEnterGame) as
                             NetClient2Main_EnterGame;

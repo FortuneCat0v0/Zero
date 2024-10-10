@@ -83,8 +83,7 @@ namespace ET.Client
                 return;
             }
 
-            errorCode = await LoginHelper.EnterGame(self.Scene(), PlayerPrefs.GetString("Account", string.Empty),
-                PlayerPrefs.GetString("Password", string.Empty));
+            errorCode = await LoginHelper.EnterGame(self.Scene());
 
             if (errorCode != ErrorCode.ERR_Success)
             {

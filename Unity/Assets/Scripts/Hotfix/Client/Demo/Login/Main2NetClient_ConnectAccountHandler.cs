@@ -23,9 +23,7 @@ namespace ET.Client
             }
 
             NetComponent netComponent = root.GetComponent<NetComponent>();
-            Session session =
-                    await RouterHelper.CreateRouterSession(netComponent, NetworkHelper.ToIPEndPoint(routerAddressComponent.Info.Account),
-                        request.Account, request.Password);
+            Session session = await RouterHelper.CreateRouterSession(netComponent, NetworkHelper.ToIPEndPoint(routerAddressComponent.Info.Account));
 
             root.AddComponent<SessionComponent>().Session = session;
         }

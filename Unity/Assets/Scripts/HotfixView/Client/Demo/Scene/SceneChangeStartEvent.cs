@@ -8,7 +8,6 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, SceneChangeStart args)
         {
             ResourcesLoaderComponent resourcesLoaderComponent = scene.AddComponent<ResourcesLoaderComponent>();
-            scene.AddComponent<UIComponent>();
             scene.AddComponent<AudioComponent>();
             scene.AddComponent<OperaComponent>();
             scene.AddComponent<HitResultTipComponent>();
@@ -17,9 +16,6 @@ namespace ET.Client
             await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/TestMap.unity", LoadSceneMode.Single);
 
             scene.GetComponent<AudioComponent>().PlayMusic("MainCity.ogg");
-
-            UIComponent uiComponent = scene.GetComponent<UIComponent>();
-            await uiComponent.Create(UIType.UIMain, UILayer.Mid);
         }
     }
 }

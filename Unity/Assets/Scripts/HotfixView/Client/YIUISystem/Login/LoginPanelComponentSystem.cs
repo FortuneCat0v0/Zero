@@ -117,9 +117,8 @@ namespace ET.Client
 
         private static async ETTask OnLogin(this LoginPanelComponent self, string account, string password, ELoginType loginType)
         {
-            // 弹出登录中UI,放置重复发送
             int errorCode = await LoginHelper.LoginAccount(self.Root(), account, password, loginType);
-            // 关闭登录中UI
+
             if (errorCode != ErrorCode.ERR_Success)
             {
                 return;
@@ -137,9 +136,45 @@ namespace ET.Client
                 return;
             }
 
-            Log.Warning("登录成功，开始获取游戏服务器列表");
+            GameServerComponent gameServerComponent = self.Root().GetComponent<GameServerComponent>();
+            GameServer gameServer = gameServerComponent.GameServers[0];
+            gameServerComponent.CurrentServerId = (int)gameServer.Id;
+
+            errorCode = await LoginHelper.GetRoles(self.Scene());
+            if (errorCode != ErrorCode.ERR_Success)
+            {
+                return;
+            }
+
+            RoleComponent roleComponent = self.Root().GetComponent<RoleComponent>();
+            if (roleComponent.Roles.Count == 0)
+            {
+                errorCode = await LoginHelper.CreateRole(self.Scene(), "玩家" + RandomGenerator.RandomNumber(0, 10000));
+                if (errorCode != ErrorCode.ERR_Success)
+                {
+                    Log.Error(errorCode.ToString());
+                    return;
+                }
+            }
+
+            Role role = roleComponent.Roles[0];
+            roleComponent.CurrentRoleId = role.Id;
+
+            errorCode = await LoginHelper.GetRealmKey(self.Scene());
+            if (errorCode != ErrorCode.ERR_Success)
+            {
+                return;
+            }
+
+            errorCode = await LoginHelper.EnterGame(self.Scene());
+            if (errorCode != ErrorCode.ERR_Success)
+            {
+                Log.Error(errorCode.ToString());
+                return;
+            }
+
+            await YIUIMgrComponent.Inst.Root.OpenPanelAsync<MainPanelComponent>();
             await YIUIMgrComponent.Inst.ClosePanelAsync<LoginPanelComponent>(false, true);
-            // await YIUIMgrComponent.Inst.Root.OpenPanelAsync<GameServerPanelComponent>();
         }
     }
 }

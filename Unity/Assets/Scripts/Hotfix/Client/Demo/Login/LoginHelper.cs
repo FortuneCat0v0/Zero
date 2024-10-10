@@ -13,7 +13,7 @@
             }
 
             clientSenderComponent = root.AddComponent<ClientSenderComponent>();
-            await clientSenderComponent.ConnectAccountAsync(account, password);
+            await clientSenderComponent.ConnectAccountAsync();
 
             C2A_LoginAccount request = C2A_LoginAccount.Create();
             request.Account = account;
@@ -133,14 +133,13 @@
             return ErrorCode.ERR_Success;
         }
 
-        public static async ETTask<int> EnterGame(Scene root, string accountName, string password)
+        public static async ETTask<int> EnterGame(Scene root)
         {
             AccountComponent accountComponent = root.GetComponent<AccountComponent>();
             ClientSenderComponent clientSenderComponent = root.GetComponent<ClientSenderComponent>();
 
             long myId = await clientSenderComponent.EnterGameAsync(accountComponent.AccountId, accountComponent.RealmKey,
-                accountComponent.RealmAddress, root.GetComponent<RoleComponent>().CurrentRoleId,
-                accountName, password);
+                accountComponent.RealmAddress, root.GetComponent<RoleComponent>().CurrentRoleId);
 
             root.GetComponent<PlayerComponent>().MyId = myId;
 

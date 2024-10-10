@@ -5,7 +5,7 @@
     {
         protected override async ETTask Run(Scene scene, A2R_GetRealmKey request, R2A_GetRealmKey response)
         {
-            string key = TimeInfo.Instance.ServerNow() + RandomHelper.RandInt64().ToString();
+            string key = TimeInfo.Instance.ServerNow() + RandomGenerator.RandInt64().ToString();
             scene.GetComponent<TokenComponent>().Remove(request.AccountId);
             scene.GetComponent<TokenComponent>().Add(request.AccountId, key);
             response.RealmKey = key;

@@ -62,8 +62,8 @@ namespace ET.Client
 
             go.GetComponent<TMP_Text>().text = str;
 
-            Vector3 randomStart = new(start.x + RandomHelper.RandomNumberFloat(0, 1f), start.y + RandomHelper.RandomNumberFloat(0, 1f),
-                start.z + RandomHelper.RandomNumberFloat(0, 1f));
+            Vector3 randomStart = new(start.x + RandomGenerator.RandomNumberFloat(0, 1f), start.y + RandomGenerator.RandomNumberFloat(0, 1f),
+                start.z + RandomGenerator.RandomNumberFloat(0, 1f));
 
             RectTransform rectTransform = go.transform.GetComponent<RectTransform>();
             rectTransform.position = randomStart;

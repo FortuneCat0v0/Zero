@@ -52,6 +52,19 @@ namespace ET
             return value;
         }
 
+        /// <summary>
+        /// 获取lower与Upper之间的随机数,包含下限，不包含上限
+        /// </summary>
+        /// <param name="lower"></param>
+        /// <param name="upper"></param>
+        /// <returns></returns>
+        public static float RandomNumberFloat(float lower, float upper)
+        {
+
+            float value = lower + (upper - lower) * (float)random.NextDouble();
+            return value;
+        }
+        
         public static bool RandomBool()
         {
             return GetRandom().Next(2) == 0;
