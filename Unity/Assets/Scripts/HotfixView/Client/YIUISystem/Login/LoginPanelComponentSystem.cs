@@ -173,7 +173,6 @@ namespace ET.Client
                 return;
             }
 
-            await YIUIMgrComponent.Inst.Root.OpenPanelAsync<MainPanelComponent>();
             await YIUIMgrComponent.Inst.ClosePanelAsync<LoginPanelComponent>(false, true);
         }
     }

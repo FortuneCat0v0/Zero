@@ -59,7 +59,7 @@ namespace ET
 
         public ETTask<bool> tcs;
 
-        public List<float3> Targets = new List<float3>();
+        public List<float3> Targets { get; set; } = new List<float3>();
 
         public float3 FinalTarget
         {

@@ -6,6 +6,7 @@
         protected override async ETTask Run(Scene scene, SceneChangeFinish args)
         {
             scene.AddComponent<CameraComponent>();
+            await YIUIMgrComponent.Inst.Root.OpenPanelAsync<MainPanelComponent>();
 
             await ETTask.CompletedTask;
         }

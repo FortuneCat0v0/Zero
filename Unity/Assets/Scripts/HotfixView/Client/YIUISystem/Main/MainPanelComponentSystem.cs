@@ -20,11 +20,14 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this MainPanelComponent self)
         {
+            self.UIPanel.OpenViewAsync<JoystickViewComponent>().Coroutine();
+
             await ETTask.CompletedTask;
             return true;
         }
 
         #region YIUIEvent开始
+
         #endregion YIUIEvent结束
     }
 }
