@@ -12,6 +12,16 @@ namespace ET.Client
         [EntitySystem]
         private static void YIUIInitialize(this JoystickViewComponent self)
         {
+        }
+
+        [EntitySystem]
+        private static void Destroy(this JoystickViewComponent self)
+        {
+        }
+
+        [EntitySystem]
+        private static async ETTask<bool> YIUIOpen(this JoystickViewComponent self)
+        {
             self.UICamera = self.Root().GetComponent<GlobalComponent>().UICamera.GetComponent<Camera>();
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
             self.MyUnit = UnitHelper.GetMyUnitFromClientScene(self.Root());
@@ -23,16 +33,7 @@ namespace ET.Client
             self.JoystickModel = EJoystickModel.Fixed;
             self.Radius = 110f;
             self.ResetUI();
-        }
 
-        [EntitySystem]
-        private static void Destroy(this JoystickViewComponent self)
-        {
-        }
-
-        [EntitySystem]
-        private static async ETTask<bool> YIUIOpen(this JoystickViewComponent self)
-        {
             await ETTask.CompletedTask;
             return true;
         }
