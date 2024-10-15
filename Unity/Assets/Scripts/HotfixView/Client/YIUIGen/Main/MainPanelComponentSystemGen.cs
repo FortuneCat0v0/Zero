@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using UnityEngine;
 using YIUIFramework;
 using System.Collections.Generic;
 
@@ -35,6 +36,7 @@ namespace ET.Client
             self.UIPanel.StackOption = EPanelStackOption.VisibleTween;
             self.UIPanel.Priority = 0;
 
+            self.u_ComPingTextMeshProUGUI = self.UIBase.ComponentTable.FindComponent<TMPro.TextMeshProUGUI>("u_ComPingTextMeshProUGUI");
 
         }
     }

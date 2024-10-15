@@ -26,6 +26,12 @@ namespace ET.Client
             return true;
         }
 
+        [EntitySystem]
+        private static void Update(this MainPanelComponent self)
+        {
+            self.u_ComPingTextMeshProUGUI.text = $"{TimeInfo.Instance.Ping} ms";
+        }
+
         #region YIUIEvent开始
 
         #endregion YIUIEvent结束
