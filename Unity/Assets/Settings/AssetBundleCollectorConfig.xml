@@ -1,14 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<root Version="2.4">
-  <Common AutoAddressable="False" LocationToLower="False" IncludeAssetGUID="False" UniqueBundleName="False" ShowPackageView="True" ShowEditorAlias="False" />
-  <Package PackageName="DefaultPackage" PackageDesc="">
-    <Group GroupActiveRule="EnableGroup" GroupName="Default Group" GroupDesc="" AssetTags="">
+<root Version="v2.1">
+  <Common ShowPackageView="False" ShowEditorAlias="False" UniqueBundleName="False" />
+  <Package PackageName="DefaultPackage" PackageDesc="" AutoAddressable="True" LocationToLower="False" IncludeAssetGUID="False" IgnoreRuleName="NormalIgnoreRule">
+    <Group GroupActiveRule="EnableGroup" GroupName="AotDlls" GroupDesc="" AssetTags="">
       <Collector CollectPath="Assets/Bundles/AotDlls" CollectGUID="51f33a3e2065f5642bee2f96c2433544" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="Audio" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/Bundles/Audio" CollectGUID="23e7ee45bbe9d9b4ca387af8b65f8d57" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="Code" GroupDesc="" AssetTags="">
       <Collector CollectPath="Assets/Bundles/Code" CollectGUID="55d9010d6a87934468703901aa518c85" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="Config" GroupDesc="" AssetTags="">
       <Collector CollectPath="Assets/Bundles/Config" CollectGUID="ff3acf49577de0f44b9e1e1afc6f131e" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
-      <Collector CollectPath="Assets/Bundles/UI" CollectGUID="3a57d524d1e0d7543828b2ac7273f608" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackSeparately" FilterRule="CollectPrefab" UserData="" AssetTags="" />
-      <Collector CollectPath="Assets/Bundles/Unit" CollectGUID="c3561f86a9d0b324680975876c94ca05" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackSeparately" FilterRule="CollectPrefab" UserData="" AssetTags="" />
-      <Collector CollectPath="Assets/Bundles/Scenes" CollectGUID="406b13cb70603ef449d91f5572708db2" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectScene" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="Effect" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/Bundles/Effect" CollectGUID="9bfdc0d90e056a744b813112c8ffe5f6" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="Icon" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/Bundles/Icon" CollectGUID="1c832b9912bc29940b7c5b81995b56a8" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="Scenes" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/Bundles/Scenes" CollectGUID="406b13cb70603ef449d91f5572708db2" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="I2Localization" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/GameRes/I2Localization" CollectGUID="b3c00ad45f677694c84baf095fb634b1" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="RedDot" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/GameRes/RedDot" CollectGUID="60b8ed24b56687448a7f66868514c852" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
+    </Group>
+    <Group GroupActiveRule="EnableGroup" GroupName="YIUI" GroupDesc="" AssetTags="">
+      <Collector CollectPath="Assets/GameRes/YIUI" CollectGUID="d89fe3ea046ea2f4ba2c6a21bb926b02" CollectType="MainAssetCollector" AddressRule="AddressByFileName" PackRule="PackDirectory" FilterRule="CollectAll" UserData="" AssetTags="" />
     </Group>
   </Package>
 </root>

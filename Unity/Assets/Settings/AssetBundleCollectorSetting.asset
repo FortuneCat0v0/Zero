@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
   ShowPackageView: 0
-  ShowEditorAlias: 1
-  UniqueBundleName: 1
+  ShowEditorAlias: 0
+  UniqueBundleName: 0
   Packages:
   - PackageName: DefaultPackage
     PackageDesc: 
     EnableAddressable: 1
     LocationToLower: 0
     IncludeAssetGUID: 0
-    IgnoreDefaultType: 1
     AutoCollectShaders: 1
+    IgnoreRuleName: NormalIgnoreRule
     Groups:
     - GroupName: AotDlls
       GroupDesc: 
@@ -31,6 +31,19 @@ MonoBehaviour:
       Collectors:
       - CollectPath: Assets/Bundles/AotDlls
         CollectorGUID: 51f33a3e2065f5642bee2f96c2433544
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Audio
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Audio
+        CollectorGUID: 23e7ee45bbe9d9b4ca387af8b65f8d57
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
@@ -63,43 +76,17 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: UI
+    - GroupName: Effect
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Bundles/UI
-        CollectorGUID: 3a57d524d1e0d7543828b2ac7273f608
+      - CollectPath: Assets/Bundles/Effect
+        CollectorGUID: 9bfdc0d90e056a744b813112c8ffe5f6
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
-        FilterRuleName: CollectPrefab
-        AssetTags: 
-        UserData: 
-    - GroupName: Unit
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/Bundles/Unit
-        CollectorGUID: c3561f86a9d0b324680975876c94ca05
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
-        FilterRuleName: CollectPrefab
-        AssetTags: 
-        UserData: 
-    - GroupName: Scene
-      GroupDesc: 
-      AssetTags: 
-      ActiveRuleName: EnableGroup
-      Collectors:
-      - CollectPath: Assets/Bundles/Scenes
-        CollectorGUID: 406b13cb70603ef449d91f5572708db2
-        CollectorType: 0
-        AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
-        FilterRuleName: CollectScene
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
     - GroupName: Icon
@@ -115,39 +102,39 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Effect
+    - GroupName: Scenes
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Bundles/Effect
-        CollectorGUID: 9bfdc0d90e056a744b813112c8ffe5f6
+      - CollectPath: Assets/Bundles/Scenes
+        CollectorGUID: 406b13cb70603ef449d91f5572708db2
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Audio
+    - GroupName: I2Localization
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Bundles/Audio
-        CollectorGUID: 23e7ee45bbe9d9b4ca387af8b65f8d57
+      - CollectPath: Assets/GameRes/I2Localization
+        CollectorGUID: b3c00ad45f677694c84baf095fb634b1
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Text
+    - GroupName: RedDot
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Bundles/Text
-        CollectorGUID: 07d9f74dc02b91848b9b19f74376f4ac
+      - CollectPath: Assets/GameRes/RedDot
+        CollectorGUID: 60b8ed24b56687448a7f66868514c852
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
@@ -164,29 +151,42 @@ MonoBehaviour:
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
-        FilterRuleName: YIUIFilterRule
+        FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: RedDot
+    - GroupName: Unit
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/GameRes/RedDot
-        CollectorGUID: 60b8ed24b56687448a7f66868514c852
+      - CollectPath: Assets/Bundles/Unit
+        CollectorGUID: c3561f86a9d0b324680975876c94ca05
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: I2Localization
+    - GroupName: UI
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/GameRes/I2Localization
-        CollectorGUID: b3c00ad45f677694c84baf095fb634b1
+      - CollectPath: Assets/Bundles/UI
+        CollectorGUID: 3a57d524d1e0d7543828b2ac7273f608
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: Text
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Text
+        CollectorGUID: 07d9f74dc02b91848b9b19f74376f4ac
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
