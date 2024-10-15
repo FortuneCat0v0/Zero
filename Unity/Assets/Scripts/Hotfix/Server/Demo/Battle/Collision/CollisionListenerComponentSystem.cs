@@ -12,6 +12,8 @@
         [EntitySystem]
         private static void Destroy(this CollisionListenerComponent self)
         {
+            self.CollisionRecorder.Clear();
+            self.ToBeRemovedCollisionData.Clear();
         }
 
         [EntitySystem]

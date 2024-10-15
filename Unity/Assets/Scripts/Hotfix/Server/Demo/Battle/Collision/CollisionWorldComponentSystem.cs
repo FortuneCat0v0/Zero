@@ -21,10 +21,6 @@ namespace ET.Server
             self.World.SetContactListener(collisionListener);
         }
 
-        /// <summary>
-        /// 每帧驱动更新碰撞检测
-        /// </summary>
-        /// <param name="self"></param>
         [EntitySystem]
         private static void FixedUpdate(this CollisionWorldComponent self)
         {
@@ -45,6 +41,9 @@ namespace ET.Server
         [EntitySystem]
         private static void Destroy(this CollisionWorldComponent self)
         {
+            self.World.Dispose();
+            self.World = null;
+            self.BodyToDestroy.Clear();
         }
 
         public static Body CreateStaticBody(this CollisionWorldComponent self, Vector2 position)
