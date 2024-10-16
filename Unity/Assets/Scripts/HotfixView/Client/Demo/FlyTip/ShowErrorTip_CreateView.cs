@@ -43,7 +43,7 @@
 
             if (!string.IsNullOrEmpty(str))
             {
-                Log.Error(str);
+                TipsHelper.OpenSync<TextTipsViewComponent>(str);
             }
 
             await ETTask.CompletedTask;
