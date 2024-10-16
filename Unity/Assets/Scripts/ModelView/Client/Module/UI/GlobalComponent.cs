@@ -7,6 +7,8 @@ namespace ET.Client
     {
         public Transform Global { get; set; }
         public Transform MainCamera { get; set; }
+
+        public GameObject Mask { get; set; }
         public Transform UICamera { get; set; }
         public Transform YIUICanvasRoot { get; set; }
         public Transform Unit { get; set; }

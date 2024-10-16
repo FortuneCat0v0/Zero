@@ -5,8 +5,8 @@
     {
         protected override async ETTask Run(Scene root, AppStartInitFinish args)
         {
-            await YIUIMgrComponent.Inst.ClosePanelAsync<HotUpdatePanelComponent>(false, true);
             await YIUIMgrComponent.Inst.Root.OpenPanelAsync<LoginPanelComponent>();
+            await YIUIMgrComponent.Inst.ClosePanelAsync<HotUpdatePanelComponent>(false, true);
         }
     }
 }

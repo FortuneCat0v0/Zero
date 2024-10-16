@@ -11,6 +11,7 @@ namespace ET.Client
         {
             self.Global = GameObject.Find("/Global").transform;
             self.MainCamera = GameObject.Find("/Global/MainCamera").transform;
+            self.Mask = GameObject.Find("/Global/Mask");
             self.UICamera = GameObject.Find("/Global/YIUIRoot/YIUICanvasRoot/YIUICamera").transform;
             self.YIUICanvasRoot = GameObject.Find("/Global/YIUIRoot/YIUICanvasRoot").transform;
             self.Unit = GameObject.Find("/Global/Unit").transform;
