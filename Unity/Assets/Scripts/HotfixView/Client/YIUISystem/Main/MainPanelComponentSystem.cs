@@ -21,6 +21,7 @@ namespace ET.Client
         private static async ETTask<bool> YIUIOpen(this MainPanelComponent self)
         {
             self.UIPanel.OpenViewAsync<JoystickViewComponent>().Coroutine();
+            self.UIPanel.OpenViewAsync<MiniMapViewComponent>().Coroutine();
 
             await ETTask.CompletedTask;
             return true;

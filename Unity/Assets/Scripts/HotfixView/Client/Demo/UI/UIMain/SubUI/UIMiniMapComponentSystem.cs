@@ -9,22 +9,22 @@ namespace ET.Client
     [EntitySystemOf(typeof(UIMiniMapComponent))]
     public static partial class UIMiniMapComponentSystem
     {
-        [Invoke(TimerInvokeType.MiniMapTimer)]
-        public class MapMiniTimer : ATimer<UIMiniMapComponent>
-        {
-            protected override void Run(UIMiniMapComponent self)
-            {
-                try
-                {
-                    self.UpdateMap();
-                    self.UpdateMapMarker();
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"move timer error: {self.Id}\n{e}");
-                }
-            }
-        }
+        // [Invoke(TimerInvokeType.MiniMapTimer)]
+        // public class MapMiniTimer : ATimer<UIMiniMapComponent>
+        // {
+        //     protected override void Run(UIMiniMapComponent self)
+        //     {
+        //         try
+        //         {
+        //             self.UpdateMap();
+        //             self.UpdateMapMarker();
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             Log.Error($"move timer error: {self.Id}\n{e}");
+        //         }
+        //     }
+        // }
 
         [EntitySystem]
         private static void Awake(this UIMiniMapComponent self, GameObject gameObject)

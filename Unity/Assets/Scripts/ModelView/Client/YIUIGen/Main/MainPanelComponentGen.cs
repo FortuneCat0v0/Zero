@@ -12,6 +12,7 @@ namespace ET.Client
     public enum EMainPanelViewEnum
     {
         JoystickView = 1,
+        MiniMapView = 2,
     }
     /// <summary>
     /// 由YIUI工具自动创建 请勿修改
