@@ -44,6 +44,7 @@ namespace ET
 				.WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
 				.WithParsed((o)=>World.Instance.AddSingleton(o));
 			Options.Instance.StartConfig = $"StartConfig/Localhost";
+			Options.Instance.LogLevel =  0; // Log.Debug的消耗不小 可以调成3
 			
 			World.Instance.AddSingleton<Logger>().Log = new UnityLogger();
 			ETTask.ExceptionHandler += Log.Error;
