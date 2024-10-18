@@ -94,7 +94,7 @@ namespace ET.Client
 
         public static void UpdateMapMarker(this MiniMapViewComponent self)
         {
-            List<Unit> allUnit = self.Scene().GetComponent<UnitComponent>().GetAll();
+            List<Unit> allUnit = self.Root().CurrentScene().GetComponent<UnitComponent>().GetAll();
             List<long> unitIds = self.UIMapMarkers.Keys.ToList();
             foreach (Unit unit in allUnit)
             {

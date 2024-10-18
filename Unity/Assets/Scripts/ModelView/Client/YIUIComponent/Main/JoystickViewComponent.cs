@@ -11,9 +11,13 @@ namespace ET.Client
     {
         public Camera UICamera;
         public Camera MainCamera;
-        public EntityRef<Unit> MyUnit;
-        public EntityRef<MoveComponent> MoveComponent;
-        public EntityRef<ClientSenderComponent> ClientSenderComponent;
+        private EntityRef<Unit> unit;
+        public Unit MyUnit { get => this.unit; set => this.unit = value; }
+
+        private EntityRef<MoveComponent> moveComponent;
+        public MoveComponent MoveComponent { get => this.moveComponent; set => this.moveComponent = value; }
+        private EntityRef<ClientSenderComponent> clientSenderComponent;
+        public ClientSenderComponent ClientSenderComponent { get => this.clientSenderComponent; set => this.clientSenderComponent = value; }
 
         public int MapMask;
         public Vector2 OldPoint;

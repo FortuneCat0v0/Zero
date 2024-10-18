@@ -25,8 +25,7 @@ namespace ET.Client
             self.UICamera = self.Root().GetComponent<GlobalComponent>().UICamera.GetComponent<Camera>();
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
             self.MyUnit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            Unit myUnit = self.MyUnit;
-            self.MoveComponent = myUnit.GetComponent<MoveComponent>();
+            self.MoveComponent = self.MyUnit.GetComponent<MoveComponent>();
             self.ClientSenderComponent = self.Root().GetComponent<ClientSenderComponent>();
 
             self.MapMask = LayerMask.GetMask("Map");
@@ -84,8 +83,7 @@ namespace ET.Client
             self.IsDrag = false;
             self.LastDirection = Vector3.zero;
             C2M_Stop c2MStop = C2M_Stop.Create();
-            ClientSenderComponent clientSenderComponent = self.ClientSenderComponent;
-            clientSenderComponent.Send(c2MStop);
+            self.ClientSenderComponent.Send(c2MStop);
             self.ResetUI();
         }
 
@@ -139,16 +137,14 @@ namespace ET.Client
                 return;
             }
 
-            Unit myUnit = self.MyUnit;
-            if (myUnit == null)
+            if (self.MyUnit == null)
             {
                 return;
             }
 
             // 切换方向立刻从新寻路，保持同一方向则要马上完成之前的移动后。解决卡边会发送寻路消息频繁
-            MoveComponent moveComponent = self.MoveComponent;
             if (self.LastDirection != Vector3.zero && Vector3.Angle(self.Direction, self.LastDirection) < 10f &&
-                (moveComponent.Targets.Count > 1 || Vector3.Distance(self.LastUnitPosition, myUnit.Position) < 0.001f))
+                (self.MoveComponent.Targets.Count > 1 || Vector3.Distance(self.LastUnitPosition, self.MyUnit.Position) < 0.001f))
             {
                 return;
             }
@@ -157,7 +153,7 @@ namespace ET.Client
             Quaternion rotation = Quaternion.Euler(0, self.MainCamera.transform.eulerAngles.y, 0);
             Vector3 direction = rotation * self.Direction;
 
-            Vector3 start = myUnit.Position;
+            Vector3 start = self.MyUnit.Position;
             float intveral = 0.25f;
             int maxStep = 40;
             Vector3 target = Vector3.zero;
@@ -179,18 +175,17 @@ namespace ET.Client
                 return;
             }
 
-            if (Vector3.Distance(target, myUnit.Position) < 0.1f)
+            if (Vector3.Distance(target, self.MyUnit.Position) < 0.1f)
             {
                 return;
             }
 
             self.LastDirection = self.Direction;
-            self.LastUnitPosition = myUnit.Position;
+            self.LastUnitPosition = self.MyUnit.Position;
 
             C2M_PathfindingResult c2MPathfindingResult = C2M_PathfindingResult.Create();
             c2MPathfindingResult.Position = target;
-            ClientSenderComponent clientSenderComponent = self.ClientSenderComponent;
-            clientSenderComponent.Send(c2MPathfindingResult);
+            self.ClientSenderComponent.Send(c2MPathfindingResult);
         }
 
         private static void ResetUI(this JoystickViewComponent self)
