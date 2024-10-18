@@ -67,7 +67,6 @@ namespace ET
 
             if (string.IsNullOrEmpty(collisionHandlerName))
             {
-                Log.Debug($"unitA {a.Id} Contact unitB {b.Id} but UnitA ActionEvent is null");
                 return;
             }
 
