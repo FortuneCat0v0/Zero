@@ -15,7 +15,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this OperaComponent self)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (InputHelper.GetMouseButtonDown(1))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -27,23 +27,23 @@ namespace ET.Client
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (InputHelper.GetKeyDown(KeyCode.Q))
             {
                 self.Test1().Coroutine();
             }
 
-            if (Input.GetKeyDown(KeyCode.W))
+            if (InputHelper.GetKeyDown(KeyCode.W))
             {
                 self.Test2().Coroutine();
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (InputHelper.GetKeyDown(KeyCode.R))
             {
                 CodeLoader.Instance.Reload();
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.T))
+            if (InputHelper.GetKeyDown(KeyCode.T))
             {
                 C2M_TransferMap c2MTransferMap = C2M_TransferMap.Create();
                 self.Root().GetComponent<ClientSenderComponent>().Call(c2MTransferMap).Coroutine();

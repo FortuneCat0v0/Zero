@@ -41,7 +41,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this GMPanelComponent self)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (InputHelper.GetKeyDown(KeyCode.Escape))
             {
                 if (!self.UIPanel.CurrentOpenViewActiveSelf)
                 {
