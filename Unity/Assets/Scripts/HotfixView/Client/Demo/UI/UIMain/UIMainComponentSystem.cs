@@ -51,13 +51,13 @@ namespace ET.Client
             self.UIMiniMapComponent = self.AddComponent<UIMiniMapComponent, GameObject>(self.UIMiniMap);
 
             self.UISkillGrid_0 = rc.Get<GameObject>("UISkillGrid_0");
-            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillGridType.SkillGrid0);
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_0).SetSkill(ESkillSlotType.Slot_0);
             self.UISkillGrid_1 = rc.Get<GameObject>("UISkillGrid_1");
-            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillGridType.SkillGrid1);
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_1).SetSkill(ESkillSlotType.Slot_1);
             self.UISkillGrid_2 = rc.Get<GameObject>("UISkillGrid_2");
-            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_2).SetSkill(ESkillGridType.SkillGrid2);
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_2).SetSkill(ESkillSlotType.Slot_2);
             self.UISkillGrid_3 = rc.Get<GameObject>("UISkillGrid_3");
-            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_3).SetSkill(ESkillGridType.SkillGrid3);
+            self.AddChild<UISkillGrid, GameObject>(self.UISkillGrid_3).SetSkill(ESkillSlotType.Slot_3);
 
             self.PingText = rc.Get<GameObject>("PingText");
         }

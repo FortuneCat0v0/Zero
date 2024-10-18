@@ -66,12 +66,12 @@
     }
     */
 
-    public enum ESkillGridType
+    public enum ESkillSlotType
     {
-        SkillGrid0,
-        SkillGrid1,
-        SkillGrid2,
-        SkillGrid3,
+        Slot_0,
+        Slot_1,
+        Slot_2,
+        Slot_3,
     }
 
     public enum EOperateStatus : byte

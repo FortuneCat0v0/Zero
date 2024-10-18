@@ -13,7 +13,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this SkillComponent self)
         {
-            foreach (ESkillGridType eSkillGridType in Enum.GetValues(typeof(ESkillGridType)))
+            foreach (ESkillSlotType eSkillGridType in Enum.GetValues(typeof(ESkillSlotType)))
             {
                 if (!self.SkillGridDict.ContainsKey((int)eSkillGridType))
                 {
@@ -76,14 +76,14 @@ namespace ET.Client
             return skill;
         }
 
-        public static Skill GetSkillByGrid(this SkillComponent self, ESkillGridType skillGridType)
+        public static Skill GetSkillByGrid(this SkillComponent self, ESkillSlotType skillSlotType)
         {
-            if (self.SkillGridDict[(int)skillGridType] == 0)
+            if (self.SkillGridDict[(int)skillSlotType] == 0)
             {
                 return null;
             }
 
-            return self.GetSkillByConfigId(self.SkillGridDict[(int)skillGridType]);
+            return self.GetSkillByConfigId(self.SkillGridDict[(int)skillSlotType]);
         }
 
         public static List<Skill> GetAllSkill(this SkillComponent self)
@@ -114,15 +114,15 @@ namespace ET.Client
             skill.StartSpell(targetUnitId, angle, position);
         }
 
-        public static void TrySpellSkill(this SkillComponent self, ESkillGridType skillGridType, long targetUnitId, float angle, float distance)
+        public static void TrySpellSkill(this SkillComponent self, ESkillSlotType skillSlotType, long targetUnitId, float angle, float distance)
         {
-            Log.Debug($"尝试释放技能 ESkillGridType : {skillGridType}");
+            Log.Debug($"尝试释放技能 ESkillGridType : {skillSlotType}");
 
-            Skill skill = self.GetSkillByGrid(skillGridType);
+            Skill skill = self.GetSkillByGrid(skillSlotType);
 
             if (skill == null)
             {
-                Log.Error($"技能不存在 ESkillGridType : {skillGridType}");
+                Log.Error($"技能不存在 ESkillGridType : {skillSlotType}");
                 return;
             }
 

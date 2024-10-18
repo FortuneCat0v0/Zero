@@ -42,12 +42,12 @@ namespace ET.Client
             self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.Skill.GetCD();
         }
 
-        public static void SetSkill(this UISkillGrid self, ESkillGridType skillGridType)
+        public static void SetSkill(this UISkillGrid self, ESkillSlotType skillSlotType)
         {
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            self.SkillGridType = skillGridType;
+            self.SkillSlotType = skillSlotType;
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            self.Skill = skillComponent.GetSkillByGrid(skillGridType);
+            self.Skill = skillComponent.GetSkillByGrid(skillSlotType);
             self.RefeshIcon().Coroutine();
         }
 
@@ -89,7 +89,7 @@ namespace ET.Client
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
 
             long targetUnitId = 0;
-            skillComponent.TrySpellSkill(self.SkillGridType, targetUnitId, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetDistance());
+            skillComponent.TrySpellSkill(self.SkillSlotType, targetUnitId, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetDistance());
 
             self.SkillIndicatorComponent.HideIndicator();
         }

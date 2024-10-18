@@ -37,6 +37,10 @@ namespace ET.Client
             self.UIPanel.Priority = 0;
 
             self.u_ComPingTextMeshProUGUI = self.UIBase.ComponentTable.FindComponent<TMPro.TextMeshProUGUI>("u_ComPingTextMeshProUGUI");
+            self.u_UISkillSlotItem_3 = self.UIBase.CDETable.FindUIOwner<ET.Client.SkillSlotItemComponent>("SkillSlotItem_3");
+            self.u_UISkillSlotItem_2 = self.UIBase.CDETable.FindUIOwner<ET.Client.SkillSlotItemComponent>("SkillSlotItem_2");
+            self.u_UISkillSlotItem_1 = self.UIBase.CDETable.FindUIOwner<ET.Client.SkillSlotItemComponent>("SkillSlotItem_1");
+            self.u_UISkillSlotItem_0 = self.UIBase.CDETable.FindUIOwner<ET.Client.SkillSlotItemComponent>("SkillSlotItem_0");
 
         }
     }

@@ -23,6 +23,11 @@ namespace ET.Client
             self.UIPanel.OpenViewAsync<JoystickViewComponent>().Coroutine();
             self.UIPanel.OpenViewAsync<MiniMapViewComponent>().Coroutine();
 
+            self.UISkillSlotItem_0.SetSkill(ESkillSlotType.Slot_0);
+            self.UISkillSlotItem_1.SetSkill(ESkillSlotType.Slot_1);
+            self.UISkillSlotItem_2.SetSkill(ESkillSlotType.Slot_2);
+            self.UISkillSlotItem_3.SetSkill(ESkillSlotType.Slot_3);
+
             await ETTask.CompletedTask;
             return true;
         }

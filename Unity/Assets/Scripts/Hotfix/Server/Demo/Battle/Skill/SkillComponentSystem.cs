@@ -12,7 +12,7 @@ namespace ET.Server
         [EntitySystem]
         private static void Awake(this SkillComponent self)
         {
-            foreach (ESkillGridType eSkillGridType in Enum.GetValues(typeof(ESkillGridType)))
+            foreach (ESkillSlotType eSkillGridType in Enum.GetValues(typeof(ESkillSlotType)))
             {
                 if (!self.SkillGridDict.ContainsKey((int)eSkillGridType))
                 {
@@ -85,7 +85,7 @@ namespace ET.Server
             return false;
         }
 
-        public static bool SetSkillGrid(this SkillComponent self, int skillConfigId, ESkillGridType skillGridType)
+        public static bool SetSkillGrid(this SkillComponent self, int skillConfigId, ESkillSlotType skillSlotType)
         {
             if (!self.SkillDict.ContainsKey(skillConfigId))
             {
@@ -100,7 +100,7 @@ namespace ET.Server
                 }
             }
 
-            self.SkillGridDict[(int)skillGridType] = skillConfigId;
+            self.SkillGridDict[(int)skillSlotType] = skillConfigId;
 
             return true;
         }

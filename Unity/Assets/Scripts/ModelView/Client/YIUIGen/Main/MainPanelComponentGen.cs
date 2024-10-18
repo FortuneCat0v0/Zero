@@ -30,6 +30,14 @@ namespace ET.Client
         public EntityRef<YIUIPanelComponent> u_UIPanel;
         public YIUIPanelComponent UIPanel => u_UIPanel;
         public TMPro.TextMeshProUGUI u_ComPingTextMeshProUGUI;
+        public EntityRef<ET.Client.SkillSlotItemComponent> u_UISkillSlotItem_3;
+        public ET.Client.SkillSlotItemComponent UISkillSlotItem_3 => u_UISkillSlotItem_3;
+        public EntityRef<ET.Client.SkillSlotItemComponent> u_UISkillSlotItem_2;
+        public ET.Client.SkillSlotItemComponent UISkillSlotItem_2 => u_UISkillSlotItem_2;
+        public EntityRef<ET.Client.SkillSlotItemComponent> u_UISkillSlotItem_1;
+        public ET.Client.SkillSlotItemComponent UISkillSlotItem_1 => u_UISkillSlotItem_1;
+        public EntityRef<ET.Client.SkillSlotItemComponent> u_UISkillSlotItem_0;
+        public ET.Client.SkillSlotItemComponent UISkillSlotItem_0 => u_UISkillSlotItem_0;
 
     }
 }

@@ -14,7 +14,7 @@ namespace ET.Client
         public TMP_Text CDText;
         public GameObject ETrigger;
 
-        public ESkillGridType SkillGridType;
+        public ESkillSlotType SkillSlotType;
         public Skill Skill { get; set; }
         public SkillIndicatorComponent SkillIndicatorComponent { get; set; }
     }
