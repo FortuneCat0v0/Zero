@@ -54,15 +54,14 @@ namespace ET.Server
         {
             Unit unit = self.GetParent<Unit>();
 
-            Unit belongToUnit = self.BelongToUnit;
             if (self.SyncPosToBelongUnit)
             {
-                unit.Position = belongToUnit.Position;
+                unit.Position = self.BelongToUnit.Position;
             }
 
             if (self.SyncRotToBelongUnit)
             {
-                unit.Rotation = belongToUnit.Rotation;
+                unit.Rotation = self.BelongToUnit.Rotation;
             }
 
             self.SyncBody();
@@ -72,15 +71,13 @@ namespace ET.Server
         private static void Destroy(this ColliderComponent self)
         {
             Log.Warning("Destroy 碰撞体");
-            CollisionWorldComponent collisionWorldComponent = self.CollisionWorldComponent;
-            collisionWorldComponent?.AddBodyTobeDestroyed(self.Body);
+            self.CollisionWorldComponent.AddBodyTobeDestroyed(self.Body);
         }
 
         public static void CreateCollider(this ColliderComponent self)
         {
             Unit unit = self.GetParent<Unit>();
-            CollisionWorldComponent collisionWorldComponent = self.CollisionWorldComponent;
-            self.Body = collisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
+            self.Body = self.CollisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
             switch (self.ColliderConfig.ColliderType)
             {
                 case EColliderType.Circle:

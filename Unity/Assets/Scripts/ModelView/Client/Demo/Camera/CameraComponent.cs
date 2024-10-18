@@ -7,7 +7,9 @@ namespace ET.Client
     public class CameraComponent : Entity, IAwake, ILateUpdate
     {
         public Camera Camera;
-        public Unit Unit { get; set; }
+
+        private EntityRef<Unit> unit;
+        public Unit Unit { get => this.unit; set => this.unit = value; }
 
         // 镜头纵深
         public float LenDepth = 1;

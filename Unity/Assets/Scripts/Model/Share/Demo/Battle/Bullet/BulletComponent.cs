@@ -5,11 +5,12 @@ namespace ET
     [ComponentOf(typeof(Unit))]
     public class BulletComponent : Entity, IAwake, IFixedUpdate, IDestroy
     {
-        [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();
 
-        public Unit OwnerUnit { get; set; }
-        public Skill OwnerSkill { get; set; }
+        private EntityRef<Unit> ownerUnit;
+        public Unit OwnerUnit { get => this.ownerUnit; set => this.ownerUnit = value; }
+        private EntityRef<Skill> ownerSkill;
+        public Skill OwnerSkill { get => this.ownerSkill; set => this.ownerSkill = value; }
         public long EndTime;
     }
 }

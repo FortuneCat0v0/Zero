@@ -23,14 +23,17 @@ namespace ET
     [ComponentOf(typeof(Unit))]
     public class ColliderComponent : Entity, IAwake, IAwake<CreateColliderParams>, IFixedUpdate, IDestroy
     {
+        private EntityRef<Unit> belongToUnit;
+
         /// <summary>
         /// 所归属的Unit，也就是产出碰撞体的Unit，
         /// 比如诺克放一个Q，那么BelongUnit就是诺克
         /// 需要注意的是，如果这个碰撞体需要同步位置，同步目标是Parent，而不是这个BelongToUnit
         /// </summary>
-        public EntityRef<Unit> BelongToUnit { get; set; }
+        public Unit BelongToUnit { get => this.belongToUnit; set => this.belongToUnit = value; }
 
-        public EntityRef<CollisionWorldComponent> CollisionWorldComponent { get; set; }
+        private EntityRef<CollisionWorldComponent> collisionWorldComponent;
+        public CollisionWorldComponent CollisionWorldComponent { get => this.collisionWorldComponent; set => this.collisionWorldComponent = value; }
 
         public Body Body;
 
@@ -40,7 +43,8 @@ namespace ET
 
         public ColliderConfig ColliderConfig;
 
-        public EntityRef<Skill> Skill;
+        private EntityRef<Skill> skill;
+        public Skill Skill { get => this.skill; set => this.skill = value; }
         public string CollisionHandler { get; set; }
         public List<int> Params { get; set; }
 
