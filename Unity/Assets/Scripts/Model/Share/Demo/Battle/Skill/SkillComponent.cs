@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Options;
 namespace ET
 {
     [ComponentOf(typeof(Unit))]
-    public class SkillComponent : Entity, IAwake, IDestroy, IDeserialize, ITransfer
+    public class SkillComponent : Entity, IAwake, IDestroy, IDeserialize, IUnitCache
     {
         [BsonIgnore]
         public Unit Unit => this.GetParent<Unit>();

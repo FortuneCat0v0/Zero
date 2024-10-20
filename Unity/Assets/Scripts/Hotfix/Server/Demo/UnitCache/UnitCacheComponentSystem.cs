@@ -1,7 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ET.Server
 {
+    [Invoke((long)SceneType.UnitCache)]
+    public class LRUCacheInvoker_DeleteUnitCache : AInvokeHandler<LRUUnitCacheDelete>
+    {
+        public override void Handle(LRUUnitCacheDelete args)
+        {
+            LRUCache lruCache = args.LruCache;
+            lruCache.GetParent<UnitCacheComponent>().Delete(args.Key).Coroutine();
+        }
+    }
+
     [FriendOf(typeof(UnitCache))]
     [FriendOf(typeof(UnitCacheComponent))]
     [EntitySystemOf(typeof(UnitCacheComponent))]
@@ -11,34 +22,53 @@ namespace ET.Server
         private static void Awake(this UnitCacheComponent self)
         {
             self.UnitCacheKeys.Clear();
+
             foreach (Type type in CodeTypes.Instance.GetTypes().Values)
             {
                 if (type != typeof(IUnitCache) && typeof(IUnitCache).IsAssignableFrom(type))
                 {
-                    self.UnitCacheKeys.Add(type.Name);
+                    self.UnitCacheKeys.Add(type.FullName);
                 }
             }
 
             foreach (string key in self.UnitCacheKeys)
             {
                 UnitCache unitCache = self.AddChild<UnitCache>();
-                unitCache.key = key;
-                self.UnitCacheDictionary.Add(key, unitCache);
+                unitCache.Key = key;
+                self.UnitCacheDict.Add(key, unitCache);
             }
+
+            self.AddComponent<LRUCache>();
+        }
+
+        [EntitySystem]
+        private static void Destroy(this UnitCacheComponent self)
+        {
+            foreach (UnitCache unitCache in self.UnitCacheDict.Values)
+            {
+                unitCache?.Dispose();
+            }
+
+            self.UnitCacheDict.Clear();
+        }
+
+        public static void CallCache(this UnitCacheComponent self, long unitId)
+        {
+            self.GetComponent<LRUCache>().Call(unitId);
         }
 
         public static async ETTask<Entity> Get(this UnitCacheComponent self, long unitId, string key)
         {
             UnitCache unitCache;
-            if (!self.UnitCacheDictionary.ContainsKey(key))
+            if (!self.UnitCacheDict.TryGetValue(key, out var value))
             {
                 unitCache = self.AddChild<UnitCache>();
-                unitCache.key = key;
-                self.UnitCacheDictionary.Add(key, unitCache);
+                unitCache.Key = key;
+                self.UnitCacheDict.Add(key, unitCache);
             }
             else
             {
-                unitCache = self.UnitCacheDictionary[key];
+                unitCache = value;
             }
 
             return await unitCache.Get(unitId);
@@ -49,38 +79,38 @@ namespace ET.Server
             string key = typeof(T).Name;
 
             UnitCache unitCache;
-            if (!self.UnitCacheDictionary.ContainsKey(key))
+            if (!self.UnitCacheDict.TryGetValue(key, out var value))
             {
                 unitCache = self.AddChild<UnitCache>();
-                unitCache.key = key;
-                self.UnitCacheDictionary.Add(key, unitCache);
+                unitCache.Key = key;
+                self.UnitCacheDict.Add(key, unitCache);
             }
             else
             {
-                unitCache = self.UnitCacheDictionary[key];
+                unitCache = value;
             }
 
             return await unitCache.Get(unitId) as T;
         }
 
-        public static async ETTask AddOrUpdate(this UnitCacheComponent self, long id, ListComponent<Entity> entityList)
+        public static async ETTask AddOrUpdate(this UnitCacheComponent self, long unitId, List<Entity> entityList)
         {
             using (ListComponent<Entity> list = ListComponent<Entity>.Create())
             {
+                self.CallCache(unitId);
                 foreach (Entity entity in entityList)
                 {
                     string key = entity.GetType().FullName;
-
                     UnitCache unitCache;
-                    if (!self.UnitCacheDictionary.ContainsKey(key))
+                    if (!self.UnitCacheDict.TryGetValue(key, out var value))
                     {
                         unitCache = self.AddChild<UnitCache>();
-                        unitCache.key = key;
-                        self.UnitCacheDictionary.Add(key, unitCache);
+                        unitCache.Key = key;
+                        self.UnitCacheDict.Add(key, unitCache);
                     }
                     else
                     {
-                        unitCache = self.UnitCacheDictionary[key];
+                        unitCache = value;
                     }
 
                     unitCache.AddOrUpdate(entity);
@@ -89,16 +119,21 @@ namespace ET.Server
 
                 if (list.Count > 0)
                 {
-                    await self.Root().GetComponent<DBManagerComponent>().GetZoneDB(self.Zone()).Save(id, list);
+                    await self.Root().GetComponent<DBManagerComponent>().GetZoneDB(self.Zone()).Save(unitId, list);
                 }
             }
+
+            await ETTask.CompletedTask;
         }
 
-        public static void Delete(this UnitCacheComponent self, long unitId)
+        public static async ETTask Delete(this UnitCacheComponent self, long unitId)
         {
-            foreach (UnitCache cache in self.UnitCacheDictionary.Values)
+            using (await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.UnitCacheGet, unitId))
             {
-                cache.Delete(unitId);
+                foreach (UnitCache unitCache in self.UnitCacheDict.Values)
+                {
+                    unitCache.Delete(unitId);
+                }
             }
         }
     }

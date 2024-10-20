@@ -46,8 +46,8 @@
                             break;
                         case PlayerState.Game:
                             // 通知游戏逻辑服下线Unit角色逻辑，并将数据存入数据库
-                            player.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.Unit)
-                                    .Send(player.Id, G2M_RequestExitGame.Create());
+                            await player.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.Unit)
+                                    .Call(player.Id, G2M_RequestExitGame.Create());
 
                             //通知聊天服下线聊天Unit
                             // var chat2GRequestExitChat = (Chat2G_RequestExitChat)await MessageHelper.CallActor(player.ChatInfoInstanceId,new G2Chat_RequestExitChat());

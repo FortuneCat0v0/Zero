@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net;
 
 namespace ET
@@ -8,17 +7,19 @@ namespace ET
     public partial class StartSceneConfigCategory
     {
         public MultiMap<int, StartSceneConfig> Gates = new();
-        
+
         public MultiMap<int, StartSceneConfig> ProcessScenes = new();
-        
-        public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new();
+
+        public Dictionary<long, Dictionary<SceneType, StartSceneConfig>> ClientScenesByType = new();
+
+        public Dictionary<long, Dictionary<string, StartSceneConfig>> OneScenesByName = new();
 
         public StartSceneConfig LocationConfig;
 
         public Dictionary<int, StartSceneConfig> Realms = new();
-        
+
         public List<StartSceneConfig> Routers = new();
-        
+
         public List<StartSceneConfig> Maps = new();
 
         public StartSceneConfig Account;
@@ -26,22 +27,24 @@ namespace ET
         public StartSceneConfig LoginCenter;
 
         public StartSceneConfig UnitCache;
-        
-        //每个区一个缓存服
-        public Dictionary<int, StartSceneConfig> UnitCaches = new();
-        
+
         public StartSceneConfig Match;
 
         public StartSceneConfig Benchmark;
-        
+
         public List<StartSceneConfig> GetByProcess(int process)
         {
             return this.ProcessScenes[process];
         }
-        
+
+        public StartSceneConfig GetOneBySceneType(int zone, SceneType type)
+        {
+            return this.ClientScenesByType[zone][type];
+        }
+
         public StartSceneConfig GetBySceneName(int zone, string name)
         {
-            return this.ClientScenesByName[zone][name];
+            return this.OneScenesByName[zone][name];
         }
 
         partial void PostInit()
@@ -49,13 +52,14 @@ namespace ET
             foreach (StartSceneConfig startSceneConfig in this.DataList)
             {
                 this.ProcessScenes.Add(startSceneConfig.Process, startSceneConfig);
-                
-                if (!this.ClientScenesByName.ContainsKey(startSceneConfig.Zone))
+
+                if (!this.OneScenesByName.ContainsKey(startSceneConfig.Zone))
                 {
-                    this.ClientScenesByName.Add(startSceneConfig.Zone, new Dictionary<string, StartSceneConfig>());
+                    this.OneScenesByName.Add(startSceneConfig.Zone, new());
                 }
-                this.ClientScenesByName[startSceneConfig.Zone].Add(startSceneConfig.Name, startSceneConfig);
-                
+
+                this.OneScenesByName[startSceneConfig.Zone].Add(startSceneConfig.Name, startSceneConfig);
+
                 switch (startSceneConfig.Type)
                 {
                     case SceneType.Realm:
@@ -86,17 +90,22 @@ namespace ET
                         this.LoginCenter = startSceneConfig;
                         break;
                     case SceneType.UnitCache:
-                        this.UnitCaches.Add(startSceneConfig.Zone, startSceneConfig);
+                        if (!this.ClientScenesByType.ContainsKey(startSceneConfig.Zone))
+                        {
+                            this.ClientScenesByType.Add(startSceneConfig.Zone, new());
+                        }
+
+                        this.ClientScenesByType[startSceneConfig.Zone].Add(startSceneConfig.Type, startSceneConfig);
                         break;
                 }
             }
         }
     }
-    
+
     public partial class StartSceneConfig
     {
         public ActorId ActorId;
-        
+
         public SceneType Type;
 
         public StartProcessConfig StartProcessConfig
@@ -106,7 +115,7 @@ namespace ET
                 return StartProcessConfigCategory.Instance.Get(this.Process);
             }
         }
-        
+
         public StartZoneConfig StartZoneConfig
         {
             get

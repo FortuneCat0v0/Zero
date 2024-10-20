@@ -33,7 +33,7 @@ namespace ET
     }
 
     [ComponentOf(typeof(Unit))]
-    public class RoleCastComponent : Entity, IAwake<ERoleCamp, ERoleTag>, ITransfer
+    public class RoleCastComponent : Entity, IAwake<ERoleCamp, ERoleTag>, IUnitCache
     {
         /// <summary>
         /// 归属阵营

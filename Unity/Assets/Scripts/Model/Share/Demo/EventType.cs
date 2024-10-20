@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System;
+
+namespace ET
 {
     public struct SceneChangeStart
     {
@@ -48,5 +50,11 @@
     public struct UnitDeath
     {
         public Unit Unit;
+    }
+
+    public struct UnitGetComponent
+    {
+        public EntityRef<Unit> Unit;
+        public Type Type;
     }
 }

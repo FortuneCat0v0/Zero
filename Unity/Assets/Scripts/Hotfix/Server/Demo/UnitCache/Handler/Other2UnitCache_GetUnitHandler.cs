@@ -2,48 +2,66 @@
 
 namespace ET.Server
 {
-    [FriendOf(typeof (UnitCacheComponent))]
+    [FriendOf(typeof(UnitCacheComponent))]
     [MessageHandler(SceneType.UnitCache)]
-    public class Other2UnitCache_GetUnitHandler: MessageHandler<Scene, Other2UnitCache_GetUnit, UnitCache2Other_GetUnit>
+    public class Other2UnitCache_GetUnitHandler : MessageHandler<Scene, Other2UnitCache_GetUnit, UnitCache2Other_GetUnit>
     {
         protected override async ETTask Run(Scene scene, Other2UnitCache_GetUnit request, UnitCache2Other_GetUnit response)
         {
             UnitCacheComponent unitCacheComponent = scene.GetComponent<UnitCacheComponent>();
-            Dictionary<string, byte[]> dictionary = ObjectPool.Instance.Fetch(typeof (Dictionary<string, byte[]>)) as Dictionary<string, byte[]>;
+            Dictionary<string, Entity> dict = ObjectPool.Instance.Fetch(typeof(Dictionary<string, Entity>)) as Dictionary<string, Entity>;
             try
             {
                 if (request.ComponentNameList.Count == 0)
                 {
-                    dictionary.Add(nameof (Unit), null);
+                    dict.Add("ET.Unit", null);
                     foreach (string s in unitCacheComponent.UnitCacheKeys)
                     {
-                        dictionary.Add(s, null);
+                        if (s == "ET.Unit")
+                        {
+                            continue;
+                        }
+
+                        dict.Add(s, null);
                     }
                 }
                 else
                 {
                     foreach (string s in request.ComponentNameList)
                     {
-                        dictionary.Add(s, null);
+                        dict.Add(s, null);
                     }
                 }
 
-                foreach (var key in dictionary.Keys)
+                using (await scene.GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.UnitCacheGet, request.UnitId))
                 {
-                    Entity entity = await unitCacheComponent.Get(request.UnitId, key);
-                    if (entity != null)
+                    unitCacheComponent.CallCache(request.UnitId);
+
+                    using (ListComponent<string> keyList = ListComponent<string>.Create())
                     {
-                        dictionary[key] = entity.ToBson();
+                        foreach (var key in dict.Keys)
+                        {
+                            keyList.Add(key);
+                        }
+
+                        foreach (var key in keyList)
+                        {
+                            Entity entity = await unitCacheComponent.Get(request.UnitId, key);
+                            dict[key] = entity;
+                        }
+                    }
+
+                    foreach (var info in dict)
+                    {
+                        response.ComponentNameList.Add(info.Key);
+                        response.EntityList.Add(info.Value?.ToBson() ?? null);
                     }
                 }
-
-                response.ComponentNameList.AddRange(dictionary.Keys);
-                response.EntityList.AddRange(dictionary.Values);
             }
             finally
             {
-                dictionary.Clear();
-                ObjectPool.Instance.Recycle(dictionary);
+                dict.Clear();
+                ObjectPool.Instance.Recycle(dict);
             }
 
             await ETTask.CompletedTask;

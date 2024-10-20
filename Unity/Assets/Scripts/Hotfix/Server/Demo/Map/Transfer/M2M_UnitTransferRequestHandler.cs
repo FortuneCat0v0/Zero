@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -14,15 +15,24 @@ namespace ET.Server
             unitComponent.AddChild(unit);
             unitComponent.Add(unit);
 
-            foreach (byte[] bytes in request.Entitys)
+            // foreach (byte[] bytes in request.Entitys)
+            // {
+            //     Entity entity = MongoHelper.Deserialize<Entity>(bytes);
+            //     unit.AddComponent(entity);
+            // }
+
+            unit.AddComponent<UnitDBSaveComponent>();
+            for (int i = 0; i < request.Entitys.Count; i++)
             {
-                Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-                unit.AddComponent(entity);
+                string k = request.Types[i];
+                Type t = CodeTypes.Instance.GetType(k);
+                byte[] v = request.Entitys[i];
+                unit.GetComponent<UnitDBSaveComponent>().AddToBytes(t, v);
             }
 
             unit.AddComponent<MoveComponent>();
-            // unit.AddComponent<PathfindingComponent, string>(scene.Name);
             // 服务端添加寻路地图
+            // unit.AddComponent<PathfindingComponent, string>(scene.Name);
             unit.AddComponent<PathfindingComponent, string>("TestMap");
             unit.Position = new float3(0, 0, 0);
 
@@ -34,7 +44,7 @@ namespace ET.Server
             m2CStartSceneChange.SceneName = scene.Name;
             MapMessageHelper.SendToClient(unit, m2CStartSceneChange);
 
-            // 通知客户端创建My Unit
+            // 通知客户端创建MyUnit
             M2C_CreateMyUnit m2CCreateUnits = M2C_CreateMyUnit.Create();
             m2CCreateUnits.Unit = UnitHelper.CreateUnitInfo(unit);
             MapMessageHelper.SendToClient(unit, m2CCreateUnits);

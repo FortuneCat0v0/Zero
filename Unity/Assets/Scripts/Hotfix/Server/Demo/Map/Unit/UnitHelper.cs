@@ -54,7 +54,7 @@ namespace ET.Server
                     unitInfo.SkillGridDict.Add(keyValuePairIntInt);
                 }
             }
-            
+
             unitInfo.ERoleCamp = (int)unit.GetComponent<RoleCastComponent>().RoleCamp;
 
             return unitInfo;
@@ -66,30 +66,30 @@ namespace ET.Server
             return self.GetComponent<AOIEntity>().GetBeSeePlayers();
         }
 
-        /// <summary>
-        /// 给Player添加GateMapComponent组件，并创建一个Map Scene赋值给GateMapComponent组件。从缓存服获取Unit挂载在Map Scene下，如果查询不到，
-        /// 则创建一个Unit,并更新到UnitCache服上
-        /// </summary>
-        /// <param name="player"></param>
-        /// <returns></returns>
         public static async ETTask<(bool, Unit)> LoadUnit(Player player)
         {
             // 在Gate上动态创建一个Map Scene，把Unit从DB中加载放进来，然后传送到真正的Map中，这样登陆跟传送的逻辑就完全一样了
             GateMapComponent gateMapComponent = player.AddComponent<GateMapComponent>();
-            gateMapComponent.Scene =
-                    await GateMapFactory.Create(gateMapComponent, player.Id, IdGenerater.Instance.GenerateInstanceId(), "GateMap");
+            gateMapComponent.Scene = await GateMapFactory.Create(gateMapComponent, player.Id, IdGenerater.Instance.GenerateInstanceId(), "GateMap");
 
-            Unit unit = await UnitCacheHelper.GetUnitCache(gateMapComponent.Scene, player.Id);
+            Unit unit = await UnitCacheHelper.GetUnitCache(player.Root(), gateMapComponent.Scene, player.Id);
 
             bool isNewUnit = unit == null;
             if (isNewUnit)
             {
                 unit = UnitFactory.CreatePlayer(gateMapComponent.Scene, player.Id);
-
+                unit.AddComponent<UnitDBSaveComponent>();
                 // List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone()).Query<Role>(d => d.Id == player.Id);
                 // unit.AddComponent(roleList[0]);
 
                 UnitCacheHelper.AddOrUpdateUnitAllCache(unit);
+            }
+            else
+            {
+                if (unit.GetComponent<UnitDBSaveComponent>() == null)
+                {
+                    unit.AddComponent<UnitDBSaveComponent>();
+                }
             }
 
             return (isNewUnit, unit);

@@ -746,6 +746,9 @@ namespace ET
         public byte[] Unit { get; set; }
 
         [MemoryPackOrder(3)]
+        public List<string> Types { get; set; } = new();
+
+        [MemoryPackOrder(4)]
         public List<byte[]> Entitys { get; set; } = new();
 
         public override void Dispose()
@@ -758,6 +761,7 @@ namespace ET
             this.RpcId = default;
             this.OldActorId = default;
             this.Unit = default;
+            this.Types.Clear();
             this.Entitys.Clear();
 
             ObjectPool.Instance.Recycle(this);

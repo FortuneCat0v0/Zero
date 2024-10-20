@@ -6,7 +6,7 @@ namespace ET
 {
     [ChildOf(typeof(UnitComponent))]
     [DebuggerDisplay("ViewName,nq")]
-    public partial class Unit : Entity, IAwake<EUnitType, int>
+    public partial class Unit : Entity, IAwake<EUnitType, int>, IGetComponentSys
     {
         public EUnitType UnitType { get; set; }
 

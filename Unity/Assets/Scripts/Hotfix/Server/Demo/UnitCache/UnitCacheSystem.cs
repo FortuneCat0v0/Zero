@@ -12,13 +12,13 @@
         [EntitySystem]
         private static void Destroy(this UnitCache self)
         {
-            foreach (Entity entity in self.CacheCompoenntsDictionary.Values)
+            foreach (Entity entity in self.CacheComponentsDict.Values)
             {
                 entity.Dispose();
             }
 
-            self.CacheCompoenntsDictionary.Clear();
-            self.key = null;
+            self.CacheComponentsDict.Clear();
+            self.Key = null;
         }
 
         public static void AddOrUpdate(this UnitCache self, Entity entity)
@@ -28,26 +28,26 @@
                 return;
             }
 
-            if (self.CacheCompoenntsDictionary.ContainsKey(entity.Id))
+            if (self.CacheComponentsDict.ContainsKey(entity.Id))
             {
-                Entity oldEntity = self.CacheCompoenntsDictionary[entity.Id];
+                Entity oldEntity = self.CacheComponentsDict[entity.Id];
                 if (entity != oldEntity)
                 {
                     oldEntity.Dispose();
                 }
 
-                self.CacheCompoenntsDictionary.Remove(entity.Id);
+                self.CacheComponentsDict.Remove(entity.Id);
             }
 
-            self.CacheCompoenntsDictionary.Add(entity.Id, entity);
+            self.CacheComponentsDict.Add(entity.Id, entity);
         }
 
-        public static async ETTask<Entity> Get(this UnitCache self, long id)
+        public static async ETTask<Entity> Get(this UnitCache self, long unitId)
         {
             Entity entity = null;
-            if (!self.CacheCompoenntsDictionary.ContainsKey(id))
+            if (!self.CacheComponentsDict.TryGetValue(unitId, out var value))
             {
-                entity = await self.Root().GetComponent<DBManagerComponent>().GetZoneDB(self.Zone()).Query<Entity>(id, self.key);
+                entity = await self.Root().GetComponent<DBManagerComponent>().GetZoneDB(self.Zone()).Query<Entity>(unitId, self.Key);
                 if (entity != null)
                 {
                     self.AddOrUpdate(entity);
@@ -55,22 +55,22 @@
             }
             else
             {
-                entity = self.CacheCompoenntsDictionary[id];
+                entity = value;
             }
 
             return entity;
         }
 
-        public static void Delete(this UnitCache self, long id)
+        public static void Delete(this UnitCache self, long unitId)
         {
-            if (!self.CacheCompoenntsDictionary.ContainsKey(id))
+            if (!self.CacheComponentsDict.TryGetValue(unitId, out var value))
             {
                 return;
             }
 
-            Entity entity = self.CacheCompoenntsDictionary[id];
+            Entity entity = value;
             entity?.Dispose();
-            self.CacheCompoenntsDictionary.Remove(id);
+            self.CacheComponentsDict.Remove(unitId);
         }
     }
 }

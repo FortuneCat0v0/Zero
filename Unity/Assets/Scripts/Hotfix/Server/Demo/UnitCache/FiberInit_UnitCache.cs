@@ -1,7 +1,7 @@
 ﻿namespace ET.Server
 {
     [Invoke((long)SceneType.UnitCache)]
-    public class FiberInit_UnitCache: AInvokeHandler<FiberInit, ETTask>
+    public class FiberInit_UnitCache : AInvokeHandler<FiberInit, ETTask>
     {
         public override async ETTask Handle(FiberInit fiberInit)
         {
@@ -11,9 +11,11 @@
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
-            
-            root.AddComponent<UnitCacheComponent>();
+            root.AddComponent<LocationProxyComponent>();
+            root.AddComponent<MessageLocationSenderComponent>();
             root.AddComponent<DBManagerComponent>();
+            root.AddComponent<UnitCacheComponent>();
+
             await ETTask.CompletedTask;
         }
     }

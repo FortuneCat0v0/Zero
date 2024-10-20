@@ -7,7 +7,7 @@
         protected override async ETTask Run(Scene scene, Other2UnitCache_DeleteUnit request, UnitCache2Other_DeleteUnit response)
         {
             UnitCacheComponent unitCacheComponent = scene.GetComponent<UnitCacheComponent>();
-            unitCacheComponent.Delete(request.UnitId);
+            unitCacheComponent.Delete(request.UnitId).Coroutine();
             await ETTask.CompletedTask;
         }
     }

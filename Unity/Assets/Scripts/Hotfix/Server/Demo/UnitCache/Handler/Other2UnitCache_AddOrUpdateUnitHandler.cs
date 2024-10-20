@@ -1,8 +1,8 @@
 ﻿namespace ET.Server
 {
-    [FriendOf(typeof (UnitCacheComponent))]
+    [FriendOf(typeof(UnitCacheComponent))]
     [MessageHandler(SceneType.UnitCache)]
-    public class Other2UnitCache_AddOrUpdateUnitHandler: MessageHandler<Scene, Other2UnitCache_AddOrUpdateUnit, UnitCache2Other_AddOrUpdateUnit>
+    public class Other2UnitCache_AddOrUpdateUnitHandler : MessageHandler<Scene, Other2UnitCache_AddOrUpdateUnit, UnitCache2Other_AddOrUpdateUnit>
     {
         protected override async ETTask Run(Scene scene, Other2UnitCache_AddOrUpdateUnit request, UnitCache2Other_AddOrUpdateUnit response)
         {

@@ -166,7 +166,8 @@ message M2M_UnitTransferRequest // IRequest
 	int32 RpcId = 1;
 	ActorId OldActorId = 2;
 	bytes Unit = 3;
-	repeated bytes Entitys = 4;
+	repeated string Types = 4;
+	repeated bytes Entitys = 5;
 }
 
 message M2M_UnitTransferResponse // IResponse
@@ -272,12 +273,10 @@ message M2G_RequestEnterGameState // ILocationResponse
     string Message = 3;
 }
 
-
 message G2M_RequestExitGame // ILocationMessage
 {
     int32 RpcId = 1;
 }
-
 
 //ResponseType L2G_RemoveLoginRecord
 message G2L_RemoveLoginRecord // IRequest
@@ -301,7 +300,6 @@ message L2G_RemoveLoginRecord // IResponse
 message Other2UnitCache_AddOrUpdateUnit //IRequest
 {
     int32 RpcId = 1;
-
     int64 UnitId = 2;				  // 需要缓存的UnitId
     repeated string EntityTypes = 3;  //实体类型
     repeated bytes EntityBytes = 4;   //实体序列化后的bytes
@@ -319,7 +317,6 @@ message UnitCache2Other_AddOrUpdateUnit //IResponse
 message Other2UnitCache_GetUnit //IRequest
 {
     int32 RpcId = 1;
-
     int64 UnitId = 2;
     repeated string ComponentNameList = 3; //需要获取的组件名
 }
@@ -329,7 +326,6 @@ message UnitCache2Other_GetUnit //IResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-
 	repeated bytes EntityList = 4;
 	repeated string ComponentNameList = 5;
 }
@@ -339,7 +335,6 @@ message UnitCache2Other_GetUnit //IResponse
 message Other2UnitCache_DeleteUnit // IRequest
 {
    int32 RpcId = 1;
-
    int64 UnitId = 2;    
 }
 

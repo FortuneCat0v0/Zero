@@ -1,101 +1,59 @@
-﻿namespace ET.Server
+﻿using System;
+
+namespace ET.Server
 {
     public static class UnitCacheHelper
     {
-        /// <summary>
-        /// 保存或者更新玩家缓存
-        /// </summary>
-        /// <param name="self"></param>
-        /// <typeparam name="T"></typeparam>
-        public static async ETTask AddOrUpdateUnitCache<T>(this T self) where T : Entity, IUnitCache
+        public static async ETTask<Unit> GetUnitCache(Scene gateScene, Scene mapScene, long unitId)
         {
-            Other2UnitCache_AddOrUpdateUnit message = Other2UnitCache_AddOrUpdateUnit.Create();
-            message.UnitId = self.Id;
-            message.EntityTypes.Add(typeof(T).FullName);
-            message.EntityBytes.Add(self.ToBson());
-            await self.Root().GetComponent<MessageSender>().Call(StartSceneConfigCategory.Instance.UnitCaches[self.Zone()].ActorId, message);
-            await ETTask.CompletedTask;
-        }
+            ActorId actorId = StartSceneConfigCategory.Instance.GetOneBySceneType(gateScene.Zone(), SceneType.UnitCache).ActorId;
+            Other2UnitCache_GetUnit message = Other2UnitCache_GetUnit.Create();
+            message.UnitId = unitId;
 
-        /// <summary>
-        /// 从UnitCache缓存服获取玩家缓存，如果没有，则从数据库中获取，挂载在MapScene的UnitComponent上
-        /// </summary>
-        /// <param name="scene"></param>
-        /// <param name="unitId"></param>
-        /// <returns></returns>
-        public static async ETTask<Unit> GetUnitCache(Scene scene, long unitId)
-        {
-            ActorId actorId = StartSceneConfigCategory.Instance.UnitCaches[scene.Zone()].ActorId;
-            Other2UnitCache_GetUnit message = new() { UnitId = unitId };
-            UnitCache2Other_GetUnit queryUnit = (UnitCache2Other_GetUnit)await scene.Root().GetComponent<MessageSender>().Call(actorId, message);
+            UnitCache2Other_GetUnit queryUnit = (UnitCache2Other_GetUnit)await gateScene.GetComponent<MessageSender>().Call(actorId, message);
             if (queryUnit.Error != ErrorCode.ERR_Success || queryUnit.EntityList.Count <= 0)
             {
                 return null;
             }
 
-            int indexOf = queryUnit.ComponentNameList.IndexOf(nameof(Unit));
+            Unit unit = null;
+            int indexOf = queryUnit.ComponentNameList.IndexOf("ET.Unit");
+            if (indexOf >= 0)
+            {
+                if (queryUnit.EntityList[indexOf] != null)
+                {
+                    unit = MongoHelper.Deserialize<Entity>(queryUnit.EntityList[indexOf]) as Unit;
+                }
+            }
 
-            if (queryUnit.EntityList[indexOf] == null)
+            if (unit == null)
             {
                 return null;
             }
 
-            Unit unit = MongoHelper.Deserialize<Unit>(queryUnit.EntityList[indexOf]);
+            mapScene.GetComponent<UnitComponent>().AddChild(unit);
 
-            scene.GetComponent<UnitComponent>().AddChild(unit);
-            foreach (byte[] bytes in queryUnit.EntityList)
+            if (unit.GetComponent<UnitDBSaveComponent>() == null)
             {
-                Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-                if (entity == null || entity is Unit)
+                unit.AddComponent<UnitDBSaveComponent>();
+            }
+
+            for (int i = 0; i < queryUnit.EntityList.Count; i++)
+            {
+                if (i == indexOf)
                 {
                     continue;
                 }
 
-                unit.AddComponent(entity);
+                byte[] entityByte = queryUnit.EntityList[i];
+                Type type = CodeTypes.Instance.GetType(queryUnit.ComponentNameList[i]);
+
+                EventSystem.Instance.Invoke((long)SceneType.UnitCache, new AddToBytes() { Unit = unit, Type = type, Bytes = entityByte });
             }
 
             return unit;
         }
 
-        /// <summary>
-        /// 获取玩家某个组件缓存
-        /// </summary>
-        /// <param name="unitId"></param>
-        /// <typeparam name="T">Unit上组件的类型</typeparam>
-        /// <returns></returns>
-        public static async ETTask<T> GetUnitComponentCache<T>(Scene scene, long unitId) where T : Entity, IUnitCache
-        {
-            Other2UnitCache_GetUnit message = Other2UnitCache_GetUnit.Create();
-            message.UnitId = unitId;
-            message.ComponentNameList.Add(typeof(T).Name);
-            ActorId actorId = StartSceneConfigCategory.Instance.UnitCaches[scene.Zone()].ActorId;
-            UnitCache2Other_GetUnit queryUnit = (UnitCache2Other_GetUnit)await scene.Root().GetComponent<MessageSender>().Call(actorId, message);
-            if (queryUnit.Error == ErrorCode.ERR_Success && queryUnit.EntityList.Count > 0)
-            {
-                return MongoHelper.Deserialize<T>(queryUnit.EntityList[0]);
-            }
-
-            await ETTask.CompletedTask;
-            return null;
-        }
-
-        /// <summary>
-        /// 删除玩家缓存
-        /// </summary>
-        /// <param name="unitId"></param>
-        public static async ETTask DeleteUnitCache(Scene scene, long unitId)
-        {
-            Other2UnitCache_DeleteUnit message = Other2UnitCache_DeleteUnit.Create();
-            message.UnitId = unitId;
-            ActorId actorId = StartSceneConfigCategory.Instance.UnitCaches[scene.Zone()].ActorId;
-            await scene.Root().GetComponent<MessageSender>().Call(actorId, message);
-            await ETTask.CompletedTask;
-        }
-
-        /// <summary>
-        /// 保存Unit及Unit身上组件到缓存服及数据库中
-        /// </summary>
-        /// <param name="unit"></param>
         public static void AddOrUpdateUnitAllCache(Unit unit)
         {
             Other2UnitCache_AddOrUpdateUnit message = Other2UnitCache_AddOrUpdateUnit.Create();
@@ -105,14 +63,22 @@
 
             foreach (Entity entity in unit.Components.Values)
             {
-                if (entity is IUnitCache)
+                Type type = entity.GetType();
+
+                if (!typeof(IUnitCache).IsAssignableFrom(type))
                 {
-                    message.EntityTypes.Add(entity.GetType().FullName);
-                    message.EntityBytes.Add((entity).ToBson());
+                    continue;
                 }
+
+                message.EntityTypes.Add(type.FullName);
+                byte[] bytes = entity.ToBson();
+                message.EntityBytes.Add(bytes);
+
+                EventSystem.Instance.Invoke((long)SceneType.UnitCache, new AddToBytes() { Unit = unit, Type = type, Bytes = bytes });
             }
 
-            unit.Root().GetComponent<MessageSender>().Call(StartSceneConfigCategory.Instance.UnitCaches[unit.Zone()].ActorId, message).Coroutine();
+            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetOneBySceneType(unit.Zone(), SceneType.UnitCache);
+            unit.Root().GetComponent<MessageSender>().Call(startSceneConfig.ActorId, message).Coroutine();
         }
     }
 }
