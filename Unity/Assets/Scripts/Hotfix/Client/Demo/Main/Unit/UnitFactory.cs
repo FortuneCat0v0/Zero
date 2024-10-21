@@ -38,7 +38,7 @@
 
             foreach (KeyValuePair_Int_Int keyValuePairIntInt in unitInfo.SkillGridDict)
             {
-                skillComponent.SkillGridDict[keyValuePairIntInt.Key] = keyValuePairIntInt.Value;
+                skillComponent.SkillSlotDict[keyValuePairIntInt.Key] = keyValuePairIntInt.Value;
             }
 
             unit.AddComponent<BuffComponent>();

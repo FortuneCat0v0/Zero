@@ -74,33 +74,21 @@ namespace ET.Server
             return await unitCache.Get(unitId);
         }
 
-        public static async ETTask<T> Get<T>(this UnitCacheComponent self, long unitId) where T : Entity
-        {
-            string key = typeof(T).Name;
-
-            UnitCache unitCache;
-            if (!self.UnitCacheDict.TryGetValue(key, out var value))
-            {
-                unitCache = self.AddChild<UnitCache>();
-                unitCache.Key = key;
-                self.UnitCacheDict.Add(key, unitCache);
-            }
-            else
-            {
-                unitCache = value;
-            }
-
-            return await unitCache.Get(unitId) as T;
-        }
-
         public static async ETTask AddOrUpdate(this UnitCacheComponent self, long unitId, List<Entity> entityList)
         {
             using (ListComponent<Entity> list = ListComponent<Entity>.Create())
             {
                 self.CallCache(unitId);
+
                 foreach (Entity entity in entityList)
                 {
                     string key = entity.GetType().FullName;
+
+                    if (string.IsNullOrEmpty(key))
+                    {
+                        continue;
+                    }
+
                     UnitCache unitCache;
                     if (!self.UnitCacheDict.TryGetValue(key, out var value))
                     {

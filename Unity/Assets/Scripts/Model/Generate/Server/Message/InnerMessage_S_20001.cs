@@ -1129,13 +1129,13 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(InnerMessage.G2M_RequestEnterGameState)]
-    [ResponseType(nameof(M2G_RequestEnterGameState))]
-    public partial class G2M_RequestEnterGameState : MessageObject, ILocationRequest
+    [Message(InnerMessage.G2M_RequestEnterGame)]
+    [ResponseType(nameof(M2G_RequestEnterGame))]
+    public partial class G2M_RequestEnterGame : MessageObject, ILocationRequest
     {
-        public static G2M_RequestEnterGameState Create(bool isFromPool = false)
+        public static G2M_RequestEnterGame Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(G2M_RequestEnterGameState), isFromPool) as G2M_RequestEnterGameState;
+            return ObjectPool.Instance.Fetch(typeof(G2M_RequestEnterGame), isFromPool) as G2M_RequestEnterGame;
         }
 
         [MemoryPackOrder(0)]
@@ -1155,12 +1155,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(InnerMessage.M2G_RequestEnterGameState)]
-    public partial class M2G_RequestEnterGameState : MessageObject, ILocationResponse
+    [Message(InnerMessage.M2G_RequestEnterGame)]
+    public partial class M2G_RequestEnterGame : MessageObject, ILocationResponse
     {
-        public static M2G_RequestEnterGameState Create(bool isFromPool = false)
+        public static M2G_RequestEnterGame Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(M2G_RequestEnterGameState), isFromPool) as M2G_RequestEnterGameState;
+            return ObjectPool.Instance.Fetch(typeof(M2G_RequestEnterGame), isFromPool) as M2G_RequestEnterGame;
         }
 
         [MemoryPackOrder(0)]
@@ -1539,8 +1539,8 @@ namespace ET
         public const ushort G2R_GetLoginGateKey = 20032;
         public const ushort G2L_AddLoginRecord = 20033;
         public const ushort L2G_AddLoginRecord = 20034;
-        public const ushort G2M_RequestEnterGameState = 20035;
-        public const ushort M2G_RequestEnterGameState = 20036;
+        public const ushort G2M_RequestEnterGame = 20035;
+        public const ushort M2G_RequestEnterGame = 20036;
         public const ushort G2M_RequestExitGame = 20037;
         public const ushort G2L_RemoveLoginRecord = 20038;
         public const ushort L2G_RemoveLoginRecord = 20039;

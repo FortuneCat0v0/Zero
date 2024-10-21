@@ -162,7 +162,7 @@ namespace ET.Server
                 SkillInfo skillInfo = SkillInfo.Create();
                 skillInfo.SkillConfigId = skillConfigId;
                 m2CSkillUpdateOp.SkillInfo = skillInfo;
-                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillGridDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;
@@ -175,7 +175,7 @@ namespace ET.Server
         public static void InterruptSkill(this Unit unit)
         {
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            List<Skill> skills = skillComponent.GetAllSkill();
+            List<EntityRef<Skill>> skills = skillComponent.GetAllSkill();
             foreach (Skill skill in skills)
             {
                 if (skill.SkillState == ESkillState.Execute)
@@ -199,7 +199,7 @@ namespace ET.Server
                 M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
                 m2CSkillUpdateOp.UnitId = unit.Id;
                 m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.SetSkillGrid;
-                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillGridDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;

@@ -13,11 +13,11 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this SkillComponent self)
         {
-            foreach (ESkillSlotType eSkillGridType in Enum.GetValues(typeof(ESkillSlotType)))
+            foreach (ESkillSlotType skillSlotType in Enum.GetValues(typeof(ESkillSlotType)))
             {
-                if (!self.SkillGridDict.ContainsKey((int)eSkillGridType))
+                if (!self.SkillSlotDict.ContainsKey((int)skillSlotType))
                 {
-                    self.SkillGridDict.Add((int)eSkillGridType, 0);
+                    self.SkillSlotDict.Add((int)skillSlotType, 0);
                 }
             }
         }
@@ -53,11 +53,11 @@ namespace ET.Client
             Skill skill = self.GetSkillByConfigId(skillConfigId);
             self.SkillDict.Remove(skillConfigId);
 
-            foreach (KeyValuePair<int, int> keyValue in self.SkillGridDict)
+            foreach (KeyValuePair<int, int> keyValue in self.SkillSlotDict)
             {
                 if (keyValue.Value == skillConfigId)
                 {
-                    self.SkillGridDict[keyValue.Key] = 0;
+                    self.SkillSlotDict[keyValue.Key] = 0;
                 }
             }
 
@@ -68,7 +68,7 @@ namespace ET.Client
         public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
             Skill skill = null;
-            if (self.SkillDict.TryGetValue(configId, out Skill value))
+            if (self.SkillDict.TryGetValue(configId, out EntityRef<Skill> value))
             {
                 skill = value;
             }
@@ -78,15 +78,15 @@ namespace ET.Client
 
         public static Skill GetSkillByGrid(this SkillComponent self, ESkillSlotType skillSlotType)
         {
-            if (self.SkillGridDict[(int)skillSlotType] == 0)
+            if (self.SkillSlotDict[(int)skillSlotType] == 0)
             {
                 return null;
             }
 
-            return self.GetSkillByConfigId(self.SkillGridDict[(int)skillSlotType]);
+            return self.GetSkillByConfigId(self.SkillSlotDict[(int)skillSlotType]);
         }
 
-        public static List<Skill> GetAllSkill(this SkillComponent self)
+        public static List<EntityRef<Skill>> GetAllSkill(this SkillComponent self)
         {
             return self.SkillDict.Values.ToList();
         }
@@ -99,7 +99,7 @@ namespace ET.Client
         /// <param name="angle"></param>
         /// <param name="position"></param>
         /// <param name="targetUnitId"></param>
-        public static void SpllSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float angle, float3 position)
+        public static void SpellSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float angle, float3 position)
         {
             Log.Debug($"释放技能 {skillConfigId}");
 

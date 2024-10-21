@@ -49,7 +49,7 @@
                             await player.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.Unit)
                                     .Call(player.Id, G2M_RequestExitGame.Create());
 
-                            //通知聊天服下线聊天Unit
+                            // 通知聊天服下线聊天Unit
                             // var chat2GRequestExitChat = (Chat2G_RequestExitChat)await MessageHelper.CallActor(player.ChatInfoInstanceId,new G2Chat_RequestExitChat());
 
                             //通知移除账号角色登录信息

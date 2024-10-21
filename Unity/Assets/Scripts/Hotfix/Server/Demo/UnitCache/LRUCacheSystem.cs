@@ -10,8 +10,8 @@ namespace ET.Server
         [EntitySystem]
         private static void Awake(this LRUCache self)
         {
-            self.MinFrequency = 0;
             self.FrequencyDict.Add(0, new());
+            self.MinFrequency = 0;
         }
 
         [EntitySystem]
@@ -22,11 +22,11 @@ namespace ET.Server
             self.MinFrequency = 0;
         }
 
-        public static void Call(this LRUCache self, long key)
+        public static void Call(this LRUCache self, long unitId)
         {
             EntityRef<LRUNode> nodeRef;
             LRUNode n;
-            if (self.LRUNodeDic.TryGetValue(key, out nodeRef))
+            if (self.LRUNodeDic.TryGetValue(unitId, out nodeRef))
             {
                 n = nodeRef;
                 self.FrequencyDict[n.Frequency].Remove(n);
@@ -46,22 +46,22 @@ namespace ET.Server
                 return;
             }
 
-            n = self.AddChild<LRUNode, long>(key);
+            n = self.AddChild<LRUNode, long>(unitId);
             n.Frequency = 0;
 
             self.FrequencyDict[0].AddLast(n);
             self.MinFrequency = 0;
-            self.LRUNodeDic[key] = n;
+            self.LRUNodeDic[unitId] = n;
 
             if (self.LRUNodeDic.Count >= 3000)
             {
                 LRUNode fn = self.FrequencyDict[self.MinFrequency].First.Value;
-                long unitId = fn.Key;
+                long uId = fn.Key;
                 self.FrequencyDict[self.MinFrequency].RemoveFirst();
-                self.LRUNodeDic.Remove(unitId);
+                self.LRUNodeDic.Remove(uId);
                 fn.Dispose();
 
-                EventSystem.Instance.Invoke((long)SceneType.UnitCache, new LRUUnitCacheDelete() { LruCache = self, Key = unitId });
+                EventSystem.Instance.Invoke((long)SceneType.UnitCache, new LRUUnitCacheDelete() { LruCache = self, Key = uId });
             }
         }
     }

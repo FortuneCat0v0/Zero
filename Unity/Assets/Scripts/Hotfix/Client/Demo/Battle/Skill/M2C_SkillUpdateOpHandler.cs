@@ -27,7 +27,7 @@
                     skillComponent.RemoveSkill(message.SkillInfo.SkillConfigId);
                     foreach (KeyValuePair_Int_Int keyValuePair in message.SkillGridDict)
                     {
-                        skillComponent.SkillGridDict[keyValuePair.Key] = keyValuePair.Value;
+                        skillComponent.SkillSlotDict[keyValuePair.Key] = keyValuePair.Value;
                     }
 
                     break;
@@ -43,7 +43,7 @@
                 {
                     foreach (KeyValuePair_Int_Int keyValuePair in message.SkillGridDict)
                     {
-                        skillComponent.SkillGridDict[keyValuePair.Key] = keyValuePair.Value;
+                        skillComponent.SkillSlotDict[keyValuePair.Key] = keyValuePair.Value;
                     }
 
                     break;

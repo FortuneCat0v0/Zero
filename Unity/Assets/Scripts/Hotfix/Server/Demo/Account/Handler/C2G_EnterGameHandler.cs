@@ -56,15 +56,16 @@ namespace ET.Server
                     {
                         try
                         {
-                            M2G_RequestEnterGameState m2GRequestEnterGameState = await root.GetComponent<MessageLocationSenderComponent>()
-                                    .Get(LocationType.Unit).Call(player.Id, G2M_RequestEnterGameState.Create()) as M2G_RequestEnterGameState;
-                            if (m2GRequestEnterGameState.Error == ErrorCode.ERR_Success)
+                            M2G_RequestEnterGame m2GRequestEnterGame =
+                                    await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Unit)
+                                            .Call(player.Id, G2M_RequestEnterGame.Create()) as M2G_RequestEnterGame;
+                            if (m2GRequestEnterGame.Error == ErrorCode.ERR_Success)
                             {
                                 response.MyId = player.Id;
                                 return;
                             }
 
-                            Log.Error("二次登录失败  " + m2GRequestEnterGameState.Error + " | " + m2GRequestEnterGameState.Message);
+                            Log.Error("二次登录失败  " + m2GRequestEnterGame.Error + " | " + m2GRequestEnterGame.Message);
                             response.Error = ErrorCode.ERR_ReEnterGameError;
                             await DisconnectHelper.KickPlayer(player, true);
                             session.Disconnect().Coroutine();
@@ -95,11 +96,6 @@ namespace ET.Server
 
                         // WorkFlow 玩家Unit上线后的初始化操作
                         // unit.GetComponent<NumericComponent>().SetNoEvent(NumericType.MaxBagCapacity, 30);
-                        SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-                        skillComponent.AddSkill(10001);
-                        skillComponent.AddSkill(10011);
-                        skillComponent.AddSkill(10021);
-                        skillComponent.AddSkill(10031);
 
                         response.MyId = player.Id;
 

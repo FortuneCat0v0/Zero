@@ -40,13 +40,13 @@ namespace ET.Server
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
             if (skillComponent != null)
             {
-                List<Skill> skills = skillComponent.GetAllSkill();
+                List<EntityRef<Skill>> skills = skillComponent.GetAllSkill();
                 foreach (Skill skill in skills)
                 {
                     unitInfo.SkillInfos.Add(skill.ToMessage());
                 }
 
-                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillGridDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;

@@ -15,7 +15,7 @@ namespace ET.Client
             }
 
             unit.Rotation = quaternion.Euler(0, math.radians(message.Angle), 0);
-            unit.GetComponent<SkillComponent>().SpllSkill(message.SkillConfigId, message.TargetUnitId, message.Angle, message.Position);
+            unit.GetComponent<SkillComponent>().SpellSkill(message.SkillConfigId, message.TargetUnitId, message.Angle, message.Position);
 
             await ETTask.CompletedTask;
         }

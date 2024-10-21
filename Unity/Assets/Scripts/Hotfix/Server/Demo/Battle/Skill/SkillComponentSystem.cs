@@ -14,17 +14,17 @@ namespace ET.Server
         {
             foreach (ESkillSlotType eSkillGridType in Enum.GetValues(typeof(ESkillSlotType)))
             {
-                if (!self.SkillGridDict.ContainsKey((int)eSkillGridType))
+                if (!self.SkillSlotDict.ContainsKey((int)eSkillGridType))
                 {
-                    self.SkillGridDict.Add((int)eSkillGridType, 0);
+                    self.SkillSlotDict.Add((int)eSkillGridType, 0);
                 }
             }
 
             // 测试
-            self.SkillGridDict[0] = 10001;
-            self.SkillGridDict[1] = 10011;
-            self.SkillGridDict[2] = 10021;
-            self.SkillGridDict[3] = 10031;
+            self.SkillSlotDict[0] = 10001;
+            self.SkillSlotDict[1] = 10011;
+            self.SkillSlotDict[2] = 10021;
+            self.SkillSlotDict[3] = 10031;
         }
 
         [EntitySystem]
@@ -73,11 +73,11 @@ namespace ET.Server
             Skill skill = self.GetSkillByConfigId(skillConfigId);
             self.SkillDict.Remove(skillConfigId);
 
-            foreach (KeyValuePair<int, int> keyValue in self.SkillGridDict)
+            foreach (KeyValuePair<int, int> keyValue in self.SkillSlotDict)
             {
                 if (keyValue.Value == skillConfigId)
                 {
-                    self.SkillGridDict[keyValue.Key] = 0;
+                    self.SkillSlotDict[keyValue.Key] = 0;
                 }
             }
 
@@ -92,15 +92,15 @@ namespace ET.Server
                 return false;
             }
 
-            foreach (KeyValuePair<int, int> keyValue in self.SkillGridDict)
+            foreach (KeyValuePair<int, int> keyValue in self.SkillSlotDict)
             {
                 if (keyValue.Value == skillConfigId)
                 {
-                    self.SkillGridDict[keyValue.Key] = 0;
+                    self.SkillSlotDict[keyValue.Key] = 0;
                 }
             }
 
-            self.SkillGridDict[(int)skillSlotType] = skillConfigId;
+            self.SkillSlotDict[(int)skillSlotType] = skillConfigId;
 
             return true;
         }
@@ -108,7 +108,7 @@ namespace ET.Server
         public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
             Skill skill = null;
-            if (self.SkillDict.TryGetValue(configId, out Skill value))
+            if (self.SkillDict.TryGetValue(configId, out EntityRef<Skill> value))
             {
                 skill = value;
             }
@@ -116,7 +116,7 @@ namespace ET.Server
             return skill;
         }
 
-        public static List<Skill> GetAllSkill(this SkillComponent self)
+        public static List<EntityRef<Skill>> GetAllSkill(this SkillComponent self)
         {
             return self.SkillDict.Values.ToList();
         }

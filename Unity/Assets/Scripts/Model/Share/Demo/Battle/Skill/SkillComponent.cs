@@ -11,12 +11,12 @@ namespace ET
         public Unit Unit => this.GetParent<Unit>();
 
         [BsonIgnore]
-        public Dictionary<int, Skill> SkillDict { get; set; } = new();
+        public Dictionary<int, EntityRef<Skill>> SkillDict { get; set; } = new();
 
         /// <summary>
-        /// 容器GridId-技能ConfigId
+        /// 容器SlotId-技能ConfigId
         /// </summary>
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, int> SkillGridDict { get; set; } = new();
+        public Dictionary<int, int> SkillSlotDict { get; set; } = new();
     }
 }

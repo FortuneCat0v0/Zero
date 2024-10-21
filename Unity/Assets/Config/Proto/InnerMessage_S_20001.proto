@@ -259,14 +259,14 @@ message L2G_AddLoginRecord // IResponse
 }
 
 
-//ResponseType M2G_RequestEnterGameState
-message G2M_RequestEnterGameState // ILocationRequest
+//ResponseType M2G_RequestEnterGame
+message G2M_RequestEnterGame // ILocationRequest
 {
     int32 RpcId = 1;
 }
 
 
-message M2G_RequestEnterGameState // ILocationResponse
+message M2G_RequestEnterGame // ILocationResponse
 {
     int32 RpcId = 1;
     int32 Error = 2;

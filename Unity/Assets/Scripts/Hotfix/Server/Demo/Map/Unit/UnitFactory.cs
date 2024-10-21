@@ -14,9 +14,9 @@ namespace ET.Server
             unit.Position = new float3(-10, 0, -10);
 
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
-            numericComponent.Set(NumericType.SpeedBase, 6f, false); // 速度是6米每秒
-            numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType. NowHp, 100, false);
+            numericComponent.Set(NumericType.SpeedBase, 6f, false);
+            numericComponent.Set(NumericType.AOI, 15000, false);
+            numericComponent.Set(NumericType.NowHp, 100, false);
             numericComponent.Set(NumericType.MaxHpBase, 100, false);
 
             unitComponent.Add(unit);
@@ -24,10 +24,14 @@ namespace ET.Server
             unit.AddComponent<BagComponent>();
             unit.AddComponent<EquipmentComponent>();
             unit.AddComponent<SkillComponent>();
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            skillComponent.AddSkill(10001);
+            skillComponent.AddSkill(10011);
+            skillComponent.AddSkill(10021);
+            skillComponent.AddSkill(10031);
             unit.AddComponent<BuffComponent>();
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Player, ERoleTag.Hero);
 
-            // 加入aoi
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;
         }
