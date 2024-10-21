@@ -76,13 +76,12 @@ namespace ET
             try
             {
                 this.EntitySystem.Update();
+                this.FixedUpdateTool.Tick();
             }
             catch (Exception e)
             {
                 this.Log.Error(e);
             }
-
-            this.FixedUpdateTool.Tick();
         }
         
         internal void LateUpdate()

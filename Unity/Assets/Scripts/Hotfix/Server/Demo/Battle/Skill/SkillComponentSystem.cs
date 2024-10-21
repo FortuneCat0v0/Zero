@@ -19,12 +19,6 @@ namespace ET.Server
                     self.SkillSlotDict.Add((int)eSkillGridType, 0);
                 }
             }
-
-            // 测试
-            self.SkillSlotDict[0] = 10001;
-            self.SkillSlotDict[1] = 10011;
-            self.SkillSlotDict[2] = 10021;
-            self.SkillSlotDict[3] = 10031;
         }
 
         [EntitySystem]

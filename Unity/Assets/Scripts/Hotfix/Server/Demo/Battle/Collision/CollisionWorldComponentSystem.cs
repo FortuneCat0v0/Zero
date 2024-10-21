@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using Box2DSharp.Dynamics;
 
 namespace ET.Server
@@ -35,7 +36,14 @@ namespace ET.Server
             }
 
             self.BodyToDestroy.Clear();
-            self.World.Step(DefineCore.FixedDeltaTime, self.VelocityIteration, self.PositionIteration);
+            try
+            {
+                self.World.Step(DefineCore.FixedDeltaTime, self.VelocityIteration, self.PositionIteration);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+            }
         }
 
         [EntitySystem]

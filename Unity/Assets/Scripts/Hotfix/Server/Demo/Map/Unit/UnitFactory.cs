@@ -25,10 +25,15 @@ namespace ET.Server
             unit.AddComponent<EquipmentComponent>();
             unit.AddComponent<SkillComponent>();
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            // 测试
             skillComponent.AddSkill(10001);
             skillComponent.AddSkill(10011);
             skillComponent.AddSkill(10021);
             skillComponent.AddSkill(10031);
+            skillComponent.SetSkillGrid(10001, ESkillSlotType.Slot_0);
+            skillComponent.SetSkillGrid(10011, ESkillSlotType.Slot_1);
+            skillComponent.SetSkillGrid(10021, ESkillSlotType.Slot_2);
+            skillComponent.SetSkillGrid(10031, ESkillSlotType.Slot_3);
             unit.AddComponent<BuffComponent>();
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Player, ERoleTag.Hero);
 
