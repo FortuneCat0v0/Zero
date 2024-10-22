@@ -208,5 +208,65 @@ namespace ET.Server
                 }
             }
         }
+
+        public static Unit GetEnemy(this Unit unit, float maxDistance, bool isNearest = true, EUnitType unitType = EUnitType.Invalid)
+        {
+            Unit nearest = null;
+            float minDistance = maxDistance;
+            List<Unit> units = unit.GetParent<UnitComponent>().GetAll();
+            for (int i = 0; i < units.Count; i++)
+            {
+                Unit u = units[i];
+
+                if (u == null)
+                {
+                    continue;
+                }
+
+                if (u.Id == unit.Id)
+                {
+                    continue;
+                }
+
+                if (unitType != EUnitType.Invalid && unit.UnitType != unitType)
+                {
+                    continue;
+                }
+
+                float dd = math.distance(u.Position, unit.Position);
+                if (dd > maxDistance)
+                {
+                    continue;
+                }
+
+                RoleCastComponent aRole = unit.GetComponent<RoleCastComponent>();
+
+                if (aRole == null)
+                {
+                    continue;
+                }
+
+                ERoleCast roleCast = aRole.GetRoleCastToTarget(u);
+
+                if (roleCast != ERoleCast.Adverse)
+                {
+                    continue;
+                }
+
+                if (!isNearest)
+                {
+                    nearest = unit;
+                    break;
+                }
+
+                if (dd < minDistance)
+                {
+                    minDistance = dd;
+                    nearest = u;
+                }
+            }
+
+            return nearest;
+        }
     }
 }

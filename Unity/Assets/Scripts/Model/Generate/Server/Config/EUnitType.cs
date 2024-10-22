@@ -11,6 +11,8 @@ namespace ET
 {
     public enum EUnitType
     {
+        Invalid = 0,
+
         Player = 1,
 
         Monster = 2,

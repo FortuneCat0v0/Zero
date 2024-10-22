@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using Unity.Mathematics;
 
 namespace ET.Server
 {
-    public class AI_XunLuo : AAIHandler
+    public class AI_ZhuiJi : AAIHandler
     {
         public override int Check(AIComponent aiComponent, AIConfig aiConfig)
         {
@@ -11,10 +10,10 @@ namespace ET.Server
             Unit enemy = myUnit.GetEnemy(8, true);
             if (enemy != null)
             {
-                return 1;
+                return 0;
             }
 
-            return 0;
+            return 1;
         }
 
         public override async ETTask Execute(AIComponent aiComponent, AIConfig aiConfig, ETCancellationToken cancellationToken)
@@ -25,19 +24,26 @@ namespace ET.Server
                 return;
             }
 
-            Log.Debug("开始巡逻");
+            Unit enemy = myUnit.GetEnemy(8, true);
 
-            while (true)
+            for (int i = 0; i < 100000; ++i)
             {
-                XunLuoPathComponent xunLuoPathComponent = myUnit.GetComponent<XunLuoPathComponent>();
-                float3 nextTarget = xunLuoPathComponent.GetCurrent();
-                await myUnit.FindPathMoveToAsync(nextTarget);
-                if (cancellationToken.IsCancel())
+                if (enemy == null)
                 {
                     return;
                 }
 
-                xunLuoPathComponent.MoveNext();
+                float distance = math.distance(enemy.Position, myUnit.Position);
+                if (distance > 1f)
+                {
+                    myUnit.FindPathMoveToAsync(enemy.Position).Coroutine();
+                }
+
+                await aiComponent.Root().GetComponent<TimerComponent>().WaitAsync(1000, cancellationToken);
+                if (cancellationToken.IsCancel())
+                {
+                    return;
+                }
             }
         }
     }
