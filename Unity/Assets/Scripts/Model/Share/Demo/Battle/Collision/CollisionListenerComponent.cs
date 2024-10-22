@@ -6,7 +6,7 @@ using Box2DSharp.Dynamics.Contacts;
 namespace ET
 {
     [EnableMethod]
-    [ComponentOf(typeof(Scene))]
+    [ComponentOf(typeof(CollisionWorldComponent))]
     public class CollisionListenerComponent : Entity, IAwake, IDestroy, IFixedUpdate, IContactListener
     {
         public List<(long, long)> CollisionRecorder = new();
