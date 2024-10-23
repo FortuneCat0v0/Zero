@@ -44,22 +44,23 @@ namespace ET.Client
         [EntitySystem]
         private static void LateUpdate(this UIHeadInfoComponent self)
         {
-            if (self.Transform == null)
-            {
-                return;
-            }
-
-            if (self.MainCamera == null)
+            if (self.Transform == null || self.MainCamera == null)
             {
                 return;
             }
 
             Vector2 localPoint = Vector2.zero;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
-                self.MainCamera.WorldToScreenPoint(self.TargetTransform.position), YIUIMgrComponent.Inst.UICamera, out localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
+                self.MainCamera.WorldToScreenPoint(self.TargetTransform.position),
+                YIUIMgrComponent.Inst.UICamera,
+                out localPoint
+            );
 
             localPoint.y += 100f;
-            self.Transform.localPosition = localPoint;
+
+            // 插值平滑位置
+            self.Transform.localPosition = Vector2.Lerp(self.Transform.localPosition, localPoint, Time.deltaTime * 10f);
         }
 
         public static void SetScale(this UIHeadInfoComponent self, Vector3 vector3)
