@@ -104,6 +104,8 @@ namespace ET.Client
             }
 
             RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.localPosition = Vector3.zero;
+            rectTransform.localScale = Vector3.one;
 
             TMP_Text tmpText = gameObject.GetComponent<TMP_Text>();
             tmpText.text = text;
@@ -117,14 +119,14 @@ namespace ET.Client
             {
                 case PopupTextExecuteType.Type_0:
                 {
-                    startPoint.x += RandomGenerator.RandomNumberFloat(-150f, 150f);
-                    startPoint.y += RandomGenerator.RandomNumberFloat(50f, 200f);
                     rectTransform.localPosition = startPoint;
+                    Vector3 targetPosition = new Vector3(startPoint.x += RandomGenerator.RandomNumberFloat(-200f, 200f),
+                        startPoint.y += RandomGenerator.RandomNumberFloat(50f, 200f), 0);
 
                     // 初始缩放效果，模拟突然跳出
                     rectTransform.localScale = Vector3.zero;
                     rectTransform
-                            .DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f)
+                            .DOScale(new Vector3(3, 3, 1f), 0.2f)
                             .SetEase(Ease.OutBack)
                             .OnComplete(() =>
                             {
@@ -134,7 +136,7 @@ namespace ET.Client
 
                     // 移动并淡出
                     rectTransform
-                            .DOLocalMoveY(rectTransform.localPosition.y + 50, 1.0f)
+                            .DOLocalMove(targetPosition, 1f)
                             .SetEase(Ease.OutQuad)
                             .OnComplete(() =>
                             {
