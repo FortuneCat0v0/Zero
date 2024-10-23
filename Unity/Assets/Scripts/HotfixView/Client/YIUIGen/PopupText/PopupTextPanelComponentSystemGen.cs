@@ -31,7 +31,7 @@ namespace ET.Client
             self.u_UIWindow = self.UIBase.GetComponent<YIUIWindowComponent>();
             self.u_UIPanel = self.UIBase.GetComponent<YIUIPanelComponent>();
             self.UIWindow.WindowOption = EWindowOption.BanTween|EWindowOption.BanAwaitOpenTween|EWindowOption.BanAwaitCloseTween|EWindowOption.SkipOtherOpenTween|EWindowOption.SkipOtherCloseTween;
-            self.UIPanel.Layer = EPanelLayer.Popup;
+            self.UIPanel.Layer = EPanelLayer.Scene;
             self.UIPanel.PanelOption = EPanelOption.Container|EPanelOption.TimeCache;
             self.UIPanel.StackOption = EPanelStackOption.None;
             self.UIPanel.Priority = 0;

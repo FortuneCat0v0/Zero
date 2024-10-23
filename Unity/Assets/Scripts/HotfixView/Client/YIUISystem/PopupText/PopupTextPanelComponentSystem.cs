@@ -72,7 +72,7 @@ namespace ET.Client
             return true;
         }
 
-        public static void PopupText(this PopupTextPanelComponent self, string text, Vector3 startPosition, PopupTextType popupTextType,
+        public static void PopupText(this PopupTextPanelComponent self, string text, Vector3 worldPosition, PopupTextType popupTextType,
         PopupTextLayer popupTextLayer,
         PopupTextExecuteType popupTextExecuteType)
         {
@@ -108,18 +108,18 @@ namespace ET.Client
             TMP_Text tmpText = gameObject.GetComponent<TMP_Text>();
             tmpText.text = text;
 
-            Vector2 localPoint = Vector2.zero;
+            Vector2 startPoint = Vector2.zero;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
-                self.MainCamera.WorldToScreenPoint(startPosition), YIUIMgrComponent.Inst.UICamera, out localPoint);
+                self.MainCamera.WorldToScreenPoint(worldPosition), YIUIMgrComponent.Inst.UICamera, out startPoint);
 
             self.ExecutingGameObjects.Add(gameObject);
             switch (popupTextExecuteType)
             {
                 case PopupTextExecuteType.Type_0:
                 {
-                    localPoint.x += RandomGenerator.RandomNumberFloat(-150f, 150f);
-                    localPoint.y += RandomGenerator.RandomNumberFloat(50f, 200f);
-                    rectTransform.localPosition = localPoint;
+                    startPoint.x += RandomGenerator.RandomNumberFloat(-150f, 150f);
+                    startPoint.y += RandomGenerator.RandomNumberFloat(50f, 200f);
+                    rectTransform.localPosition = startPoint;
 
                     // 初始缩放效果，模拟突然跳出
                     rectTransform.localScale = Vector3.zero;
@@ -145,14 +145,15 @@ namespace ET.Client
                 }
                 case PopupTextExecuteType.Type_1:
                 {
-                    localPoint.x += RandomGenerator.RandomNumberFloat(-150f, 150f);
-                    localPoint.y += RandomGenerator.RandomNumberFloat(50f, 100f);
-                    rectTransform.localPosition = localPoint;
+                    startPoint.x += RandomGenerator.RandomNumberFloat(-150f, 150f);
+                    startPoint.y += RandomGenerator.RandomNumberFloat(50f, 100f);
+                    rectTransform.localPosition = startPoint;
 
                     // 初始缩放效果，模拟突然跳出
                     rectTransform.localScale = Vector3.zero;
                     rectTransform
                             .DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f)
+                            .SetRelative(true)
                             .SetEase(Ease.OutBack)
                             .OnComplete(() =>
                             {

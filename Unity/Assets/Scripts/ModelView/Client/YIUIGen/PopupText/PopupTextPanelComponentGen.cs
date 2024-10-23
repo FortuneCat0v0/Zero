@@ -9,7 +9,7 @@ namespace ET.Client
     /// <summary>
     /// 由YIUI工具自动创建 请勿修改
     /// </summary>
-    [YIUI(EUICodeType.Panel, EPanelLayer.Popup)]
+    [YIUI(EUICodeType.Panel, EPanelLayer.Scene)]
     public partial class PopupTextPanelComponent: Entity, IDestroy, IAwake, IYIUIBind, IYIUIInitialize, IYIUIOpen
     {
         public const string PkgName = "PopupText";
