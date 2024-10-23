@@ -7,6 +7,7 @@
         {
             scene.AddComponent<CameraComponent>();
             await YIUIMgrComponent.Inst.Root.OpenPanelAsync<MainPanelComponent>();
+            await YIUIMgrComponent.Inst.Root.OpenPanelAsync<PopupTextPanelComponent>();
 
             await ETTask.CompletedTask;
         }

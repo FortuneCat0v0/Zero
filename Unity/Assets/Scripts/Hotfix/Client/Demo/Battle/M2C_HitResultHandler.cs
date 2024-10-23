@@ -9,7 +9,7 @@
 
             if (toUnit != null)
             {
-                EventSystem.Instance.Publish(root.CurrentScene(),
+                EventSystem.Instance.Publish(root,
                     new HitResult() { ToUnit = toUnit, HitResultType = (EHitResultType)message.HitResultType, Value = message.Value });
             }
 

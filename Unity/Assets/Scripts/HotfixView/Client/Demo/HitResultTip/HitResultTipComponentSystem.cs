@@ -4,34 +4,6 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [Event(SceneType.Current)]
-    public class HitResult_View : AEvent<Scene, HitResult>
-    {
-        protected override async ETTask Run(Scene scene, HitResult args)
-        {
-            string str = string.Empty;
-            if (args.HitResultType == EHitResultType.Damage)
-            {
-                str = args.Value.ToString();
-            }
-            else if (args.HitResultType == EHitResultType.RecoverBlood)
-            {
-                str = args.Value.ToString();
-            }
-            else if (args.HitResultType == EHitResultType.Doge)
-            {
-                str = "闪避";
-            }
-            else if (args.HitResultType == EHitResultType.Crit)
-            {
-                str = args.Value.ToString() + "!!!";
-            }
-
-            scene.GetComponent<HitResultTipComponent>().ShowHitResultTip(args.ToUnit.Position, str);
-            await ETTask.CompletedTask;
-        }
-    }
-
     [FriendOf(typeof(HitResultTipComponent))]
     [EntitySystemOf(typeof(HitResultTipComponent))]
     public static partial class HitResultTipComponentSystem

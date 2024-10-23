@@ -10,7 +10,6 @@ namespace ET.Client
             ResourcesLoaderComponent resourcesLoaderComponent = scene.AddComponent<ResourcesLoaderComponent>();
             scene.AddComponent<AudioComponent>();
             scene.AddComponent<OperaComponent>();
-            scene.AddComponent<HitResultTipComponent>();
 
             // 加载场景资源
             await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/TestMap.unity", LoadSceneMode.Single);

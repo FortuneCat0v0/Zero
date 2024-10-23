@@ -125,5 +125,30 @@ namespace ET.Client
             GameObject pb = await scene.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(poolName);
             return pb;
         }
+
+        public static void InitPoolFormGamObject(string poolName, GameObject pb, int size = 3, PoolInflationType type = PoolInflationType.INCREMENT)
+        {
+            if (poolDict.ContainsKey(poolName))
+            {
+                return;
+            }
+            else
+            {
+                try
+                {
+                    if (pb == null)
+                    {
+                        Log.Error("[ResourceManager] Invalid prefab name for pooling :" + poolName);
+                        return;
+                    }
+
+                    poolDict[poolName] = new GameObjectPool(poolName, pb, GameObject.Find("Global/PoolRoot"), size, type);
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+        }
     }
 }
