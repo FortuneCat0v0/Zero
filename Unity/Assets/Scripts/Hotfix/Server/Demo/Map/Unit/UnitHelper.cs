@@ -55,7 +55,11 @@ namespace ET.Server
                 }
             }
 
-            unitInfo.ERoleCamp = (int)unit.GetComponent<RoleCastComponent>().RoleCamp;
+            RoleCastComponent roleCastComponent = unit.GetComponent<RoleCastComponent>();
+            if (roleCastComponent != null)
+            {
+                unitInfo.ERoleCamp = (int)roleCastComponent.RoleCamp;
+            }
 
             return unitInfo;
         }

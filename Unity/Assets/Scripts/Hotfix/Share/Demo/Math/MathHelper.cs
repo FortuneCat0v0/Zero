@@ -156,5 +156,18 @@ namespace ET
             // 将角度转换为度数
             return math.degrees(angleRad);
         }
+
+        /// <summary>
+        /// 两点之间的目标点
+        /// </summary>
+        /// <param name="pointA"></param>
+        /// <param name="pointB"></param>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        public static float3 GetPointBetween(float3 pointA, float3 pointB, float distance)
+        {
+            float3 direction = math.normalize(pointB - pointA);
+            return pointB - direction * distance;
+        }
     }
 }

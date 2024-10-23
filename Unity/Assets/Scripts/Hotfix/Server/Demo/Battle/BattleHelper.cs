@@ -33,10 +33,41 @@ namespace ET.Server
         }
     }
 
+    [Event(SceneType.Map)]
+    public class UnitDeath_Notice : AEvent<Scene, UnitDeath>
+    {
+        protected override async ETTask Run(Scene scene, UnitDeath args)
+        {
+            if (args.DefendUnit.UnitType == EUnitType.Monster)
+            {
+                UnitFactory.CreateItem(scene, args.DefendUnit.Position, 1);
+            }
+
+            OnRemoveUnit(scene, args.DefendUnit, 1000).Coroutine();
+            await ETTask.CompletedTask;
+        }
+
+        private async ETTask OnRemoveUnit(Scene scene, Unit unit, long waitTime)
+        {
+            await scene.GetComponent<TimerComponent>().WaitAsync(waitTime);
+            if (unit == null || unit.IsDisposed)
+            {
+                return;
+            }
+
+            unit.GetParent<UnitComponent>().Remove(unit.Id);
+        }
+    }
+
     public static class BattleHelper
     {
         public static void HitSettle(Unit from, Unit to, EHitFromType hitType, int damage = 0)
         {
+            if (to.GetComponent<NumericComponent>().GetAsInt(NumericType.Death) > 0)
+            {
+                return;
+            }
+
             switch (hitType)
             {
                 case EHitFromType.Skill_Normal:
@@ -46,7 +77,9 @@ namespace ET.Server
                     to.GetComponent<NumericComponent>().Set(NumericType.NowHp, finalHp);
                     if (finalHp <= 0)
                     {
+                        to.GetComponent<NumericComponent>().Set(NumericType.Death, 1);
                         // 死亡发事件通知
+                        EventSystem.Instance.Publish(from.Root(), new UnitDeath() { AttackUnit = from, DefendUnit = to });
                     }
 
                     Log.Info($"hit settle, from:{from?.Id}, to:{to?.Id}, value:{dmg}");
@@ -62,7 +95,9 @@ namespace ET.Server
                     to.GetComponent<NumericComponent>().Set(NumericType.NowHp, finalHp);
                     if (finalHp <= 0)
                     {
+                        to.GetComponent<NumericComponent>().Set(NumericType.Death, 1);
                         // 死亡发事件通知
+                        EventSystem.Instance.Publish(from.Root(), new UnitDeath() { AttackUnit = from, DefendUnit = to });
                     }
 
                     Log.Info($"hit settle, from:{from.Id}, to:{to.Id}, value:{dmg}");

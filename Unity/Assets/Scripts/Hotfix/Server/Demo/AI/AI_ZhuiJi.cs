@@ -34,9 +34,9 @@ namespace ET.Server
                 }
 
                 float distance = math.distance(enemy.Position, myUnit.Position);
-                if (distance > 1f)
+                if (distance > 3f)
                 {
-                    myUnit.FindPathMoveToAsync(enemy.Position).Coroutine();
+                    myUnit.FindPathMoveToAsync(MathHelper.GetPointBetween(myUnit.Position, enemy.Position, 2)).Coroutine();
                 }
 
                 await aiComponent.Root().GetComponent<TimerComponent>().WaitAsync(1000, cancellationToken);

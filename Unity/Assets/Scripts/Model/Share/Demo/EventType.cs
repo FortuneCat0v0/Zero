@@ -31,6 +31,12 @@ namespace ET
         public Unit Unit;
     }
 
+    public struct UnitDeath
+    {
+        public Unit AttackUnit;
+        public Unit DefendUnit;
+    }
+
     public struct HitResult
     {
         public Unit FromUnit;
@@ -45,11 +51,6 @@ namespace ET
         public Item Item;
         public EquipPosition EquipPosition;
         public EquipOp EquipOp;
-    }
-
-    public struct UnitDeath
-    {
-        public Unit Unit;
     }
 
     public struct UnitGetComponent

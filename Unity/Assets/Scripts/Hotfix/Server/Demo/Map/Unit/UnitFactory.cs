@@ -41,6 +41,22 @@ namespace ET.Server
             return unit;
         }
 
+        public static Unit CreateItem(Scene scene, float3 position, int itemConfigId)
+        {
+            UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
+
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Item, itemConfigId);
+            unit.Position = position;
+
+            NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
+            numericComponent.Set(NumericType.AOI, 15000, false);
+
+            unitComponent.Add(unit);
+
+            unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
+            return unit;
+        }
+
         public static Unit CreateMonster(Scene scene, float3 position)
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();

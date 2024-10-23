@@ -19,7 +19,9 @@ namespace ET
 
         NPC = 3,
 
-        Skill = 4,
+        Item = 4,
+
+        Skill = 5,
 
     }
 }

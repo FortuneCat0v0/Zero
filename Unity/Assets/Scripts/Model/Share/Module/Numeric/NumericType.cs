@@ -35,6 +35,7 @@ namespace ET
 
         public const int NowHp = 3001; //生命值
         public const int AOI = 3002;
+        public const int Death = 3003; //是否已经死亡
 
         public const int RechargeAmount = 8001; //充值金额
         public const int Gold = 8010; //金块
