@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "64a6d26fa33466c864de9cb0ed90481873cd6250"
+      "hash": "bd7c3293bcff7cd6946449bb4a9553c098141f86"
     },
     "com.cysharp.memorypack": {
       "version": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/Plugins/MemoryPack#1.10.0",
@@ -31,37 +31,37 @@
       "url": "https://registry.npmjs.org"
     },
     "com.tapsdk.antiaddiction": {
-      "version": "3.29.3",
+      "version": "3.29.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.taptap.tds.common": "3.29.3"
+        "com.taptap.tds.common": "3.29.4"
       },
       "url": "https://registry.npmjs.org"
     },
     "com.taptap.tds.bootstrap": {
-      "version": "3.29.3",
+      "version": "3.29.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.taptap.tds.login": "3.29.3",
+        "com.taptap.tds.login": "3.29.4",
         "com.leancloud.realtime": "2.3.0"
       },
       "url": "https://registry.npmjs.org"
     },
     "com.taptap.tds.common": {
-      "version": "3.29.3",
+      "version": "3.29.4",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://registry.npmjs.org"
     },
     "com.taptap.tds.login": {
-      "version": "3.29.3",
-      "depth": 1,
+      "version": "3.29.4",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.taptap.tds.common": "3.29.3"
+        "com.taptap.tds.common": "3.29.4"
       },
       "url": "https://registry.npmjs.org"
     },
@@ -87,11 +87,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.burst": {
-      "version": "1.8.11",
+      "version": "1.8.18",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.mathematics": "1.2.1"
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -112,7 +113,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.31",
+      "version": "3.0.34",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -160,7 +161,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "14.0.9",
+      "version": "14.0.11",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
@@ -177,17 +178,17 @@
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
         "com.unity.burst": "1.8.9",
-        "com.unity.render-pipelines.core": "14.0.9",
-        "com.unity.shadergraph": "14.0.9",
+        "com.unity.render-pipelines.core": "14.0.11",
+        "com.unity.shadergraph": "14.0.11",
         "com.unity.render-pipelines.universal-config": "14.0.9"
       }
     },
     "com.unity.render-pipelines.universal-config": {
-      "version": "14.0.9",
+      "version": "14.0.10",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "14.0.9"
+        "com.unity.render-pipelines.core": "14.0.10"
       }
     },
     "com.unity.scriptablebuildpipeline": {
@@ -205,11 +206,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "14.0.9",
+      "version": "14.0.11",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "14.0.9",
+        "com.unity.render-pipelines.core": "14.0.11",
         "com.unity.searcher": "4.9.2"
       }
     },
