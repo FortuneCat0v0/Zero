@@ -11,8 +11,13 @@ namespace ET.Client
             scene.AddComponent<AudioComponent>();
             scene.AddComponent<OperaComponent>();
 
+            await YIUIMgrComponent.Inst.Root.OpenPanelAsync<LoadingPanelComponent>();
+            scene.Root().GetComponent<GlobalComponent>().Mask.SetActive(false);
+
             // 加载场景资源
             await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/TestMap.unity", LoadSceneMode.Single);
+            
+            YIUIMgrComponent.Inst.GetPanel<LoadingPanelComponent>().SetComplete();
 
             scene.GetComponent<AudioComponent>().PlayMusic("MainCity.ogg");
         }

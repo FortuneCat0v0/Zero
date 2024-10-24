@@ -13,7 +13,6 @@ namespace ET.Client
         {
             HotUpdatePanelComponent hotUpdatePanelComponent = await YIUIMgrComponent.Inst.Root.OpenPanelAsync<HotUpdatePanelComponent>();
             hotUpdatePanelComponent.ShowPackageVersion(args.PackageVersion);
-            scene.GetComponent<GlobalComponent>().Mask.gameObject.SetActive(false);
         }
     }
 
