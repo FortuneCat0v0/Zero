@@ -24,9 +24,9 @@ namespace ET.Client
         public UnityEngine.RectTransform u_ComLayer_0RectTransform;
         public UnityEngine.RectTransform u_ComLayer_1RectTransform;
         public UnityEngine.RectTransform u_ComLayer_2RectTransform;
-        public UnityEngine.RectTransform u_ComText_0RectTransform;
-        public UnityEngine.RectTransform u_ComText_1RectTransform;
-        public UnityEngine.RectTransform u_ComText_2RectTransform;
+        public UnityEngine.RectTransform u_ComPopupText_0RectTransform;
+        public UnityEngine.RectTransform u_ComPopupText_1RectTransform;
+        public UnityEngine.RectTransform u_ComPopupText_2RectTransform;
 
     }
 }

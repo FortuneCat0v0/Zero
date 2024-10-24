@@ -31,7 +31,8 @@ namespace ET.Client
             }
 
             PopupTextPanelComponent popupTextPanelComponent = YIUIMgrComponent.Inst.GetPanel<PopupTextPanelComponent>();
-            popupTextPanelComponent.PopupText(str, args.ToUnit.Position, PopupTextType.Text_0, PopupTextLayer.Layer_0, PopupTextExecuteType.Type_0);
+            popupTextPanelComponent.PopupText(str, Vector2.zero, args.ToUnit.GetComponent<GameObjectComponent>().GameObject.transform,
+                PopupTextType.Text_0, PopupTextLayer.Layer_0, PopupTextExecuteType.Type_0);
 
             await ETTask.CompletedTask;
         }
@@ -43,12 +44,12 @@ namespace ET.Client
         [EntitySystem]
         private static void YIUIInitialize(this PopupTextPanelComponent self)
         {
-            GameObjectPoolHelper.InitPoolFormGamObject(self.u_ComText_0RectTransform.name, self.u_ComText_0RectTransform.gameObject);
-            GameObjectPoolHelper.InitPoolFormGamObject(self.u_ComText_1RectTransform.name, self.u_ComText_1RectTransform.gameObject);
-            GameObjectPoolHelper.InitPoolFormGamObject(self.u_ComText_2RectTransform.name, self.u_ComText_2RectTransform.gameObject);
-            self.u_ComText_0RectTransform.gameObject.SetActive(false);
-            self.u_ComText_1RectTransform.gameObject.SetActive(false);
-            self.u_ComText_2RectTransform.gameObject.SetActive(false);
+            GameObjectPoolHelper.InitPoolFormGamObject(self.u_ComPopupText_0RectTransform.name, self.u_ComPopupText_0RectTransform.gameObject);
+            GameObjectPoolHelper.InitPoolFormGamObject(self.u_ComPopupText_1RectTransform.name, self.u_ComPopupText_1RectTransform.gameObject);
+            GameObjectPoolHelper.InitPoolFormGamObject(self.u_ComPopupText_2RectTransform.name, self.u_ComPopupText_2RectTransform.gameObject);
+            self.u_ComPopupText_0RectTransform.gameObject.SetActive(false);
+            self.u_ComPopupText_1RectTransform.gameObject.SetActive(false);
+            self.u_ComPopupText_2RectTransform.gameObject.SetActive(false);
         }
 
         [EntitySystem]
@@ -72,7 +73,11 @@ namespace ET.Client
             return true;
         }
 
-        public static void PopupText(this PopupTextPanelComponent self, string text, Vector3 worldPosition, PopupTextType popupTextType,
+        public static void PopupText(this PopupTextPanelComponent self,
+        string text,
+        Vector2 startPosition,
+        Transform targetTransform,
+        PopupTextType popupTextType,
         PopupTextLayer popupTextLayer,
         PopupTextExecuteType popupTextExecuteType)
         {
@@ -80,13 +85,13 @@ namespace ET.Client
             switch (popupTextType)
             {
                 case PopupTextType.Text_0:
-                    gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), self.u_ComText_0RectTransform.name);
+                    gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), self.u_ComPopupText_0RectTransform.name);
                     break;
                 case PopupTextType.Text_1:
-                    gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), self.u_ComText_1RectTransform.name);
+                    gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), self.u_ComPopupText_1RectTransform.name);
                     break;
                 case PopupTextType.Text_2:
-                    gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), self.u_ComText_2RectTransform.name);
+                    gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), self.u_ComPopupText_2RectTransform.name);
                     break;
             }
 
@@ -103,41 +108,62 @@ namespace ET.Client
                     break;
             }
 
-            RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
-            rectTransform.localPosition = Vector3.zero;
-            rectTransform.localScale = Vector3.one;
+            RectTransform rootRect = gameObject.GetComponent<RectTransform>();
+            rootRect.localPosition = Vector3.zero;
+            rootRect.localScale = Vector3.one;
 
-            TMP_Text tmpText = gameObject.GetComponent<TMP_Text>();
+            TMP_Text tmpText = gameObject.GetComponentInChildren<TMP_Text>();
             tmpText.text = text;
-
-            Vector2 startPoint = Vector2.zero;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
-                self.MainCamera.WorldToScreenPoint(worldPosition), YIUIMgrComponent.Inst.UICamera, out startPoint);
+            RectTransform textRect = tmpText.GetComponent<RectTransform>();
+            textRect.localPosition = Vector3.zero;
+            textRect.localScale = Vector3.one;
 
             self.ExecutingGameObjects.Add(gameObject);
             switch (popupTextExecuteType)
             {
                 case PopupTextExecuteType.Type_0:
                 {
-                    rectTransform.localPosition = startPoint;
-                    Vector3 targetPosition = new Vector3(startPoint.x += RandomGenerator.RandomNumberFloat(-200f, 200f),
-                        startPoint.y += RandomGenerator.RandomNumberFloat(50f, 200f), 0);
+                    if (targetTransform == null)
+                    {
+                        return;
+                    }
+
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
+                        self.MainCamera.WorldToScreenPoint(targetTransform.position), YIUIMgrComponent.Inst.UICamera, out startPosition);
+                    rootRect.localPosition = startPosition;
 
                     // 初始缩放效果，模拟突然跳出
-                    rectTransform.localScale = Vector3.zero;
-                    rectTransform
+                    textRect.localScale = Vector3.zero;
+                    textRect
                             .DOScale(new Vector3(3, 3, 1f), 0.2f)
                             .SetEase(Ease.OutBack)
                             .OnComplete(() =>
                             {
                                 // 缩放回正常大小
-                                rectTransform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBounce);
+                                textRect.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBounce);
                             });
 
-                    // 移动并淡出
-                    rectTransform
-                            .DOLocalMove(targetPosition, 1f)
+                    Vector2 pos = new(RandomGenerator.RandomNumberFloat(-100f, 100f), RandomGenerator.RandomNumberFloat(50f, 200f));
+                    textRect.localPosition = pos;
+                    pos.x += RandomGenerator.RandomNumberFloat(-50f, 50f);
+                    pos.y += RandomGenerator.RandomNumberFloat(-50f, 50f);
+                    Vector2 targetPosition = pos;
+                    // 移动
+                    textRect
+                            .DOLocalMove(targetPosition, 0.5f)
                             .SetEase(Ease.OutQuad)
+                            .OnUpdate(() =>
+                            {
+                                if (targetTransform == null)
+                                {
+                                    return;
+                                }
+
+                                // 跟随目标
+                                RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
+                                    self.MainCamera.WorldToScreenPoint(targetTransform.position), YIUIMgrComponent.Inst.UICamera, out startPosition);
+                                rootRect.localPosition = startPosition;
+                            })
                             .OnComplete(() =>
                             {
                                 self.ExecutingGameObjects.Remove(gameObject);
@@ -147,37 +173,6 @@ namespace ET.Client
                 }
                 case PopupTextExecuteType.Type_1:
                 {
-                    startPoint.x += RandomGenerator.RandomNumberFloat(-150f, 150f);
-                    startPoint.y += RandomGenerator.RandomNumberFloat(50f, 100f);
-                    rectTransform.localPosition = startPoint;
-
-                    // 初始缩放效果，模拟突然跳出
-                    rectTransform.localScale = Vector3.zero;
-                    rectTransform
-                            .DOScale(new Vector3(1.5f, 1.5f, 1.5f), 0.2f)
-                            .SetRelative(true)
-                            .SetEase(Ease.OutBack)
-                            .OnComplete(() =>
-                            {
-                                // 缩放回正常大小
-                                rectTransform.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBounce);
-                            });
-
-                    // 移动并淡出
-                    rectTransform
-                            .DOLocalMoveY(rectTransform.localPosition.y + 200, 1.0f)
-                            .SetEase(Ease.OutQuad)
-                            .OnUpdate(() =>
-                            {
-                                Color currentColor = tmpText.color;
-                                currentColor.a = Mathf.Lerp(1, 0, rectTransform.localPosition.y / 200);
-                                tmpText.color = currentColor;
-                            })
-                            .OnComplete(() =>
-                            {
-                                self.ExecutingGameObjects.Remove(gameObject);
-                                GameObjectPoolHelper.ReturnObjectToPool(gameObject);
-                            });
                     break;
                 }
             }

@@ -40,9 +40,9 @@ namespace ET.Client
             self.u_ComLayer_0RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComLayer_0RectTransform");
             self.u_ComLayer_1RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComLayer_1RectTransform");
             self.u_ComLayer_2RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComLayer_2RectTransform");
-            self.u_ComText_0RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComText_0RectTransform");
-            self.u_ComText_1RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComText_1RectTransform");
-            self.u_ComText_2RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComText_2RectTransform");
+            self.u_ComPopupText_0RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComPopupText_0RectTransform");
+            self.u_ComPopupText_1RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComPopupText_1RectTransform");
+            self.u_ComPopupText_2RectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComPopupText_2RectTransform");
 
         }
     }
