@@ -16,6 +16,11 @@
             ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
             Unit bBelongToUnit = bColliderComponent.BelongToUnit;
 
+            if (aRole == null || bRole == null)
+            {
+                return;
+            }
+
             ERoleCast roleCast = aRole.GetRoleCastToTarget(b);
             ERoleTag roleTag = bRole.RoleTag;
 

@@ -11,13 +11,13 @@ namespace ET.Server
         [EntitySystem]
         private static void Awake(this ColliderComponent self)
         {
-            self.CollisionWorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
+            self.CollisionWorldComponent = self.Scene().GetComponent<CollisionWorldComponent>();
         }
 
         [EntitySystem]
         private static void Awake(this ColliderComponent self, CreateColliderParams createColliderParams)
         {
-            self.CollisionWorldComponent = self.Root().GetComponent<CollisionWorldComponent>();
+            self.CollisionWorldComponent = self.Scene().GetComponent<CollisionWorldComponent>();
             self.BelongToUnit = createColliderParams.BelontToUnit;
             self.SyncPosToBelongUnit = createColliderParams.FollowUnitPos;
             self.SyncRotToBelongUnit = createColliderParams.FollowUnitRot;
@@ -45,7 +45,7 @@ namespace ET.Server
                 selfUnit.Rotation = quaternion.Euler(0, math.radians(createColliderParams.Angle), 0);
             }
 
-            self.CreateCollider();
+            self.CreateCollider().Coroutine();
             self.SyncBody();
         }
 
@@ -74,9 +74,10 @@ namespace ET.Server
             self.CollisionWorldComponent?.AddBodyTobeDestroyed(self.Body);
         }
 
-        public static void CreateCollider(this ColliderComponent self)
+        private static async ETTask CreateCollider(this ColliderComponent self)
         {
             Unit unit = self.GetParent<Unit>();
+            await self.Root().GetComponent<TimerComponent>().WaitFrameAsync();
             self.Body = self.CollisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
             switch (self.ColliderConfig.ColliderType)
             {
@@ -107,6 +108,11 @@ namespace ET.Server
         /// <param name="radius"></param>
         public static void SetBodyCircleRadius(this ColliderComponent self, float radius)
         {
+            if (self.Body == null)
+            {
+                return;
+            }
+
             if (self.Body.FixtureList.Count > 0)
             {
                 Shape shape = self.Body.FixtureList[0].Shape;
@@ -135,16 +141,31 @@ namespace ET.Server
 
         public static void SetColliderBodyPos(this ColliderComponent self, Vector2 pos)
         {
+            if (self.Body == null)
+            {
+                return;
+            }
+
             self.Body.SetTransform(pos, self.Body.GetAngle());
         }
 
         public static void SetColliderBodyAngle(this ColliderComponent self, float angle)
         {
+            if (self.Body == null)
+            {
+                return;
+            }
+
             self.Body.SetTransform(self.Body.GetPosition(), angle);
         }
 
         public static void SetColliderBodyState(this ColliderComponent self, bool state)
         {
+            if (self.Body == null)
+            {
+                return;
+            }
+
             self.Body.IsEnabled = state;
         }
     }

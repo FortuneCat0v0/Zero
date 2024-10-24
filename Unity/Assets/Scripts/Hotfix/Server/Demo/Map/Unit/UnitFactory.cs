@@ -53,6 +53,20 @@ namespace ET.Server
 
             unitComponent.Add(unit);
 
+            unit.AddComponent<ColliderComponent, CreateColliderParams>(new CreateColliderParams()
+            {
+                BelontToUnit = unit,
+                FollowUnitPos = true,
+                FollowUnitRot = true,
+                Offset = default,
+                TargetPos = default,
+                Angle = default,
+                ColliderConfigId = 1001,
+                Skill = default,
+                CollisionHandler = nameof(CH_PickUpItem),
+                Params = default
+            });
+
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;
         }
