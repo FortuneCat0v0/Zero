@@ -36,6 +36,11 @@ namespace ET.Server
             unit.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession).Send(unit.Id, message);
         }
 
+        public static void SendToClient(Scene scene, long GateSessionId, IMessage message)
+        {
+            scene.GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession).Send(GateSessionId, message);
+        }
+
         /// <summary>
         /// 发送协议给Actor
         /// </summary>

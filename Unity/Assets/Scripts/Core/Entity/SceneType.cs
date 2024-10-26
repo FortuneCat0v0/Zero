@@ -27,6 +27,7 @@ namespace ET
 		Account = 1 << 20,
 		LoginCenter = 1 << 21,
 		UnitCache = 1 << 22,
+		Chat = 1 << 23,
 
 		// 客户端
 		Demo = 1 << 30,

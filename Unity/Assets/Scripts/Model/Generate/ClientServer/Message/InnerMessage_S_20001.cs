@@ -1504,6 +1504,132 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(InnerMessage.G2Chat_EnterChat)]
+    [ResponseType(nameof(Chat2G_EnterChat))]
+    public partial class G2Chat_EnterChat : MessageObject, IRequest
+    {
+        public static G2Chat_EnterChat Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2Chat_EnterChat), isFromPool) as G2Chat_EnterChat;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public string Name { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long UnitId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Name = default;
+            this.UnitId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.Chat2G_EnterChat)]
+    public partial class Chat2G_EnterChat : MessageObject, IResponse
+    {
+        public static Chat2G_EnterChat Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Chat2G_EnterChat), isFromPool) as Chat2G_EnterChat;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.G2Chat_RequestExitChat)]
+    [ResponseType(nameof(Chat2G_RequestExitChat))]
+    public partial class G2Chat_RequestExitChat : MessageObject, ILocationRequest
+    {
+        public static G2Chat_RequestExitChat Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2Chat_RequestExitChat), isFromPool) as G2Chat_RequestExitChat;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.Chat2G_RequestExitChat)]
+    public partial class Chat2G_RequestExitChat : MessageObject, ILocationResponse
+    {
+        public static Chat2G_RequestExitChat Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Chat2G_RequestExitChat), isFromPool) as Chat2G_RequestExitChat;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class InnerMessage
     {
         public const ushort ObjectQueryRequest = 20002;
@@ -1550,5 +1676,9 @@ namespace ET
         public const ushort UnitCache2Other_GetUnit = 20043;
         public const ushort Other2UnitCache_DeleteUnit = 20044;
         public const ushort UnitCache2Other_DeleteUnit = 20045;
+        public const ushort G2Chat_EnterChat = 20046;
+        public const ushort Chat2G_EnterChat = 20047;
+        public const ushort G2Chat_RequestExitChat = 20048;
+        public const ushort Chat2G_RequestExitChat = 20049;
     }
 }

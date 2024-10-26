@@ -43,5 +43,6 @@ namespace ET
         public const int ERR_AddBagItemError = 200030;
         public const int ERR_AddMapItemError = 200031;
         public const int ERR_RechargeError = 200032;
+        public const int ERR_ChatMessageEmpty = 200033;
     }
 }

@@ -3,7 +3,7 @@
     [MessageLocationHandler(SceneType.Map)]
     public class C2M_GMCMDHandler : MessageLocationHandler<Unit, C2M_GM, M2C_GM>
     {
-        protected override async ETTask Run(Unit unit, C2M_GM request, M2C_GM response)
+        protected override async ETTask Run(Unit chatUnit, C2M_GM request, M2C_GM response)
         {
             if (string.IsNullOrEmpty(request.GMMessage))
             {
@@ -21,17 +21,17 @@
             }
             else if (cmd[0] == ".AddSkill")
             {
-                SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+                SkillComponent skillComponent = chatUnit.GetComponent<SkillComponent>();
                 skillComponent.AddSkill(int.Parse(cmd[1]));
             }
             else if (cmd[0] == ".UpSkill")
             {
-                SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+                SkillComponent skillComponent = chatUnit.GetComponent<SkillComponent>();
                 // skillComponent.UpSkill(int.Parse(cmd[1]), int.Parse(cmd[2]));
             }
             else if (cmd[0] == ".Recharge")
             {
-                response.Error = ItemHelper.Recharge(unit, int.Parse(cmd[1]));
+                response.Error = ItemHelper.Recharge(chatUnit, int.Parse(cmd[1]));
             }
 
             await ETTask.CompletedTask;

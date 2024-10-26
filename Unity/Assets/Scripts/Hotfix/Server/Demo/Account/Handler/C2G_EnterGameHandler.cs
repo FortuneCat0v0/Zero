@@ -91,7 +91,7 @@ namespace ET.Server
                         // 再通过Player上引用的ClientSession转发给客户端(SessionStreamDispatcherServerInner)
                         // unit.AddComponent<UnitGateComponent, long>(player.InstanceId);
 
-                        // player.ChatInfoInstanceId = await this.EnterWorldChatServer(unit); //登录聊天服
+                        await this.EnterWorldChatServer(unit); //登录聊天服
                         // player.MatchInfoInstanceId = await this.EnterMatchServer(unit); // 登录匹配服
 
                         // WorkFlow 玩家Unit上线后的初始化操作
@@ -121,18 +121,14 @@ namespace ET.Server
             }
         }
 
-        // private async ETTask<long> EnterWorldChatServer(Unit unit)
-        // {
-        //     StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.DomainZone(), "ChatInfo");
-        //     Chat2G_EnterChat chat2GEnterChat = (Chat2G_EnterChat)await MessageHelper.CallActor(startSceneConfig.InstanceId,
-        //         new G2Chat_EnterChat()
-        //         {
-        //             UnitId = unit.Id,
-        //             Name = unit.GetComponent<RoleInfo>().Name,
-        //             GateSessionActorId = unit.GetComponent<UnitGateComponent>().GateSessionActorId
-        //         });
-        //
-        //     return chat2GEnterChat.ChatInfoUnitInstanceId;
-        // }
+        private async ETTask EnterWorldChatServer(Unit unit)
+        {
+            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Chat");
+            G2Chat_EnterChat request = G2Chat_EnterChat.Create();
+            request.UnitId = unit.Id;
+            request.Name = unit.RoleName;
+
+            await unit.Root().GetComponent<MessageSender>().Call(startSceneConfig.ActorId, request);
+        }
     }
 }

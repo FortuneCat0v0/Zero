@@ -3,7 +3,7 @@
 namespace ET.Server
 {
     [Invoke((long)SceneType.Gate)]
-    public class NetComponentOnReadInvoker_Gate: AInvokeHandler<NetComponentOnRead>
+    public class NetComponentOnReadInvoker_Gate : AInvokeHandler<NetComponentOnRead>
     {
         public override void Handle(NetComponentOnRead args)
         {
@@ -39,6 +39,22 @@ namespace ET.Server
                     root.GetComponent<MessageSender>().Send(roomActorId, actorRoom);
                     break;
                 }
+                case IChatRequest actorChatRequest:
+                {
+                    long chatUnitId = session.GetComponent<SessionPlayerComponent>().Player.Id;
+                    int rpcId = actorChatRequest.RpcId; // 这里要保存客户端的rpcId
+                    long instanceId = session.InstanceId;
+                    IResponse iResponse = await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Chat)
+                            .Call(chatUnitId, actorChatRequest);
+                    iResponse.RpcId = rpcId;
+                    // session可能已经断开了，所以这里需要判断
+                    if (session.InstanceId == instanceId)
+                    {
+                        session.Send(iResponse);
+                    }
+
+                    break;
+                }
                 case ILocationMessage actorLocationMessage:
                 {
                     long unitId = session.GetComponent<SessionPlayerComponent>().Player.Id;
@@ -50,24 +66,26 @@ namespace ET.Server
                     long unitId = session.GetComponent<SessionPlayerComponent>().Player.Id;
                     int rpcId = actorLocationRequest.RpcId; // 这里要保存客户端的rpcId
                     long instanceId = session.InstanceId;
-                    IResponse iResponse = await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Unit).Call(unitId, actorLocationRequest);
+                    IResponse iResponse = await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Unit)
+                            .Call(unitId, actorLocationRequest);
                     iResponse.RpcId = rpcId;
                     // session可能已经断开了，所以这里需要判断
                     if (session.InstanceId == instanceId)
                     {
                         session.Send(iResponse);
                     }
+
                     break;
                 }
-                case IRequest actorRequest:  // 分发IActorRequest消息，目前没有用到，需要的自己添加
+                case IRequest actorRequest: // 分发IActorRequest消息，目前没有用到，需要的自己添加
                 {
                     break;
                 }
-                case IMessage actorMessage:  // 分发IActorMessage消息，目前没有用到，需要的自己添加
+                case IMessage actorMessage: // 分发IActorMessage消息，目前没有用到，需要的自己添加
                 {
                     break;
                 }
-				
+
                 default:
                 {
                     throw new Exception($"not found handler: {message}");

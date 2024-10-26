@@ -9,16 +9,16 @@
     [ChildOf]
     public class Role : Entity, IAwake
     {
-        public string Name;
+        public string Name { get; set; }
 
-        public int ServerId;
+        public int ServerId { get; set; }
 
-        public int State;
+        public int State { get; set; }
 
-        public long AccountId;
+        public long AccountId { get; set; }
 
-        public long LastLoginTime;
+        public long LastLoginTime { get; set; }
 
-        public long CreateTime;
+        public long CreateTime { get; set; }
     }
 }

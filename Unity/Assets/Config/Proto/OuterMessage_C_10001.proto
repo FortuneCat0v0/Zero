@@ -537,3 +537,23 @@ message M2C_Recharge // ILocationResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+//ResponseType Chat2C_SendChat
+message C2Chat_SendChat // IChatRequest
+{
+	int32 RpcId = 1;
+	string ChatMessage  = 2;
+}
+
+message Chat2C_SendChat // IChatResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+message Chat2C_NoticeChat // IMessage
+{
+	string Name = 1;
+	string ChatMessage = 2;
+}

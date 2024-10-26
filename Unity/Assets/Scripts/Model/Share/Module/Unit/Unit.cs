@@ -8,6 +8,8 @@ namespace ET
     [DebuggerDisplay("ViewName,nq")]
     public partial class Unit : Entity, IAwake<EUnitType, int>, IGetComponentSys
     {
+        public string RoleName { get; set; }
+
         public EUnitType UnitType { get; set; }
 
         public int ConfigId { get; set; }

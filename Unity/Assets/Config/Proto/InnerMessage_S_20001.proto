@@ -344,3 +344,32 @@ message UnitCache2Other_DeleteUnit // IResponse
     int32 Error = 2;
     string Message = 3;
 }
+
+
+//ResponseType Chat2G_EnterChat
+message G2Chat_EnterChat // IRequest
+{
+    int32 RpcId = 1;
+	string Name  = 2;
+	int64 UnitId = 3;
+}
+
+message Chat2G_EnterChat // IResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}
+
+//ResponseType Chat2G_RequestExitChat
+message G2Chat_RequestExitChat // ILocationRequest
+{
+    int32 RpcId = 1;
+}
+
+message Chat2G_RequestExitChat // ILocationResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}
