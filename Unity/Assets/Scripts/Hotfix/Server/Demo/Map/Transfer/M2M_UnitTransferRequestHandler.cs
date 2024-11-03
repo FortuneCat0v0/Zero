@@ -30,6 +30,7 @@ namespace ET.Server
                 unit.GetComponent<UnitDBSaveComponent>().AddToBytes(t, v);
             }
 
+            unit.AddComponent<NumericNoticeComponent>();
             unit.AddComponent<MoveComponent>();
             // 服务端添加寻路地图
             // unit.AddComponent<PathfindingComponent, string>(scene.Name);

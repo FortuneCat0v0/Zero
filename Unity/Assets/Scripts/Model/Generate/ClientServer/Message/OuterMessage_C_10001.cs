@@ -2050,6 +2050,35 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.M2C_NoticeNumericMsg)]
+    public partial class M2C_NoticeNumericMsg : MessageObject, IMessage
+    {
+        public static M2C_NoticeNumericMsg Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_NoticeNumericMsg), isFromPool) as M2C_NoticeNumericMsg;
+        }
+
+        [MemoryPackOrder(0)]
+        public int NumericType { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long NewValue { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.NumericType = default;
+            this.NewValue = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.M2C_NoticeUnitNumeric)]
     public partial class M2C_NoticeUnitNumeric : MessageObject, IMessage
     {
@@ -2077,6 +2106,39 @@ namespace ET
             this.UnitId = default;
             this.NumericType = default;
             this.NewValue = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_NoticeUnitNumericList)]
+    public partial class M2C_NoticeUnitNumericList : MessageObject, IMessage
+    {
+        public static M2C_NoticeUnitNumericList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_NoticeUnitNumericList), isFromPool) as M2C_NoticeUnitNumericList;
+        }
+
+        [MemoryPackOrder(0)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public List<int> NumericTypeList { get; set; } = new();
+
+        [MemoryPackOrder(2)]
+        public List<long> NewValueList { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.UnitId = default;
+            this.NumericTypeList.Clear();
+            this.NewValueList.Clear();
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2562,18 +2624,20 @@ namespace ET
         public const ushort M2C_GM = 10059;
         public const ushort AttributeEntryInfo = 10060;
         public const ushort ItemInfo = 10061;
-        public const ushort M2C_NoticeUnitNumeric = 10062;
-        public const ushort M2C_AllItems = 10063;
-        public const ushort M2C_ItemUpdateOp = 10064;
-        public const ushort C2M_SpellSkill = 10065;
-        public const ushort M2C_SpellSkill = 10066;
-        public const ushort SkillInfo = 10067;
-        public const ushort M2C_SkillUpdateOp = 10068;
-        public const ushort M2C_HitResult = 10069;
-        public const ushort C2M_Recharge = 10070;
-        public const ushort M2C_Recharge = 10071;
-        public const ushort C2Chat_SendChat = 10072;
-        public const ushort Chat2C_SendChat = 10073;
-        public const ushort Chat2C_NoticeChat = 10074;
+        public const ushort M2C_NoticeNumericMsg = 10062;
+        public const ushort M2C_NoticeUnitNumeric = 10063;
+        public const ushort M2C_NoticeUnitNumericList = 10064;
+        public const ushort M2C_AllItems = 10065;
+        public const ushort M2C_ItemUpdateOp = 10066;
+        public const ushort C2M_SpellSkill = 10067;
+        public const ushort M2C_SpellSkill = 10068;
+        public const ushort SkillInfo = 10069;
+        public const ushort M2C_SkillUpdateOp = 10070;
+        public const ushort M2C_HitResult = 10071;
+        public const ushort C2M_Recharge = 10072;
+        public const ushort M2C_Recharge = 10073;
+        public const ushort C2Chat_SendChat = 10074;
+        public const ushort Chat2C_SendChat = 10075;
+        public const ushort Chat2C_NoticeChat = 10076;
     }
 }

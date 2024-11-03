@@ -7,6 +7,7 @@
         {
             root.CurrentScene().GetComponent<UnitComponent>()
                     .Get(message.UnitId)?.GetComponent<NumericComponent>().Set(message.NumericType, message.NewValue);
+
             await ETTask.CompletedTask;
         }
     }

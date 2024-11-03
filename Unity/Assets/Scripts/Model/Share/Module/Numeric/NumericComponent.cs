@@ -95,8 +95,10 @@ namespace ET
                 EventSystem.Instance.Publish(self.Scene(),
                     new NumericChange()
                     {
-                        Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType,
-                        IsBroadcast = NumericType.Broadcast.Contains(numericType)
+                        Unit = self.GetParent<Unit>(),
+                        NumericType = numericType,
+                        Old = oldValue,
+                        New = value
                     });
             }
         }
@@ -132,7 +134,6 @@ namespace ET
         public int NumericType;
         public long Old;
         public long New;
-        public bool IsBroadcast;
     }
 
     [ComponentOf(typeof(Unit))]

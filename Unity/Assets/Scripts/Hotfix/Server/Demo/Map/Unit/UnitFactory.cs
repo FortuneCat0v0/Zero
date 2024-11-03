@@ -13,6 +13,7 @@ namespace ET.Server
             unit.AddComponent<MoveComponent>();
             unit.Position = new float3(-10, 0, -10);
 
+            unit.AddComponent<NumericNoticeComponent>();
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.SpeedBase, 6f, false);
             numericComponent.Set(NumericType.AOI, 15000, false);
@@ -48,6 +49,7 @@ namespace ET.Server
             Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Item, itemConfigId);
             unit.Position = position;
 
+            unit.AddComponent<NumericNoticeComponent>();
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.AOI, 15000, false);
 
@@ -79,6 +81,7 @@ namespace ET.Server
             unit.AddComponent<MoveComponent>();
             unit.Position = position;
 
+            unit.AddComponent<NumericNoticeComponent>();
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.SpeedBase, 5f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
@@ -116,6 +119,7 @@ namespace ET.Server
             Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
             unitComponent.Add(unit);
 
+            unit.AddComponent<NumericNoticeComponent>();
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.SpeedBase, 10f, false); // 速度是10米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米

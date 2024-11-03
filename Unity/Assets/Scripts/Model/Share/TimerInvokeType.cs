@@ -26,5 +26,6 @@
         public const int MiniMapTimer = 310;
         public const int TimeoutTimer = 311;
         public const int CancellationTimer = 312;
+        public const int NumericSync = 313;
     }
 }
