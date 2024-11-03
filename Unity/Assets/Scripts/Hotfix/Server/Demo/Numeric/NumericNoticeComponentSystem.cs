@@ -134,7 +134,7 @@ namespace ET.Server
             {
                 M2C_NoticeUnitNumericList message = M2C_NoticeUnitNumericList.Create(true);
                 message.UnitId = unit.Id;
-                foreach (var kv in myNums)
+                foreach (var kv in broadcastNums)
                 {
                     message.NumericTypeList.Add(kv.Item1);
                     message.NewValueList.Add(kv.Item2);
