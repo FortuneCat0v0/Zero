@@ -29,6 +29,7 @@ namespace ET.Client
 
             self.u_ComCDImage = self.UIBase.ComponentTable.FindComponent<UnityEngine.UI.Image>("u_ComCDImage");
             self.u_ComCDTextMeshProUGUI = self.UIBase.ComponentTable.FindComponent<TMPro.TextMeshProUGUI>("u_ComCDTextMeshProUGUI");
+            self.u_ComUIParticleRectTransform = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComUIParticleRectTransform");
             self.u_EventOnPointerDown = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventOnPointerDown");
             self.u_EventOnPointerDownHandle = self.u_EventOnPointerDown.Add(self.OnEventOnPointerDownAction);
             self.u_EventOnDrag = self.UIBase.EventTable.FindEvent<UIEventP1<object>>("u_EventOnDrag");

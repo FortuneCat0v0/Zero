@@ -13,6 +13,10 @@ namespace ET.Client
         private static void YIUIInitialize(this SkillSlotItemComponent self)
         {
             self.SkillIndicatorComponent = self.Root().GetComponent<SkillIndicatorComponent>();
+            string path = AssetPathHelper.GetEffectPath("UIEffect/Item_FX_48");
+            GameObject prefab = self.Root().GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(path);
+            GameObject go = UnityEngine.Object.Instantiate(prefab, self.u_ComUIParticleRectTransform);
+            self.u_ComUIParticleRectTransform.GetComponent<Coffee.UIExtensions.UIParticle>().scale = 50f;
         }
 
         [EntitySystem]

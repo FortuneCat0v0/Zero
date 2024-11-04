@@ -19,6 +19,7 @@ namespace ET.Client
         public YIUIComponent UIBase => u_UIBase;
         public UnityEngine.UI.Image u_ComCDImage;
         public TMPro.TextMeshProUGUI u_ComCDTextMeshProUGUI;
+        public UnityEngine.RectTransform u_ComUIParticleRectTransform;
         public UIEventP0 u_EventOnPointerDown;
         public UIEventHandleP0 u_EventOnPointerDownHandle;
         public UIEventP1<object> u_EventOnDrag;
