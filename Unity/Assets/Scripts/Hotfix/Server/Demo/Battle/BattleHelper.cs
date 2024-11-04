@@ -226,10 +226,10 @@ namespace ET.Server
             }
         }
 
-        public static void SetSkillGrid(this Unit unit, int skillConfigId, ESkillSlotType skillSlotType)
+        public static void SetSkillSlot(this Unit unit, int skillConfigId, ESkillSlotType skillSlotType)
         {
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            if (skillComponent.SetSkillGrid(skillConfigId, skillSlotType))
+            if (skillComponent.SetSkillSlot(skillConfigId, skillSlotType))
             {
                 M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
                 m2CSkillUpdateOp.UnitId = unit.Id;

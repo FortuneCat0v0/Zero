@@ -31,10 +31,10 @@ namespace ET.Server
             skillComponent.AddSkill(10011);
             skillComponent.AddSkill(10021);
             skillComponent.AddSkill(10031);
-            skillComponent.SetSkillGrid(10001, ESkillSlotType.Slot_0);
-            skillComponent.SetSkillGrid(10011, ESkillSlotType.Slot_1);
-            skillComponent.SetSkillGrid(10021, ESkillSlotType.Slot_2);
-            skillComponent.SetSkillGrid(10031, ESkillSlotType.Slot_3);
+            skillComponent.SetSkillSlot(10001, ESkillSlotType.Slot_0);
+            skillComponent.SetSkillSlot(10011, ESkillSlotType.Slot_1);
+            skillComponent.SetSkillSlot(10021, ESkillSlotType.Slot_2);
+            skillComponent.SetSkillSlot(10031, ESkillSlotType.Slot_3);
             unit.AddComponent<BuffComponent>();
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Player, ERoleTag.Hero);
 

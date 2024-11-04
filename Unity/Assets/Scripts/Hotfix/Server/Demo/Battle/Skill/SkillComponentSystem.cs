@@ -79,7 +79,7 @@ namespace ET.Server
             return false;
         }
 
-        public static bool SetSkillGrid(this SkillComponent self, int skillConfigId, ESkillSlotType skillSlotType)
+        public static bool SetSkillSlot(this SkillComponent self, int skillConfigId, ESkillSlotType skillSlotType)
         {
             if (!self.SkillDict.ContainsKey(skillConfigId))
             {

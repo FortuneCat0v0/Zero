@@ -47,7 +47,7 @@ namespace ET.Client
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             self.SkillSlotType = skillSlotType;
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            self.Skill = skillComponent.GetSkillByGrid(skillSlotType);
+            self.Skill = skillComponent.GetSkillBySlot(skillSlotType);
             self.RefeshIcon().Coroutine();
         }
 

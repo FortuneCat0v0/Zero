@@ -76,7 +76,7 @@ namespace ET.Client
             return skill;
         }
 
-        public static Skill GetSkillByGrid(this SkillComponent self, ESkillSlotType skillSlotType)
+        public static Skill GetSkillBySlot(this SkillComponent self, ESkillSlotType skillSlotType)
         {
             if (self.SkillSlotDict[(int)skillSlotType] == 0)
             {
@@ -118,7 +118,7 @@ namespace ET.Client
         {
             Log.Debug($"尝试释放技能 ESkillGridType : {skillSlotType}");
 
-            Skill skill = self.GetSkillByGrid(skillSlotType);
+            Skill skill = self.GetSkillBySlot(skillSlotType);
 
             if (skill == null)
             {
