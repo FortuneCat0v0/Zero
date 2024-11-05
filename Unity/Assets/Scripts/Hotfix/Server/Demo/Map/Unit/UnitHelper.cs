@@ -76,6 +76,12 @@ namespace ET.Server
             GateMapComponent gateMapComponent = player.AddComponent<GateMapComponent>();
             gateMapComponent.Scene = await GateMapFactory.Create(gateMapComponent, player.Id, IdGenerater.Instance.GenerateInstanceId(), "GateMap");
 
+            DBComponent accountDBComponent =
+                    player.Root().GetComponent<DBManagerComponent>().GetZoneDB(StartSceneConfigCategory.Instance.Account.Zone);
+            List<Role> roles = await accountDBComponent.Query<Role>(d => d.Id == player.Id);
+            roles[0].LastLoginTime = TimeInfo.Instance.ServerNow();
+            await accountDBComponent.Save(roles[0]);
+
             Unit unit = await UnitCacheHelper.GetUnitCache(player.Root(), gateMapComponent.Scene, player.Id);
 
             bool isNewUnit = unit == null;
@@ -83,8 +89,6 @@ namespace ET.Server
             {
                 unit = UnitFactory.CreatePlayer(gateMapComponent.Scene, player.Id);
                 unit.AddComponent<UnitDBSaveComponent>();
-                List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(StartSceneConfigCategory.Instance.Account.Zone)
-                        .Query<Role>(d => d.Id == player.Id);
                 unit.RoleName = roles[0].Name;
 
                 UnitCacheHelper.AddOrUpdateUnitAllCache(unit);
