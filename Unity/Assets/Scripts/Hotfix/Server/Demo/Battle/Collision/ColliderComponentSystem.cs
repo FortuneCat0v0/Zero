@@ -22,7 +22,7 @@ namespace ET.Server
             self.SyncPosToBelongUnit = createColliderParams.FollowUnitPos;
             self.SyncRotToBelongUnit = createColliderParams.FollowUnitRot;
             self.ColliderConfig = ColliderConfigCategory.Instance.Get(createColliderParams.ColliderConfigId);
-            self.Skill = createColliderParams.Skill;
+            self.SkillC = createColliderParams.SkillS;
             self.CollisionHandler = createColliderParams.CollisionHandler;
             self.Params = createColliderParams.Params;
 

@@ -6,8 +6,8 @@ namespace ET.Client
     {
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
-            Skill skill = entity as Skill;
-            Unit owner = skill.OwnerUnit;
+            SkillC skillC = entity as SkillC;
+            Unit owner = skillC.OwnerUnit;
 
             EventSystem.Instance.Publish(owner.Scene(), new PlaySound()
             {

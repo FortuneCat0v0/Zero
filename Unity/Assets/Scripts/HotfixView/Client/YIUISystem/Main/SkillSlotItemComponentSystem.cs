@@ -27,22 +27,22 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this SkillSlotItemComponent self)
         {
-            if (self.Skill == null)
+            if (self.SkillC == null)
             {
                 return;
             }
 
-            long cd = self.Skill.GetCurrentCD();
+            long cd = self.SkillC.GetCurrentCD();
             self.u_ComCDTextMeshProUGUI.text = cd <= 0 ? string.Empty : $"{cd / 1000f:0.#}";
-            self.u_ComCDImage.fillAmount = cd <= 0 ? 0 : cd * 1f / self.Skill.GetCD();
+            self.u_ComCDImage.fillAmount = cd <= 0 ? 0 : cd * 1f / self.SkillC.CD;
         }
 
         public static void SetSkill(this SkillSlotItemComponent self, ESkillSlotType skillSlotType)
         {
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             self.SkillSlotType = skillSlotType;
-            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            self.Skill = skillComponent.GetSkillBySlot(skillSlotType);
+            SkillCComponent skillCComponent = unit.GetComponent<SkillCComponent>();
+            self.SkillC = skillCComponent.GetSkillBySlot(skillSlotType);
             // 加载图标等。。。
         }
 
@@ -50,17 +50,17 @@ namespace ET.Client
 
         private static void OnEventOnPointerUpAction(this SkillSlotItemComponent self)
         {
-            if (self.Skill == null)
+            if (self.SkillC == null)
             {
                 return;
             }
 
             // 发送消息 使用技能
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
-            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            SkillCComponent skillCComponent = unit.GetComponent<SkillCComponent>();
 
             long targetUnitId = 0;
-            skillComponent.TrySpellSkill(self.SkillSlotType, targetUnitId, self.SkillIndicatorComponent.GetAngle(),
+            skillCComponent.TrySpellSkill(self.SkillSlotType, targetUnitId, self.SkillIndicatorComponent.GetAngle(),
                 self.SkillIndicatorComponent.GetDistance());
 
             self.SkillIndicatorComponent.HideIndicator();
@@ -68,7 +68,7 @@ namespace ET.Client
 
         private static void OnEventOnDragAction(this SkillSlotItemComponent self, object p1)
         {
-            if (self.Skill == null)
+            if (self.SkillC == null)
             {
                 return;
             }
@@ -79,12 +79,12 @@ namespace ET.Client
 
         private static void OnEventOnPointerDownAction(this SkillSlotItemComponent self)
         {
-            if (self.Skill == null)
+            if (self.SkillC == null)
             {
                 return;
             }
 
-            self.SkillIndicatorComponent.ShowIndicator(self.Skill.SkillConfig);
+            self.SkillIndicatorComponent.ShowIndicator(self.SkillC.SkillConfig);
         }
 
         #endregion YIUIEvent结束

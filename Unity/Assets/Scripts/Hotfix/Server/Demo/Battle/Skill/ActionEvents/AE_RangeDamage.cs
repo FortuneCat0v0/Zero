@@ -10,9 +10,9 @@ namespace ET.Server
     {
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
-            Skill skill = entity as Skill;
-            Scene root = skill.Root();
-            Unit owner = skill.OwnerUnit;
+            SkillS skillS = entity as SkillS;
+            Scene root = skillS.Root();
+            Unit owner = skillS.OwnerUnit;
 
             Unit colliderUnit = UnitFactory.CreateColliderUnit(root,
                 new CreateColliderParams()
@@ -24,7 +24,7 @@ namespace ET.Server
                     TargetPos = default,
                     Angle = default,
                     ColliderConfigId = param[0],
-                    Skill = skill,
+                    SkillS = skillS,
                     CollisionHandler = nameof(CH_SimpleArea),
                     Params = new() { param[1] }
                 }, 500);

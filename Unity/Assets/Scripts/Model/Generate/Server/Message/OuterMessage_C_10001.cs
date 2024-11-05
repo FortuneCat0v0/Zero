@@ -2317,6 +2317,9 @@ namespace ET
         [MemoryPackOrder(3)]
         public long SpellEndTime { get; set; }
 
+        [MemoryPackOrder(4)]
+        public int CD { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -2328,6 +2331,7 @@ namespace ET
             this.SkillConfigId = default;
             this.SpellStartTime = default;
             this.SpellEndTime = default;
+            this.CD = default;
 
             ObjectPool.Instance.Recycle(this);
         }

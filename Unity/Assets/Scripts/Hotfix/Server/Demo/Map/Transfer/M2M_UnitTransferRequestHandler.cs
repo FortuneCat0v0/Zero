@@ -54,7 +54,7 @@ namespace ET.Server
                 TargetPos = default,
                 Angle = default,
                 ColliderConfigId = 1001,
-                Skill = default,
+                SkillS = default,
                 CollisionHandler = default,
                 Params = default
             });

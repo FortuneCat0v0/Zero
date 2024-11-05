@@ -519,6 +519,7 @@ message SkillInfo
 	int32 SkillConfigId = 2;
 	int64 SpellStartTime = 3;
 	int64 SpellEndTime = 4;
+	int32 CD = 5;
 }
 
 message M2C_SkillUpdateOp // IMessage

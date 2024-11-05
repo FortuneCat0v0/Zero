@@ -11,9 +11,9 @@ namespace ET.Server
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
             Log.Info("触发子弹事件");
-            Skill skill = entity as Skill;
-            Scene root = skill.Root();
-            Unit owner = skill.OwnerUnit;
+            SkillS skillS = entity as SkillS;
+            Scene root = skillS.Root();
+            Unit owner = skillS.OwnerUnit;
 
             TimerComponent timerComponent = root.GetComponent<TimerComponent>();
             for (int i = 0; i < param[0]; i++)
@@ -25,9 +25,9 @@ namespace ET.Server
                     FollowUnitRot = false,
                     Offset = default,
                     TargetPos = owner.Position,
-                    Angle = skill.Angle + i * (-1 ^ i) * 10,
+                    Angle = skillS.Angle + i * (-1 ^ i) * 10,
                     ColliderConfigId = 1001,
-                    Skill = skill,
+                    SkillS = skillS,
                     CollisionHandler = nameof(CH_SimpleArea),
                     Params = new() { param[1] }
                 });

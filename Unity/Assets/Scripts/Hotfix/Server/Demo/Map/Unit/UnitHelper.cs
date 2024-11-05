@@ -37,16 +37,16 @@ namespace ET.Server
                 unitInfo.KV.Add(key, value);
             }
 
-            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
-            if (skillComponent != null)
+            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
+            if (skillSComponent != null)
             {
-                List<EntityRef<Skill>> skills = skillComponent.GetAllSkill();
-                foreach (Skill skill in skills)
+                List<EntityRef<SkillS>> skills = skillSComponent.GetAllSkill();
+                foreach (SkillS skill in skills)
                 {
                     unitInfo.SkillInfos.Add(skill.ToMessage());
                 }
 
-                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillSComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;
@@ -83,7 +83,7 @@ namespace ET.Server
             {
                 unit = UnitFactory.CreatePlayer(gateMapComponent.Scene, player.Id);
                 unit.AddComponent<UnitDBSaveComponent>();
-                List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(player.Zone())
+                List<Role> roles = await player.Root().GetComponent<DBManagerComponent>().GetZoneDB(StartSceneConfigCategory.Instance.Account.Zone)
                         .Query<Role>(d => d.Id == player.Id);
                 unit.RoleName = roles[0].Name;
 

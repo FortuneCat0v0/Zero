@@ -23,15 +23,12 @@ namespace ET
             Name = _buf.ReadString();
             Desc = _buf.ReadString();
             CD = _buf.ReadInt();
-            Life = _buf.ReadInt();
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEsServer = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsServer.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEParamsServer = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsServer.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentServer = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentServer.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEsClient = new System.Collections.Generic.List<string>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { string _e0;  _e0 = _buf.ReadString(); AEsClient.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AEParamsClient = new System.Collections.Generic.List<System.Collections.Generic.List<int>>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { System.Collections.Generic.List<int> _e0;  {int n1 = System.Math.Min(_buf.ReadSize(), _buf.Size);_e0 = new System.Collections.Generic.List<int>(n1);for(var i1 = 0 ; i1 < n1 ; i1++) { int _e1;  _e1 = _buf.ReadInt(); _e0.Add(_e1);}} AEParamsClient.Add(_e0);}}
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AETriggerPercentClient = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AETriggerPercentClient.Add(_e0);}}
             SkillIndicatorType = (ESkillIndicatorType)_buf.ReadInt();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
+            SkillHandler = _buf.ReadString();
+            EffectConfigId = _buf.ReadInt();
+            ColliderConfigId = _buf.ReadInt();
+            Damage = _buf.ReadInt();
 
             PostInit();
         }
@@ -77,41 +74,6 @@ namespace ET
         public readonly int CD;
 
         /// <summary>
-        /// 技能执行时间(毫秒)
-        /// </summary>
-        public readonly int Life;
-
-        /// <summary>
-        /// 行为事件(服务端)
-        /// </summary>
-        public readonly System.Collections.Generic.List<string> AEsServer;
-
-        /// <summary>
-        /// 行为事件参数(服务端)
-        /// </summary>
-        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> AEParamsServer;
-
-        /// <summary>
-        /// 行为事件触发百分比(服务端)
-        /// </summary>
-        public readonly System.Collections.Generic.List<int> AETriggerPercentServer;
-
-        /// <summary>
-        /// 行为事件(客户端)
-        /// </summary>
-        public readonly System.Collections.Generic.List<string> AEsClient;
-
-        /// <summary>
-        /// 行为事件参数(客户端)
-        /// </summary>
-        public readonly System.Collections.Generic.List<System.Collections.Generic.List<int>> AEParamsClient;
-
-        /// <summary>
-        /// 行为事件触发百分比(客户端)
-        /// </summary>
-        public readonly System.Collections.Generic.List<int> AETriggerPercentClient;
-
-        /// <summary>
         /// 技能指示器类型
         /// </summary>
         public readonly ESkillIndicatorType SkillIndicatorType;
@@ -121,15 +83,32 @@ namespace ET
         /// </summary>
         public readonly System.Collections.Generic.List<float> SkillIndicatorParams;
 
+        /// <summary>
+        /// 行为
+        /// </summary>
+        public readonly string SkillHandler;
+
+        /// <summary>
+        /// 特效
+        /// </summary>
+        public readonly int EffectConfigId;
+
+        /// <summary>
+        /// 碰撞体
+        /// </summary>
+        public readonly int ColliderConfigId;
+
+        /// <summary>
+        /// 伤害
+        /// </summary>
+        public readonly int Damage;
+
 
         public const int __ID__ = -844226349;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()
         {
-            
-            
-            
             
             
             
@@ -155,15 +134,12 @@ namespace ET
             + "Name:" + Name + ","
             + "Desc:" + Desc + ","
             + "CD:" + CD + ","
-            + "Life:" + Life + ","
-            + "AEsServer:" + Luban.StringUtil.CollectionToString(AEsServer) + ","
-            + "AEParamsServer:" + Luban.StringUtil.CollectionToString(AEParamsServer) + ","
-            + "AETriggerPercentServer:" + Luban.StringUtil.CollectionToString(AETriggerPercentServer) + ","
-            + "AEsClient:" + Luban.StringUtil.CollectionToString(AEsClient) + ","
-            + "AEParamsClient:" + Luban.StringUtil.CollectionToString(AEParamsClient) + ","
-            + "AETriggerPercentClient:" + Luban.StringUtil.CollectionToString(AETriggerPercentClient) + ","
             + "SkillIndicatorType:" + SkillIndicatorType + ","
             + "SkillIndicatorParams:" + Luban.StringUtil.CollectionToString(SkillIndicatorParams) + ","
+            + "SkillHandler:" + SkillHandler + ","
+            + "EffectConfigId:" + EffectConfigId + ","
+            + "ColliderConfigId:" + ColliderConfigId + ","
+            + "Damage:" + Damage + ","
             + "}";
         }
 

@@ -1,7 +1,36 @@
 ﻿namespace ET
 {
-    public static partial class BattleDefine
+    public enum EBuffType
     {
+        /// <summary>
+        /// 纯标记
+        /// </summary>
+        OnlySign = 0,
+        ChangeNumeric,
+    }
+
+    public enum EBuffAddType
+    {
+        RefreshTime,
+        CantOverlay,
+        OverlayAddLayerRefreshTime,
+        OnlyAddTime,
+    }
+
+    public enum ESkillState
+    {
+        Waiting,
+        Running,
+        Finished
+    }
+
+    public enum ESkillOpType
+    {
+        Add,
+        Remove,
+        Interrupt,
+        SetSkillGrid,
+        UpLevel
     }
 
     public enum EActionEventSourceType

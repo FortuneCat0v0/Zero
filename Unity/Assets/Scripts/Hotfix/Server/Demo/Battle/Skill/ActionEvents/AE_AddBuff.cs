@@ -11,11 +11,11 @@ namespace ET.Server
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
             Log.Info("触发添加Buff事件");
-            Skill skill = entity as Skill;
-            Scene root = skill.Root();
-            Unit owner = skill.OwnerUnit;
+            SkillS skillS = entity as SkillS;
+            Scene root = skillS.Root();
+            Unit owner = skillS.OwnerUnit;
 
-            owner.GetComponent<BuffComponent>().AddBuff(param[0]);
+            owner.GetComponent<BuffSComponent>().AddBuff(param[0]);
 
             await ETTask.CompletedTask;
         }

@@ -24,18 +24,18 @@ namespace ET.Server
 
             unit.AddComponent<BagComponent>();
             unit.AddComponent<EquipmentComponent>();
-            unit.AddComponent<SkillComponent>();
-            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            unit.AddComponent<SkillSComponent>();
+            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
             // 测试
-            skillComponent.AddSkill(10001);
-            skillComponent.AddSkill(10011);
-            skillComponent.AddSkill(10021);
-            skillComponent.AddSkill(10031);
-            skillComponent.SetSkillSlot(10001, ESkillSlotType.Slot_0);
-            skillComponent.SetSkillSlot(10011, ESkillSlotType.Slot_1);
-            skillComponent.SetSkillSlot(10021, ESkillSlotType.Slot_2);
-            skillComponent.SetSkillSlot(10031, ESkillSlotType.Slot_3);
-            unit.AddComponent<BuffComponent>();
+            skillSComponent.AddSkill(10001);
+            skillSComponent.AddSkill(10011);
+            skillSComponent.AddSkill(10021);
+            skillSComponent.AddSkill(10031);
+            skillSComponent.SetSkillSlot(10001, ESkillSlotType.Slot_0);
+            skillSComponent.SetSkillSlot(10011, ESkillSlotType.Slot_1);
+            skillSComponent.SetSkillSlot(10021, ESkillSlotType.Slot_2);
+            skillSComponent.SetSkillSlot(10031, ESkillSlotType.Slot_3);
+            unit.AddComponent<BuffSComponent>();
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Player, ERoleTag.Hero);
 
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
@@ -64,7 +64,7 @@ namespace ET.Server
                 TargetPos = default,
                 Angle = default,
                 ColliderConfigId = 1001,
-                Skill = default,
+                SkillS = default,
                 CollisionHandler = nameof(CH_PickUpItem),
                 Params = default
             });
@@ -100,7 +100,7 @@ namespace ET.Server
                 TargetPos = default,
                 Angle = default,
                 ColliderConfigId = 1001,
-                Skill = default,
+                SkillS = default,
                 CollisionHandler = default,
                 Params = default
             });
