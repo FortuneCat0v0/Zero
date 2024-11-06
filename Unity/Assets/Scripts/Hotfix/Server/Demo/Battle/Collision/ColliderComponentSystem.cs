@@ -18,7 +18,7 @@ namespace ET.Server
         private static void Awake(this ColliderComponent self, CreateColliderParams createColliderParams)
         {
             self.CollisionWorldComponent = self.Scene().GetComponent<CollisionWorldComponent>();
-            self.BelongToUnit = createColliderParams.BelontToUnit;
+            self.BelongToUnit = createColliderParams.BelongToUnit;
             self.SyncPosToBelongUnit = createColliderParams.FollowUnitPos;
             self.SyncRotToBelongUnit = createColliderParams.FollowUnitRot;
             self.ColliderConfig = ColliderConfigCategory.Instance.Get(createColliderParams.ColliderConfigId);
@@ -29,7 +29,7 @@ namespace ET.Server
             Unit selfUnit = self.GetParent<Unit>();
             if (createColliderParams.FollowUnitPos)
             {
-                selfUnit.Position = createColliderParams.BelontToUnit.Position + createColliderParams.Offset;
+                selfUnit.Position = createColliderParams.BelongToUnit.Position + createColliderParams.Offset;
             }
             else
             {
@@ -38,7 +38,7 @@ namespace ET.Server
 
             if (createColliderParams.FollowUnitRot)
             {
-                selfUnit.Rotation = createColliderParams.BelontToUnit.Rotation;
+                selfUnit.Rotation = createColliderParams.BelongToUnit.Rotation;
             }
             else
             {

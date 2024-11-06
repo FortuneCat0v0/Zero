@@ -10,19 +10,14 @@
         {
             Scene root = skillS.Root();
             Unit owner = skillS.OwnerUnit;
-            UnitFactory.CreateBullet(root, new CreateColliderParams()
-            {
-                BelontToUnit = owner,
-                FollowUnitPos = false,
-                FollowUnitRot = false,
-                Offset = default,
-                TargetPos = owner.Position,
-                Angle = skillS.Angle,
-                ColliderConfigId = 1001,
-                SkillS = skillS,
-                CollisionHandler = nameof(CH_SimpleArea),
-                Params = new() { skillS.SkillConfig.Damage }
-            });
+            UnitFactory.CreateBullet(root,
+                new(belongToUnit: owner,
+                    colliderConfigId: 1001,
+                    targetPos: owner.Position,
+                    angle: skillS.Angle,
+                    skillS: skillS,
+                    collisionHandler: nameof(CH_SimpleArea),
+                    paramsList: new() { skillS.SkillConfig.Damage }));
 
             skillS.SkillState = ESkillState.Finished;
         }

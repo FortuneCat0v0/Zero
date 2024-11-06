@@ -48,6 +48,8 @@ namespace ET.Client
 
         public SkillCHandler SkillCHandler;
 
+        public bool Active { get; set; }
+
         public long EffectId;
     }
 }

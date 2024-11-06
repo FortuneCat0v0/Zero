@@ -12,7 +12,7 @@
         public override void OnUpdate(SkillS skillS)
         {
             long nowTime = TimeInfo.Instance.ServerNow();
-            if (nowTime < skillS.SpellStartTime + 100)
+            if (nowTime < skillS.SpellStartTime + 500)
             {
                 return;
             }
@@ -21,19 +21,14 @@
             Unit owner = skillS.OwnerUnit;
 
             Unit colliderUnit = UnitFactory.CreateColliderUnit(root,
-                new CreateColliderParams()
-                {
-                    BelontToUnit = owner,
-                    FollowUnitPos = true,
-                    FollowUnitRot = true,
-                    Offset = default,
-                    TargetPos = default,
-                    Angle = default,
-                    ColliderConfigId = skillS.SkillConfig.ColliderConfigId,
-                    SkillS = skillS,
-                    CollisionHandler = nameof(CH_SimpleArea),
-                    Params = new() { skillS.SkillConfig.Damage }
-                }, 500);
+                new(belongToUnit: owner,
+                    colliderConfigId: skillS.SkillConfig.ColliderConfigId,
+                    followUnitPos: true,
+                    followUnitRot: true,
+                    skillS: skillS,
+                    collisionHandler: nameof(CH_SimpleArea),
+                    paramsList: new() { skillS.SkillConfig.Damage })
+                , 500);
 
             skillS.SkillState = ESkillState.Finished;
         }

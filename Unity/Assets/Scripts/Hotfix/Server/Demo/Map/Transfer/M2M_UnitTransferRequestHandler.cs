@@ -45,19 +45,10 @@ namespace ET.Server
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
 
             Log.Warning("注意传送后的碰撞体要重新添加");
-            unit.AddComponent<ColliderComponent, CreateColliderParams>(new CreateColliderParams()
-            {
-                BelontToUnit = unit,
-                FollowUnitPos = true,
-                FollowUnitRot = true,
-                Offset = default,
-                TargetPos = default,
-                Angle = default,
-                ColliderConfigId = 1001,
-                SkillS = default,
-                CollisionHandler = default,
-                Params = default
-            });
+            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+                colliderConfigId: 1001,
+                followUnitPos: true,
+                followUnitRot: true));
 
             // 解锁location，可以接收发给Unit的消息
             await scene.Root().GetComponent<LocationProxyComponent>().UnLock(LocationType.Unit, unit.Id, request.OldActorId, unit.GetActorId());

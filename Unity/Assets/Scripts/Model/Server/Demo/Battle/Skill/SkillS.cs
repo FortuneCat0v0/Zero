@@ -56,5 +56,8 @@ namespace ET.Server
 
         [BsonIgnore]
         public SkillSHandler SkillSHandler;
+
+        [BsonIgnore]
+        public bool Active { get; set; }
     }
 }

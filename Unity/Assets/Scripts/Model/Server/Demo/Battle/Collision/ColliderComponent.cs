@@ -6,7 +6,9 @@ namespace ET.Server
 {
     public struct CreateColliderParams
     {
-        public Unit BelontToUnit;
+        public Unit BelongToUnit;
+        public int ColliderConfigId;
+
         public bool FollowUnitPos;
         public bool FollowUnitRot;
         public float3 Offset;
@@ -14,10 +16,33 @@ namespace ET.Server
         public float3 TargetPos;
         public float Angle;
 
-        public int ColliderConfigId;
         public SkillS SkillS;
         public string CollisionHandler;
         public List<int> Params;
+
+        public CreateColliderParams(
+        Unit belongToUnit,
+        int colliderConfigId,
+        bool followUnitPos = false,
+        bool followUnitRot = false,
+        float3 offset = default,
+        float3 targetPos = default,
+        float angle = 0,
+        SkillS skillS = null,
+        string collisionHandler = null,
+        List<int> paramsList = null)
+        {
+            BelongToUnit = belongToUnit;
+            ColliderConfigId = colliderConfigId;
+            FollowUnitPos = followUnitPos;
+            FollowUnitRot = followUnitRot;
+            Offset = offset;
+            TargetPos = targetPos;
+            Angle = angle;
+            SkillS = skillS;
+            CollisionHandler = collisionHandler;
+            Params = paramsList;
+        }
     }
 
     [ComponentOf(typeof(Unit))]

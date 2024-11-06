@@ -55,19 +55,11 @@ namespace ET.Server
 
             unitComponent.Add(unit);
 
-            unit.AddComponent<ColliderComponent, CreateColliderParams>(new CreateColliderParams()
-            {
-                BelontToUnit = unit,
-                FollowUnitPos = true,
-                FollowUnitRot = true,
-                Offset = default,
-                TargetPos = default,
-                Angle = default,
-                ColliderConfigId = 1001,
-                SkillS = default,
-                CollisionHandler = nameof(CH_PickUpItem),
-                Params = default
-            });
+            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+                colliderConfigId: 1001,
+                followUnitPos: true,
+                followUnitRot: true,
+                collisionHandler: nameof(CH_PickUpItem)));
 
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;
@@ -91,19 +83,10 @@ namespace ET.Server
             unitComponent.Add(unit);
 
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Monster, ERoleTag.Hero);
-            unit.AddComponent<ColliderComponent, CreateColliderParams>(new CreateColliderParams()
-            {
-                BelontToUnit = unit,
-                FollowUnitPos = true,
-                FollowUnitRot = true,
-                Offset = default,
-                TargetPos = default,
-                Angle = default,
-                ColliderConfigId = 1001,
-                SkillS = default,
-                CollisionHandler = default,
-                Params = default
-            });
+            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+                colliderConfigId: 1001,
+                followUnitPos: true,
+                followUnitRot: true));
 
             unit.AddComponent<PathfindingComponent, string>("TestMap");
             unit.AddComponent<XunLuoPathComponent>();
@@ -124,7 +107,7 @@ namespace ET.Server
             numericComponent.Set(NumericType.SpeedBase, 10f, false); // 速度是10米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
 
-            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelongToUnit.GetComponent<RoleCastComponent>().RoleCamp,
                 ERoleTag.SkillCollision);
 
             unit.AddComponent<ColliderComponent, CreateColliderParams>(createColliderParams);
@@ -151,7 +134,7 @@ namespace ET.Server
 
             //为碰撞体新建一个Unit
             Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
-            unit.Position = createColliderParams.BelontToUnit.Position;
+            unit.Position = createColliderParams.BelongToUnit.Position;
 
             if (lifeTime > 0)
             {
@@ -163,7 +146,7 @@ namespace ET.Server
                 unit.AddComponent<CancellationComponent, ETCancellationToken>(cancellationToken);
             }
 
-            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelontToUnit.GetComponent<RoleCastComponent>().RoleCamp,
+            unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(createColliderParams.BelongToUnit.GetComponent<RoleCastComponent>().RoleCamp,
                 ERoleTag.SkillCollision);
 
             unit.AddComponent<ColliderComponent, CreateColliderParams>(createColliderParams);
