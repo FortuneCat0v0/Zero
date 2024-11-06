@@ -15,6 +15,9 @@ namespace ET.Client
 
         public static void ShowIndicator(this SkillIndicatorComponent self, SkillConfig skillconfig)
         {
+            self.Unit ??= UnitHelper.GetMyUnitFromClientScene(self.Root()); // 以后若是有切换控制对象，通过订阅事件设置对象
+
+            self.Vector2 = Vector2.zero;
             self.SkillConfig = skillconfig;
             if (self.GameObject != null)
             {
@@ -24,11 +27,11 @@ namespace ET.Client
 
             self.GameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(),
                 $"Assets/Bundles/Effect/SkillIndicator/SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}.prefab");
-            self.GameObject.transform.SetParent(UnitHelper.GetMyUnitFromClientScene(self.Root()).GetComponent<GameObjectComponent>().GameObject
-                    .transform);
+            self.GameObject.transform.SetParent(self.Unit.GetComponent<GameObjectComponent>().GameObject.transform);
             self.GameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
-            self.Vector2 = Vector2.zero;
-            self.Angle = MathHelper.QuaternionToEulerAngle_Y(UnitHelper.GetMyUnitFromClientScene(self.Root()).Rotation);
+            self.GameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+            self.Angle = MathHelper.QuaternionToEulerAngle_Y(self.Unit.Rotation);
             self.Distance = 0;
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
@@ -63,6 +66,7 @@ namespace ET.Client
                 case ESkillIndicatorType.SingleLine:
                 {
                     rc.Get<GameObject>("Line").transform.localScale = new Vector3(1, 1, self.SkillConfig.SkillIndicatorParams[1]);
+                    rc.Get<GameObject>("Line").transform.rotation = Quaternion.Euler(0, self.Angle, 0);
                     rc.Get<GameObject>("Range").transform.localScale =
                             new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
@@ -85,8 +89,6 @@ namespace ET.Client
             {
                 return;
             }
-
-            Unit myUnit = UnitHelper.GetMyUnitFromClientScene(self.Root());
 
             float angle = 90 - Mathf.Atan2(self.Vector2.y, self.Vector2.x) * Mathf.Rad2Deg;
             angle += self.MainCamera.transform.eulerAngles.y;
@@ -128,7 +130,7 @@ namespace ET.Client
                 }
                 case ESkillIndicatorType.Range:
                 {
-                    self.Angle = MathHelper.QuaternionToEulerAngle_Y(myUnit.Rotation);
+                    self.Angle = MathHelper.QuaternionToEulerAngle_Y(self.Unit.Rotation);
                     self.Distance = 0;
                     break;
                 }

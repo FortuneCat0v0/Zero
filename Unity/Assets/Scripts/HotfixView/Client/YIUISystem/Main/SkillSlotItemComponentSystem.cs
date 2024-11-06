@@ -17,6 +17,7 @@ namespace ET.Client
             GameObject prefab = self.Root().GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(path);
             GameObject go = UnityEngine.Object.Instantiate(prefab, self.u_ComUIParticleRectTransform);
             self.u_ComUIParticleRectTransform.GetComponent<Coffee.UIExtensions.UIParticle>().scale = 50f;
+            self.u_ComUIParticleRectTransform.gameObject.SetActive(false);
         }
 
         [EntitySystem]
@@ -31,6 +32,8 @@ namespace ET.Client
             {
                 return;
             }
+
+            self.u_ComUIParticleRectTransform.gameObject.SetActive(self.SkillC.SkillState == ESkillState.Running);
 
             long cd = self.SkillC.GetCurrentCD();
             self.u_ComCDTextMeshProUGUI.text = cd <= 0 ? string.Empty : $"{cd / 1000f:0.#}";
