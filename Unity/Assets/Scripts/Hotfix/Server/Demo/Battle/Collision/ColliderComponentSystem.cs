@@ -22,6 +22,7 @@ namespace ET.Server
             self.SyncPosToBelongUnit = createColliderParams.FollowUnitPos;
             self.SyncRotToBelongUnit = createColliderParams.FollowUnitRot;
             self.ColliderConfig = ColliderConfigCategory.Instance.Get(createColliderParams.ColliderConfigId);
+            self.Layer = createColliderParams.Layer;
             self.SkillC = createColliderParams.SkillS;
             self.CollisionHandler = createColliderParams.CollisionHandler;
             self.Params = createColliderParams.Params;
@@ -82,18 +83,18 @@ namespace ET.Server
             {
                 case EColliderType.Circle:
                     self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset, self.ColliderConfig.IsSensor,
-                        unit);
+                        unit, self.Layer);
 
                     break;
                 case EColliderType.Box:
                     self.Body.CreateBoxFixture(self.ColliderConfig.HX, self.ColliderConfig.HY, self.ColliderConfig.Offset, 0,
-                        self.ColliderConfig.IsSensor, unit);
+                        self.ColliderConfig.IsSensor, unit, self.Layer);
 
                     break;
                 case EColliderType.Polygon:
-                    foreach (var verxtPoint in self.ColliderConfig.FinalPoints)
+                    foreach (var points in self.ColliderConfig.FinalPoints)
                     {
-                        self.Body.CreatePolygonFixture(verxtPoint, self.ColliderConfig.IsSensor, unit);
+                        self.Body.CreatePolygonFixture(points, self.ColliderConfig.IsSensor, unit, self.Layer);
                     }
 
                     break;

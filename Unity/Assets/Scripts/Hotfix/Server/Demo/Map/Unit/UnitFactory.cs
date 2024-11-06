@@ -59,7 +59,7 @@ namespace ET.Server
                 colliderConfigId: 1001,
                 followUnitPos: true,
                 followUnitRot: true,
-                collisionHandler: nameof(CH_PickUpItem)));
+                collisionHandler: nameof(CH_ContactItem)));
 
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;

@@ -23,5 +23,7 @@ namespace ET
 
         Skill = 5,
 
+        Area = 6,
+
     }
 }

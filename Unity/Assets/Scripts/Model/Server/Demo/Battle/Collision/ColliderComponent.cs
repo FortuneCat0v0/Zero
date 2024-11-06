@@ -8,6 +8,7 @@ namespace ET.Server
     {
         public Unit BelongToUnit;
         public int ColliderConfigId;
+        public ushort Layer;
 
         public bool FollowUnitPos;
         public bool FollowUnitRot;
@@ -23,6 +24,7 @@ namespace ET.Server
         public CreateColliderParams(
         Unit belongToUnit,
         int colliderConfigId,
+        ushort layer = 1 << 0,
         bool followUnitPos = false,
         bool followUnitRot = false,
         float3 offset = default,
@@ -34,6 +36,7 @@ namespace ET.Server
         {
             BelongToUnit = belongToUnit;
             ColliderConfigId = colliderConfigId;
+            Layer = layer;
             FollowUnitPos = followUnitPos;
             FollowUnitRot = followUnitRot;
             Offset = offset;
@@ -67,6 +70,7 @@ namespace ET.Server
         public bool SyncRotToBelongUnit;
 
         public ColliderConfig ColliderConfig;
+        public ushort Layer;
 
         private EntityRef<SkillS> skillS;
         public SkillS SkillC { get => this.skillS; set => this.skillS = value; }

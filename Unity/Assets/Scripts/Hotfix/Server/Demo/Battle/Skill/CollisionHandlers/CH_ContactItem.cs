@@ -3,7 +3,7 @@
     /// <summary>
     /// 捡道具
     /// </summary>
-    public class CH_PickUpItem : CollisionHandler
+    public class CH_ContactItem : CollisionHandler
     {
         public override void HandleCollisionStart(Unit a, Unit b)
         {

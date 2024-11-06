@@ -75,7 +75,7 @@ namespace ET
         public readonly float HY;
 
         /// <summary>
-        /// 碰撞体所包含的顶点信息(顺时针),可能由多个多边形组成
+        /// 碰撞体所包含的顶点信息(顺时针)，可能由多个多边形组成，注意！3~8个顶点，只能是凸多边形，要创建凹多边形需将其拆分为多个凸多边形
         /// </summary>
         public readonly System.Collections.Generic.List<System.Collections.Generic.List<vector2>> FinalPoints;
 
