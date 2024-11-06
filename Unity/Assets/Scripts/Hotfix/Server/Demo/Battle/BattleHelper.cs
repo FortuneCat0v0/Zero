@@ -40,6 +40,7 @@ namespace ET.Server
         {
             if (args.DefendUnit.UnitType == EUnitType.Monster)
             {
+                await scene.Root().GetComponent<TimerComponent>().WaitFrameAsync();
                 UnitFactory.CreateItem(scene, args.DefendUnit.Position, 1);
             }
 

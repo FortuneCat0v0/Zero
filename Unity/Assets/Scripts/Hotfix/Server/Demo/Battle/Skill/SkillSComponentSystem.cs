@@ -32,6 +32,7 @@ namespace ET.Server
             foreach (Entity entity in self.Children.Values)
             {
                 SkillS skillS = entity as SkillS;
+                skillS.SetCD();
                 self.SkillDict.Add(skillS.SkillConfigId, skillS);
             }
         }

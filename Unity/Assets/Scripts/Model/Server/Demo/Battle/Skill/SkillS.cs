@@ -12,6 +12,7 @@ namespace ET.Server
 
         public long SpellEndTime { get; set; }
 
+        [BsonIgnore]
         public int CD { get; set; }
 
         [BsonIgnore]
