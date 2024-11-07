@@ -19,6 +19,7 @@ namespace ET
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             AssetPath = _buf.ReadString();
+            NavName = _buf.ReadString();
             PlayerSpawnPoint = ExternalTypeUtil.NewVector3(vector3.Deserializevector3(_buf));
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);AreaConfigIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); AreaConfigIds.Add(_e0);}}
 
@@ -46,6 +47,11 @@ namespace ET
         public readonly string AssetPath;
 
         /// <summary>
+        /// 寻路
+        /// </summary>
+        public readonly string NavName;
+
+        /// <summary>
         /// 玩家出生点
         /// </summary>
         public readonly System.Numerics.Vector3 PlayerSpawnPoint;
@@ -66,6 +72,7 @@ namespace ET
             
             
             
+            
         }
 
         public override string ToString()
@@ -74,6 +81,7 @@ namespace ET
             + "Id:" + Id + ","
             + "Name:" + Name + ","
             + "AssetPath:" + AssetPath + ","
+            + "NavName:" + NavName + ","
             + "PlayerSpawnPoint:" + PlayerSpawnPoint + ","
             + "AreaConfigIds:" + Luban.StringUtil.CollectionToString(AreaConfigIds) + ","
             + "}";

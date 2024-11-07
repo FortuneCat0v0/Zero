@@ -100,8 +100,7 @@ namespace ET.Server
                         response.MyId = player.Id;
 
                         StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Map1");
-
-                        TransferHelper.TransferAtFrameFinish(unit, startSceneConfig.ActorId, startSceneConfig.Name).Coroutine();
+                        TransferHelper.TransferAtFrameFinish(unit, startSceneConfig.ActorId).Coroutine();
 
                         SessionStateComponent SessionStateComponent =
                                 session.GetComponent<SessionStateComponent>() ?? session.AddComponent<SessionStateComponent>();

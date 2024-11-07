@@ -15,12 +15,6 @@ namespace ET.Server
             unitComponent.AddChild(unit);
             unitComponent.Add(unit);
 
-            // foreach (byte[] bytes in request.Entitys)
-            // {
-            //     Entity entity = MongoHelper.Deserialize<Entity>(bytes);
-            //     unit.AddComponent(entity);
-            // }
-
             unit.AddComponent<UnitDBSaveComponent>();
             for (int i = 0; i < request.Entitys.Count; i++)
             {
@@ -32,10 +26,27 @@ namespace ET.Server
 
             unit.AddComponent<NumericNoticeComponent>();
             unit.AddComponent<MoveComponent>();
-            // 服务端添加寻路地图
-            // unit.AddComponent<PathfindingComponent, string>(scene.Name);
-            unit.AddComponent<PathfindingComponent, string>("TestMap");
-            unit.Position = new float3(0, 0, 0);
+
+            // 传送后的一些处理
+            MapComponent mapComponent = scene.GetComponent<MapComponent>();
+            MapConfig mapConfig = MapConfigCategory.Instance.Get(mapComponent.MapConfigId);
+            switch (mapComponent.MapType)
+            {
+                case MapType.Map1:
+                {
+                    unit.AddComponent<PathfindingComponent, string>(mapConfig.NavName);
+                    unit.Position = new float3(mapConfig.PlayerSpawnPoint.X, mapConfig.PlayerSpawnPoint.Y, mapConfig.PlayerSpawnPoint.Z);
+                    break;
+                }
+                case MapType.Map2:
+                {
+                    unit.AddComponent<PathfindingComponent, string>(mapConfig.NavName);
+                    unit.Position = new float3(mapConfig.PlayerSpawnPoint.X, mapConfig.PlayerSpawnPoint.Y, mapConfig.PlayerSpawnPoint.Z);
+                    break;
+                }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             unit.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.OrderedMessage);
 

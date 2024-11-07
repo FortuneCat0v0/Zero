@@ -1,17 +1,64 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ET.Server
 {
     public static partial class TransferHelper
     {
-        public static async ETTask TransferAtFrameFinish(Unit unit, ActorId sceneInstanceId, string sceneName)
+        public static async ETTask TransferAtFrameFinish(Unit unit, ActorId sceneInstanceId)
         {
             await unit.Fiber().WaitFrameFinish();
 
-            await Transfer(unit, sceneInstanceId, sceneName);
+            await Transfer(unit, sceneInstanceId);
         }
 
-        public static async ETTask Transfer(Unit unit, ActorId sceneInstanceId, string sceneName)
+        public static async ETTask<int> TransferUnit(Unit unit, MapType mapType, int mapConfigId)
+        {
+            using (await unit.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.Transfer, unit.Id))
+            {
+                if (unit.IsDisposed)
+                {
+                    return ErrorCode.ERR_RequestRepeatedly;
+                }
+
+                // 传送前的一些处理
+                MapType oldMap = unit.Scene().GetComponent<MapComponent>().MapType;
+                // 检查能否传送。。。。
+                // 清空一些状态什么的
+                switch (oldMap)
+                {
+                    case MapType.Map1:
+                        break;
+                    case MapType.Map2:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                // 开始传送
+                switch (mapType)
+                {
+                    case MapType.Map1:
+                    {
+                        StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Map1");
+                        Transfer(unit, startSceneConfig.ActorId).Coroutine();
+                        break;
+                    }
+                    case MapType.Map2:
+                    {
+                        StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Map2");
+                        Transfer(unit, startSceneConfig.ActorId).Coroutine();
+                        break;
+                    }
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(mapType), mapType, null);
+                }
+            }
+
+            return ErrorCode.ERR_Success;
+        }
+
+        private static async ETTask Transfer(Unit unit, ActorId sceneInstanceId)
         {
             Scene root = unit.Root();
 
@@ -23,13 +70,6 @@ namespace ET.Server
             M2M_UnitTransferRequest request = M2M_UnitTransferRequest.Create();
             request.OldActorId = unit.GetActorId();
             request.Unit = unit.ToBson();
-            // foreach (Entity entity in unit.Components.Values)
-            // {
-            //     if (entity is ITransfer)
-            //     {
-            //         request.Entitys.Add(entity.ToBson());
-            //     }
-            // }
 
             foreach (var kv in unit.GetComponent<UnitDBSaveComponent>().Bytes)
             {

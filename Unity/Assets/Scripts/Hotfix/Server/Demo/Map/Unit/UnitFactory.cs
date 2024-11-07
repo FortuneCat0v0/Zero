@@ -127,14 +127,13 @@ namespace ET.Server
             return unit;
         }
 
-        public static Unit CreateColliderUnit(Scene root, CreateColliderParams createColliderParams, long lifeTime = 0,
+        public static Unit CreateSkill(Scene root, CreateColliderParams createColliderParams, long lifeTime = 0,
         ETCancellationToken cancellationToken = null)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
             //为碰撞体新建一个Unit
             Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
-            unit.Position = createColliderParams.BelongToUnit.Position;
 
             if (lifeTime > 0)
             {
@@ -150,6 +149,22 @@ namespace ET.Server
                 ERoleTag.SkillCollision);
 
             unit.AddComponent<ColliderComponent, CreateColliderParams>(createColliderParams);
+
+            return unit;
+        }
+
+        public static Unit CreateArea(Scene root, int areaConfigId)
+        {
+            UnitComponent unitComponent = root.GetComponent<UnitComponent>();
+
+            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Area, areaConfigId);
+            AreaConfig areaConfig = AreaConfigCategory.Instance.Get(areaConfigId);
+
+            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+                colliderConfigId: areaConfig.ColliderConfigId,
+                followUnitPos: false,
+                targetPos: new(areaConfig.Point.X, areaConfig.Point.Y, areaConfig.Point.Z),
+                collisionHandler: nameof(CH_ContactArea)));
 
             return unit;
         }

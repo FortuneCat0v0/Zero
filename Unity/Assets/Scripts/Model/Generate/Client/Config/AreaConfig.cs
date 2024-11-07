@@ -19,7 +19,7 @@ namespace ET
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             Des = _buf.ReadString();
-            Point = vector2.Deserializevector2(_buf);
+            Point = vector3.Deserializevector3(_buf);
             ColliderConfigId = _buf.ReadInt();
             AreaType = (EAreaType)_buf.ReadInt();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Params = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Params.Add(_e0);}}
@@ -50,7 +50,7 @@ namespace ET
         /// <summary>
         /// 区域坐标点
         /// </summary>
-        public readonly vector2 Point;
+        public readonly vector3 Point;
 
         /// <summary>
         /// 碰撞体配置信息

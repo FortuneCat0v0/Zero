@@ -58,4 +58,10 @@
         Common = 1,
         Special = 2,
     }
+
+    public enum MapType
+    {
+        Map1 = 1,
+        Map2 = 2,
+    }
 }

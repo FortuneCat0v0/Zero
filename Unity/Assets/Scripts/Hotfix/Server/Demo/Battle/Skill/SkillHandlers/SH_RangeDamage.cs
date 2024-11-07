@@ -20,7 +20,7 @@
             Scene root = skillS.Root();
             Unit owner = skillS.OwnerUnit;
 
-            Unit colliderUnit = UnitFactory.CreateColliderUnit(root,
+            Unit colliderUnit = UnitFactory.CreateSkill(root,
                 new(belongToUnit: owner,
                     colliderConfigId: skillS.SkillConfig.ColliderConfigId,
                     followUnitPos: true,

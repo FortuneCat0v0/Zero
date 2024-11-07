@@ -223,6 +223,8 @@ message M2C_TestRobotCase2 // ILocationMessage
 message C2M_TransferMap // ILocationRequest
 {
 	int32 RpcId = 1;
+	int32 MapType = 2;
+	int32 MapConfigId = 3;
 }
 
 message M2C_TransferMap // ILocationResponse

@@ -1022,6 +1022,12 @@ namespace ET
         [MemoryPackOrder(0)]
         public int RpcId { get; set; }
 
+        [MemoryPackOrder(1)]
+        public int MapType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int MapConfigId { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -1030,6 +1036,8 @@ namespace ET
             }
 
             this.RpcId = default;
+            this.MapType = default;
+            this.MapConfigId = default;
 
             ObjectPool.Instance.Recycle(this);
         }
