@@ -32,13 +32,7 @@ namespace ET.Server
             MapConfig mapConfig = MapConfigCategory.Instance.Get(mapComponent.MapConfigId);
             switch (mapComponent.MapType)
             {
-                case MapType.Map1:
-                {
-                    unit.AddComponent<PathfindingComponent, string>(mapConfig.NavName);
-                    unit.Position = new float3(mapConfig.PlayerSpawnPoint.X, mapConfig.PlayerSpawnPoint.Y, mapConfig.PlayerSpawnPoint.Z);
-                    break;
-                }
-                case MapType.Map2:
+                case MapType.MainMap:
                 {
                     unit.AddComponent<PathfindingComponent, string>(mapConfig.NavName);
                     unit.Position = new float3(mapConfig.PlayerSpawnPoint.X, mapConfig.PlayerSpawnPoint.Y, mapConfig.PlayerSpawnPoint.Z);

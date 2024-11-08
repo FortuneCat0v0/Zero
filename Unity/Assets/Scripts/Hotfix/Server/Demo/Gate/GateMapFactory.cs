@@ -7,10 +7,9 @@ namespace ET.Server
             await ETTask.CompletedTask;
             Scene scene = EntitySceneFactory.CreateScene(parent, id, instanceId, SceneType.Map, name);
 
+            scene.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.UnOrderedMessage);
             scene.AddComponent<UnitComponent>();
             scene.AddComponent<AOIManagerComponent>();
-
-            scene.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.UnOrderedMessage);
 
             return scene;
         }

@@ -27,9 +27,7 @@ namespace ET.Server
                 // 清空一些状态什么的
                 switch (oldMap)
                 {
-                    case MapType.Map1:
-                        break;
-                    case MapType.Map2:
+                    case MapType.MainMap:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -38,15 +36,9 @@ namespace ET.Server
                 // 开始传送
                 switch (mapType)
                 {
-                    case MapType.Map1:
+                    case MapType.MainMap:
                     {
                         StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Map1");
-                        Transfer(unit, startSceneConfig.ActorId).Coroutine();
-                        break;
-                    }
-                    case MapType.Map2:
-                    {
-                        StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Map2");
                         Transfer(unit, startSceneConfig.ActorId).Coroutine();
                         break;
                     }

@@ -61,7 +61,6 @@
 
     public enum MapType
     {
-        Map1 = 1,
-        Map2 = 2,
+        MainMap = 1,
     }
 }
