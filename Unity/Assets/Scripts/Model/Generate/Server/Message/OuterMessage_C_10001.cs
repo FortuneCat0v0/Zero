@@ -384,7 +384,10 @@ namespace ET
         public long SceneInstanceId { get; set; }
 
         [MemoryPackOrder(1)]
-        public string SceneName { get; set; }
+        public int MapType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public int MapConfigId { get; set; }
 
         public override void Dispose()
         {
@@ -394,7 +397,8 @@ namespace ET
             }
 
             this.SceneInstanceId = default;
-            this.SceneName = default;
+            this.MapType = default;
+            this.MapConfigId = default;
 
             ObjectPool.Instance.Recycle(this);
         }

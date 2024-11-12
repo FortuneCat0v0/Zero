@@ -2,6 +2,11 @@
 {
     public static partial class AssetPathHelper
     {
+        public static string GetScenePath(string fileName)
+        {
+            return $"Assets/Bundles/Scenes/{fileName}.unity";
+        }
+
         public static string GetUIPath(string fileName)
         {
             return $"Assets/Bundles/UI/{fileName}.prefab";

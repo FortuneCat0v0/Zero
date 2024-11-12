@@ -15,8 +15,9 @@ namespace ET.Client
             scene.Root().GetComponent<GlobalComponent>().Mask.SetActive(false);
 
             // 加载场景资源
-            await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/TestMap.unity", LoadSceneMode.Single);
-            
+            MapConfig mapConfig = MapConfigCategory.Instance.Get(scene.GetComponent<MapComponent>().MapConfigId);
+            await resourcesLoaderComponent.LoadSceneAsync(AssetPathHelper.GetScenePath(mapConfig.AssetPath), LoadSceneMode.Single);
+
             YIUIMgrComponent.Inst.GetPanel<LoadingPanelComponent>().SetComplete();
 
             scene.GetComponent<AudioComponent>().PlayMusic("MainCity.ogg");

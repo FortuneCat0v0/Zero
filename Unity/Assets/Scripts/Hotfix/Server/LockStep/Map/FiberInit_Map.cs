@@ -22,12 +22,12 @@
             mapComponent.MapType = MapType.MainMap;
             mapComponent.MapConfigId = 1001;
 
-            MapConfig mapConfig = MapConfigCategory.Instance.Get(mapComponent.MapConfigId);
+            // MapConfig mapConfig = MapConfigCategory.Instance.Get(mapComponent.MapConfigId);
             // 生成特殊区域
-            foreach (int areaConfigId in mapConfig.AreaConfigIds)
-            {
-                UnitFactory.CreateArea(root, areaConfigId);
-            }
+            // foreach (int areaConfigId in mapConfig.AreaConfigIds)
+            // {
+            //     UnitFactory.CreateArea(root, areaConfigId);
+            // }
 
             await ETTask.CompletedTask;
         }

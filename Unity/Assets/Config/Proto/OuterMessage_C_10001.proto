@@ -85,7 +85,8 @@ message M2C_CreateMyUnit // IMessage
 message M2C_StartSceneChange // IMessage
 {
 	int64 SceneInstanceId = 1;
-	string SceneName = 2;
+	int32 MapType = 2;
+	int32 MapConfigId = 3;
 }
 
 message M2C_RemoveUnits // IMessage

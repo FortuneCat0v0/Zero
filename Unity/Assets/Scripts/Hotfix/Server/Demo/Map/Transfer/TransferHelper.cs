@@ -78,9 +78,11 @@ namespace ET.Server
         public static void NoticeClient(Scene scene, Unit unit)
         {
             // 通知客户端开始切场景
+            MapComponent mapComponent = scene.GetComponent<MapComponent>();
             M2C_StartSceneChange m2CStartSceneChange = M2C_StartSceneChange.Create();
             m2CStartSceneChange.SceneInstanceId = scene.InstanceId;
-            m2CStartSceneChange.SceneName = scene.Name;
+            m2CStartSceneChange.MapType = (int)mapComponent.MapType;
+            m2CStartSceneChange.MapConfigId = mapComponent.MapConfigId;
             MapMessageHelper.SendToClient(unit, m2CStartSceneChange);
 
             // 通知客户端创建MyUnit
