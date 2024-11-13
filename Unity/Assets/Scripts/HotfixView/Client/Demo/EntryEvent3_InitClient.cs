@@ -18,6 +18,7 @@ namespace ET.Client
             root.AddComponent<RoleComponent>();
             root.AddComponent<SkillIndicatorComponent>();
             root.AddComponent<BagComponent>();
+            root.AddComponent<SlimeComponent>();
             root.AddComponent<EquipmentComponent>();
             root.AddComponent<ChatComponent>();
             // root.AddComponent<MaskWordComponent>();

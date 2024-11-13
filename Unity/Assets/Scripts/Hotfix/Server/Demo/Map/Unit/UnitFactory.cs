@@ -23,6 +23,7 @@ namespace ET.Server
             unitComponent.Add(unit);
 
             unit.AddComponent<BagComponent>();
+            unit.AddComponent<SlimeComponent>();
             unit.AddComponent<EquipmentComponent>();
             unit.AddComponent<SkillSComponent>();
             SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();

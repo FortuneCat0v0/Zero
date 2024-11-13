@@ -32,9 +32,12 @@ namespace ET.Server
             }
 
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-            foreach ((int key, long value) in numericComponent.NumericDic)
+            if (numericComponent != null)
             {
-                unitInfo.KV.Add(key, value);
+                foreach ((int key, long value) in numericComponent.NumericDic)
+                {
+                    unitInfo.KV.Add(key, value);
+                }
             }
 
             SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();

@@ -2578,6 +2578,60 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.SlimeInfo)]
+    public partial class SlimeInfo : MessageObject
+    {
+        public static SlimeInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(SlimeInfo), isFromPool) as SlimeInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long Id { get; set; }
+
+        [MemoryPackOrder(1)]
+        public string Name { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Id = default;
+            this.Name = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_AllSlimes)]
+    public partial class M2C_AllSlimes : MessageObject, IMessage
+    {
+        public static M2C_AllSlimes Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_AllSlimes), isFromPool) as M2C_AllSlimes;
+        }
+
+        [MemoryPackOrder(0)]
+        public List<SlimeInfo> SlimeInfos { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.SlimeInfos.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -2655,5 +2709,7 @@ namespace ET
         public const ushort C2Chat_SendChat = 10074;
         public const ushort Chat2C_SendChat = 10075;
         public const ushort Chat2C_NoticeChat = 10076;
+        public const ushort SlimeInfo = 10077;
+        public const ushort M2C_AllSlimes = 10078;
     }
 }

@@ -574,3 +574,14 @@ message Chat2C_NoticeChat // IMessage
 	string Name = 1;
 	string ChatMessage = 2;
 }
+
+message SlimeInfo
+{
+	int64 Id = 1;
+	string Name = 2;
+}
+
+message M2C_AllSlimes // IMessage
+{
+	repeated SlimeInfo SlimeInfos = 1;
+}
