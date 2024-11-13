@@ -457,7 +457,7 @@ message ItemInfo
 {
 	int64 Id = 1;
 	int32 ConfigId = 2;
-	int32 Quality = 3;
+	int32 ContainerType = 3;
 	int32 Num = 4;
 	repeated AttributeEntryInfo AttributeEntryInfos = 5;
 }
@@ -493,8 +493,6 @@ message M2C_ItemUpdateOp // IMessage
 {
 	ItemInfo ItemInfo = 1;
 	int32 ItemOpType = 2;
-	int32 ItemContainerType = 3;
-	int32 EquipPosition = 4;
 }
 
 message C2M_SpellSkill // ILocationMessage

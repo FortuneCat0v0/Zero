@@ -91,14 +91,18 @@ namespace ET.Server
             MapMessageHelper.SendToClient(unit, m2CCreateUnits);
 
             // 通知客户端同步背包信息
-            List<Item> items = unit.GetComponent<BagComponent>().GetAllItems();
-            M2C_AllItems m2CAllItems = M2C_AllItems.Create();
-            m2CAllItems.ItemContainerType = (int)ItemContainerType.Bag;
-            foreach (Item item in items)
+            using (ListComponent<Item> items = ListComponent<Item>.Create())
             {
-                m2CAllItems.ItemInfos.Add(item.ToMessage());
+                unit.GetComponent<KnapsackComponent>().GetAllItems(items);
+                M2C_AllItems m2CAllItems = M2C_AllItems.Create();
+                m2CAllItems.ItemContainerType = (int)KnapsackContainerType.Inventory;
+                foreach (Item item in items)
+                {
+                    m2CAllItems.ItemInfos.Add(item.ToMessage());
+                }
+
+                MapMessageHelper.SendToClient(unit, m2CAllItems);
             }
-            MapMessageHelper.SendToClient(unit, m2CAllItems);
 
             // 通知客户端同步史莱姆信息
             List<Slime> slimes = unit.GetComponent<SlimeComponent>().GetAll();
@@ -107,18 +111,19 @@ namespace ET.Server
             {
                 m2CAllSlimes.SlimeInfos.Add(slime.ToMessage());
             }
+
             MapMessageHelper.SendToClient(unit, m2CAllSlimes);
 
             // 通知客户端同步装备信息
-            Dictionary<int, Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
-            m2CAllItems = M2C_AllItems.Create();
-            m2CAllItems.ItemContainerType = (int)ItemContainerType.Equipment;
-            foreach (KeyValuePair<int, Item> keyValuePair in equipItems)
-            {
-                m2CAllItems.EquipPositions.Add(keyValuePair.Key);
-                m2CAllItems.ItemInfos.Add(keyValuePair.Value.ToMessage());
-            }
-            MapMessageHelper.SendToClient(unit, m2CAllItems);
+            // Dictionary<int, Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();
+            // m2CAllItems = M2C_AllItems.Create();
+            // m2CAllItems.ItemContainerType = (int)KnapsackContainerType.Warehouse;
+            // foreach (KeyValuePair<int, Item> keyValuePair in equipItems)
+            // {
+            //     m2CAllItems.EquipPositions.Add(keyValuePair.Key);
+            //     m2CAllItems.ItemInfos.Add(keyValuePair.Value.ToMessage());
+            // }
+            // MapMessageHelper.SendToClient(unit, m2CAllItems);
         }
     }
 }

@@ -47,8 +47,6 @@ namespace ET.Server
             M2C_ItemUpdateOp m2CItemUpdateOp = M2C_ItemUpdateOp.Create();
             m2CItemUpdateOp.ItemInfo = item.ToMessage();
             m2CItemUpdateOp.ItemOpType = (int)ItemOpType.Add;
-            m2CItemUpdateOp.ItemContainerType = (int)ItemContainerType.Equipment;
-            m2CItemUpdateOp.EquipPosition = (int)equipPosition;
             MapMessageHelper.SendToClient(self.GetParent<Unit>(), m2CItemUpdateOp);
 
             return true;
@@ -76,8 +74,6 @@ namespace ET.Server
             M2C_ItemUpdateOp m2CItemUpdateOp = M2C_ItemUpdateOp.Create();
             m2CItemUpdateOp.ItemInfo = item.ToMessage();
             m2CItemUpdateOp.ItemOpType = (int)ItemOpType.Remove;
-            m2CItemUpdateOp.ItemContainerType = (int)ItemContainerType.Equipment;
-            m2CItemUpdateOp.EquipPosition = (int)equipPosition;
             MapMessageHelper.SendToClient(self.GetParent<Unit>(), m2CItemUpdateOp);
 
             return item;

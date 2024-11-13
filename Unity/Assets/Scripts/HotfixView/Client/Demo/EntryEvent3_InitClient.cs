@@ -17,7 +17,7 @@ namespace ET.Client
             root.AddComponent<GameServerComponent>();
             root.AddComponent<RoleComponent>();
             root.AddComponent<SkillIndicatorComponent>();
-            root.AddComponent<BagComponent>();
+            root.AddComponent<ClientKnapsackComponent>();
             root.AddComponent<SlimeComponent>();
             root.AddComponent<EquipmentComponent>();
             root.AddComponent<ChatComponent>();

@@ -13,18 +13,6 @@
         Consume
     }
 
-    public enum ItemOpType
-    {
-        Add,
-        Remove,
-    }
-
-    public enum ItemContainerType
-    {
-        Bag = 0,
-        Equipment = 1,
-    }
-
     public enum EquipmentType
     {
         None = 0, // 不可装备
