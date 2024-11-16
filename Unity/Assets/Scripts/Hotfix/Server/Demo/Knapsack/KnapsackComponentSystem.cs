@@ -40,9 +40,9 @@
             }
         }
 
-        public static KnapsackContainerComponent GetContainer(this KnapsackComponent self, KnapsackContainerType containerType)
+        public static KnapsackContainerComponent GetContainer(this KnapsackComponent self, int containerType)
         {
-            self.ContainerInfoDic.TryGetValue((int)containerType, out EntityRef<KnapsackContainerComponent> containerComponent);
+            self.ContainerInfoDic.TryGetValue(containerType, out EntityRef<KnapsackContainerComponent> containerComponent);
             return containerComponent;
         }
     }

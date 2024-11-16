@@ -462,6 +462,50 @@ message ItemInfo
 	repeated AttributeEntryInfo AttributeEntryInfos = 5;
 }
 
+// ResponseType M2C_GetAllKnapsack
+message C2M_GetAllKnapsack // ILocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_GetAllKnapsack // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated ItemInfo ItemList = 4;
+}
+
+// ResponseType M2C_AddKnapsackItem
+message C2M_AddKnapsackItem // ILocationRequest
+{
+	int32 RpcId = 1;
+	int32 ContainerType = 2;
+	int32 ConfigId = 3;
+}
+
+message M2C_AddKnapsackItem // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// ResponseType M2C_RemoveKnapsackItem
+message C2M_RemoveKnapsackItem // ILocationRequest
+{
+	int32 RpcId = 1;
+	int32 ContainerType = 2;
+	int32 ItemId = 3;
+}
+
+message M2C_RemoveKnapsackItem // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
 message M2C_NoticeNumericMsg // IMessage
 {
 	int32 NumericType = 1;
