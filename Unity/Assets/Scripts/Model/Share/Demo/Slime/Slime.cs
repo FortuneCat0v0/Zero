@@ -4,5 +4,8 @@
     public class Slime : Entity, IAwake, IDestroy, ISerializeToEntity
     {
         public string Name;
+        public int LifeTime; //寿命
+        public int Realm; //境界
+        
     }
 }
