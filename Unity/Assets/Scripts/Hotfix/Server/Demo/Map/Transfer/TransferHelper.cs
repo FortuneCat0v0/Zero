@@ -105,14 +105,14 @@ namespace ET.Server
             }
 
             // 通知客户端同步史莱姆信息
-            List<Slime> slimes = unit.GetComponent<SlimeComponent>().GetAll();
-            M2C_AllSlimes m2CAllSlimes = M2C_AllSlimes.Create();
-            foreach (Slime slime in slimes)
-            {
-                m2CAllSlimes.SlimeInfos.Add(slime.ToMessage());
-            }
-
-            MapMessageHelper.SendToClient(unit, m2CAllSlimes);
+            // List<Slime> slimes = unit.GetComponent<SlimeComponent>().GetAll();
+            // M2C_AllSlimes m2CAllSlimes = M2C_AllSlimes.Create();
+            // foreach (Slime slime in slimes)
+            // {
+            //     m2CAllSlimes.SlimeInfos.Add(slime.ToMessage());
+            // }
+            //
+            // MapMessageHelper.SendToClient(unit, m2CAllSlimes);
 
             // 通知客户端同步装备信息
             // Dictionary<int, Item> equipItems = unit.GetComponent<EquipmentComponent>().GetAllItems();

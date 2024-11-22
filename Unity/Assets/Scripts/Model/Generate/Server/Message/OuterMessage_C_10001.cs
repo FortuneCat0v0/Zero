@@ -2259,6 +2259,315 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.M2C_AllItems)]
+    public partial class M2C_AllItems : MessageObject, IMessage
+    {
+        public static M2C_AllItems Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_AllItems), isFromPool) as M2C_AllItems;
+        }
+
+        [MemoryPackOrder(0)]
+        public int ItemContainerType { get; set; }
+
+        [MemoryPackOrder(1)]
+        public List<int> EquipPositions { get; set; } = new();
+
+        [MemoryPackOrder(2)]
+        public List<ItemInfo> ItemInfos { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.ItemContainerType = default;
+            this.EquipPositions.Clear();
+            this.ItemInfos.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_ItemUpdateOp)]
+    public partial class M2C_ItemUpdateOp : MessageObject, IMessage
+    {
+        public static M2C_ItemUpdateOp Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_ItemUpdateOp), isFromPool) as M2C_ItemUpdateOp;
+        }
+
+        [MemoryPackOrder(0)]
+        public ItemInfo ItemInfo { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int ItemOpType { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.ItemInfo = default;
+            this.ItemOpType = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.SlimeInfo)]
+    public partial class SlimeInfo : MessageObject
+    {
+        public static SlimeInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(SlimeInfo), isFromPool) as SlimeInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long Id { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int ConfigId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Id = default;
+            this.ConfigId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2M_GetAllSlime)]
+    [ResponseType(nameof(M2C_GetAllSlime))]
+    public partial class C2M_GetAllSlime : MessageObject, ILocationRequest
+    {
+        public static C2M_GetAllSlime Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_GetAllSlime), isFromPool) as C2M_GetAllSlime;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_GetAllSlime)]
+    public partial class M2C_GetAllSlime : MessageObject, ILocationResponse
+    {
+        public static M2C_GetAllSlime Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_GetAllSlime), isFromPool) as M2C_GetAllSlime;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<SlimeInfo> SlimeList { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.SlimeList.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2M_AddSlime)]
+    [ResponseType(nameof(M2C_AddSlime))]
+    public partial class C2M_AddSlime : MessageObject, ILocationRequest
+    {
+        public static C2M_AddSlime Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_AddSlime), isFromPool) as C2M_AddSlime;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int ConfigId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.ConfigId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_AddSlime)]
+    public partial class M2C_AddSlime : MessageObject, ILocationResponse
+    {
+        public static M2C_AddSlime Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_AddSlime), isFromPool) as M2C_AddSlime;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2M_RemoveSlime)]
+    [ResponseType(nameof(M2C_RemoveSlime))]
+    public partial class C2M_RemoveSlime : MessageObject, ILocationRequest
+    {
+        public static C2M_RemoveSlime Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2M_RemoveSlime), isFromPool) as C2M_RemoveSlime;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int SlimeId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.SlimeId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_RemoveSlime)]
+    public partial class M2C_RemoveSlime : MessageObject, ILocationResponse
+    {
+        public static M2C_RemoveSlime Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_RemoveSlime), isFromPool) as M2C_RemoveSlime;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.M2C_SlimeUpdateOp)]
+    public partial class M2C_SlimeUpdateOp : MessageObject, IMessage
+    {
+        public static M2C_SlimeUpdateOp Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(M2C_SlimeUpdateOp), isFromPool) as M2C_SlimeUpdateOp;
+        }
+
+        [MemoryPackOrder(0)]
+        public SlimeInfo SlimeInfo { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int SlimeOpType { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.SlimeInfo = default;
+            this.SlimeOpType = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.M2C_NoticeNumericMsg)]
     public partial class M2C_NoticeNumericMsg : MessageObject, IMessage
     {
@@ -2348,68 +2657,6 @@ namespace ET
             this.UnitId = default;
             this.NumericTypeList.Clear();
             this.NewValueList.Clear();
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.M2C_AllItems)]
-    public partial class M2C_AllItems : MessageObject, IMessage
-    {
-        public static M2C_AllItems Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(M2C_AllItems), isFromPool) as M2C_AllItems;
-        }
-
-        [MemoryPackOrder(0)]
-        public int ItemContainerType { get; set; }
-
-        [MemoryPackOrder(1)]
-        public List<int> EquipPositions { get; set; } = new();
-
-        [MemoryPackOrder(2)]
-        public List<ItemInfo> ItemInfos { get; set; } = new();
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.ItemContainerType = default;
-            this.EquipPositions.Clear();
-            this.ItemInfos.Clear();
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.M2C_ItemUpdateOp)]
-    public partial class M2C_ItemUpdateOp : MessageObject, IMessage
-    {
-        public static M2C_ItemUpdateOp Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(M2C_ItemUpdateOp), isFromPool) as M2C_ItemUpdateOp;
-        }
-
-        [MemoryPackOrder(0)]
-        public ItemInfo ItemInfo { get; set; }
-
-        [MemoryPackOrder(1)]
-        public int ItemOpType { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.ItemInfo = default;
-            this.ItemOpType = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -2767,60 +3014,6 @@ namespace ET
         }
     }
 
-    [MemoryPackable]
-    [Message(OuterMessage.SlimeInfo)]
-    public partial class SlimeInfo : MessageObject
-    {
-        public static SlimeInfo Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(SlimeInfo), isFromPool) as SlimeInfo;
-        }
-
-        [MemoryPackOrder(0)]
-        public long Id { get; set; }
-
-        [MemoryPackOrder(1)]
-        public string Name { get; set; }
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.Id = default;
-            this.Name = default;
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.M2C_AllSlimes)]
-    public partial class M2C_AllSlimes : MessageObject, IMessage
-    {
-        public static M2C_AllSlimes Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(M2C_AllSlimes), isFromPool) as M2C_AllSlimes;
-        }
-
-        [MemoryPackOrder(0)]
-        public List<SlimeInfo> SlimeInfos { get; set; } = new();
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.SlimeInfos.Clear();
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -2889,22 +3082,28 @@ namespace ET
         public const ushort M2C_AddKnapsackItem = 10065;
         public const ushort C2M_RemoveKnapsackItem = 10066;
         public const ushort M2C_RemoveKnapsackItem = 10067;
-        public const ushort M2C_NoticeNumericMsg = 10068;
-        public const ushort M2C_NoticeUnitNumeric = 10069;
-        public const ushort M2C_NoticeUnitNumericList = 10070;
-        public const ushort M2C_AllItems = 10071;
-        public const ushort M2C_ItemUpdateOp = 10072;
-        public const ushort C2M_SpellSkill = 10073;
-        public const ushort M2C_SpellSkill = 10074;
-        public const ushort SkillInfo = 10075;
-        public const ushort M2C_SkillUpdateOp = 10076;
-        public const ushort M2C_HitResult = 10077;
-        public const ushort C2M_Recharge = 10078;
-        public const ushort M2C_Recharge = 10079;
-        public const ushort C2Chat_SendChat = 10080;
-        public const ushort Chat2C_SendChat = 10081;
-        public const ushort Chat2C_NoticeChat = 10082;
-        public const ushort SlimeInfo = 10083;
-        public const ushort M2C_AllSlimes = 10084;
+        public const ushort M2C_AllItems = 10068;
+        public const ushort M2C_ItemUpdateOp = 10069;
+        public const ushort SlimeInfo = 10070;
+        public const ushort C2M_GetAllSlime = 10071;
+        public const ushort M2C_GetAllSlime = 10072;
+        public const ushort C2M_AddSlime = 10073;
+        public const ushort M2C_AddSlime = 10074;
+        public const ushort C2M_RemoveSlime = 10075;
+        public const ushort M2C_RemoveSlime = 10076;
+        public const ushort M2C_SlimeUpdateOp = 10077;
+        public const ushort M2C_NoticeNumericMsg = 10078;
+        public const ushort M2C_NoticeUnitNumeric = 10079;
+        public const ushort M2C_NoticeUnitNumericList = 10080;
+        public const ushort C2M_SpellSkill = 10081;
+        public const ushort M2C_SpellSkill = 10082;
+        public const ushort SkillInfo = 10083;
+        public const ushort M2C_SkillUpdateOp = 10084;
+        public const ushort M2C_HitResult = 10085;
+        public const ushort C2M_Recharge = 10086;
+        public const ushort M2C_Recharge = 10087;
+        public const ushort C2Chat_SendChat = 10088;
+        public const ushort Chat2C_SendChat = 10089;
+        public const ushort Chat2C_NoticeChat = 10090;
     }
 }

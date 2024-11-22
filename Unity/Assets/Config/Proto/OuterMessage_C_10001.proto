@@ -506,6 +506,76 @@ message M2C_RemoveKnapsackItem // ILocationResponse
 	string Message = 3;
 }
 
+message M2C_AllItems // IMessage
+{
+	int32 ItemContainerType = 1;
+	repeated int32 EquipPositions = 2;
+	repeated ItemInfo ItemInfos = 3;
+}
+
+message M2C_ItemUpdateOp // IMessage
+{
+	ItemInfo ItemInfo = 1;
+	int32 ItemOpType = 2;
+}
+
+
+
+message SlimeInfo
+{
+	int64 Id = 1;
+	int32 ConfigId = 2;
+}
+
+// ResponseType M2C_GetAllSlime
+message C2M_GetAllSlime // ILocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2C_GetAllSlime // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated SlimeInfo SlimeList = 4;
+}
+
+// ResponseType M2C_AddSlime
+message C2M_AddSlime // ILocationRequest
+{
+	int32 RpcId = 1;
+	int32 ConfigId = 2;
+}
+
+message M2C_AddSlime // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// ResponseType M2C_RemoveSlime
+message C2M_RemoveSlime // ILocationRequest
+{
+	int32 RpcId = 1;
+	int32 SlimeId = 2;
+}
+
+message M2C_RemoveSlime // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+message M2C_SlimeUpdateOp // IMessage
+{
+	SlimeInfo SlimeInfo = 1;
+	int32 SlimeOpType = 2;
+}
+
+
 message M2C_NoticeNumericMsg // IMessage
 {
 	int32 NumericType = 1;
@@ -524,19 +594,6 @@ message M2C_NoticeUnitNumericList // IMessage
 	int64 UnitId = 1;
 	repeated int32 NumericTypeList = 2;
 	repeated int64 NewValueList = 3;
-}
-
-message M2C_AllItems // IMessage
-{
-	int32 ItemContainerType = 1;
-	repeated int32 EquipPositions = 2;
-	repeated ItemInfo ItemInfos = 3;
-}
-
-message M2C_ItemUpdateOp // IMessage
-{
-	ItemInfo ItemInfo = 1;
-	int32 ItemOpType = 2;
 }
 
 message C2M_SpellSkill // ILocationMessage
@@ -615,15 +672,4 @@ message Chat2C_NoticeChat // IMessage
 {
 	string Name = 1;
 	string ChatMessage = 2;
-}
-
-message SlimeInfo
-{
-	int64 Id = 1;
-	string Name = 2;
-}
-
-message M2C_AllSlimes // IMessage
-{
-	repeated SlimeInfo SlimeInfos = 1;
 }

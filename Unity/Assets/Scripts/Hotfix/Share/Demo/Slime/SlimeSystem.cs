@@ -18,14 +18,14 @@
         {
             SlimeInfo slimeInfo = SlimeInfo.Create();
             slimeInfo.Id = self.Id;
-            slimeInfo.Name = self.Name;
+            slimeInfo.ConfigId = self.ConfigId;
 
             return slimeInfo;
         }
 
         public static void FromMessage(this Slime self, SlimeInfo slimeInfo)
         {
-            self.Name = slimeInfo.Name;
+            self.ConfigId = slimeInfo.ConfigId;
         }
     }
 }
