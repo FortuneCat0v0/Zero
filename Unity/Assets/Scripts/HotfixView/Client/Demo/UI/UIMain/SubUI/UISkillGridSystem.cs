@@ -31,23 +31,23 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this UISkillGrid self)
         {
-            if (self.SkillC == null)
+            if (self.ClientSkill == null)
             {
                 return;
             }
 
-            long cd = self.SkillC.GetCurrentCD();
+            long cd = self.ClientSkill.GetCurrentCD();
             self.CDText.text = cd <= 0 ? string.Empty : $"{cd / 1000f:0.#}";
 
-            self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.SkillC.CD;
+            self.CDImg.fillAmount = cd <= 0 ? 0 : cd * 1f / self.ClientSkill.CD;
         }
 
         public static void SetSkill(this UISkillGrid self, ESkillSlotType skillSlotType)
         {
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             self.SkillSlotType = skillSlotType;
-            SkillCComponent skillCComponent = unit.GetComponent<SkillCComponent>();
-            self.SkillC = skillCComponent.GetSkillBySlot(skillSlotType);
+            ClientSkillComponent clientSkillComponent = unit.GetComponent<ClientSkillComponent>();
+            self.ClientSkill = clientSkillComponent.GetSkillBySlot(skillSlotType);
             self.RefeshIcon().Coroutine();
         }
 
@@ -58,17 +58,17 @@ namespace ET.Client
 
         private static void OnPointerDown(this UISkillGrid self, PointerEventData pdata)
         {
-            if (self.SkillC == null)
+            if (self.ClientSkill == null)
             {
                 return;
             }
 
-            self.SkillIndicatorComponent.ShowIndicator(self.SkillC.SkillConfig);
+            self.SkillIndicatorComponent.ShowIndicator(self.ClientSkill.SkillConfig);
         }
 
         private static void OnDrag(this UISkillGrid self, PointerEventData pdata)
         {
-            if (self.SkillC == null)
+            if (self.ClientSkill == null)
             {
                 return;
             }
@@ -78,7 +78,7 @@ namespace ET.Client
 
         private static void OnPointerUp(this UISkillGrid self, PointerEventData pdata)
         {
-            if (self.SkillC == null)
+            if (self.ClientSkill == null)
             {
                 return;
             }
@@ -86,10 +86,10 @@ namespace ET.Client
             // 发送消息 使用技能
             Unit unit = UnitHelper.GetMyUnitFromClientScene(self.Root());
             SkillIndicatorComponent skillIndicatorComponent = self.Root().GetComponent<SkillIndicatorComponent>();
-            SkillCComponent skillCComponent = unit.GetComponent<SkillCComponent>();
+            ClientSkillComponent clientSkillComponent = unit.GetComponent<ClientSkillComponent>();
 
             long targetUnitId = 0;
-            skillCComponent.TrySpellSkill(self.SkillSlotType, targetUnitId, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetDistance());
+            clientSkillComponent.TrySpellSkill(self.SkillSlotType, targetUnitId, skillIndicatorComponent.GetAngle(), skillIndicatorComponent.GetDistance());
 
             self.SkillIndicatorComponent.HideIndicator();
         }

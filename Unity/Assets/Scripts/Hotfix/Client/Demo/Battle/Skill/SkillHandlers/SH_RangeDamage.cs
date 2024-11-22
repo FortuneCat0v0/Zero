@@ -1,17 +1,17 @@
 ﻿namespace ET.Client
 {
-    public class SH_RangeDamage : SkillCHandler
+    public class SH_RangeDamage : ClientSkillHandler
     {
-        public override void OnInit(SkillC skillS)
+        public override void OnInit(ClientSkill clientSkillS)
         {
-            skillS.Active = false;
+            clientSkillS.Active = false;
         }
 
-        public override void OnUpdate(SkillC skillS)
+        public override void OnUpdate(ClientSkill clientSkillS)
         {
-            if (skillS.Active == false)
+            if (clientSkillS.Active == false)
             {
-                Unit owner = skillS.OwnerUnit;
+                Unit owner = clientSkillS.OwnerUnit;
 
                 EventSystem.Instance.Publish(owner.Scene(), new PlayEffect()
                 {
@@ -19,28 +19,28 @@
                     EffectId = IdGenerater.Instance.GenerateId(),
                     EffectData = new EffectData()
                     {
-                        EffectConfigId = skillS.SkillConfig.EffectConfigId,
-                        Position = skillS.Position,
-                        Angle = skillS.Angle
+                        EffectConfigId = clientSkillS.SkillConfig.EffectConfigId,
+                        Position = clientSkillS.Position,
+                        Angle = clientSkillS.Angle
                     }
                 });
 
-                skillS.Active = true;
+                clientSkillS.Active = true;
                 return;
             }
 
             long nowTime = TimeInfo.Instance.ServerNow();
-            if (nowTime < skillS.SpellStartTime + 500)
+            if (nowTime < clientSkillS.SpellStartTime + 500)
             {
                 return;
             }
 
-            skillS.SkillState = ESkillState.Finished;
+            clientSkillS.SkillState = ESkillState.Finished;
         }
 
-        public override void OnFinish(SkillC skillS)
+        public override void OnFinish(ClientSkill clientSkillS)
         {
-            skillS.Active = false;
+            clientSkillS.Active = false;
         }
     }
 }

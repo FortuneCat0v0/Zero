@@ -40,16 +40,16 @@ namespace ET.Server
                 }
             }
 
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
-            if (skillSComponent != null)
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent != null)
             {
-                List<EntityRef<SkillS>> skills = skillSComponent.GetAllSkill();
-                foreach (SkillS skill in skills)
+                List<EntityRef<Skill>> skills = skillComponent.GetAllSkill();
+                foreach (Skill skill in skills)
                 {
                     unitInfo.SkillInfos.Add(skill.ToMessage());
                 }
 
-                foreach (KeyValuePair<int, int> keyValuePair in skillSComponent.SkillSlotDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;

@@ -10,8 +10,8 @@ namespace ET.Client
     {
         public override async ETTask Execute(Entity entity, List<int> param, ETCancellationToken cancellationToken)
         {
-            SkillC skillC = entity as SkillC;
-            Unit owner = skillC.OwnerUnit;
+            ClientSkill clientSkill = entity as ClientSkill;
+            Unit owner = clientSkill.OwnerUnit;
 
             EventSystem.Instance.Publish(owner.Scene(), new PlayEffect()
             {
@@ -20,8 +20,8 @@ namespace ET.Client
                 EffectData = new EffectData()
                 {
                     EffectConfigId = param[0],
-                    Position = skillC.Position,
-                    Angle = skillC.Angle
+                    Position = clientSkill.Position,
+                    Angle = clientSkill.Angle
                 }
             });
 

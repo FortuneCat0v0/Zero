@@ -34,17 +34,17 @@
                         }
                     }
 
-                    SkillCComponent skillCComponent = unit.AddComponent<SkillCComponent>();
+                    ClientSkillComponent clientSkillComponent = unit.AddComponent<ClientSkillComponent>();
                     foreach (SkillInfo skillInfo in unitInfo.SkillInfos)
                     {
-                        SkillC skillC = currentScene.AddChildWithId<SkillC>(skillInfo.Id);
-                        skillC.FromMessage(skillInfo);
-                        skillCComponent.AddSkill(skillC);
+                        ClientSkill clientSkill = currentScene.AddChildWithId<ClientSkill>(skillInfo.Id);
+                        clientSkill.FromMessage(skillInfo);
+                        clientSkillComponent.AddSkill(clientSkill);
                     }
 
                     foreach (KeyValuePair_Int_Int keyValuePairIntInt in unitInfo.SkillGridDict)
                     {
-                        skillCComponent.SkillSlotDict[keyValuePairIntInt.Key] = keyValuePairIntInt.Value;
+                        clientSkillComponent.SkillSlotDict[keyValuePairIntInt.Key] = keyValuePairIntInt.Value;
                     }
 
                     unit.AddComponent<BuffCComponent>();

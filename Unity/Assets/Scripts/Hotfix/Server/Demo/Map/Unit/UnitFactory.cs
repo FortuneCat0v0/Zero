@@ -25,17 +25,17 @@ namespace ET.Server
             unit.AddComponent<KnapsackComponent>();
             unit.AddComponent<SlimeComponent>();
             unit.AddComponent<EquipmentComponent>();
-            unit.AddComponent<SkillSComponent>();
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
+            unit.AddComponent<SkillComponent>();
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
             // 测试
-            skillSComponent.AddSkill(10001);
-            skillSComponent.AddSkill(10011);
-            skillSComponent.AddSkill(10021);
-            skillSComponent.AddSkill(10031);
-            skillSComponent.SetSkillSlot(10001, ESkillSlotType.Slot_0);
-            skillSComponent.SetSkillSlot(10011, ESkillSlotType.Slot_1);
-            skillSComponent.SetSkillSlot(10021, ESkillSlotType.Slot_2);
-            skillSComponent.SetSkillSlot(10031, ESkillSlotType.Slot_3);
+            skillComponent.AddSkill(10001);
+            skillComponent.AddSkill(10011);
+            skillComponent.AddSkill(10021);
+            skillComponent.AddSkill(10031);
+            skillComponent.SetSkillSlot(10001, ESkillSlotType.Slot_0);
+            skillComponent.SetSkillSlot(10011, ESkillSlotType.Slot_1);
+            skillComponent.SetSkillSlot(10021, ESkillSlotType.Slot_2);
+            skillComponent.SetSkillSlot(10031, ESkillSlotType.Slot_3);
             unit.AddComponent<BuffSComponent>();
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Player, ERoleTag.Hero);
 

@@ -21,12 +21,12 @@
             }
             else if (cmd[0] == ".AddSkill")
             {
-                SkillSComponent skillSComponent = chatUnit.GetComponent<SkillSComponent>();
-                skillSComponent.AddSkill(int.Parse(cmd[1]));
+                SkillComponent skillComponent = chatUnit.GetComponent<SkillComponent>();
+                skillComponent.AddSkill(int.Parse(cmd[1]));
             }
             else if (cmd[0] == ".UpSkill")
             {
-                SkillSComponent skillSComponent = chatUnit.GetComponent<SkillSComponent>();
+                SkillComponent skillComponent = chatUnit.GetComponent<SkillComponent>();
                 // skillComponent.UpSkill(int.Parse(cmd[1]), int.Parse(cmd[2]));
             }
             else if (cmd[0] == ".Recharge")

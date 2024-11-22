@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using Unity.Mathematics;
 
-namespace ET.Client
+namespace ET.Server
 {
     [ChildOf]
-    public class SkillC : Entity, IAwake, IDestroy
+    public class Skill : Entity, IAwake<int>, IDestroy, ISerializeToEntity
     {
         public int SkillConfigId { get; set; }
 
@@ -12,20 +12,28 @@ namespace ET.Client
 
         public long SpellEndTime { get; set; }
 
+        [BsonIgnore]
         public int CD { get; set; }
 
+        [BsonIgnore]
         public ESkillState SkillState { get; set; }
 
+        [BsonIgnore]
         public long TargetUnitId { get; set; }
 
+        [BsonIgnore]
         public float Angle { get; set; }
 
+        [BsonIgnore]
         public float3 Position { get; set; }
 
+        [BsonIgnore]
         public long Timer;
 
-        public Unit OwnerUnit => this.GetParent<SkillCComponent>().GetParent<Unit>();
+        [BsonIgnore]
+        public Unit OwnerUnit => this.GetParent<SkillComponent>().GetParent<Unit>();
 
+        [BsonIgnore]
         public SkillConfig SkillConfig
         {
             get
@@ -44,12 +52,13 @@ namespace ET.Client
             }
         }
 
+        [BsonIgnore]
         private SkillConfig skillConfig;
 
-        public SkillCHandler SkillCHandler;
+        [BsonIgnore]
+        public SkillHandler SkillHandler;
 
+        [BsonIgnore]
         public bool Active { get; set; }
-
-        public long EffectId;
     }
 }

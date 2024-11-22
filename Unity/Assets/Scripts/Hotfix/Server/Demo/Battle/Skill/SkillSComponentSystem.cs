@@ -5,12 +5,12 @@ using Unity.Mathematics;
 
 namespace ET.Server
 {
-    [EntitySystemOf(typeof(SkillSComponent))]
-    [FriendOf(typeof(SkillSComponent))]
+    [EntitySystemOf(typeof(SkillComponent))]
+    [FriendOf(typeof(SkillComponent))]
     public static partial class SkillSComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this SkillSComponent self)
+        private static void Awake(this SkillComponent self)
         {
             foreach (ESkillSlotType eSkillGridType in Enum.GetValues(typeof(ESkillSlotType)))
             {
@@ -22,22 +22,22 @@ namespace ET.Server
         }
 
         [EntitySystem]
-        private static void Destroy(this SkillSComponent self)
+        private static void Destroy(this SkillComponent self)
         {
         }
 
         [EntitySystem]
-        private static void Deserialize(this SkillSComponent self)
+        private static void Deserialize(this SkillComponent self)
         {
             foreach (Entity entity in self.Children.Values)
             {
-                SkillS skillS = entity as SkillS;
-                skillS.SetCD();
-                self.SkillDict.Add(skillS.SkillConfigId, skillS);
+                Skill skill = entity as Skill;
+                skill.SetCD();
+                self.SkillDict.Add(skill.SkillConfigId, skill);
             }
         }
 
-        public static bool AddSkill(this SkillSComponent self, int skillConfigId)
+        public static bool AddSkill(this SkillComponent self, int skillConfigId)
         {
             if (!self.SkillDict.ContainsKey(skillConfigId))
             {
@@ -48,8 +48,8 @@ namespace ET.Server
                     return false;
                 }
 
-                SkillS skillS = self.AddChild<SkillS, int>(skillConfigId);
-                self.SkillDict.Add(skillConfigId, skillS);
+                Skill skill = self.AddChild<Skill, int>(skillConfigId);
+                self.SkillDict.Add(skillConfigId, skill);
 
                 return true;
             }
@@ -58,14 +58,14 @@ namespace ET.Server
             return false;
         }
 
-        public static bool RemoveSkill(this SkillSComponent self, int skillConfigId)
+        public static bool RemoveSkill(this SkillComponent self, int skillConfigId)
         {
             if (!self.SkillDict.ContainsKey(skillConfigId))
             {
                 return false;
             }
 
-            SkillS skillS = self.GetSkillByConfigId(skillConfigId);
+            Skill skill = self.GetSkillByConfigId(skillConfigId);
             self.SkillDict.Remove(skillConfigId);
 
             foreach (KeyValuePair<int, int> keyValue in self.SkillSlotDict)
@@ -76,11 +76,11 @@ namespace ET.Server
                 }
             }
 
-            skillS.Dispose();
+            skill.Dispose();
             return false;
         }
 
-        public static bool SetSkillSlot(this SkillSComponent self, int skillConfigId, ESkillSlotType skillSlotType)
+        public static bool SetSkillSlot(this SkillComponent self, int skillConfigId, ESkillSlotType skillSlotType)
         {
             if (!self.SkillDict.ContainsKey(skillConfigId))
             {
@@ -100,38 +100,38 @@ namespace ET.Server
             return true;
         }
 
-        public static SkillS GetSkillByConfigId(this SkillSComponent self, int configId)
+        public static Skill GetSkillByConfigId(this SkillComponent self, int configId)
         {
-            SkillS skillS = null;
-            if (self.SkillDict.TryGetValue(configId, out EntityRef<SkillS> value))
+            Skill skill = null;
+            if (self.SkillDict.TryGetValue(configId, out EntityRef<Skill> value))
             {
-                skillS = value;
+                skill = value;
             }
 
-            return skillS;
+            return skill;
         }
 
-        public static List<EntityRef<SkillS>> GetAllSkill(this SkillSComponent self)
+        public static List<EntityRef<Skill>> GetAllSkill(this SkillComponent self)
         {
             return self.SkillDict.Values.ToList();
         }
 
-        public static bool SpellSkill(this SkillSComponent self, int skillConfigId, long targetUnitId, float3 position, float angle)
+        public static bool SpellSkill(this SkillComponent self, int skillConfigId, long targetUnitId, float3 position, float angle)
         {
-            SkillS skillS = self.GetSkillByConfigId(skillConfigId);
+            Skill skill = self.GetSkillByConfigId(skillConfigId);
 
-            if (skillS == null)
+            if (skill == null)
             {
                 Log.Debug($"Server 技能不存在 {skillConfigId}");
                 return false;
             }
 
-            if (!skillS.CanSpell())
+            if (!skill.CanSpell())
             {
                 return false;
             }
 
-            skillS.StartSpell(targetUnitId, position, angle);
+            skill.StartSpell(targetUnitId, position, angle);
             return true;
         }
     }

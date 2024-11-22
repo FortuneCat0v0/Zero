@@ -3,37 +3,37 @@
     /// <summary>
     /// 对一个范围内的敌人造成伤害
     /// </summary>
-    public class SH_RangeDamage : SkillSHandler
+    public class SH_RangeDamage : SkillHandler
     {
-        public override void OnInit(SkillS skillS)
+        public override void OnInit(Skill skill)
         {
         }
 
-        public override void OnUpdate(SkillS skillS)
+        public override void OnUpdate(Skill skill)
         {
             long nowTime = TimeInfo.Instance.ServerNow();
-            if (nowTime < skillS.SpellStartTime + 500)
+            if (nowTime < skill.SpellStartTime + 500)
             {
                 return;
             }
 
-            Scene root = skillS.Root();
-            Unit owner = skillS.OwnerUnit;
+            Scene root = skill.Root();
+            Unit owner = skill.OwnerUnit;
 
             Unit colliderUnit = UnitFactory.CreateSkill(root,
                 new(belongToUnit: owner,
-                    colliderConfigId: skillS.SkillConfig.ColliderConfigId,
+                    colliderConfigId: skill.SkillConfig.ColliderConfigId,
                     followUnitPos: true,
                     followUnitRot: true,
-                    skillS: skillS,
+                    skill: skill,
                     collisionHandler: nameof(CH_SimpleArea),
-                    paramsList: new() { skillS.SkillConfig.Damage })
+                    paramsList: new() { skill.SkillConfig.Damage })
                 , 500);
 
-            skillS.SkillState = ESkillState.Finished;
+            skill.SkillState = ESkillState.Finished;
         }
 
-        public override void OnFinish(SkillS skillS)
+        public override void OnFinish(Skill skill)
         {
         }
     }

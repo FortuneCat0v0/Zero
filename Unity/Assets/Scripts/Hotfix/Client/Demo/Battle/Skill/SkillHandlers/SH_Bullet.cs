@@ -1,17 +1,17 @@
 ﻿namespace ET.Client
 {
-    public class SH_Bullet : SkillCHandler
+    public class SH_Bullet : ClientSkillHandler
     {
-        public override void OnInit(SkillC skillS)
+        public override void OnInit(ClientSkill clientSkillS)
         {
         }
 
-        public override void OnUpdate(SkillC skillS)
+        public override void OnUpdate(ClientSkill clientSkillS)
         {
-            skillS.SkillState = ESkillState.Finished;
+            clientSkillS.SkillState = ESkillState.Finished;
         }
 
-        public override void OnFinish(SkillC skillS)
+        public override void OnFinish(ClientSkill clientSkillS)
         {
         }
     }

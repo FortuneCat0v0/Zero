@@ -17,7 +17,7 @@ namespace ET.Server
         public float3 TargetPos;
         public float Angle;
 
-        public SkillS SkillS;
+        public Skill Skill;
         public string CollisionHandler;
         public List<int> Params;
 
@@ -30,7 +30,7 @@ namespace ET.Server
         float3 offset = default,
         float3 targetPos = default,
         float angle = 0,
-        SkillS skillS = null,
+        Skill skill = null,
         string collisionHandler = null,
         List<int> paramsList = null)
         {
@@ -42,7 +42,7 @@ namespace ET.Server
             Offset = offset;
             TargetPos = targetPos;
             Angle = angle;
-            SkillS = skillS;
+            this.Skill = skill;
             CollisionHandler = collisionHandler;
             Params = paramsList;
         }
@@ -72,8 +72,8 @@ namespace ET.Server
         public ColliderConfig ColliderConfig;
         public ushort Layer;
 
-        private EntityRef<SkillS> skillS;
-        public SkillS SkillC { get => this.skillS; set => this.skillS = value; }
+        private EntityRef<Skill> skillS;
+        public Skill SkillC { get => this.skillS; set => this.skillS = value; }
         public string CollisionHandler { get; set; }
         public List<int> Params { get; set; }
 

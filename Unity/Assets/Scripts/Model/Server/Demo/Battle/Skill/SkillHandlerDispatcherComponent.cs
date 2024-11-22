@@ -4,16 +4,16 @@ using System.Collections.Generic;
 namespace ET.Server
 {
     [Code]
-    public class SkillSHandlerDispatcherComponent : Singleton<SkillSHandlerDispatcherComponent>, ISingletonAwake
+    public class SkillHandlerDispatcherComponent : Singleton<SkillHandlerDispatcherComponent>, ISingletonAwake
     {
-        private readonly Dictionary<string, SkillSHandler> skillSHandlers = new();
+        private readonly Dictionary<string, SkillHandler> skillSHandlers = new();
 
         public void Awake()
         {
-            var types = CodeTypes.Instance.GetTypes(typeof(SkillSHandlerAttribute));
+            var types = CodeTypes.Instance.GetTypes(typeof(SkillHandlerAttribute));
             foreach (Type type in types)
             {
-                SkillSHandler skillHandler = Activator.CreateInstance(type) as SkillSHandler;
+                SkillHandler skillHandler = Activator.CreateInstance(type) as SkillHandler;
                 if (skillHandler == null)
                 {
                     Log.Error($"not SkillHandler: {type.Name}");
@@ -24,7 +24,7 @@ namespace ET.Server
             }
         }
 
-        public SkillSHandler Get(string key)
+        public SkillHandler Get(string key)
         {
             this.skillSHandlers.TryGetValue(key, out var aaiHandler);
             return aaiHandler;

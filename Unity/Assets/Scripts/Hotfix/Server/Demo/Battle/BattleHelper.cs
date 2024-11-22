@@ -149,7 +149,7 @@ namespace ET.Server
 
         public static void SpellSkill(this Unit unit, int skillConfigId, long targetUnitId, float angle, float distance)
         {
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
 
             SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skillConfigId);
             if (distance > skillConfig.SkillIndicatorParams[0])
@@ -160,7 +160,7 @@ namespace ET.Server
             quaternion rotation = quaternion.Euler(0, math.radians(angle), 0);
             float3 position = unit.Position + math.mul(rotation, math.forward()) + distance;
 
-            if (skillSComponent.SpellSkill(skillConfigId, targetUnitId, position, angle))
+            if (skillComponent.SpellSkill(skillConfigId, targetUnitId, position, angle))
             {
                 M2C_SpellSkill m2CSpellSkill = M2C_SpellSkill.Create();
                 m2CSpellSkill.UnitId = unit.Id;
@@ -175,22 +175,22 @@ namespace ET.Server
 
         public static void AddSkill(this Unit unit, int skillConfigId)
         {
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
-            if (skillSComponent.AddSkill(skillConfigId))
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent.AddSkill(skillConfigId))
             {
-                SkillS skillS = skillSComponent.GetSkillByConfigId(skillConfigId);
+                Skill skill = skillComponent.GetSkillByConfigId(skillConfigId);
 
                 M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
                 m2CSkillUpdateOp.UnitId = unit.Id;
                 m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.Add;
-                m2CSkillUpdateOp.SkillInfo = skillS.ToMessage();
+                m2CSkillUpdateOp.SkillInfo = skill.ToMessage();
             }
         }
 
         public static void RemoveSkill(this Unit unit, int skillConfigId)
         {
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
-            if (skillSComponent.RemoveSkill(skillConfigId))
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent.RemoveSkill(skillConfigId))
             {
                 M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
                 m2CSkillUpdateOp.UnitId = unit.Id;
@@ -198,7 +198,7 @@ namespace ET.Server
                 SkillInfo skillInfo = SkillInfo.Create();
                 skillInfo.SkillConfigId = skillConfigId;
                 m2CSkillUpdateOp.SkillInfo = skillInfo;
-                foreach (KeyValuePair<int, int> keyValuePair in skillSComponent.SkillSlotDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;
@@ -210,9 +210,9 @@ namespace ET.Server
 
         public static void InterruptSkill(this Unit unit)
         {
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
-            List<EntityRef<SkillS>> skills = skillSComponent.GetAllSkill();
-            foreach (SkillS skill in skills)
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            List<EntityRef<Skill>> skills = skillComponent.GetAllSkill();
+            foreach (Skill skill in skills)
             {
                 if (skill.SkillState == ESkillState.Running)
                 {
@@ -229,13 +229,13 @@ namespace ET.Server
 
         public static void SetSkillSlot(this Unit unit, int skillConfigId, ESkillSlotType skillSlotType)
         {
-            SkillSComponent skillSComponent = unit.GetComponent<SkillSComponent>();
-            if (skillSComponent.SetSkillSlot(skillConfigId, skillSlotType))
+            SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
+            if (skillComponent.SetSkillSlot(skillConfigId, skillSlotType))
             {
                 M2C_SkillUpdateOp m2CSkillUpdateOp = M2C_SkillUpdateOp.Create();
                 m2CSkillUpdateOp.UnitId = unit.Id;
                 m2CSkillUpdateOp.SkillOpType = (int)ESkillOpType.SetSkillGrid;
-                foreach (KeyValuePair<int, int> keyValuePair in skillSComponent.SkillSlotDict)
+                foreach (KeyValuePair<int, int> keyValuePair in skillComponent.SkillSlotDict)
                 {
                     KeyValuePair_Int_Int keyValuePairIntInt = KeyValuePair_Int_Int.Create();
                     keyValuePairIntInt.Key = keyValuePair.Key;

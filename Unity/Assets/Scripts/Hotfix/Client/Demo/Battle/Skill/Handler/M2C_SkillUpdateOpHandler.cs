@@ -11,31 +11,31 @@
                 return;
             }
 
-            SkillCComponent skillCComponent = unit.GetComponent<SkillCComponent>();
+            ClientSkillComponent clientSkillComponent = unit.GetComponent<ClientSkillComponent>();
             switch (message.SkillOpType)
             {
                 case (int)ESkillOpType.Add:
                 {
-                    SkillC skillC = skillCComponent.AddChildWithId<SkillC>(message.SkillInfo.Id);
-                    skillC.FromMessage(message.SkillInfo);
-                    skillCComponent.AddSkill(skillC);
+                    ClientSkill clientSkill = clientSkillComponent.AddChildWithId<ClientSkill>(message.SkillInfo.Id);
+                    clientSkill.FromMessage(message.SkillInfo);
+                    clientSkillComponent.AddSkill(clientSkill);
 
                     break;
                 }
                 case (int)ESkillOpType.Remove:
                 {
-                    skillCComponent.RemoveSkill(message.SkillInfo.SkillConfigId);
+                    clientSkillComponent.RemoveSkill(message.SkillInfo.SkillConfigId);
                     foreach (KeyValuePair_Int_Int keyValuePair in message.SkillGridDict)
                     {
-                        skillCComponent.SkillSlotDict[keyValuePair.Key] = keyValuePair.Value;
+                        clientSkillComponent.SkillSlotDict[keyValuePair.Key] = keyValuePair.Value;
                     }
 
                     break;
                 }
                 case (int)ESkillOpType.Interrupt:
                 {
-                    SkillC skillC = skillCComponent.GetSkillByConfigId(message.SkillInfo.SkillConfigId);
-                    skillC.EndSpell();
+                    ClientSkill clientSkill = clientSkillComponent.GetSkillByConfigId(message.SkillInfo.SkillConfigId);
+                    clientSkill.EndSpell();
 
                     break;
                 }
@@ -43,7 +43,7 @@
                 {
                     foreach (KeyValuePair_Int_Int keyValuePair in message.SkillGridDict)
                     {
-                        skillCComponent.SkillSlotDict[keyValuePair.Key] = keyValuePair.Value;
+                        clientSkillComponent.SkillSlotDict[keyValuePair.Key] = keyValuePair.Value;
                     }
 
                     break;

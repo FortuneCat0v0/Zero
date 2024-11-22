@@ -9,8 +9,8 @@ namespace ET.Server
 
         private EntityRef<Unit> ownerUnit;
         public Unit OwnerUnit { get => this.ownerUnit; set => this.ownerUnit = value; }
-        private EntityRef<SkillS> ownerSkillS;
-        public SkillS OwnerSkillC { get => this.ownerSkillS; set => this.ownerSkillS = value; }
+        private EntityRef<Skill> ownerSkillS;
+        public Skill OwnerSkillC { get => this.ownerSkillS; set => this.ownerSkillS = value; }
         public long EndTime;
     }
 }

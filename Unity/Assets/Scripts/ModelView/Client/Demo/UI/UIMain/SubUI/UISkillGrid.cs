@@ -15,7 +15,7 @@ namespace ET.Client
         public GameObject ETrigger;
 
         public ESkillSlotType SkillSlotType;
-        public SkillC SkillC { get; set; }
+        public ClientSkill ClientSkill { get; set; }
         public SkillIndicatorComponent SkillIndicatorComponent { get; set; }
     }
 }

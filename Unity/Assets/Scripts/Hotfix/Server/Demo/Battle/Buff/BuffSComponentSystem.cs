@@ -1,6 +1,6 @@
 ﻿namespace ET.Server
 {
-    [FriendOf(typeof(SkillSComponent))]
+    [FriendOf(typeof(SkillComponent))]
     [FriendOf(typeof(BuffSComponent))]
     [EntitySystemOf(typeof(BuffSComponent))]
     public static partial class BuffSComponentSystem

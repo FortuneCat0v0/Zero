@@ -1,28 +1,28 @@
 ﻿namespace ET.Server
 {
-    public class SH_Bullet : SkillSHandler
+    public class SH_Bullet : SkillHandler
     {
-        public override void OnInit(SkillS skillS)
+        public override void OnInit(Skill skill)
         {
         }
 
-        public override void OnUpdate(SkillS skillS)
+        public override void OnUpdate(Skill skill)
         {
-            Scene root = skillS.Root();
-            Unit owner = skillS.OwnerUnit;
+            Scene root = skill.Root();
+            Unit owner = skill.OwnerUnit;
             UnitFactory.CreateBullet(root,
                 new(belongToUnit: owner,
                     colliderConfigId: 1001,
                     targetPos: owner.Position,
-                    angle: skillS.Angle,
-                    skillS: skillS,
+                    angle: skill.Angle,
+                    skill: skill,
                     collisionHandler: nameof(CH_SimpleArea),
-                    paramsList: new() { skillS.SkillConfig.Damage }));
+                    paramsList: new() { skill.SkillConfig.Damage }));
 
-            skillS.SkillState = ESkillState.Finished;
+            skill.SkillState = ESkillState.Finished;
         }
 
-        public override void OnFinish(SkillS skillS)
+        public override void OnFinish(Skill skill)
         {
         }
     }
