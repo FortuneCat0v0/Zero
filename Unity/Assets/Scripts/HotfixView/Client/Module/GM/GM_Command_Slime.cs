@@ -32,15 +32,15 @@ namespace ET.Client
         {
             return new()
             {
-                new GMParamInfo(EGMParamType.Int, "SlimeId"),
+                new GMParamInfo(EGMParamType.Long, "SlimeId"),
             };
         }
 
         public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
-            var paramInt = paramVo.Get<int>();
+            var paramLong = paramVo.Get<long>();
 
-            await SlimeHelper.RequestRemoveSlime(root, paramInt);
+            await SlimeHelper.RequestRemoveSlime(root, paramLong);
 
             await ETTask.CompletedTask;
             return true;

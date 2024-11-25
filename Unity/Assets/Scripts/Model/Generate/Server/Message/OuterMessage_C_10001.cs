@@ -2208,7 +2208,7 @@ namespace ET
         public int ContainerType { get; set; }
 
         [MemoryPackOrder(2)]
-        public int ItemId { get; set; }
+        public long ItemId { get; set; }
 
         public override void Dispose()
         {
@@ -2489,7 +2489,7 @@ namespace ET
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public int SlimeId { get; set; }
+        public long SlimeId { get; set; }
 
         public override void Dispose()
         {

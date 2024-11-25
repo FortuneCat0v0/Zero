@@ -31,7 +31,7 @@
             return response.Error;
         }
 
-        public static async ETTask<int> RequestRemoveSlime(Scene root, int slimeId)
+        public static async ETTask<int> RequestRemoveSlime(Scene root, long slimeId)
         {
             C2M_RemoveSlime request = C2M_RemoveSlime.Create();
             request.SlimeId = slimeId;

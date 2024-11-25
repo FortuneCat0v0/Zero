@@ -496,7 +496,7 @@ message C2M_RemoveKnapsackItem // ILocationRequest
 {
 	int32 RpcId = 1;
 	int32 ContainerType = 2;
-	int32 ItemId = 3;
+	int64 ItemId = 3;
 }
 
 message M2C_RemoveKnapsackItem // ILocationResponse
@@ -559,7 +559,7 @@ message M2C_AddSlime // ILocationResponse
 message C2M_RemoveSlime // ILocationRequest
 {
 	int32 RpcId = 1;
-	int32 SlimeId = 2;
+	int64 SlimeId = 2;
 }
 
 message M2C_RemoveSlime // ILocationResponse

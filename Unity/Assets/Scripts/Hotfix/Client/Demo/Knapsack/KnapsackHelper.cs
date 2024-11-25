@@ -32,7 +32,7 @@
             return response.Error;
         }
 
-        public static async ETTask<int> RequestRemoveItem(Scene root, KnapsackContainerType containerType, int itemId)
+        public static async ETTask<int> RequestRemoveItem(Scene root, KnapsackContainerType containerType, long itemId)
         {
             C2M_RemoveKnapsackItem request = C2M_RemoveKnapsackItem.Create();
             request.ContainerType = (int)containerType;

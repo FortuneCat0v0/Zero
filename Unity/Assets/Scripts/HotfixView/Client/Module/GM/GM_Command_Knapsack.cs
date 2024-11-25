@@ -35,16 +35,16 @@ namespace ET.Client
             return new()
             {
                 new GMParamInfo(EGMParamType.Enum, "容器", "ET.KnapsackContainerType"),
-                new GMParamInfo(EGMParamType.Int, "ItemId"),
+                new GMParamInfo(EGMParamType.Long, "ItemId"),
             };
         }
 
         public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             var paramEnum = paramVo.Get<KnapsackContainerType>(0);
-            var paramInt = paramVo.Get<int>(1);
+            var paramLong = paramVo.Get<long>(1);
 
-            await KnapsackHelper.RequestRemoveItem(root, paramEnum, paramInt);
+            await KnapsackHelper.RequestRemoveItem(root, paramEnum, paramLong);
 
             await ETTask.CompletedTask;
             return true;
