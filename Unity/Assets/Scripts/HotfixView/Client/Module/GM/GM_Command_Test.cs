@@ -26,7 +26,7 @@ namespace ET.Client
             };
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             //通过paramvo 可以取出所有参数
             var paramEnum   = paramVo.Get<EGMParamType>(0);

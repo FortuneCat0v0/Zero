@@ -13,7 +13,7 @@ namespace ET.Client
             return new();
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             await YIUIMgrComponent.Inst.Root.OpenPanelAsync<RedDotPanelComponent>();
             return true;

@@ -1,11 +1,10 @@
 ﻿using System;
 using YIUIFramework;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace ET.Client
 {
-    [FriendOf(typeof (GMViewComponent))]
+    [FriendOf(typeof(GMViewComponent))]
     public static partial class GMViewComponentSystem
     {
         [EntitySystem]
@@ -16,7 +15,7 @@ namespace ET.Client
             self.GMTypeLoop = new YIUILoopScroll<EGMType, GMTypeItemComponent>(self, self.u_ComGMTypeLoop, self.GMTypeTitleRenderer);
             self.GMTypeLoop.SetOnClickInfo("u_EventSelect", self.OnClickTitle);
             self.GMTypeData = new List<EGMType>();
-            foreach (EGMType gmType in Enum.GetValues(typeof (EGMType)))
+            foreach (EGMType gmType in Enum.GetValues(typeof(EGMType)))
             {
                 self.GMTypeData.Add(gmType);
             }

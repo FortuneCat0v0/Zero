@@ -15,7 +15,7 @@ namespace ET.Client
             };
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             var paramString = paramVo.Get<string>();
             TipsHelper.OpenSync<MessageTipsViewComponent>(paramString);
@@ -32,7 +32,7 @@ namespace ET.Client
             return new();
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             TipsHelper.Open<MessageTipsViewComponent>("回调测试",new MessageTipsExtraData()
             {
@@ -58,7 +58,7 @@ namespace ET.Client
             return new();
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             TipsHelper.Open<MessageTipsViewComponent>("只有确定 回调测试",new MessageTipsExtraData()
             {
@@ -80,7 +80,7 @@ namespace ET.Client
             return new();
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             TipsHelper.Open<MessageTipsViewComponent>("回调测试 修改按钮名称",new MessageTipsExtraData()
             {
@@ -115,7 +115,7 @@ namespace ET.Client
             };
         }
 
-        public async ETTask<bool> Run(Scene clientScene, ParamVo paramVo)
+        public async ETTask<bool> Run(Scene root, ParamVo paramVo)
         {
             var paramString = paramVo.Get<string>();
             TipsHelper.OpenSync<TextTipsViewComponent>(paramString);

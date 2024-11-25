@@ -1,10 +1,6 @@
-﻿using System;
-using YIUIFramework;
-using System.Collections.Generic;
-
-namespace ET.Client
+﻿namespace ET.Client
 {
-    [FriendOf(typeof (GMTypeItemComponent))]
+    [FriendOf(typeof(GMTypeItemComponent))]
     public static partial class GMTypeItemComponentSystem
     {
         [EntitySystem]
@@ -17,7 +13,7 @@ namespace ET.Client
         {
         }
 
-        public static void ResetItem(this GMTypeItemComponent self,string name, EGMType data)
+        public static void ResetItem(this GMTypeItemComponent self, string name, EGMType data)
         {
             self.u_DataTypeName.SetValue(name);
         }

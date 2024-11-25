@@ -1,14 +1,7 @@
-﻿using System;
-using YIUIFramework;
-using System.Collections.Generic;
+﻿using YIUIFramework;
 
 namespace ET.Client
 {
-    /// <summary>
-    /// Author  YIUI
-    /// Date    2023.11.30
-    /// Desc
-    /// </summary>
     [FriendOf(typeof(GMCommandItemComponent))]
     public static partial class GMCommandItemComponentSystem
     {
@@ -26,7 +19,7 @@ namespace ET.Client
         public static void ResetItem(this GMCommandItemComponent self, GMCommandComponent commandComponent, GMCommandInfo info)
         {
             self.m_CommandComponent = commandComponent;
-            self.Info             = info;
+            self.Info = info;
             self.u_DataName.SetValue(info.GMName);
             self.u_DataDesc.SetValue(info.GMDesc);
             self.u_DataShowParamLoop.SetValue(info.ParamInfoList.Count >= 1);
@@ -35,22 +28,23 @@ namespace ET.Client
         }
 
         private static async ETTask WaitRefresh(this GMCommandItemComponent self)
-        {            
+        {
             await self.Root().GetComponent<TimerComponent>().WaitAsync(500);
             self.GMParamLoop.RefreshCells();
         }
-        
+
         private static void GMParamRenderer(this GMCommandItemComponent self, int index, GMParamInfo data, GMParamItemComponent item, bool select)
         {
             item.ResetItem(data);
         }
-        
+
         #region YIUIEvent开始
-        
+
         private static void OnEventRunAction(this GMCommandItemComponent self)
         {
             self.CommandComponent?.Run(self.Info).Coroutine();
         }
+
         #endregion YIUIEvent结束
     }
 }

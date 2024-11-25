@@ -89,7 +89,7 @@ namespace ET.Client
         public static async ETTask Run(this GMCommandComponent self, GMCommandInfo info)
         {
             /*
-             * TODO 判断inof中的 GM命令需求等级
+             * TODO 判断info中的 GM命令需求等级
              * 取自身数据中的等级  判断是否符合要求
              */
 
