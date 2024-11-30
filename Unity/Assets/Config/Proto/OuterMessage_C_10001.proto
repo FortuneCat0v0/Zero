@@ -673,3 +673,24 @@ message Chat2C_NoticeChat // IMessage
 	string Name = 1;
 	string ChatMessage = 2;
 }
+
+message RankInfo
+{
+	int64 Id = 1;
+	int64 UnitId = 2;
+	string Name = 3;
+}
+
+//ResponseType Rank2C_GetRanksInfo
+message C2Rank_GetRanksInfo // IRankRequest
+{
+	int32 RpcId = 1;
+}
+
+message Rank2C_GetRanksInfo // IRankResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated RankInfo RankInfoList = 4;
+}

@@ -1,7 +1,7 @@
 ﻿namespace ET.Server
 {
     [MessageHandler(SceneType.Chat)]
-    public class C2Chat_SendChatHandler : MessageLocationHandler<ChatUnit, C2Chat_SendChat, Chat2C_SendChat>
+    public class C2Chat_SendChatHandler : MessageHandler<ChatUnit, C2Chat_SendChat, Chat2C_SendChat>
     {
         protected override async ETTask Run(ChatUnit chatUnit, C2Chat_SendChat request, Chat2C_SendChat response)
         {

@@ -28,6 +28,8 @@ namespace ET
 		LoginCenter = 1 << 21,
 		UnitCache = 1 << 22,
 		Chat = 1 << 23,
+		Rank = 1 << 24,
+		Mail = 1 << 25,
 
 		// 客户端
 		Demo = 1 << 30,

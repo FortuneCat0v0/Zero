@@ -42,12 +42,34 @@ namespace ET.Server
                 case IChatRequest actorChatRequest:
                 {
                     long chatUnitId = session.GetComponent<SessionPlayerComponent>().Player.Id;
-                    int rpcId = actorChatRequest.RpcId; // 这里要保存客户端的rpcId
+                    int rpcId = actorChatRequest.RpcId;
                     long instanceId = session.InstanceId;
                     IResponse iResponse = await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Chat)
                             .Call(chatUnitId, actorChatRequest);
                     iResponse.RpcId = rpcId;
-                    // session可能已经断开了，所以这里需要判断
+
+                    if (session.InstanceId == instanceId)
+                    {
+                        session.Send(iResponse);
+                    }
+
+                    break;
+                }
+                case IRankMessage actorRankMessage:
+                {
+                    ActorId rankActorId = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Rank").ActorId;
+                    root.GetComponent<MessageSender>().Send(rankActorId, actorRankMessage);
+                    break;
+                }
+                case IRankRequest actorRankRequest:
+                {
+                    ActorId rankActorId = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Rank").ActorId;
+                    int rpcId = actorRankRequest.RpcId;
+                    long instanceId = session.InstanceId;
+
+                    IResponse iResponse = await root.GetComponent<MessageSender>().Call(rankActorId, actorRankRequest);
+                    iResponse.RpcId = rpcId;
+
                     if (session.InstanceId == instanceId)
                     {
                         session.Send(iResponse);

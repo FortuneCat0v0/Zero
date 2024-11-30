@@ -11,12 +11,4 @@
     public interface ILocationResponse : IResponse
     {
     }
-
-    public interface IChatRequest : ILocationRequest
-    {
-    }
-
-    public interface IChatResponse : ILocationResponse
-    {
-    }
 }
