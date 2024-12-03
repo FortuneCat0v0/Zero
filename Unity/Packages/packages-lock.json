@@ -41,37 +41,39 @@
       "url": "https://registry.npmjs.org"
     },
     "com.tapsdk.antiaddiction": {
-      "version": "3.29.4",
+      "version": "3.29.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.taptap.tds.common": "3.29.4"
+        "com.taptap.tds.common": "3.29.5"
       },
       "url": "https://registry.npmjs.org"
     },
     "com.taptap.tds.bootstrap": {
-      "version": "3.29.4",
+      "version": "3.29.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.taptap.tds.login": "3.29.4",
+        "com.taptap.tds.login": "3.29.5",
         "com.leancloud.realtime": "2.3.0"
       },
       "url": "https://registry.npmjs.org"
     },
     "com.taptap.tds.common": {
-      "version": "3.29.4",
+      "version": "3.29.5",
       "depth": 1,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.leancloud.storage": "2.3.0"
+      },
       "url": "https://registry.npmjs.org"
     },
     "com.taptap.tds.login": {
-      "version": "3.29.4",
-      "depth": 0,
+      "version": "3.29.5",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.taptap.tds.common": "3.29.4"
+        "com.taptap.tds.common": "3.29.5"
       },
       "url": "https://registry.npmjs.org"
     },

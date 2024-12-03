@@ -1,6 +1,6 @@
 ﻿namespace ET.Server
 {
-    [Invoke((long)SceneType.Rank)]
+    [Invoke((long)SceneType.Mail)]
     public class FiberInit_Mail : AInvokeHandler<FiberInit, ETTask>
     {
         public override async ETTask Handle(FiberInit fiberInit)
