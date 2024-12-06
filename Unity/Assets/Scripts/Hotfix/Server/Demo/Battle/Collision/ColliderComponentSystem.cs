@@ -81,17 +81,17 @@ namespace ET.Server
             self.Body = self.CollisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
             switch (self.ColliderConfig.ColliderType)
             {
-                case EColliderType.Circle:
+                case ColliderType.Circle:
                     self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset, self.ColliderConfig.IsSensor,
                         unit, self.Layer);
 
                     break;
-                case EColliderType.Box:
+                case ColliderType.Box:
                     self.Body.CreateBoxFixture(self.ColliderConfig.HX, self.ColliderConfig.HY, self.ColliderConfig.Offset, 0,
                         self.ColliderConfig.IsSensor, unit, self.Layer);
 
                     break;
-                case EColliderType.Polygon:
+                case ColliderType.Polygon:
                     foreach (var points in self.ColliderConfig.FinalPoints)
                     {
                         self.Body.CreatePolygonFixture(points, self.ColliderConfig.IsSensor, unit, self.Layer);

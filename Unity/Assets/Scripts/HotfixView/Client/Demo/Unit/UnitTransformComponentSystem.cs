@@ -24,27 +24,27 @@ namespace ET.Client
             // self.WeaponEndPos = rc.Get<GameObject>("Trans_WeaponEndPos").transform;
         }
 
-        public static Transform GetTranform(this UnitTransformComponent self, EUnitPosType unitPosType)
+        public static Transform GetTranform(this UnitTransformComponent self, UnitPosType unitPosType)
         {
             switch (unitPosType)
             {
-                case EUnitPosType.Head:
+                case UnitPosType.Head:
                     return self.HeadPos;
-                case EUnitPosType.Ground:
+                case UnitPosType.Ground:
                     return self.GroundPos;
-                case EUnitPosType.Front:
+                case UnitPosType.Front:
                     return self.ChannelPos;
-                case EUnitPosType.Center:
+                case UnitPosType.Center:
                     return self.CenterPos;
-                case EUnitPosType.LeftHand:
+                case UnitPosType.LeftHand:
                     return self.LeftHeadPos;
-                case EUnitPosType.RightHand:
+                case UnitPosType.RightHand:
                     return self.RightHeadPos;
-                case EUnitPosType.WeaponStart:
+                case UnitPosType.WeaponStart:
                     return self.WeaponStartPos;
-                case EUnitPosType.WeaponCenter:
+                case UnitPosType.WeaponCenter:
                     return self.WeaponCenterPos;
-                case EUnitPosType.WeaponEnd:
+                case UnitPosType.WeaponEnd:
                     return self.WeaponEndPos;
             }
 

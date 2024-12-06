@@ -6,11 +6,11 @@ namespace ET
 {
     [ChildOf(typeof(UnitComponent))]
     [DebuggerDisplay("ViewName,nq")]
-    public partial class Unit : Entity, IAwake<EUnitType, int>, IGetComponentSys
+    public partial class Unit : Entity, IAwake<UnitType, int>, IGetComponentSys
     {
         public string RoleName { get; set; }
 
-        public EUnitType UnitType { get; set; }
+        public UnitType UnitType { get; set; }
 
         public int ConfigId { get; set; }
 

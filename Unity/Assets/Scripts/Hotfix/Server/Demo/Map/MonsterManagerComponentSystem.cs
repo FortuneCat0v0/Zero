@@ -41,7 +41,7 @@ namespace ET.Server
 
             foreach (Unit unit in self.Root().GetComponent<UnitComponent>().GetAll())
             {
-                if (unit.UnitType != EUnitType.Monster)
+                if (unit.UnitType != UnitType.Monster)
                 {
                     continue;
                 }

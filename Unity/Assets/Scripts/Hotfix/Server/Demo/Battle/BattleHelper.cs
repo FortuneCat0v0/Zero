@@ -38,7 +38,7 @@ namespace ET.Server
     {
         protected override async ETTask Run(Scene scene, UnitDeath args)
         {
-            if (args.DefendUnit.UnitType == EUnitType.Monster)
+            if (args.DefendUnit.UnitType == UnitType.Monster)
             {
                 await scene.Root().GetComponent<TimerComponent>().WaitFrameAsync();
                 UnitFactory.CreateItem(scene, args.DefendUnit.Position, 1);
@@ -245,7 +245,7 @@ namespace ET.Server
             }
         }
 
-        public static Unit GetEnemy(this Unit unit, float maxDistance, bool isNearest = true, EUnitType unitType = EUnitType.Invalid)
+        public static Unit GetEnemy(this Unit unit, float maxDistance, bool isNearest = true, UnitType unitType = UnitType.Invalid)
         {
             Unit nearest = null;
             float minDistance = maxDistance;
@@ -264,7 +264,7 @@ namespace ET.Server
                     continue;
                 }
 
-                if (unitType != EUnitType.Invalid && unit.UnitType != unitType)
+                if (unitType != UnitType.Invalid && unit.UnitType != unitType)
                 {
                     continue;
                 }

@@ -6,7 +6,7 @@ namespace ET
     public static partial class UnitSystem
     {
         [EntitySystem]
-        private static void Awake(this Unit self, EUnitType unitType, int configId)
+        private static void Awake(this Unit self, UnitType unitType, int configId)
         {
             self.UnitType = unitType;
             self.ConfigId = configId;

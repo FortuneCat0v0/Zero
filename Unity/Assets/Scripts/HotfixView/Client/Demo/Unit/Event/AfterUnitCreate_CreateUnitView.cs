@@ -11,7 +11,7 @@ namespace ET.Client
 
             // Unit View层
 
-            if (unit.UnitType == EUnitType.Player)
+            if (unit.UnitType == UnitType.Player)
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("AngelSlime").GameObject;
                 model.transform.position = unit.Position;
@@ -24,7 +24,7 @@ namespace ET.Client
                 uiHeadInfoComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp) * 1f /
                     numericComponent.GetAsInt(NumericType.MaxHp));
             }
-            else if (unit.UnitType == EUnitType.Monster)
+            else if (unit.UnitType == UnitType.Monster)
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("PowerSlime").GameObject;
                 model.transform.position = unit.Position;
@@ -37,12 +37,12 @@ namespace ET.Client
                 uiHeadInfoComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp) * 1f /
                     numericComponent.GetAsInt(NumericType.MaxHp));
             }
-            else if (unit.UnitType == EUnitType.Item)
+            else if (unit.UnitType == UnitType.Item)
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("Item").GameObject;
                 model.transform.position = unit.Position;
             }
-            else if (unit.UnitType == EUnitType.Skill)
+            else if (unit.UnitType == UnitType.Skill)
             {
                 GameObject model = unit.AddComponent<GameObjectComponent, string>("Bullet").GameObject;
                 model.transform.position = unit.Position;

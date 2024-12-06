@@ -9,7 +9,7 @@ namespace ET.Server
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChildWithId<Unit, EUnitType, int>(id, EUnitType.Player, 1001);
+            Unit unit = unitComponent.AddChildWithId<Unit, UnitType, int>(id, UnitType.Player, 1001);
             unit.AddComponent<MoveComponent>();
             unit.Position = new float3(-10, 0, -10);
 
@@ -47,7 +47,7 @@ namespace ET.Server
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Item, itemConfigId);
+            Unit unit = unitComponent.AddChild<Unit, UnitType, int>(UnitType.Item, itemConfigId);
             unit.Position = position;
 
             unit.AddComponent<NumericNoticeComponent>();
@@ -70,7 +70,7 @@ namespace ET.Server
         {
             UnitComponent unitComponent = scene.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Monster, 1001);
+            Unit unit = unitComponent.AddChild<Unit, UnitType, int>(UnitType.Monster, 1001);
             unit.AddComponent<MoveComponent>();
             unit.Position = position;
 
@@ -100,7 +100,7 @@ namespace ET.Server
         public static Unit CreateBullet(Scene root, CreateColliderParams createColliderParams)
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
+            Unit unit = unitComponent.AddChild<Unit, UnitType, int>(UnitType.Skill, 1001);
             unitComponent.Add(unit);
 
             unit.AddComponent<NumericNoticeComponent>();
@@ -134,7 +134,7 @@ namespace ET.Server
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
             //为碰撞体新建一个Unit
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Skill, 1001);
+            Unit unit = unitComponent.AddChild<Unit, UnitType, int>(UnitType.Skill, 1001);
 
             if (lifeTime > 0)
             {
@@ -158,7 +158,7 @@ namespace ET.Server
         {
             UnitComponent unitComponent = root.GetComponent<UnitComponent>();
 
-            Unit unit = unitComponent.AddChild<Unit, EUnitType, int>(EUnitType.Area, areaConfigId);
+            Unit unit = unitComponent.AddChild<Unit, UnitType, int>(UnitType.Area, areaConfigId);
             AreaConfig areaConfig = AreaConfigCategory.Instance.Get(areaConfigId);
 
             unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,

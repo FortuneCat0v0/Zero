@@ -19,11 +19,11 @@ namespace ET
             Id = _buf.ReadInt();
             Level = _buf.ReadInt();
             NextSkill = _buf.ReadInt();
-            SkillAbstractType = (ESkillAbstractType)_buf.ReadInt();
+            SkillAbstractType = (SkillAbstractType)_buf.ReadInt();
             Name = _buf.ReadString();
             Desc = _buf.ReadString();
             CD = _buf.ReadInt();
-            SkillIndicatorType = (ESkillIndicatorType)_buf.ReadInt();
+            SkillIndicatorType = (SkillIndicatorType)_buf.ReadInt();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
             SkillHandler = _buf.ReadString();
             EffectConfigId = _buf.ReadInt();
@@ -56,7 +56,7 @@ namespace ET
         /// <summary>
         /// 技能抽象类型
         /// </summary>
-        public readonly ESkillAbstractType SkillAbstractType;
+        public readonly SkillAbstractType SkillAbstractType;
 
         /// <summary>
         /// 名字
@@ -76,7 +76,7 @@ namespace ET
         /// <summary>
         /// 技能指示器类型
         /// </summary>
-        public readonly ESkillIndicatorType SkillIndicatorType;
+        public readonly SkillIndicatorType SkillIndicatorType;
 
         /// <summary>
         /// 技能指示器参数

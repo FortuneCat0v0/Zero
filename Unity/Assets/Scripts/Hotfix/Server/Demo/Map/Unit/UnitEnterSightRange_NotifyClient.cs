@@ -14,7 +14,7 @@
             }
 
             Unit ua = a.GetParent<Unit>();
-            if (ua.UnitType != EUnitType.Player)
+            if (ua.UnitType != UnitType.Player)
             {
                 return;
             }

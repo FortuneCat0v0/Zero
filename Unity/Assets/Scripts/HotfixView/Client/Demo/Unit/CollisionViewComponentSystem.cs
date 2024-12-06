@@ -12,11 +12,11 @@ namespace ET.Client
             self.GameObject = gameObject;
         }
 
-        public static void AddColloder(this CollisionViewComponent self, EColliderType colliderType, Vector2 vector2, float angle = 0)
+        public static void AddColloder(this CollisionViewComponent self, ColliderType colliderType, Vector2 vector2, float angle = 0)
         {
             switch (colliderType)
             {
-                case EColliderType.Circle:
+                case ColliderType.Circle:
                     SphereCollider sphereCollider = self.GameObject.GetComponent<SphereCollider>();
                     if (sphereCollider == null)
                     {
@@ -27,7 +27,7 @@ namespace ET.Client
                     sphereCollider.radius = vector2.x;
 
                     break;
-                case EColliderType.Box:
+                case ColliderType.Box:
                     BoxCollider boxCollider = self.GameObject.GetComponent<BoxCollider>();
                     if (boxCollider == null)
                     {

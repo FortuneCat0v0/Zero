@@ -13,7 +13,7 @@
             ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
             Unit bBelongToUnit = bColliderComponent.BelongToUnit;
 
-            if (aBelongToUnit.UnitType == EUnitType.Item && bBelongToUnit.UnitType == EUnitType.Player)
+            if (aBelongToUnit.UnitType == UnitType.Item && bBelongToUnit.UnitType == UnitType.Player)
             {
                 Log.Warning($"玩家 {bBelongToUnit.Id} 拾取到 {aBelongToUnit.ConfigId}");
                 aBelongToUnit.GetParent<UnitComponent>().Remove(aBelongToUnit.Id);

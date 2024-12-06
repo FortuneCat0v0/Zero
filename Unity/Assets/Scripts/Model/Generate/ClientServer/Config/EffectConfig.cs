@@ -21,7 +21,7 @@ namespace ET
             AssetPath = _buf.ReadString();
             Life = _buf.ReadInt();
             FollowUnit = _buf.ReadBool();
-            UnitPosType = (EUnitPosType)_buf.ReadInt();
+            UnitPosType = (UnitPosType)_buf.ReadInt();
             SyncRot = _buf.ReadBool();
 
             PostInit();
@@ -60,7 +60,7 @@ namespace ET
         /// <summary>
         /// 跟随的位置
         /// </summary>
-        public readonly EUnitPosType UnitPosType;
+        public readonly UnitPosType UnitPosType;
 
         /// <summary>
         /// 同步旋转

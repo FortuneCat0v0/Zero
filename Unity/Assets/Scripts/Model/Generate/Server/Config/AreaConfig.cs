@@ -21,7 +21,7 @@ namespace ET
             Des = _buf.ReadString();
             Point = ExternalTypeUtil.NewVector3(vector3.Deserializevector3(_buf));
             ColliderConfigId = _buf.ReadInt();
-            AreaType = (EAreaType)_buf.ReadInt();
+            AreaType = (AreaType)_buf.ReadInt();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Params = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); Params.Add(_e0);}}
 
             PostInit();
@@ -60,7 +60,7 @@ namespace ET
         /// <summary>
         /// 类型
         /// </summary>
-        public readonly EAreaType AreaType;
+        public readonly AreaType AreaType;
 
         /// <summary>
         /// 参数

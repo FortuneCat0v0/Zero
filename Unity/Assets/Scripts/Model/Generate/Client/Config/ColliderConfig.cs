@@ -17,7 +17,7 @@ namespace ET
         public ColliderConfig(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            ColliderType = (EColliderType)_buf.ReadInt();
+            ColliderType = (ColliderType)_buf.ReadInt();
             Desc = _buf.ReadString();
             IsSensor = _buf.ReadBool();
             Offset = vector2.Deserializevector2(_buf);
@@ -42,7 +42,7 @@ namespace ET
         /// <summary>
         /// 碰撞体类型类型
         /// </summary>
-        public readonly EColliderType ColliderType;
+        public readonly ColliderType ColliderType;
 
         /// <summary>
         /// 描述

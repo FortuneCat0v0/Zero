@@ -5,7 +5,7 @@
         public static Unit Create(Scene currentScene, UnitInfo unitInfo)
         {
             UnitComponent unitComponent = currentScene.GetComponent<UnitComponent>();
-            Unit unit = unitComponent.AddChildWithId<Unit, EUnitType, int>(unitInfo.UnitId, (EUnitType)unitInfo.EUnitType, unitInfo.ConfigId);
+            Unit unit = unitComponent.AddChildWithId<Unit, UnitType, int>(unitInfo.UnitId, (UnitType)unitInfo.EUnitType, unitInfo.ConfigId);
             unitComponent.Add(unit);
 
             unit.Position = unitInfo.Position;
@@ -13,9 +13,9 @@
 
             switch (unit.UnitType)
             {
-                case EUnitType.Player:
-                case EUnitType.Monster:
-                case EUnitType.Skill:
+                case UnitType.Player:
+                case UnitType.Monster:
+                case UnitType.Skill:
                 {
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
 
@@ -54,7 +54,7 @@
                     unit.AddComponent<ObjectWait>();
                     break;
                 }
-                case EUnitType.Item:
+                case UnitType.Item:
                 {
                     NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
 

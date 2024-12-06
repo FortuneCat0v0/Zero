@@ -37,13 +37,13 @@ namespace ET.Client
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
-                case ESkillIndicatorType.TargetOnly:
+                case SkillIndicatorType.TargetOnly:
                 {
                     rc.Get<GameObject>("Range").transform.localScale =
                             new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
-                case ESkillIndicatorType.Circle:
+                case SkillIndicatorType.Circle:
                 {
                     rc.Get<GameObject>("Circle").transform.localScale =
                             new Vector3(self.SkillConfig.SkillIndicatorParams[1], 1, self.SkillConfig.SkillIndicatorParams[1]);
@@ -51,19 +51,19 @@ namespace ET.Client
                             new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
-                case ESkillIndicatorType.Umbrella:
+                case SkillIndicatorType.Umbrella:
                 {
                     // rc.Get<GameObject>("Umbrella").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
                     // rc.Get<GameObject>("CircleIndicator").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
                     break;
                 }
-                case ESkillIndicatorType.Range:
+                case SkillIndicatorType.Range:
                 {
                     rc.Get<GameObject>("Range").transform.localScale =
                             new Vector3(self.SkillConfig.SkillIndicatorParams[0], 1, self.SkillConfig.SkillIndicatorParams[0]);
                     break;
                 }
-                case ESkillIndicatorType.SingleLine:
+                case SkillIndicatorType.SingleLine:
                 {
                     rc.Get<GameObject>("Line").transform.localScale = new Vector3(1, 1, self.SkillConfig.SkillIndicatorParams[1]);
                     rc.Get<GameObject>("Line").transform.rotation = Quaternion.Euler(0, self.Angle, 0);
@@ -102,7 +102,7 @@ namespace ET.Client
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
             switch (self.SkillConfig.SkillIndicatorType)
             {
-                case ESkillIndicatorType.TargetOnly:
+                case SkillIndicatorType.TargetOnly:
                 {
                     // 锁定最近的怪物。。
                     // 修改TargetComponent
@@ -112,7 +112,7 @@ namespace ET.Client
                     self.Distance = 0;
                     break;
                 }
-                case ESkillIndicatorType.Circle:
+                case SkillIndicatorType.Circle:
                 {
                     rc.Get<GameObject>("Circle").transform.localPosition = Quaternion.Euler(0, angle, 0) * Vector3.forward * distance;
 
@@ -120,7 +120,7 @@ namespace ET.Client
                     self.Distance = distance;
                     break;
                 }
-                case ESkillIndicatorType.Umbrella:
+                case SkillIndicatorType.Umbrella:
                 {
                     rc.Get<GameObject>("Umbrella").transform.rotation = Quaternion.Euler(0, angle, 0);
 
@@ -128,13 +128,13 @@ namespace ET.Client
                     self.Distance = 0;
                     break;
                 }
-                case ESkillIndicatorType.Range:
+                case SkillIndicatorType.Range:
                 {
                     self.Angle = MathHelper.QuaternionToEulerAngle_Y(self.Unit.Rotation);
                     self.Distance = 0;
                     break;
                 }
-                case ESkillIndicatorType.SingleLine:
+                case SkillIndicatorType.SingleLine:
                 {
                     rc.Get<GameObject>("Line").transform.rotation = Quaternion.Euler(0, angle, 0);
 

@@ -13,12 +13,12 @@
             ColliderComponent bColliderComponent = b.GetComponent<ColliderComponent>();
             Unit bBelongToUnit = bColliderComponent.BelongToUnit;
 
-            if (aBelongToUnit.UnitType == EUnitType.Area && bBelongToUnit.UnitType == EUnitType.Player)
+            if (aBelongToUnit.UnitType == UnitType.Area && bBelongToUnit.UnitType == UnitType.Player)
             {
                 Log.Warning($"玩家 {bBelongToUnit.Id} 进入到 {aBelongToUnit.ConfigId}");
 
                 AreaConfig areaConfig = AreaConfigCategory.Instance.Get(aBelongToUnit.ConfigId);
-                if (areaConfig.AreaType == EAreaType.Water)
+                if (areaConfig.AreaType == AreaType.Water)
                 {
                     Log.Debug($"玩家 {bBelongToUnit.Id} 开始获取水元素");
                 }
