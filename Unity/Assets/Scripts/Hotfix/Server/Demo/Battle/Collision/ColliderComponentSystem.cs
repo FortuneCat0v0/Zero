@@ -122,8 +122,7 @@ namespace ET.Server
         {
             Unit selfUnit = self.GetParent<Unit>();
 
-            self.SetColliderBodyPos(new Vector2(selfUnit.Position.x, selfUnit.Position.z));
-            self.SetColliderBodyAngle(MathHelper.QuaternionToEulerAngle_Y(selfUnit.Rotation));
+            self.SetColliderBodyTransform(new(selfUnit.Position.x, selfUnit.Position.z), MathHelper.QuaternionToEulerAngle_Y(selfUnit.Rotation));
         }
 
         public static void SyncUnit(this ColliderComponent self)
@@ -132,6 +131,11 @@ namespace ET.Server
 
             selfUnit.Position = new float3(self.Body.GetPosition().X, selfUnit.Position.y, self.Body.GetPosition().Y);
             selfUnit.Rotation = quaternion.Euler(0, math.radians(self.Body.GetAngle()), 0);
+        }
+
+        public static void SetColliderBodyTransform(this ColliderComponent self, Vector2 pos, float angle)
+        {
+            self.Body.SetTransform(pos, angle);
         }
 
         public static void SetColliderBodyPos(this ColliderComponent self, Vector2 pos)
