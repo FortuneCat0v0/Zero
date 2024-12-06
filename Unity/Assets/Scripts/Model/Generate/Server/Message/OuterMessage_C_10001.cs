@@ -1153,12 +1153,15 @@ namespace ET
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public string Account { get; set; }
+        public string AppVersion { get; set; }
 
         [MemoryPackOrder(2)]
-        public string Password { get; set; }
+        public string Account { get; set; }
 
         [MemoryPackOrder(3)]
+        public string Password { get; set; }
+
+        [MemoryPackOrder(4)]
         public int ELoginType { get; set; }
 
         public override void Dispose()
@@ -1169,6 +1172,7 @@ namespace ET
             }
 
             this.RpcId = default;
+            this.AppVersion = default;
             this.Account = default;
             this.Password = default;
             this.ELoginType = default;

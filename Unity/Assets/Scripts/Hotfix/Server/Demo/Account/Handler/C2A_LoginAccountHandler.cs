@@ -18,6 +18,13 @@ namespace ET.Server
                 return;
             }
 
+            if (request.AppVersion != GlobalValue.AppVersion)
+            {
+                response.Error = ErrorCode.ERR_AppVersionError;
+                session.Disconnect().Coroutine();
+                return;
+            }
+
             if (string.IsNullOrEmpty(request.Account) || string.IsNullOrEmpty(request.Password))
             {
                 response.Error = ErrorCode.ERR_LoginInfoIsNull;

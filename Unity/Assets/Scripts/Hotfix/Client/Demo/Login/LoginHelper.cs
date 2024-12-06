@@ -16,6 +16,7 @@
             await clientSenderComponent.ConnectAccountAsync();
 
             C2A_LoginAccount request = C2A_LoginAccount.Create();
+            request.AppVersion = GlobalValue.AppVersion;
             request.Account = account;
             request.Password = password;
             request.ELoginType = (int)loginType;

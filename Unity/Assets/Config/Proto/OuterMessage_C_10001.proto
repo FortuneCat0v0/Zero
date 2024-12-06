@@ -253,9 +253,10 @@ message G2C_Benchmark // ISessionResponse
 message C2A_LoginAccount // ISessionRequest
 {
 	int32 RpcId = 1;
-	string Account = 2;
-	string Password = 3;
-	int32 ELoginType = 4;
+	string AppVersion = 2;
+	string Account = 3;
+	string Password = 4;
+	int32 ELoginType = 5;
 }
 
 
