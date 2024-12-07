@@ -53,6 +53,10 @@
                             await player.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.Chat)
                                     .Call(player.Id, G2Chat_RequestExitChat.Create());
 
+                            // 通知邮件服下线邮件Unit
+                            await player.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.Mail)
+                                    .Call(player.Id, G2Mail_ExitMailServer.Create());
+
                             //通知移除账号角色登录信息
                             StartSceneConfig loginCenterConfig = StartSceneConfigCategory.Instance.LoginCenter;
                             G2L_RemoveLoginRecord g2LRemoveLoginRecord = G2L_RemoveLoginRecord.Create();

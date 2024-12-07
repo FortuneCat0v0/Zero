@@ -10,6 +10,7 @@ namespace ET.Server
         public const int Friend = 2;
         public const int Chat = 3;
         public const int GateSession = 4;
+        public const int Mail = 5;
         public const int Max = 10;
     }
     

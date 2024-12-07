@@ -13,6 +13,10 @@
             root.AddComponent<MessageSender>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
+            root.AddComponent<DBManagerComponent>();
+
+            root.AddComponent<MailCenterComponent>();
+            root.AddComponent<MailUnitsComponent>();
 
             await ETTask.CompletedTask;
         }

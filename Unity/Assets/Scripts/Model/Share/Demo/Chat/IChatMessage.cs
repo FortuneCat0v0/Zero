@@ -1,6 +1,6 @@
 ﻿namespace ET
 {
-    public interface IChatMessage : IChatRequest
+    public interface IChatMessage : IMessage
     {
     }
 

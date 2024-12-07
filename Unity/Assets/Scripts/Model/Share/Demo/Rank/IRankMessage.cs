@@ -1,6 +1,6 @@
 ﻿namespace ET
 {
-    public interface IRankMessage : IRankRequest
+    public interface IRankMessage : IMessage
     {
     }
 

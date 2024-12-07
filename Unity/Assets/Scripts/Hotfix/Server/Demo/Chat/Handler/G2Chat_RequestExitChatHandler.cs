@@ -5,10 +5,17 @@
     {
         protected override async ETTask Run(ChatUnit chatUnit, G2Chat_RequestExitChat request, Chat2G_RequestExitChat response)
         {
-            Log.Debug($"玩家：{chatUnit.Id} 登录聊天服");
+            ChatUnitExit(chatUnit).Coroutine();
 
-            ChatUnitComponent chatInfoUnitsComponent = chatUnit.Root().GetComponent<ChatUnitComponent>();
-            chatInfoUnitsComponent.Remove(chatUnit.Id);
+            await ETTask.CompletedTask;
+        }
+
+        private async ETTask ChatUnitExit(ChatUnit chatUnit)
+        {
+            await chatUnit.Fiber().WaitFrameFinish();
+            await chatUnit.RemoveLocation(LocationType.Chat);
+            chatUnit.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession).Remove(chatUnit.Id);
+            chatUnit?.Dispose();
 
             await ETTask.CompletedTask;
         }

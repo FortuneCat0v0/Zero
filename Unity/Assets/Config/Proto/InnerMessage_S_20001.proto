@@ -373,3 +373,30 @@ message Chat2G_RequestExitChat // ILocationResponse
     int32 Error = 2;
     string Message = 3;
 }
+
+//ResponseType Mail2G_LoginMailServer
+message G2Mail_LoginMailServer // IRequest
+{
+    int32 RpcId = 1;
+	int64 UnitId = 2;
+}
+
+message Mail2G_LoginMailServer // IResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}
+
+//ResponseType Mail2G_ExitMailServer
+message G2Mail_ExitMailServer // ILocationRequest
+{
+    int32 RpcId = 1;
+}
+
+message Mail2G_ExitMailServer // ILocationResponse
+{
+    int32 RpcId = 1;
+    int32 Error = 2;
+    string Message = 3;
+}

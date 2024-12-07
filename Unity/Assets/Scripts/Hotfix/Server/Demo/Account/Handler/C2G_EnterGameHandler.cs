@@ -91,7 +91,8 @@ namespace ET.Server
                         // 再通过Player上引用的ClientSession转发给客户端(SessionStreamDispatcherServerInner)
                         // unit.AddComponent<UnitGateComponent, long>(player.InstanceId);
 
-                        await this.EnterWorldChatServer(unit); //登录聊天服
+                        await this.LoginChatServer(unit); //登录聊天服
+                        await this.LoginMailServer(unit);
                         // player.MatchInfoInstanceId = await this.EnterMatchServer(unit); // 登录匹配服
 
                         // WorkFlow 玩家Unit上线后的初始化操作
@@ -120,12 +121,21 @@ namespace ET.Server
             }
         }
 
-        private async ETTask EnterWorldChatServer(Unit unit)
+        private async ETTask LoginChatServer(Unit unit)
         {
             StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Chat");
             G2Chat_EnterChat request = G2Chat_EnterChat.Create();
             request.UnitId = unit.Id;
             request.Name = unit.RoleName;
+
+            await unit.Root().GetComponent<MessageSender>().Call(startSceneConfig.ActorId, request);
+        }
+
+        private async ETTask LoginMailServer(Unit unit)
+        {
+            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(unit.Zone(), "Mail");
+            G2Mail_LoginMailServer request = G2Mail_LoginMailServer.Create();
+            request.UnitId = unit.Id;
 
             await unit.Root().GetComponent<MessageSender>().Call(startSceneConfig.ActorId, request);
         }

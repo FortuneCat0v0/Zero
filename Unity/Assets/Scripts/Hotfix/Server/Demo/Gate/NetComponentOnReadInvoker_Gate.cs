@@ -41,11 +41,12 @@ namespace ET.Server
                 }
                 case IChatRequest actorChatRequest:
                 {
-                    long chatUnitId = session.GetComponent<SessionPlayerComponent>().Player.Id;
+                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
                     int rpcId = actorChatRequest.RpcId;
                     long instanceId = session.InstanceId;
-                    IResponse iResponse = await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Chat)
-                            .Call(chatUnitId, actorChatRequest);
+                    IChatResponse iResponse =
+                            await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Chat)
+                                    .Call(player.Id, actorChatRequest) as IChatResponse;
                     iResponse.RpcId = rpcId;
 
                     if (session.InstanceId == instanceId)
@@ -55,10 +56,11 @@ namespace ET.Server
 
                     break;
                 }
-                case IRankMessage actorRankMessage:
+                case IChatMessage actorChatMessage:
                 {
-                    ActorId rankActorId = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Rank").ActorId;
-                    root.GetComponent<MessageSender>().Send(rankActorId, actorRankMessage);
+                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
+                    root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Chat).Send(player.Id, actorChatMessage);
+
                     break;
                 }
                 case IRankRequest actorRankRequest:
@@ -74,6 +76,38 @@ namespace ET.Server
                     {
                         session.Send(iResponse);
                     }
+
+                    break;
+                }
+                case IRankMessage actorRankMessage:
+                {
+                    ActorId rankActorId = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Rank").ActorId;
+                    root.GetComponent<MessageSender>().Send(rankActorId, actorRankMessage);
+
+                    break;
+                }
+                case IMailRequest actorMailRequest:
+                {
+                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
+                    int rpcId = actorMailRequest.RpcId;
+                    long instanceId = session.InstanceId;
+
+                    IMailResponse iResponse =
+                            await root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Mail)
+                                    .Call(player.Id, actorMailRequest) as IMailResponse;
+                    iResponse.RpcId = rpcId;
+
+                    if (session.InstanceId == instanceId)
+                    {
+                        session.Send(iResponse);
+                    }
+
+                    break;
+                }
+                case IMailMessage actorMailMessage:
+                {
+                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
+                    root.GetComponent<MessageLocationSenderComponent>().Get(LocationType.Mail).Send(player.Id, actorMailMessage);
 
                     break;
                 }

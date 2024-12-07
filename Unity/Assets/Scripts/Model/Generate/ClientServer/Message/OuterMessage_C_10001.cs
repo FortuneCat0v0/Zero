@@ -3114,6 +3114,102 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.MailInfo)]
+    public partial class MailInfo : MessageObject
+    {
+        public static MailInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(MailInfo), isFromPool) as MailInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long MailId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public string Title { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.MailId = default;
+            this.Title = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2Mail_GetAllMailList)]
+    [ResponseType(nameof(Mail2C_GetAllMailList))]
+    public partial class C2Mail_GetAllMailList : MessageObject, IMailRequest
+    {
+        public static C2Mail_GetAllMailList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2Mail_GetAllMailList), isFromPool) as C2Mail_GetAllMailList;
+        }
+
+        [MemoryPackOrder(89)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.Mail2C_GetAllMailList)]
+    public partial class Mail2C_GetAllMailList : MessageObject, IMailResponse
+    {
+        public static Mail2C_GetAllMailList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Mail2C_GetAllMailList), isFromPool) as Mail2C_GetAllMailList;
+        }
+
+        [MemoryPackOrder(89)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(90)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(91)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(0)]
+        public List<MailInfo> MailInfoList { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.MailInfoList.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -3208,5 +3304,8 @@ namespace ET
         public const ushort RankInfo = 10091;
         public const ushort C2Rank_GetRanksInfo = 10092;
         public const ushort Rank2C_GetRanksInfo = 10093;
+        public const ushort MailInfo = 10094;
+        public const ushort C2Mail_GetAllMailList = 10095;
+        public const ushort Mail2C_GetAllMailList = 10096;
     }
 }

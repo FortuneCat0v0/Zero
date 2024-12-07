@@ -173,5 +173,51 @@ namespace ET.Client
         }
 
         # endregion
+
+        # region 排行榜
+
+        [GM(EGMType.Test, 1, "Rank测试-获取RankInfo")]
+        public class GM_Command_Rank1 : IGMCommand
+        {
+            public List<GMParamInfo> GetParams()
+            {
+                return new()
+                {
+                };
+            }
+
+            public async ETTask<bool> Run(Scene root, ParamVo paramVo)
+            {
+                await RankHelper.GetRankInfo(root);
+
+                await ETTask.CompletedTask;
+                return true;
+            }
+        }
+
+        #endregion
+
+        # region 邮件
+
+        [GM(EGMType.Test, 1, "Mail测试-获取MailInfo")]
+        public class GM_Command_Mail1 : IGMCommand
+        {
+            public List<GMParamInfo> GetParams()
+            {
+                return new()
+                {
+                };
+            }
+
+            public async ETTask<bool> Run(Scene root, ParamVo paramVo)
+            {
+                await MailHelper.GetMailInfo(root);
+
+                await ETTask.CompletedTask;
+                return true;
+            }
+        }
+
+        #endregion
     }
 }

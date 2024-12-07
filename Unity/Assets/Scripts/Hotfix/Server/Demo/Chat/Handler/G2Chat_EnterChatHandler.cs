@@ -6,20 +6,20 @@
     {
         protected override async ETTask Run(Scene scene, G2Chat_EnterChat request, Chat2G_EnterChat response)
         {
-            Log.Debug($"玩家：{request.UnitId} 登录聊天服");
-
             ChatUnitComponent chatInfoUnitsComponent = scene.Root().GetComponent<ChatUnitComponent>();
-            ChatUnit chatUnit = chatInfoUnitsComponent.Get(request.UnitId);
+            chatInfoUnitsComponent.Children.TryGetValue(request.UnitId, out Entity chatUnitEntity);
 
-            if (chatUnit != null && !chatUnit.IsDisposed)
+            ChatUnit chatUnit = chatUnitEntity as ChatUnit;
+
+            if (chatUnit != null)
             {
                 chatUnit.Name = request.Name;
                 return;
             }
 
             chatUnit = chatInfoUnitsComponent.AddChildWithId<ChatUnit>(request.UnitId);
-            chatInfoUnitsComponent.Add(chatUnit);
             chatUnit.Name = request.Name;
+
             chatUnit.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.UnOrderedMessage);
             await chatUnit.AddLocation(LocationType.Chat);
 
