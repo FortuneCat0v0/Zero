@@ -11,9 +11,13 @@
     "SkillIndicatorParams": [
       2
     ],
+    "ColliderParams": {
+      "$type": "CircleColliderParams",
+      "Radius": 1
+    },
+    "CastRange": 6,
     "SkillHandler": "SH_RangeDamage",
     "EffectConfigId": 10001,
-    "ColliderConfigId": 1002,
     "Damage": 2
   },
   {
@@ -28,9 +32,14 @@
     "SkillIndicatorParams": [
       3
     ],
+    "ColliderParams": {
+      "$type": "BoxColliderParams",
+      "HX": 1,
+      "HY": 1
+    },
+    "CastRange": 6,
     "SkillHandler": "SH_RangeDamage",
     "EffectConfigId": 10001,
-    "ColliderConfigId": 1002,
     "Damage": 2
   },
   {
@@ -46,9 +55,32 @@
       3,
       3
     ],
+    "ColliderParams": {
+      "$type": "PolygonColliderParams",
+      "FinalPoints": [
+        [
+          {
+            "x": -1,
+            "y": -1
+          },
+          {
+            "x": -1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": -1
+          }
+        ]
+      ]
+    },
+    "CastRange": 6,
     "SkillHandler": "SH_Bullet",
     "EffectConfigId": 10001,
-    "ColliderConfigId": 1002,
     "Damage": 2
   },
   {
@@ -64,9 +96,13 @@
       3,
       3
     ],
+    "ColliderParams": {
+      "$type": "CircleColliderParams",
+      "Radius": 1
+    },
+    "CastRange": 6,
     "SkillHandler": "SH_Bullet",
     "EffectConfigId": 10001,
-    "ColliderConfigId": 1002,
     "Damage": 2
   },
   {
@@ -81,9 +117,13 @@
     "SkillIndicatorParams": [
       0
     ],
+    "ColliderParams": {
+      "$type": "CircleColliderParams",
+      "Radius": 1
+    },
+    "CastRange": 6,
     "SkillHandler": "SH_AddBuff",
     "EffectConfigId": 10001,
-    "ColliderConfigId": 1002,
     "Damage": 2
   },
   {
@@ -99,9 +139,13 @@
       5,
       2
     ],
+    "ColliderParams": {
+      "$type": "CircleColliderParams",
+      "Radius": 1
+    },
+    "CastRange": 6,
     "SkillHandler": "SH_SphereDamageAura",
     "EffectConfigId": 10001,
-    "ColliderConfigId": 1002,
     "Damage": 2
   }
 ]

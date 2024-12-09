@@ -26,4 +26,17 @@
             <option name="constructor" value="ExternalTypeUtil.NewVector4"/>
         </mapper>
     </bean>
+    <bean name="ColliderParams">
+        <bean name="CircleColliderParams">
+            <var name="Radius" type="float"/>
+        </bean>
+        <bean name="BoxColliderParams">
+            <var name="HX" type="float"/>
+            <var name="HY" type="float"/>
+        </bean>
+        <bean name="PolygonColliderParams">
+            <var name="FinalPoints" type="list,(list#sep=;),vector2"/>
+        </bean>
+    </bean>
+
 </module>

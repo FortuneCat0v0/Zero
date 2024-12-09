@@ -7,7 +7,7 @@ namespace ET.Server
     public struct CreateColliderParams
     {
         public Unit BelongToUnit;
-        public int ColliderConfigId;
+        public ColliderParams ColliderParams;
         public ushort Layer;
 
         public bool FollowUnitPos;
@@ -23,7 +23,7 @@ namespace ET.Server
 
         public CreateColliderParams(
         Unit belongToUnit,
-        int colliderConfigId,
+        ColliderParams colliderParams,
         ushort layer = 1 << 0,
         bool followUnitPos = false,
         bool followUnitRot = false,
@@ -34,17 +34,17 @@ namespace ET.Server
         string collisionHandler = null,
         List<int> paramsList = null)
         {
-            BelongToUnit = belongToUnit;
-            ColliderConfigId = colliderConfigId;
-            Layer = layer;
-            FollowUnitPos = followUnitPos;
-            FollowUnitRot = followUnitRot;
-            Offset = offset;
-            TargetPos = targetPos;
-            Angle = angle;
+            this.BelongToUnit = belongToUnit;
+            this.ColliderParams = colliderParams;
+            this.Layer = layer;
+            this.FollowUnitPos = followUnitPos;
+            this.FollowUnitRot = followUnitRot;
+            this.Offset = offset;
+            this.TargetPos = targetPos;
+            this.Angle = angle;
             this.Skill = skill;
-            CollisionHandler = collisionHandler;
-            Params = paramsList;
+            this.CollisionHandler = collisionHandler;
+            this.Params = paramsList;
         }
     }
 
@@ -69,7 +69,7 @@ namespace ET.Server
 
         public bool SyncRotToBelongUnit;
 
-        public ColliderConfig ColliderConfig;
+        public ColliderParams ColliderParams;
         public ushort Layer;
 
         private EntityRef<Skill> skillS;

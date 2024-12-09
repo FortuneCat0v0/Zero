@@ -22,7 +22,7 @@
 
             Unit colliderUnit = UnitFactory.CreateSkill(root,
                 new(belongToUnit: owner,
-                    colliderConfigId: skill.SkillConfig.ColliderConfigId,
+                    colliderParams: skill.SkillConfig.ColliderParams,
                     followUnitPos: true,
                     followUnitRot: true,
                     skill: skill,

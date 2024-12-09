@@ -25,9 +25,10 @@ namespace ET
             CD = _buf.ReadInt();
             SkillIndicatorType = (SkillIndicatorType)_buf.ReadInt();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
+            ColliderParams = ColliderParams.DeserializeColliderParams(_buf);
+            CastRange = _buf.ReadFloat();
             SkillHandler = _buf.ReadString();
             EffectConfigId = _buf.ReadInt();
-            ColliderConfigId = _buf.ReadInt();
             Damage = _buf.ReadInt();
 
             PostInit();
@@ -84,6 +85,16 @@ namespace ET
         public readonly System.Collections.Generic.List<float> SkillIndicatorParams;
 
         /// <summary>
+        /// 碰撞体参数
+        /// </summary>
+        public readonly ColliderParams ColliderParams;
+
+        /// <summary>
+        /// 施法距离
+        /// </summary>
+        public readonly float CastRange;
+
+        /// <summary>
         /// 行为
         /// </summary>
         public readonly string SkillHandler;
@@ -92,11 +103,6 @@ namespace ET
         /// 特效
         /// </summary>
         public readonly int EffectConfigId;
-
-        /// <summary>
-        /// 碰撞体
-        /// </summary>
-        public readonly int ColliderConfigId;
 
         /// <summary>
         /// 伤害
@@ -118,6 +124,7 @@ namespace ET
             
             
             
+            ColliderParams?.ResolveRef();
             
             
             
@@ -136,9 +143,10 @@ namespace ET
             + "CD:" + CD + ","
             + "SkillIndicatorType:" + SkillIndicatorType + ","
             + "SkillIndicatorParams:" + Luban.StringUtil.CollectionToString(SkillIndicatorParams) + ","
+            + "ColliderParams:" + ColliderParams + ","
+            + "CastRange:" + CastRange + ","
             + "SkillHandler:" + SkillHandler + ","
             + "EffectConfigId:" + EffectConfigId + ","
-            + "ColliderConfigId:" + ColliderConfigId + ","
             + "Damage:" + Damage + ","
             + "}";
         }

@@ -39,10 +39,10 @@ namespace ET.Server
         /// <param name="offset">偏移量</param>
         /// <param name="angle">角度</param>
         /// <param name="isSensor">是否为触发器</param>
-        /// <param name="layer"></param>
         /// <param name="userData">用户自定义信息</param>
-        public static void CreateBoxFixture(this Body self, float hx, float hy, Vector2 offset, float angle, bool isSensor, object userData,
-        ushort layer)
+        /// <param name="layer"></param>
+        public static void CreateBoxFixture(this Body self, float hx, float hy, Vector2 offset, float angle, bool isSensor, ushort layer,
+        object userData)
         {
             PolygonShape m_BoxShape = new();
             m_BoxShape.SetAsBox(hx, hy, offset, angle);
@@ -68,7 +68,7 @@ namespace ET.Server
         /// <param name="isSensor">是否为触发器</param>
         /// <param name="layer"></param>
         /// <param name="userData">用户自定义信息</param>
-        public static void CreateCircleFixture(this Body self, float radius, Vector2 offset, bool isSensor, object userData, ushort layer)
+        public static void CreateCircleFixture(this Body self, float radius, Vector2 offset, bool isSensor, ushort layer, object userData)
         {
             CircleShape m_CircleShape = new();
             m_CircleShape.Radius = radius;
@@ -94,7 +94,7 @@ namespace ET.Server
         /// <param name="isSensor">是否为触发器</param>
         /// <param name="layer"></param>
         /// <param name="userData">用户自定义信息</param>
-        public static void CreatePolygonFixture(this Body self, List<Vector2> points, bool isSensor, object userData, ushort layer)
+        public static void CreatePolygonFixture(this Body self, List<Vector2> points, bool isSensor, ushort layer, object userData)
         {
             PolygonShape m_PolygonShape = new();
             m_PolygonShape.Set(points.ToArray());

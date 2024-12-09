@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Box2DSharp.Collision.Shapes;
+using DotRecast.Detour.Dynamic.Colliders;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -21,7 +22,7 @@ namespace ET.Server
             self.BelongToUnit = createColliderParams.BelongToUnit;
             self.SyncPosToBelongUnit = createColliderParams.FollowUnitPos;
             self.SyncRotToBelongUnit = createColliderParams.FollowUnitRot;
-            self.ColliderConfig = ColliderConfigCategory.Instance.Get(createColliderParams.ColliderConfigId);
+            self.ColliderParams = createColliderParams.ColliderParams;
             self.Layer = createColliderParams.Layer;
             self.SkillC = createColliderParams.Skill;
             self.CollisionHandler = createColliderParams.CollisionHandler;
@@ -79,25 +80,23 @@ namespace ET.Server
         {
             Unit unit = self.GetParent<Unit>();
             self.Body = self.CollisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
-            switch (self.ColliderConfig.ColliderType)
+            switch (self.ColliderParams)
             {
-                case ColliderType.Circle:
-                    self.Body.CreateCircleFixture(self.ColliderConfig.Radius, self.ColliderConfig.Offset, self.ColliderConfig.IsSensor,
-                        unit, self.Layer);
-
+                case CircleColliderParams colliderParams:
+                    self.Body.CreateCircleFixture(colliderParams.Radius, Vector2.Zero, true, self.Layer, unit);
                     break;
-                case ColliderType.Box:
-                    self.Body.CreateBoxFixture(self.ColliderConfig.HX, self.ColliderConfig.HY, self.ColliderConfig.Offset, 0,
-                        self.ColliderConfig.IsSensor, unit, self.Layer);
-
+                case BoxColliderParams colliderParams:
+                    self.Body.CreateBoxFixture(colliderParams.HX, colliderParams.HY, Vector2.Zero, 0, true, self.Layer, unit);
                     break;
-                case ColliderType.Polygon:
-                    foreach (var points in self.ColliderConfig.FinalPoints)
+                case PolygonColliderParams colliderParams:
+                {
+                    foreach (var points in colliderParams.FinalPoints)
                     {
-                        self.Body.CreatePolygonFixture(points, self.ColliderConfig.IsSensor, unit, self.Layer);
+                        self.Body.CreatePolygonFixture(points, true, self.Layer, unit);
                     }
 
                     break;
+                }
             }
         }
 
@@ -110,7 +109,7 @@ namespace ET.Server
         {
             if (self.Body.FixtureList.Count > 0)
             {
-                Shape shape = self.Body.FixtureList[0].Shape;
+                Box2DSharp.Collision.Shapes.Shape shape = self.Body.FixtureList[0].Shape;
                 if (shape is CircleShape circle)
                 {
                     circle.Radius = radius;

@@ -12,7 +12,7 @@
             Unit owner = skill.OwnerUnit;
             UnitFactory.CreateBullet(root,
                 new(belongToUnit: owner,
-                    colliderConfigId: 1001,
+                    colliderParams: skill.SkillConfig.ColliderParams,
                     targetPos: owner.Position,
                     angle: skill.Angle,
                     skill: skill,

@@ -56,11 +56,11 @@ namespace ET.Server
 
             unitComponent.Add(unit);
 
-            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
-                colliderConfigId: 1001,
-                followUnitPos: true,
-                followUnitRot: true,
-                collisionHandler: nameof(CH_ContactItem)));
+            // unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+            //     colliderConfigId: 1001,
+            //     followUnitPos: true,
+            //     followUnitRot: true,
+            //     collisionHandler: nameof(CH_ContactItem)));
 
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;
@@ -84,10 +84,10 @@ namespace ET.Server
             unitComponent.Add(unit);
 
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Monster, ERoleTag.Hero);
-            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
-                colliderConfigId: 1001,
-                followUnitPos: true,
-                followUnitRot: true));
+            // unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+            //     colliderConfigId: 1001,
+            //     followUnitPos: true,
+            //     followUnitRot: true));
 
             unit.AddComponent<PathfindingComponent, string>("TestMap");
             unit.AddComponent<XunLuoPathComponent>();
@@ -161,11 +161,11 @@ namespace ET.Server
             Unit unit = unitComponent.AddChild<Unit, UnitType, int>(UnitType.Area, areaConfigId);
             AreaConfig areaConfig = AreaConfigCategory.Instance.Get(areaConfigId);
 
-            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
-                colliderConfigId: areaConfig.ColliderConfigId,
-                followUnitPos: false,
-                targetPos: new(areaConfig.Point.X, areaConfig.Point.Y, areaConfig.Point.Z),
-                collisionHandler: nameof(CH_ContactArea)));
+            // unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+            //     colliderConfigId: areaConfig.ColliderConfigId,
+            //     followUnitPos: false,
+            //     targetPos: new(areaConfig.Point.X, areaConfig.Point.Y, areaConfig.Point.Z),
+            //     collisionHandler: nameof(CH_ContactArea)));
 
             return unit;
         }
