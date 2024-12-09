@@ -13,6 +13,15 @@ namespace ET.Client
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
         }
 
+        [EntitySystem]
+        private static void Update(this SkillIndicatorComponent self)
+        {
+            if (self.GameObject != null && self.Unit != null)
+            {
+                self.GameObject.transform.localPosition = self.Unit.Position + new float3(0, 0.1f, 0);
+            }
+        }
+
         public static void ShowIndicator(this SkillIndicatorComponent self, SkillConfig skillconfig)
         {
             self.Unit ??= UnitHelper.GetMyUnitFromClientScene(self.Root()); // 以后若是有切换控制对象，通过订阅事件设置对象
@@ -27,8 +36,8 @@ namespace ET.Client
 
             self.GameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(),
                 $"Assets/Bundles/Effect/SkillIndicator/SkillIndicator_{self.SkillConfig.SkillIndicatorType.ToString()}.prefab");
-            self.GameObject.transform.SetParent(self.Unit.GetComponent<GameObjectComponent>().GameObject.transform);
-            self.GameObject.transform.localPosition = new Vector3(0, 0.1f, 0);
+            self.GameObject.transform.SetParent(self.Root().GetComponent<GlobalComponent>().EffectRoot);
+            self.GameObject.transform.localPosition = self.Unit.Position;
             self.GameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
             self.Angle = MathHelper.QuaternionToEulerAngle_Y(self.Unit.Rotation);

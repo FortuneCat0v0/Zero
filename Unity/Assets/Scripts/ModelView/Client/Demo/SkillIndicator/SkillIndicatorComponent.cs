@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [ComponentOf(typeof(Scene))]
-    public class SkillIndicatorComponent : Entity, IAwake
+    public class SkillIndicatorComponent : Entity, IAwake, IUpdate
     {
         private EntityRef<Unit> unit;
         public Unit Unit { get => this.unit; set => this.unit = value; }
