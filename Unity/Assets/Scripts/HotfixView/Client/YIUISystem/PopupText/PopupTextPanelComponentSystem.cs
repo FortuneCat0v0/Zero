@@ -143,10 +143,9 @@ namespace ET.Client
                                 textRect.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBounce);
                             });
 
-                    Vector2 pos = new(RandomGenerator.RandomNumberFloat(-100f, 100f), RandomGenerator.RandomNumberFloat(50f, 200f));
+                    Vector2 pos = new(0, 100f);
                     textRect.localPosition = pos;
-                    pos.x += RandomGenerator.RandomNumberFloat(-50f, 50f);
-                    pos.y += RandomGenerator.RandomNumberFloat(-50f, 50f);
+                    pos.y += 100f;
                     Vector2 targetPosition = pos;
                     // 移动
                     textRect
@@ -173,6 +172,52 @@ namespace ET.Client
                 }
                 case PopupTextExecuteType.Type_1:
                 {
+                    if (targetTransform == null)
+                    {
+                        return;
+                    }
+
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
+                        self.MainCamera.WorldToScreenPoint(targetTransform.position), YIUIMgrComponent.Inst.UICamera, out startPosition);
+                    rootRect.localPosition = startPosition;
+
+                    // 初始缩放效果，模拟突然跳出
+                    textRect.localScale = Vector3.zero;
+                    textRect
+                            .DOScale(new Vector3(3, 3, 1f), 0.2f)
+                            .SetEase(Ease.OutBack)
+                            .OnComplete(() =>
+                            {
+                                // 缩放回正常大小
+                                textRect.DOScale(Vector3.one, 0.1f).SetEase(Ease.InOutBounce);
+                            });
+
+                    Vector2 pos = new(RandomGenerator.RandomNumberFloat(-100f, 100f), RandomGenerator.RandomNumberFloat(50f, 200f));
+                    textRect.localPosition = pos;
+                    pos.x += RandomGenerator.RandomNumberFloat(-50f, 50f);
+                    pos.y += RandomGenerator.RandomNumberFloat(-50f, 50f);
+                    Vector2 targetPosition = pos;
+                    // 移动
+                    textRect
+                            .DOLocalMove(targetPosition, 0.5f)
+                            .SetEase(Ease.OutQuad)
+                            .OnUpdate(() =>
+                            {
+                                if (targetTransform == null)
+                                {
+                                    return;
+                                }
+
+                                // 跟随目标
+                                RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
+                                    self.MainCamera.WorldToScreenPoint(targetTransform.position), YIUIMgrComponent.Inst.UICamera, out startPosition);
+                                rootRect.localPosition = startPosition;
+                            })
+                            .OnComplete(() =>
+                            {
+                                self.ExecutingGameObjects.Remove(gameObject);
+                                GameObjectPoolHelper.ReturnObjectToPool(gameObject);
+                            });
                     break;
                 }
             }

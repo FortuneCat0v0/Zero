@@ -78,8 +78,8 @@ namespace ET.Server
             NumericComponent numericComponent = unit.AddComponent<NumericComponent>();
             numericComponent.Set(NumericType.SpeedBase, 5f, false); // 速度是6米每秒
             numericComponent.Set(NumericType.AOI, 15000, false); // 视野15米
-            numericComponent.Set(NumericType.NowHp, 100, false);
-            numericComponent.Set(NumericType.MaxHpBase, 100, false);
+            numericComponent.Set(NumericType.NowHp, 999999, false);
+            numericComponent.Set(NumericType.MaxHpBase, 999999, false);
 
             unitComponent.Add(unit);
 
