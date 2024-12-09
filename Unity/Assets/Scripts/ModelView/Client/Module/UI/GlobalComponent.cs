@@ -11,9 +11,9 @@ namespace ET.Client
         public GameObject Mask { get; set; }
         public Transform UICamera { get; set; }
         public Transform YIUICanvasRoot { get; set; }
-        public Transform Unit { get; set; }
-        public Transform Effect { get; set; }
-        public Transform Audio { get; set; }
+        public Transform UnitRoot { get; set; }
+        public Transform EffectRoot { get; set; }
+        public Transform AudioRoot { get; set; }
         public GlobalConfig GlobalConfig { get; set; }
     }
 }

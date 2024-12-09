@@ -150,7 +150,7 @@ namespace ET.Client
         private static AudioSource GetAudioSource(this AudioComponent self)
         {
             GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Scene(), AssetPathHelper.GetAudioPlayerPath());
-            go.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Audio);
+            go.transform.SetParent(self.Root().GetComponent<GlobalComponent>().AudioRoot);
             return go.GetComponent<AudioSource>();
         }
     }

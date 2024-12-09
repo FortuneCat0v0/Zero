@@ -31,7 +31,7 @@ namespace ET.Client
                 }
                 else
                 {
-                    self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Effect);
+                    self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().EffectRoot);
                     self.EffectGo.transform.position = Vector3.zero;
                     self.EffectGo.transform.localScale = Vector3.one;
                     self.AddComponent<SyncPosComponent, Transform, Transform>(self.EffectGo.transform,
@@ -40,7 +40,7 @@ namespace ET.Client
             }
             else
             {
-                self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Effect);
+                self.EffectGo.transform.SetParent(self.Root().GetComponent<GlobalComponent>().EffectRoot);
                 self.EffectGo.transform.position = self.EffectData.Position;
                 self.EffectGo.transform.localScale = Vector3.one;
                 self.EffectGo.transform.rotation = quaternion.Euler(0, math.radians(self.EffectData.Angle), 0);

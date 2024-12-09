@@ -9,7 +9,7 @@ namespace ET.Client
         private static void Awake(this GameObjectComponent self, string name)
         {
             GameObject gameObject = GameObjectPoolHelper.GetObjectFromPoolSync(self.Scene(), AssetPathHelper.GetUnitPath(name));
-            gameObject.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Unit);
+            gameObject.transform.SetParent(self.Root().GetComponent<GlobalComponent>().UnitRoot);
             self.GameObject = gameObject;
         }
 

@@ -28,7 +28,7 @@ namespace ET.Client
         public static void ShowHitResultTip(this HitResultTipComponent self, Vector3 start, string str)
         {
             GameObject go = GameObjectPoolHelper.GetObjectFromPoolSync(self.Root(), "Assets/Bundles/UI/Other/HitResultTip.prefab");
-            go.transform.SetParent(self.Root().GetComponent<GlobalComponent>().Unit);
+            go.transform.SetParent(self.Root().GetComponent<GlobalComponent>().UnitRoot);
             self.HitResultTips.Add(go);
             go.SetActive(true);
 

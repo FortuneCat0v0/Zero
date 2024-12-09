@@ -30,7 +30,7 @@ namespace ET.Client
                 GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
 
                 GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
-                GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+                GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.UnitRoot, true);
                 unitGo.transform.position = lsUnit.Position.ToVector();
 
                 LSUnitView lsUnitView = self.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);

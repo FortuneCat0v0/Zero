@@ -14,9 +14,9 @@ namespace ET.Client
             self.Mask = GameObject.Find("/Global/Mask");
             self.UICamera = GameObject.Find("/Global/YIUIRoot/YIUICanvasRoot/YIUICamera").transform;
             self.YIUICanvasRoot = GameObject.Find("/Global/YIUIRoot/YIUICanvasRoot").transform;
-            self.Unit = GameObject.Find("/Global/Unit").transform;
-            self.Effect = GameObject.Find("/Global/Effect").transform;
-            self.Audio = GameObject.Find("/Global/Audio").transform;
+            self.UnitRoot = GameObject.Find("/Global/UnitRoot").transform;
+            self.EffectRoot = GameObject.Find("/Global/EffectRoot").transform;
+            self.AudioRoot = GameObject.Find("/Global/AudioRoot").transform;
             self.GlobalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
         }
     }
