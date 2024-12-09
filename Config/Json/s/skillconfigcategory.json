@@ -8,14 +8,11 @@
     "Desc": "爆发混沌之力，吸食2m附近食物",
     "CD": 3000,
     "SkillIndicatorType": 4,
-    "SkillIndicatorParams": [
-      2
-    ],
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 1
+      "Radius": 2
     },
-    "CastRange": 6,
+    "CastRange": 2,
     "SkillHandler": "SH_RangeDamage",
     "EffectConfigId": 10001,
     "Damage": 2
@@ -29,15 +26,11 @@
     "Desc": "爆发混沌之力，吸食3m附近食物",
     "CD": 3000,
     "SkillIndicatorType": 4,
-    "SkillIndicatorParams": [
-      3
-    ],
     "ColliderParams": {
-      "$type": "BoxColliderParams",
-      "HX": 1,
-      "HY": 1
+      "$type": "CircleColliderParams",
+      "Radius": 3
     },
-    "CastRange": 6,
+    "CastRange": 3,
     "SkillHandler": "SH_RangeDamage",
     "EffectConfigId": 10001,
     "Damage": 2
@@ -51,32 +44,9 @@
     "Desc": "随机方向间隔发射1颗子弹",
     "CD": 500,
     "SkillIndicatorType": 5,
-    "SkillIndicatorParams": [
-      3,
-      3
-    ],
     "ColliderParams": {
-      "$type": "PolygonColliderParams",
-      "FinalPoints": [
-        [
-          {
-            "x": -1,
-            "y": -1
-          },
-          {
-            "x": -1,
-            "y": 1
-          },
-          {
-            "x": 1,
-            "y": 1
-          },
-          {
-            "x": 1,
-            "y": -1
-          }
-        ]
-      ]
+      "$type": "CircleColliderParams",
+      "Radius": 1
     },
     "CastRange": 6,
     "SkillHandler": "SH_Bullet",
@@ -92,10 +62,6 @@
     "Desc": "随机方向间隔发射2颗子弹",
     "CD": 500,
     "SkillIndicatorType": 5,
-    "SkillIndicatorParams": [
-      3,
-      3
-    ],
     "ColliderParams": {
       "$type": "CircleColliderParams",
       "Radius": 1
@@ -114,14 +80,11 @@
     "Desc": "添加治愈Buff",
     "CD": 2000,
     "SkillIndicatorType": 4,
-    "SkillIndicatorParams": [
-      0
-    ],
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 1
+      "Radius": 0
     },
-    "CastRange": 6,
+    "CastRange": 0,
     "SkillHandler": "SH_AddBuff",
     "EffectConfigId": 10001,
     "Damage": 2
@@ -135,10 +98,6 @@
     "Desc": "区域范围持续伤害",
     "CD": 8000,
     "SkillIndicatorType": 2,
-    "SkillIndicatorParams": [
-      5,
-      2
-    ],
     "ColliderParams": {
       "$type": "CircleColliderParams",
       "Radius": 1

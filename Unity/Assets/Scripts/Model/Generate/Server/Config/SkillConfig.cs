@@ -24,7 +24,6 @@ namespace ET
             Desc = _buf.ReadString();
             CD = _buf.ReadInt();
             SkillIndicatorType = (SkillIndicatorType)_buf.ReadInt();
-            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SkillIndicatorParams = new System.Collections.Generic.List<float>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { float _e0;  _e0 = _buf.ReadFloat(); SkillIndicatorParams.Add(_e0);}}
             ColliderParams = ColliderParams.DeserializeColliderParams(_buf);
             CastRange = _buf.ReadFloat();
             SkillHandler = _buf.ReadString();
@@ -80,17 +79,12 @@ namespace ET
         public readonly SkillIndicatorType SkillIndicatorType;
 
         /// <summary>
-        /// 技能指示器参数
-        /// </summary>
-        public readonly System.Collections.Generic.List<float> SkillIndicatorParams;
-
-        /// <summary>
         /// 碰撞体参数
         /// </summary>
         public readonly ColliderParams ColliderParams;
 
         /// <summary>
-        /// 施法距离
+        /// 施法范围
         /// </summary>
         public readonly float CastRange;
 
@@ -123,7 +117,6 @@ namespace ET
             
             
             
-            
             ColliderParams?.ResolveRef();
             
             
@@ -142,7 +135,6 @@ namespace ET
             + "Desc:" + Desc + ","
             + "CD:" + CD + ","
             + "SkillIndicatorType:" + SkillIndicatorType + ","
-            + "SkillIndicatorParams:" + Luban.StringUtil.CollectionToString(SkillIndicatorParams) + ","
             + "ColliderParams:" + ColliderParams + ","
             + "CastRange:" + CastRange + ","
             + "SkillHandler:" + SkillHandler + ","

@@ -152,9 +152,9 @@ namespace ET.Server
             SkillComponent skillComponent = unit.GetComponent<SkillComponent>();
 
             SkillConfig skillConfig = SkillConfigCategory.Instance.Get(skillConfigId);
-            if (distance > skillConfig.SkillIndicatorParams[0])
+            if (distance > skillConfig.CastRange)
             {
-                distance = skillConfig.SkillIndicatorParams[0];
+                distance = skillConfig.CastRange;
             }
 
             quaternion rotation = quaternion.Euler(0, math.radians(angle), 0);
