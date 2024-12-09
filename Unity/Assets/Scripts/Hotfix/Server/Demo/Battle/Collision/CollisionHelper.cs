@@ -115,5 +115,18 @@ namespace ET.Server
         {
             return new Box2DSharp.Dynamics.World(gravity);
         }
+
+        public static bool TestPoint(this Body self, Vector2 point)
+        {
+            foreach (Fixture fixture in self.FixtureList)
+            {
+                if (fixture.TestPoint(point))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
