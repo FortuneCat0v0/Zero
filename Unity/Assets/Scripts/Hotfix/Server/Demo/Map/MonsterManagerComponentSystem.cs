@@ -49,7 +49,7 @@ namespace ET.Server
                 monsterCount++;
             }
 
-            for (int i = monsterCount; i < 5; i++)
+            for (int i = monsterCount; i < 1; i++)
             {
                 UnitFactory.CreateMonster(self.Root(), new float3(i * 1.5f, 0, 0));
             }

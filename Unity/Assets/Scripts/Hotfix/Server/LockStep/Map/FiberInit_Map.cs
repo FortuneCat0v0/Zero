@@ -11,12 +11,13 @@
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
-            root.AddComponent<UnitComponent>();
             root.AddComponent<AOIManagerComponent>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
+
+            root.AddComponent<UnitComponent>();
             root.AddComponent<CollisionWorldComponent>();
-            // root.AddComponent<MonsterManagerComponent>();
+            root.AddComponent<MonsterManagerComponent>();
 
             MapComponent mapComponent = root.AddComponent<MapComponent>();
             mapComponent.MapType = MapType.MainMap;

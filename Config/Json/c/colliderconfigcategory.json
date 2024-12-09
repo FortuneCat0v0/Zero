@@ -1,77 +1,9 @@
 [
   {
     "Id": 1001,
-    "ColliderType": 1,
-    "Desc": "",
-    "IsSensor": true,
-    "Offset": {
-      "x": 0,
-      "y": 0
-    },
-    "Radius": 1,
-    "HX": 0,
-    "HY": 0,
-    "FinalPoints": []
-  },
-  {
-    "Id": 1002,
-    "ColliderType": 1,
-    "Desc": "",
-    "IsSensor": true,
-    "Offset": {
-      "x": 0,
-      "y": 0
-    },
-    "Radius": 2,
-    "HX": 0,
-    "HY": 0,
-    "FinalPoints": []
-  },
-  {
-    "Id": 1003,
-    "ColliderType": 1,
-    "Desc": "",
-    "IsSensor": true,
-    "Offset": {
-      "x": 0,
-      "y": 0
-    },
-    "Radius": 3,
-    "HX": 0,
-    "HY": 0,
-    "FinalPoints": []
-  },
-  {
-    "Id": 3001,
-    "ColliderType": 3,
-    "Desc": "",
-    "IsSensor": true,
-    "Offset": {
-      "x": 0,
-      "y": 0
-    },
-    "Radius": 0,
-    "HX": 0,
-    "HY": 0,
-    "FinalPoints": [
-      [
-        {
-          "x": -1,
-          "y": -1
-        },
-        {
-          "x": -1,
-          "y": 1
-        },
-        {
-          "x": 1,
-          "y": 1
-        },
-        {
-          "x": 1,
-          "y": -1
-        }
-      ]
-    ]
+    "ColliderParams": {
+      "$type": "CircleColliderParams",
+      "Radius": 1
+    }
   }
 ]

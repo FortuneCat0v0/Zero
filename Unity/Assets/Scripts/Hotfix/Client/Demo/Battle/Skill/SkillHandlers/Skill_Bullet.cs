@@ -1,6 +1,6 @@
 ﻿namespace ET.Client
 {
-    public class SH_Bullet : ClientSkillHandler
+    public class Skill_Bullet : ClientSkillHandler
     {
         public override void OnInit(ClientSkill clientSkillS)
         {

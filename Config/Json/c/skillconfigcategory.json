@@ -5,15 +5,15 @@
     "NextSkill": 10002,
     "SkillAbstractType": 2,
     "Name": "扩散吞噬1级",
-    "Desc": "爆发混沌之力，吸食2m附近食物",
+    "Desc": "以自身为中心的范围伤害",
     "CD": 3000,
     "SkillIndicatorType": 4,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 2
+      "Radius": 4
     },
-    "CastRange": 2,
-    "SkillHandler": "SH_RangeDamage",
+    "CastRange": 4,
+    "SkillHandler": "Skill_RangeDamage",
     "EffectConfigId": 10001,
     "Damage": 2
   },
@@ -23,15 +23,15 @@
     "NextSkill": 0,
     "SkillAbstractType": 2,
     "Name": "扩散吞噬2级",
-    "Desc": "爆发混沌之力，吸食3m附近食物",
+    "Desc": "以自身为中心的范围伤害",
     "CD": 3000,
     "SkillIndicatorType": 4,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 3
+      "Radius": 5
     },
-    "CastRange": 3,
-    "SkillHandler": "SH_RangeDamage",
+    "CastRange": 5,
+    "SkillHandler": "Skill_RangeDamage",
     "EffectConfigId": 10001,
     "Damage": 2
   },
@@ -41,7 +41,7 @@
     "NextSkill": 10012,
     "SkillAbstractType": 2,
     "Name": "随机喷射1级",
-    "Desc": "随机方向间隔发射1颗子弹",
+    "Desc": "发射1颗子弹",
     "CD": 500,
     "SkillIndicatorType": 5,
     "ColliderParams": {
@@ -49,7 +49,7 @@
       "Radius": 1
     },
     "CastRange": 6,
-    "SkillHandler": "SH_Bullet",
+    "SkillHandler": "Skill_Bullet",
     "EffectConfigId": 10001,
     "Damage": 2
   },
@@ -59,7 +59,7 @@
     "NextSkill": 0,
     "SkillAbstractType": 2,
     "Name": "随机喷射2级",
-    "Desc": "随机方向间隔发射2颗子弹",
+    "Desc": "发射颗子弹",
     "CD": 500,
     "SkillIndicatorType": 5,
     "ColliderParams": {
@@ -67,7 +67,7 @@
       "Radius": 1
     },
     "CastRange": 6,
-    "SkillHandler": "SH_Bullet",
+    "SkillHandler": "Skill_Bullet",
     "EffectConfigId": 10001,
     "Damage": 2
   },
@@ -85,7 +85,7 @@
       "Radius": 0
     },
     "CastRange": 0,
-    "SkillHandler": "SH_AddBuff",
+    "SkillHandler": "Skill_AddBuff",
     "EffectConfigId": 10001,
     "Damage": 2
   },
@@ -103,7 +103,7 @@
       "Radius": 1
     },
     "CastRange": 6,
-    "SkillHandler": "SH_SphereDamageAura",
+    "SkillHandler": "Skill_SphereDamageAura",
     "EffectConfigId": 10001,
     "Damage": 2
   }

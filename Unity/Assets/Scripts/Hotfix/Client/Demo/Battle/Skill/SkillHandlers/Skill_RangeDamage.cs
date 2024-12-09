@@ -1,6 +1,6 @@
 ﻿namespace ET.Client
 {
-    public class SH_RangeDamage : ClientSkillHandler
+    public class Skill_RangeDamage : ClientSkillHandler
     {
         public override void OnInit(ClientSkill clientSkillS)
         {

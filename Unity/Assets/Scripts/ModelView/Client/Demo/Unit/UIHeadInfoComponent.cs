@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ET.Client
@@ -9,6 +10,7 @@ namespace ET.Client
         public Transform TargetTransform;
         public Transform Transform;
         public Image HealthBarFillImg;
+        public TMP_Text HealthTxt;
 
         public Camera MainCamera;
     }

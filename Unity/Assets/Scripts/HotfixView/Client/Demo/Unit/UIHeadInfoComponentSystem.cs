@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using YIUIFramework;
 
@@ -11,7 +12,7 @@ namespace ET.Client
         {
             NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
             unit.GetComponent<UIHeadInfoComponent>()
-                    ?.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp) * 1f / numericComponent.GetAsInt(NumericType.MaxHp));
+                    ?.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp), numericComponent.GetAsInt(NumericType.MaxHp));
         }
     }
 
@@ -31,6 +32,7 @@ namespace ET.Client
 
             ReferenceCollector rc = self.Transform.GetComponent<ReferenceCollector>();
             self.HealthBarFillImg = rc.Get<GameObject>("HealthBarFillImg").GetComponent<Image>();
+            self.HealthTxt = rc.Get<GameObject>("HealthTxt").GetComponent<TMP_Text>();
 
             self.MainCamera = self.Root().GetComponent<GlobalComponent>().MainCamera.GetComponent<Camera>();
         }
@@ -50,17 +52,18 @@ namespace ET.Client
             }
 
             Vector2 localPoint = Vector2.zero;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(YIUIMgrComponent.Inst.UICanvas.GetComponent<RectTransform>(),
                 self.MainCamera.WorldToScreenPoint(self.TargetTransform.position),
                 YIUIMgrComponent.Inst.UICamera,
-                out localPoint
-            );
+                out localPoint);
 
             localPoint.y += 100f;
 
             // 插值平滑位置
-            self.Transform.localPosition = Vector2.Lerp(self.Transform.localPosition, localPoint, Time.deltaTime * 10f);
+            // self.Transform.localPosition = Vector2.Lerp(self.Transform.localPosition, localPoint, Time.deltaTime * 10f);
+
+            // 直接
+            self.Transform.localPosition = localPoint;
         }
 
         public static void SetScale(this UIHeadInfoComponent self, Vector3 vector3)
@@ -73,19 +76,10 @@ namespace ET.Client
             self.Transform.localPosition = vector3;
         }
 
-        public static void RefreshHealthBar(this UIHeadInfoComponent self, float value)
+        public static void RefreshHealthBar(this UIHeadInfoComponent self, float now, float max)
         {
-            if (value > 1)
-            {
-                value = 1;
-            }
-
-            if (value < 0)
-            {
-                value = 0;
-            }
-
-            self.HealthBarFillImg.fillAmount = value;
+            self.HealthBarFillImg.fillAmount = now * 1f / max;
+            self.HealthTxt.text = $"{now}/{max}";
         }
     }
 }

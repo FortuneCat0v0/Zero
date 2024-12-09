@@ -1,10 +1,33 @@
 ﻿namespace ET.Server
 {
-    /// <summary>
-    /// 一次性的、即时的范围检测
-    /// 参数：伤害
-    /// </summary>
-    public class CH_SimpleArea : CollisionHandler
+    public class Skill_Bullet : SkillHandler
+    {
+        public override void OnInit(Skill skill)
+        {
+        }
+
+        public override void OnUpdate(Skill skill)
+        {
+            Scene root = skill.Root();
+            Unit owner = skill.OwnerUnit;
+            UnitFactory.CreateBullet(root,
+                new(belongToUnit: owner,
+                    colliderParams: skill.SkillConfig.ColliderParams,
+                    targetPos: owner.Position,
+                    angle: skill.Angle,
+                    skill: skill,
+                    collisionHandler: nameof(Collision_Bullet),
+                    paramsList: new() { skill.SkillConfig.Damage }));
+
+            skill.SkillState = ESkillState.Finished;
+        }
+
+        public override void OnFinish(Skill skill)
+        {
+        }
+    }
+
+    public class Collision_Bullet : CollisionHandler
     {
         public override void HandleCollisionStart(Unit a, Unit b)
         {

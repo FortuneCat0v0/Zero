@@ -84,14 +84,14 @@ namespace ET.Server
             unitComponent.Add(unit);
 
             unit.AddComponent<RoleCastComponent, ERoleCamp, ERoleTag>(ERoleCamp.Monster, ERoleTag.Hero);
-            // unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
-            //     colliderConfigId: 1001,
-            //     followUnitPos: true,
-            //     followUnitRot: true));
+            unit.AddComponent<ColliderComponent, CreateColliderParams>(new(belongToUnit: unit,
+                colliderParams: ColliderConfigCategory.Instance.Get(1001).ColliderParams,
+                followUnitPos: true,
+                followUnitRot: true));
 
-            unit.AddComponent<PathfindingComponent, string>("TestMap");
-            unit.AddComponent<XunLuoPathComponent>();
-            unit.AddComponent<AIComponent, int>(2);
+            // unit.AddComponent<PathfindingComponent, string>("TestMap");
+            // unit.AddComponent<XunLuoPathComponent>();
+            // unit.AddComponent<AIComponent, int>(2);
 
             unit.AddComponent<AOIEntity, int, float3>(9 * 1000, unit.Position);
             return unit;

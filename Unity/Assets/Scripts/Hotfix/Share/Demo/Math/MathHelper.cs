@@ -57,10 +57,19 @@ namespace ET
 
         public static float QuaternionToEulerAngle_Y(quaternion q)
         {
-            // 标准化四元数
-            q = math.normalize(q);
+            // 检查四元数是否为默认值
+            if (math.lengthsq(q.value) == 0)
+            {
+                q = quaternion.identity;
+            }
+            else
+            {
+                q = math.normalize(q);
+            }
+
             // 回旋角的计算
-            float y = math.atan2(2f * q.value.w * q.value.y + 2 * q.value.x * q.value.z, 1 - 2 * q.value.x * q.value.x - 2 * q.value.y * q.value.y);
+            float y = math.atan2(2f * (q.value.w * q.value.y + q.value.x * q.value.z),
+                1 - 2 * (q.value.x * q.value.x + q.value.y * q.value.y));
 
             return math.degrees(y); // 转换为度
         }
