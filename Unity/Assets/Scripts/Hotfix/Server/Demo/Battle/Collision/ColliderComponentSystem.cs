@@ -26,7 +26,6 @@ namespace ET.Server
             self.Layer = createColliderParams.Layer;
             self.SkillC = createColliderParams.Skill;
             self.CollisionHandler = createColliderParams.CollisionHandler;
-            self.Params = createColliderParams.Params;
 
             Unit selfUnit = self.GetParent<Unit>();
             if (createColliderParams.FollowUnitPos)
@@ -72,6 +71,9 @@ namespace ET.Server
         [EntitySystem]
         private static void Destroy(this ColliderComponent self)
         {
+            self.UnitIds.Clear();
+            self.UnitLastTriggerTimeDict.Clear();
+            
             Log.Warning("Destroy 碰撞体");
             self.CollisionWorldComponent?.AddBodyTobeDestroyed(self.Body);
         }

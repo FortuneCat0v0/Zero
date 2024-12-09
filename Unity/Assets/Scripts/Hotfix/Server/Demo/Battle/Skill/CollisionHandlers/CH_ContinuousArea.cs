@@ -29,7 +29,7 @@
                         case ERoleTag.Hero:
                             if (!aColliderComponent.UnitLastTriggerTimeDict.ContainsKey(bBelongToUnit.Id))
                             {
-                                int damage = aColliderComponent.Params[1];
+                                int damage = aColliderComponent.SkillC.SkillConfig.Damage;
                                 BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Normal, damage);
 
                                 aColliderComponent.UnitLastTriggerTimeDict.Add(bBelongToUnit.Id, TimeInfo.Instance.ServerNow());
@@ -69,10 +69,10 @@
                             {
                                 long lastTriggerTime = aColliderComponent.UnitLastTriggerTimeDict[bBelongToUnit.Id];
                                 long nowTime = TimeInfo.Instance.ServerNow();
-                                if (nowTime - lastTriggerTime > aColliderComponent.Params[0])
+                                if (nowTime - lastTriggerTime > aColliderComponent.SkillC.SkillConfig.DmgInterval)
                                 {
                                     aColliderComponent.UnitLastTriggerTimeDict[bBelongToUnit.Id] = nowTime;
-                                    int damage = aColliderComponent.Params[1];
+                                    int damage = aColliderComponent.SkillC.SkillConfig.Damage;
                                     BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Normal, damage);
                                 }
                             }

@@ -19,7 +19,6 @@ namespace ET.Server
 
         public Skill Skill;
         public string CollisionHandler;
-        public List<int> Params;
 
         public CreateColliderParams(
         Unit belongToUnit,
@@ -44,7 +43,6 @@ namespace ET.Server
             this.Angle = angle;
             this.Skill = skill;
             this.CollisionHandler = collisionHandler;
-            this.Params = paramsList;
         }
     }
 
@@ -75,7 +73,6 @@ namespace ET.Server
         private EntityRef<Skill> skillS;
         public Skill SkillC { get => this.skillS; set => this.skillS = value; }
         public string CollisionHandler { get; set; }
-        public List<int> Params { get; set; }
 
         //-----------执行时-------------
         public List<long> UnitIds { get; set; } = new();

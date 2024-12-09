@@ -28,6 +28,7 @@ namespace ET
             CastRange = _buf.ReadFloat();
             SkillHandler = _buf.ReadString();
             EffectConfigId = _buf.ReadInt();
+            DmgInterval = _buf.ReadInt();
             Damage = _buf.ReadInt();
 
             PostInit();
@@ -99,6 +100,11 @@ namespace ET
         public readonly int EffectConfigId;
 
         /// <summary>
+        /// 伤害间隔(毫秒)
+        /// </summary>
+        public readonly int DmgInterval;
+
+        /// <summary>
         /// 伤害
         /// </summary>
         public readonly int Damage;
@@ -122,6 +128,7 @@ namespace ET
             
             
             
+            
         }
 
         public override string ToString()
@@ -139,6 +146,7 @@ namespace ET
             + "CastRange:" + CastRange + ","
             + "SkillHandler:" + SkillHandler + ","
             + "EffectConfigId:" + EffectConfigId + ","
+            + "DmgInterval:" + DmgInterval + ","
             + "Damage:" + Damage + ","
             + "}";
         }

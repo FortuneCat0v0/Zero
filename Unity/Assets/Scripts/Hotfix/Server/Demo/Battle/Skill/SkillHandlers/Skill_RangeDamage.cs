@@ -68,7 +68,7 @@
                         case ERoleTag.Hero:
                             if (!aColliderComponent.UnitIds.Contains(bBelongToUnit.Id))
                             {
-                                int damage = aColliderComponent.Params[0];
+                                int damage = aColliderComponent.SkillC.SkillConfig.Damage;
                                 BattleHelper.HitSettle(aBelongToUnit, bBelongToUnit, EHitFromType.Skill_Normal, damage);
 
                                 aColliderComponent.UnitIds.Add(bBelongToUnit.Id);
