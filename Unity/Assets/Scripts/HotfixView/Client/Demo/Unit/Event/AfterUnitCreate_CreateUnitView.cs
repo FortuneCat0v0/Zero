@@ -13,7 +13,7 @@ namespace ET.Client
 
             if (unit.UnitType == UnitType.Player)
             {
-                GameObject model = unit.AddComponent<GameObjectComponent, string>("AngelSlime").GameObject;
+                GameObject model = unit.AddComponent<GameObjectComponent, string>("Player").GameObject;
                 model.transform.position = unit.Position;
                 unit.AddComponent<AnimationComponent>().UpdateAnimData(model);
 

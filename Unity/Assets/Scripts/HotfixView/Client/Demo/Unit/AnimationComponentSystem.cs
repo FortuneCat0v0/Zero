@@ -9,7 +9,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, MoveStart args)
         {
-            args.Unit.GetComponent<AnimationComponent>()?.Play("Crawl_Forward");
+            args.Unit.GetComponent<AnimationComponent>()?.Play("Run");
 
             await ETTask.CompletedTask;
         }
