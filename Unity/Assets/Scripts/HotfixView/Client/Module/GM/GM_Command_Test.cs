@@ -143,7 +143,7 @@ namespace ET.Client
             {
                 var paramInt = paramVo.Get<int>();
 
-                await SlimeHelper.RequestAddSlime(root, paramInt);
+                await PetHelper.RequestAddPet(root, paramInt);
 
                 await ETTask.CompletedTask;
                 return true;
@@ -165,7 +165,7 @@ namespace ET.Client
             {
                 var paramLong = paramVo.Get<long>();
 
-                await SlimeHelper.RequestRemoveSlime(root, paramLong);
+                await PetHelper.RequestRemovePet(root, paramLong);
 
                 await ETTask.CompletedTask;
                 return true;

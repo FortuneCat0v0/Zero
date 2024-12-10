@@ -2325,12 +2325,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.SlimeInfo)]
-    public partial class SlimeInfo : MessageObject
+    [Message(OuterMessage.PetInfo)]
+    public partial class PetInfo : MessageObject
     {
-        public static SlimeInfo Create(bool isFromPool = false)
+        public static PetInfo Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(SlimeInfo), isFromPool) as SlimeInfo;
+            return ObjectPool.Instance.Fetch(typeof(PetInfo), isFromPool) as PetInfo;
         }
 
         [MemoryPackOrder(0)]
@@ -2354,13 +2354,13 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.C2M_GetAllSlime)]
-    [ResponseType(nameof(M2C_GetAllSlime))]
-    public partial class C2M_GetAllSlime : MessageObject, ILocationRequest
+    [Message(OuterMessage.C2M_GetAllPet)]
+    [ResponseType(nameof(M2C_GetAllPet))]
+    public partial class C2M_GetAllPet : MessageObject, ILocationRequest
     {
-        public static C2M_GetAllSlime Create(bool isFromPool = false)
+        public static C2M_GetAllPet Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2M_GetAllSlime), isFromPool) as C2M_GetAllSlime;
+            return ObjectPool.Instance.Fetch(typeof(C2M_GetAllPet), isFromPool) as C2M_GetAllPet;
         }
 
         [MemoryPackOrder(0)]
@@ -2380,12 +2380,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.M2C_GetAllSlime)]
-    public partial class M2C_GetAllSlime : MessageObject, ILocationResponse
+    [Message(OuterMessage.M2C_GetAllPet)]
+    public partial class M2C_GetAllPet : MessageObject, ILocationResponse
     {
-        public static M2C_GetAllSlime Create(bool isFromPool = false)
+        public static M2C_GetAllPet Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(M2C_GetAllSlime), isFromPool) as M2C_GetAllSlime;
+            return ObjectPool.Instance.Fetch(typeof(M2C_GetAllPet), isFromPool) as M2C_GetAllPet;
         }
 
         [MemoryPackOrder(0)]
@@ -2398,7 +2398,7 @@ namespace ET
         public string Message { get; set; }
 
         [MemoryPackOrder(3)]
-        public List<SlimeInfo> SlimeList { get; set; } = new();
+        public List<PetInfo> PetList { get; set; } = new();
 
         public override void Dispose()
         {
@@ -2410,20 +2410,20 @@ namespace ET
             this.RpcId = default;
             this.Error = default;
             this.Message = default;
-            this.SlimeList.Clear();
+            this.PetList.Clear();
 
             ObjectPool.Instance.Recycle(this);
         }
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.C2M_AddSlime)]
-    [ResponseType(nameof(M2C_AddSlime))]
-    public partial class C2M_AddSlime : MessageObject, ILocationRequest
+    [Message(OuterMessage.C2M_AddPet)]
+    [ResponseType(nameof(M2C_AddPet))]
+    public partial class C2M_AddPet : MessageObject, ILocationRequest
     {
-        public static C2M_AddSlime Create(bool isFromPool = false)
+        public static C2M_AddPet Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2M_AddSlime), isFromPool) as C2M_AddSlime;
+            return ObjectPool.Instance.Fetch(typeof(C2M_AddPet), isFromPool) as C2M_AddPet;
         }
 
         [MemoryPackOrder(0)]
@@ -2447,12 +2447,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.M2C_AddSlime)]
-    public partial class M2C_AddSlime : MessageObject, ILocationResponse
+    [Message(OuterMessage.M2C_AddPet)]
+    public partial class M2C_AddPet : MessageObject, ILocationResponse
     {
-        public static M2C_AddSlime Create(bool isFromPool = false)
+        public static M2C_AddPet Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(M2C_AddSlime), isFromPool) as M2C_AddSlime;
+            return ObjectPool.Instance.Fetch(typeof(M2C_AddPet), isFromPool) as M2C_AddPet;
         }
 
         [MemoryPackOrder(0)]
@@ -2480,20 +2480,20 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.C2M_RemoveSlime)]
-    [ResponseType(nameof(M2C_RemoveSlime))]
-    public partial class C2M_RemoveSlime : MessageObject, ILocationRequest
+    [Message(OuterMessage.C2M_RemovePet)]
+    [ResponseType(nameof(M2C_RemovePet))]
+    public partial class C2M_RemovePet : MessageObject, ILocationRequest
     {
-        public static C2M_RemoveSlime Create(bool isFromPool = false)
+        public static C2M_RemovePet Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2M_RemoveSlime), isFromPool) as C2M_RemoveSlime;
+            return ObjectPool.Instance.Fetch(typeof(C2M_RemovePet), isFromPool) as C2M_RemovePet;
         }
 
         [MemoryPackOrder(0)]
         public int RpcId { get; set; }
 
         [MemoryPackOrder(1)]
-        public long SlimeId { get; set; }
+        public long PetId { get; set; }
 
         public override void Dispose()
         {
@@ -2503,19 +2503,19 @@ namespace ET
             }
 
             this.RpcId = default;
-            this.SlimeId = default;
+            this.PetId = default;
 
             ObjectPool.Instance.Recycle(this);
         }
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.M2C_RemoveSlime)]
-    public partial class M2C_RemoveSlime : MessageObject, ILocationResponse
+    [Message(OuterMessage.M2C_RemovePet)]
+    public partial class M2C_RemovePet : MessageObject, ILocationResponse
     {
-        public static M2C_RemoveSlime Create(bool isFromPool = false)
+        public static M2C_RemovePet Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(M2C_RemoveSlime), isFromPool) as M2C_RemoveSlime;
+            return ObjectPool.Instance.Fetch(typeof(M2C_RemovePet), isFromPool) as M2C_RemovePet;
         }
 
         [MemoryPackOrder(0)]
@@ -2543,19 +2543,19 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.M2C_SlimeUpdateOp)]
-    public partial class M2C_SlimeUpdateOp : MessageObject, IMessage
+    [Message(OuterMessage.M2C_PetUpdateOp)]
+    public partial class M2C_PetUpdateOp : MessageObject, IMessage
     {
-        public static M2C_SlimeUpdateOp Create(bool isFromPool = false)
+        public static M2C_PetUpdateOp Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(M2C_SlimeUpdateOp), isFromPool) as M2C_SlimeUpdateOp;
+            return ObjectPool.Instance.Fetch(typeof(M2C_PetUpdateOp), isFromPool) as M2C_PetUpdateOp;
         }
 
         [MemoryPackOrder(0)]
-        public SlimeInfo SlimeInfo { get; set; }
+        public PetInfo PetInfo { get; set; }
 
         [MemoryPackOrder(1)]
-        public int SlimeOpType { get; set; }
+        public int PetOpType { get; set; }
 
         public override void Dispose()
         {
@@ -2564,8 +2564,8 @@ namespace ET
                 return;
             }
 
-            this.SlimeInfo = default;
-            this.SlimeOpType = default;
+            this.PetInfo = default;
+            this.PetOpType = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -3280,14 +3280,14 @@ namespace ET
         public const ushort M2C_RemoveKnapsackItem = 10067;
         public const ushort M2C_AllItems = 10068;
         public const ushort M2C_ItemUpdateOp = 10069;
-        public const ushort SlimeInfo = 10070;
-        public const ushort C2M_GetAllSlime = 10071;
-        public const ushort M2C_GetAllSlime = 10072;
-        public const ushort C2M_AddSlime = 10073;
-        public const ushort M2C_AddSlime = 10074;
-        public const ushort C2M_RemoveSlime = 10075;
-        public const ushort M2C_RemoveSlime = 10076;
-        public const ushort M2C_SlimeUpdateOp = 10077;
+        public const ushort PetInfo = 10070;
+        public const ushort C2M_GetAllPet = 10071;
+        public const ushort M2C_GetAllPet = 10072;
+        public const ushort C2M_AddPet = 10073;
+        public const ushort M2C_AddPet = 10074;
+        public const ushort C2M_RemovePet = 10075;
+        public const ushort M2C_RemovePet = 10076;
+        public const ushort M2C_PetUpdateOp = 10077;
         public const ushort M2C_NoticeNumericMsg = 10078;
         public const ushort M2C_NoticeUnitNumeric = 10079;
         public const ushort M2C_NoticeUnitNumericList = 10080;

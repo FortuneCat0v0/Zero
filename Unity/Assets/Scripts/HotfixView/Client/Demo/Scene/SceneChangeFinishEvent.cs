@@ -7,7 +7,7 @@
         {
             // 获取数据
             await KnapsackHelper.GetAllItems(scene.Root());
-            await SlimeHelper.GetAllSlimes(scene.Root());
+            await PetHelper.GetAllPets(scene.Root());
 
             scene.AddComponent<CameraComponent>();
 

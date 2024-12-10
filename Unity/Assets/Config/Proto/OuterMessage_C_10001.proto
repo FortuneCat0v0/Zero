@@ -522,58 +522,58 @@ message M2C_ItemUpdateOp // IMessage
 
 
 
-message SlimeInfo
+message PetInfo
 {
 	int64 Id = 1;
 	int32 ConfigId = 2;
 }
 
-// ResponseType M2C_GetAllSlime
-message C2M_GetAllSlime // ILocationRequest
+// ResponseType M2C_GetAllPet
+message C2M_GetAllPet // ILocationRequest
 {
 	int32 RpcId = 1;
 }
 
-message M2C_GetAllSlime // ILocationResponse
+message M2C_GetAllPet // ILocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	repeated SlimeInfo SlimeList = 4;
+	repeated PetInfo PetList = 4;
 }
 
-// ResponseType M2C_AddSlime
-message C2M_AddSlime // ILocationRequest
+// ResponseType M2C_AddPet
+message C2M_AddPet // ILocationRequest
 {
 	int32 RpcId = 1;
 	int32 ConfigId = 2;
 }
 
-message M2C_AddSlime // ILocationResponse
+message M2C_AddPet // ILocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
 }
 
-// ResponseType M2C_RemoveSlime
-message C2M_RemoveSlime // ILocationRequest
+// ResponseType M2C_RemovePet
+message C2M_RemovePet // ILocationRequest
 {
 	int32 RpcId = 1;
-	int64 SlimeId = 2;
+	int64 PetId = 2;
 }
 
-message M2C_RemoveSlime // ILocationResponse
+message M2C_RemovePet // ILocationResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
 }
 
-message M2C_SlimeUpdateOp // IMessage
+message M2C_PetUpdateOp // IMessage
 {
-	SlimeInfo SlimeInfo = 1;
-	int32 SlimeOpType = 2;
+	PetInfo PetInfo = 1;
+	int32 PetOpType = 2;
 }
 
 
