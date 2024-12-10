@@ -29,13 +29,19 @@
     <bean name="ColliderParams">
         <bean name="CircleColliderParams">
             <var name="Radius" type="float"/>
+            <var name="Offset" type="vector2"/>
         </bean>
         <bean name="BoxColliderParams">
             <var name="HX" type="float"/>
             <var name="HY" type="float"/>
+            <var name="Offset" type="vector2"/>
         </bean>
         <bean name="PolygonColliderParams">
             <var name="FinalPoints" type="list,(list#sep=;),vector2"/>
+        </bean>
+        <bean name="SectorColliderParams">
+            <var name="Radius" type="float"/>
+            <var name="Angle" type="float"/>
         </bean>
     </bean>
 

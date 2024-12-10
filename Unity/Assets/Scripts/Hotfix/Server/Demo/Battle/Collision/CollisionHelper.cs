@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Box2DSharp.Collision.Shapes;
@@ -109,6 +110,65 @@ namespace ET.Server
                 GroupIndex = 0
             };
             self.CreateFixture(fixtureDef3);
+        }
+
+        /// <summary>
+        /// 为刚体挂载一个扇形（多边形）碰撞体
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="radius">扇形的半径</param>
+        /// <param name="startAngle">扇形的结束角度（角度制）。</param>
+        /// <param name="endAngle">扇形的起始角度（角度制）。</param>
+        /// <param name="isSensor">是否为触发器</param>
+        /// <param name="layer"></param>
+        /// <param name="userData"></param>
+        public static void CreateSectorFixture(this Body self, float radius, float startAngle, float endAngle, bool isSensor, ushort layer,
+        object userData)
+        {
+            // 计算扇形的顶点
+            List<Vector2> points = new List<Vector2>();
+
+            // 计算角度范围
+            float angleRange = endAngle - startAngle;
+
+            // 步长，多少度一个三角形
+            float maxAngleStep = 10f;
+
+            // 计算适当的分段数
+            int segments = (int)(angleRange / maxAngleStep);
+            segments = Math.Max(segments, 1); // 至少一个分段
+
+            // 将角度转化为弧度（角度 * π / 180）
+            float startRad = MathF.PI * startAngle / 180f;
+            float angleStep = MathF.PI * maxAngleStep / 180f; // 步长转换为弧度
+
+            // 计算顶点位置
+            for (int i = 0; i <= segments; i++)
+            {
+                float angle = startRad + i * angleStep;
+                float x = radius * MathF.Cos(angle);
+                float y = radius * MathF.Sin(angle);
+                points.Add(new Vector2(x, y));
+            }
+
+            // 确保至少有一个三角形扇形
+            if (points.Count > 1)
+            {
+                // 扇形的中心点
+                Vector2 center = Vector2.Zero;
+
+                // 遍历点并生成每个扇形的小三角形
+                for (int i = 0; i < points.Count - 1; i++)
+                {
+                    List<Vector2> p = new List<Vector2>
+                    {
+                        points[i], // 当前点
+                        points[i + 1], // 下一个点
+                        center // 中心点
+                    };
+                    self.CreatePolygonFixture(p, isSensor, layer, userData);
+                }
+            }
         }
 
         public static Box2DSharp.Dynamics.World CreateWorld(Vector2 gravity)

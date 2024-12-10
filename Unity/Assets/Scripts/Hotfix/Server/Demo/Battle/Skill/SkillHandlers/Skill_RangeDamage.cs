@@ -1,4 +1,6 @@
-﻿namespace ET.Server
+﻿using Unity.Mathematics;
+
+namespace ET.Server
 {
     /// <summary>
     /// 对一个范围内的敌人造成伤害
@@ -7,6 +9,7 @@
     {
         public override void OnInit(Skill skill)
         {
+            skill.OwnerUnit.Rotation = quaternion.Euler(0, math.radians(skill.Angle), 0);
         }
 
         public override void OnUpdate(Skill skill)
@@ -26,8 +29,7 @@
                     followUnitPos: true,
                     followUnitRot: true,
                     skill: skill,
-                    collisionHandler: nameof(Collision_RangeDamage),
-                    paramsList: new() { skill.SkillConfig.Damage })
+                    collisionHandler: nameof(Collision_RangeDamage))
                 , 500);
 
             skill.SkillState = ESkillState.Finished;

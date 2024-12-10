@@ -40,7 +40,7 @@ namespace ET.Client
             self.GameObject.transform.localPosition = self.Unit.Position;
             self.GameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-            self.Angle = MathHelper.QuaternionToEulerAngle_Y(self.Unit.Rotation);
+            self.Angle = MathHelper.QuaternionToEulerAngle_Y_Deg(self.Unit.Rotation);
             self.Distance = 0;
 
             ReferenceCollector rc = self.GameObject.GetComponent<ReferenceCollector>();
@@ -61,10 +61,14 @@ namespace ET.Client
                     rc.Get<GameObject>("Range").transform.localScale = new Vector3(self.SkillConfig.CastRange, 1, self.SkillConfig.CastRange);
                     break;
                 }
-                case SkillIndicatorType.Umbrella:
+                case SkillIndicatorType.Sector:
                 {
-                    // rc.Get<GameObject>("Umbrella").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
-                    // rc.Get<GameObject>("CircleIndicator").transform.localScale = Vector3.one * self.SkillConfig.SkillIndicatorParams[0];
+                    if (self.SkillConfig.ColliderParams is SectorColliderParams colliderParams)
+                    {
+                        rc.Get<GameObject>("Sector").transform.localScale = new Vector3(colliderParams.Radius, 1, colliderParams.Radius);
+                        rc.Get<GameObject>("CircleIndicator").GetComponent<MeshRenderer>().material.SetFloat("_Angle", colliderParams.Angle);
+                    }
+
                     break;
                 }
                 case SkillIndicatorType.Range:
@@ -129,9 +133,9 @@ namespace ET.Client
                     self.Distance = distance;
                     break;
                 }
-                case SkillIndicatorType.Umbrella:
+                case SkillIndicatorType.Sector:
                 {
-                    rc.Get<GameObject>("Umbrella").transform.rotation = Quaternion.Euler(0, angle, 0);
+                    rc.Get<GameObject>("Sector").transform.rotation = Quaternion.Euler(0, angle, 0);
 
                     self.Angle = angle;
                     self.Distance = 0;
@@ -139,7 +143,7 @@ namespace ET.Client
                 }
                 case SkillIndicatorType.Range:
                 {
-                    self.Angle = MathHelper.QuaternionToEulerAngle_Y(self.Unit.Rotation);
+                    self.Angle = MathHelper.QuaternionToEulerAngle_Y_Deg(self.Unit.Rotation);
                     self.Distance = 0;
                     break;
                 }

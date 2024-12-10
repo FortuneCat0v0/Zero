@@ -5,7 +5,7 @@ namespace ET.Server
 {
     [EntitySystemOf(typeof(Skill))]
     [FriendOf(typeof(Skill))]
-    public static partial class SkillSSystem
+    public static partial class SkillSystem
     {
         [Invoke(TimerInvokeType.SkillTimer_Server)]
         public class SkillTimer : ATimer<Skill>

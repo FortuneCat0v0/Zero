@@ -17,6 +17,7 @@ namespace ET
         public CircleColliderParams(ByteBuf _buf) : base(_buf) 
         {
             Radius = _buf.ReadFloat();
+            Offset = ExternalTypeUtil.NewVector2(vector2.Deserializevector2(_buf));
 
             PostInit();
         }
@@ -28,6 +29,8 @@ namespace ET
 
         public readonly float Radius;
 
+        public readonly System.Numerics.Vector2 Offset;
+
 
         public const int __ID__ = 512739242;
         public override int GetTypeId() => __ID__;
@@ -36,12 +39,14 @@ namespace ET
         {
             base.ResolveRef();
             
+            
         }
 
         public override string ToString()
         {
             return "{ "
             + "Radius:" + Radius + ","
+            + "Offset:" + Offset + ","
             + "}";
         }
 

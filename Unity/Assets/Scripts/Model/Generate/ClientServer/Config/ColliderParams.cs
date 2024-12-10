@@ -27,6 +27,7 @@ namespace ET
                 case CircleColliderParams.__ID__: return new CircleColliderParams(_buf);
                 case BoxColliderParams.__ID__: return new BoxColliderParams(_buf);
                 case PolygonColliderParams.__ID__: return new PolygonColliderParams(_buf);
+                case SectorColliderParams.__ID__: return new SectorColliderParams(_buf);
                 default: throw new SerializationException();
             }
         }

@@ -55,7 +55,7 @@ namespace ET
             return angleDeg;
         }
 
-        public static float QuaternionToEulerAngle_Y(quaternion q)
+        public static float QuaternionToEulerAngle_Y_Deg(quaternion q)
         {
             // 检查四元数是否为默认值
             if (math.lengthsq(q.value) == 0)
@@ -72,6 +72,25 @@ namespace ET
                 1 - 2 * (q.value.x * q.value.x + q.value.y * q.value.y));
 
             return math.degrees(y); // 转换为度
+        }
+
+        public static float QuaternionToEulerAngle_Y_Rad(quaternion q)
+        {
+            // 检查四元数是否为默认值
+            if (math.lengthsq(q.value) == 0)
+            {
+                q = quaternion.identity;
+            }
+            else
+            {
+                q = math.normalize(q);
+            }
+
+            // 计算回旋角 (Y轴的旋转)
+            float y = math.atan2(2f * (q.value.w * q.value.y + q.value.x * q.value.z),
+                1 - 2 * (q.value.x * q.value.x + q.value.y * q.value.y));
+
+            return y; // 返回弧度
         }
 
         /// <summary>

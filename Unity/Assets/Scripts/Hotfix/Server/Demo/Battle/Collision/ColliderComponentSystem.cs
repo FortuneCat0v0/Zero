@@ -47,7 +47,6 @@ namespace ET.Server
             }
 
             self.CreateCollider();
-            self.SyncBody();
         }
 
         [EntitySystem]
@@ -73,7 +72,7 @@ namespace ET.Server
         {
             self.UnitIds.Clear();
             self.UnitLastTriggerTimeDict.Clear();
-            
+
             Log.Warning("Destroy 碰撞体");
             self.CollisionWorldComponent?.AddBodyTobeDestroyed(self.Body);
         }
@@ -82,13 +81,14 @@ namespace ET.Server
         {
             Unit unit = self.GetParent<Unit>();
             self.Body = self.CollisionWorldComponent.CreateDynamicBody(new Vector2(unit.Position.x, unit.Position.z));
+            self.SyncBody();
             switch (self.ColliderParams)
             {
                 case CircleColliderParams colliderParams:
-                    self.Body.CreateCircleFixture(colliderParams.Radius, Vector2.Zero, true, self.Layer, unit);
+                    self.Body.CreateCircleFixture(colliderParams.Radius, colliderParams.Offset, true, self.Layer, unit);
                     break;
                 case BoxColliderParams colliderParams:
-                    self.Body.CreateBoxFixture(colliderParams.HX, colliderParams.HY, Vector2.Zero, 0, true, self.Layer, unit);
+                    self.Body.CreateBoxFixture(colliderParams.HX, colliderParams.HY, colliderParams.Offset, 0, true, self.Layer, unit);
                     break;
                 case PolygonColliderParams colliderParams:
                 {
@@ -96,6 +96,13 @@ namespace ET.Server
                     {
                         self.Body.CreatePolygonFixture(points, true, self.Layer, unit);
                     }
+
+                    break;
+                }
+                case SectorColliderParams colliderParams:
+                {
+                    float a = colliderParams.Angle / 2;
+                    self.Body.CreateSectorFixture(colliderParams.Radius, 90 - a, 90 + a, true, self.Layer, unit);
 
                     break;
                 }
@@ -111,7 +118,7 @@ namespace ET.Server
         {
             if (self.Body.FixtureList.Count > 0)
             {
-                Box2DSharp.Collision.Shapes.Shape shape = self.Body.FixtureList[0].Shape;
+                Shape shape = self.Body.FixtureList[0].Shape;
                 if (shape is CircleShape circle)
                 {
                     circle.Radius = radius;
@@ -123,7 +130,7 @@ namespace ET.Server
         {
             Unit selfUnit = self.GetParent<Unit>();
 
-            self.SetColliderBodyTransform(new(selfUnit.Position.x, selfUnit.Position.z), MathHelper.QuaternionToEulerAngle_Y(selfUnit.Rotation));
+            self.SetColliderBodyTransform(new(selfUnit.Position.x, selfUnit.Position.z), -MathHelper.QuaternionToEulerAngle_Y_Rad(selfUnit.Rotation));
         }
 
         public static void SyncUnit(this ColliderComponent self)
@@ -131,9 +138,15 @@ namespace ET.Server
             Unit selfUnit = self.GetParent<Unit>();
 
             selfUnit.Position = new float3(self.Body.GetPosition().X, selfUnit.Position.y, self.Body.GetPosition().Y);
-            selfUnit.Rotation = quaternion.Euler(0, math.radians(self.Body.GetAngle()), 0);
+            selfUnit.Rotation = quaternion.Euler(0, -self.Body.GetAngle(), 0);
         }
 
+        /// <summary>
+        /// 设置位置和旋转
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="pos"></param>
+        /// <param name="angle">弧度(逆时针)</param>
         public static void SetColliderBodyTransform(this ColliderComponent self, Vector2 pos, float angle)
         {
             self.Body.SetTransform(pos, angle);

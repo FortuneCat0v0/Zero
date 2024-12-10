@@ -24,7 +24,7 @@ namespace ET
         /// <summary>
         /// 扇形指示器
         /// </summary>
-        Umbrella = 3,
+        Sector = 3,
 
         /// <summary>
         /// 范围指示器

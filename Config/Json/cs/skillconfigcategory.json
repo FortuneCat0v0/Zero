@@ -10,7 +10,11 @@
     "SkillIndicatorType": 4,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 4
+      "Radius": 4,
+      "Offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "CastRange": 4,
     "SkillHandler": "Skill_RangeDamage",
@@ -29,7 +33,11 @@
     "SkillIndicatorType": 4,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 5
+      "Radius": 5,
+      "Offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "CastRange": 5,
     "SkillHandler": "Skill_RangeDamage",
@@ -48,7 +56,11 @@
     "SkillIndicatorType": 5,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 1
+      "Radius": 1,
+      "Offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "CastRange": 6,
     "SkillHandler": "Skill_Bullet",
@@ -67,7 +79,11 @@
     "SkillIndicatorType": 5,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 1
+      "Radius": 1,
+      "Offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "CastRange": 6,
     "SkillHandler": "Skill_Bullet",
@@ -86,7 +102,11 @@
     "SkillIndicatorType": 4,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 0
+      "Radius": 0,
+      "Offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "CastRange": 0,
     "SkillHandler": "Skill_AddBuff",
@@ -105,12 +125,36 @@
     "SkillIndicatorType": 2,
     "ColliderParams": {
       "$type": "CircleColliderParams",
-      "Radius": 1
+      "Radius": 1,
+      "Offset": {
+        "x": 0,
+        "y": 0
+      }
     },
     "CastRange": 6,
     "SkillHandler": "Skill_SphereDamageAura",
     "EffectConfigId": 10001,
     "DmgInterval": 1000,
+    "Damage": 2
+  },
+  {
+    "Id": 10041,
+    "Level": 1,
+    "NextSkill": 0,
+    "SkillAbstractType": 2,
+    "Name": "1级",
+    "Desc": "前面扇形的一个攻击",
+    "CD": 3000,
+    "SkillIndicatorType": 3,
+    "ColliderParams": {
+      "$type": "SectorColliderParams",
+      "Radius": 4,
+      "Angle": 120
+    },
+    "CastRange": 0,
+    "SkillHandler": "Skill_RangeDamage",
+    "EffectConfigId": 10001,
+    "DmgInterval": 0,
     "Damage": 2
   }
 ]

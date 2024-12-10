@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5867125298045340119}
   m_Layer: 0
-  m_Name: Umbrella
+  m_Name: Sector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 4920227822878218425}
   - component: {fileID: 7021240188464544001}
   m_Layer: 0
-  m_Name: SkillIndicator_Umbrella
+  m_Name: SkillIndicator_Sector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,10 +78,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
+  - key: Sector
+    gameObject: {fileID: 570360512337680515}
   - key: CircleIndicator
     gameObject: {fileID: 6886733800958166166}
-  - key: Umbrella
-    gameObject: {fileID: 570360512337680515}
 --- !u!1 &6886733800958166166
 GameObject:
   m_ObjectHideFlags: 0

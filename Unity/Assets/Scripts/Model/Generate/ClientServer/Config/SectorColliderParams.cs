@@ -12,30 +12,27 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class BoxColliderParams : ColliderParams
+    public sealed partial class SectorColliderParams : ColliderParams
     {
-        public BoxColliderParams(ByteBuf _buf) : base(_buf) 
+        public SectorColliderParams(ByteBuf _buf) : base(_buf) 
         {
-            HX = _buf.ReadFloat();
-            HY = _buf.ReadFloat();
-            Offset = vector2.Deserializevector2(_buf);
+            Radius = _buf.ReadFloat();
+            Angle = _buf.ReadFloat();
 
             PostInit();
         }
 
-        public static BoxColliderParams DeserializeBoxColliderParams(ByteBuf _buf)
+        public static SectorColliderParams DeserializeSectorColliderParams(ByteBuf _buf)
         {
-            return new BoxColliderParams(_buf);
+            return new SectorColliderParams(_buf);
         }
 
-        public readonly float HX;
+        public readonly float Radius;
 
-        public readonly float HY;
-
-        public readonly vector2 Offset;
+        public readonly float Angle;
 
 
-        public const int __ID__ = -2055945947;
+        public const int __ID__ = 1838752704;
         public override int GetTypeId() => __ID__;
 
         public override void ResolveRef()
@@ -43,15 +40,13 @@ namespace ET
             base.ResolveRef();
             
             
-            
         }
 
         public override string ToString()
         {
             return "{ "
-            + "HX:" + HX + ","
-            + "HY:" + HY + ","
-            + "Offset:" + Offset + ","
+            + "Radius:" + Radius + ","
+            + "Angle:" + Angle + ","
             + "}";
         }
 

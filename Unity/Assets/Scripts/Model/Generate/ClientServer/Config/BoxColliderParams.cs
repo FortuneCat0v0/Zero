@@ -18,6 +18,7 @@ namespace ET
         {
             HX = _buf.ReadFloat();
             HY = _buf.ReadFloat();
+            Offset = ExternalTypeUtil.NewVector2(vector2.Deserializevector2(_buf));
 
             PostInit();
         }
@@ -31,6 +32,8 @@ namespace ET
 
         public readonly float HY;
 
+        public readonly System.Numerics.Vector2 Offset;
+
 
         public const int __ID__ = -2055945947;
         public override int GetTypeId() => __ID__;
@@ -40,6 +43,7 @@ namespace ET
             base.ResolveRef();
             
             
+            
         }
 
         public override string ToString()
@@ -47,6 +51,7 @@ namespace ET
             return "{ "
             + "HX:" + HX + ","
             + "HY:" + HY + ","
+            + "Offset:" + Offset + ","
             + "}";
         }
 
