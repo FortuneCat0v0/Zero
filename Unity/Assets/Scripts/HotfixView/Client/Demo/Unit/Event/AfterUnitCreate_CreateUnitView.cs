@@ -19,6 +19,9 @@ namespace ET.Client
 
                 unit.AddComponent<UnitTransformComponent>();
 
+                // 测试 骑上史莱姆
+                unit.GetComponent<GameObjectComponent>().RideMount("AngelSlime");
+
                 // UIHeadInfoComponent uiHeadInfoComponent = unit.AddComponent<UIHeadInfoComponent, Transform>(model.transform);
                 // NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
                 // uiHeadInfoComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp), numericComponent.GetAsInt(NumericType.MaxHp));
