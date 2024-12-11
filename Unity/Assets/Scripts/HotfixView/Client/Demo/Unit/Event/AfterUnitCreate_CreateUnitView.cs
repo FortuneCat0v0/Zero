@@ -19,9 +19,9 @@ namespace ET.Client
 
                 unit.AddComponent<UnitTransformComponent>();
 
-                UIHeadInfoComponent uiHeadInfoComponent = unit.AddComponent<UIHeadInfoComponent, Transform>(model.transform);
-                NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
-                uiHeadInfoComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp), numericComponent.GetAsInt(NumericType.MaxHp));
+                // UIHeadInfoComponent uiHeadInfoComponent = unit.AddComponent<UIHeadInfoComponent, Transform>(model.transform);
+                // NumericComponent numericComponent = unit.GetComponent<NumericComponent>();
+                // uiHeadInfoComponent.RefreshHealthBar(numericComponent.GetAsInt(NumericType.NowHp), numericComponent.GetAsInt(NumericType.MaxHp));
             }
             else if (unit.UnitType == UnitType.Monster)
             {

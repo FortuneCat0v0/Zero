@@ -22,7 +22,7 @@ namespace ET.Client
         public float OffsetAngleY = 45;
 
         //相机与人物的坐标的偏移量
-        public float3 OffsetPostion = new(0, 10f, -6f);
+        public float3 OffsetPostion = new(0, 5f, -3f);
 
         //纪录偏移角度用于复原
         public float RecordAngleX;
