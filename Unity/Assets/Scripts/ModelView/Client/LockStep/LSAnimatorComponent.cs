@@ -3,6 +3,13 @@ using UnityEngine;
 
 namespace ET.Client
 {
+	public enum MotionType
+	{
+		None,
+		Idle,
+		Run,
+	}
+	
 	[ComponentOf]
 	public class LSAnimatorComponent : Entity, IAwake, IUpdate, IDestroy
 	{

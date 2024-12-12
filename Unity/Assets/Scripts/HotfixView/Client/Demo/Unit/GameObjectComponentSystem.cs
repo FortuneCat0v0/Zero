@@ -76,7 +76,7 @@ namespace ET.Client
             self.GameObject.transform.SetParent(point);
             self.GameObject.transform.localPosition = Vector3.zero;
 
-            self.GetParent<Unit>().GetComponent<AnimationComponent>().UpdateAnimData(self.MountGameObject);
+            self.GetParent<Unit>().GetComponent<AnimatorComponent>().UpdateAnimData(self.MountGameObject);
 
             // 处理动画
         }

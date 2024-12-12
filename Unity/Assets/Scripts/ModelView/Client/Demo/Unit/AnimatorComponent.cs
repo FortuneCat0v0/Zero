@@ -1,25 +1,19 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using Animancer;
 
 namespace ET.Client
 {
-    public enum MotionType
+    public static class HumanoidAnimations
     {
-        None,
-        Idle,
-        Run,
+        [StaticField]
+        public static readonly StringReference Idle = "Idle";
+
+        [StaticField]
+        public static readonly StringReference Move = "Move";
     }
 
-    [ComponentOf]
-    public class AnimatorComponent : Entity, IAwake<GameObject>, IUpdate, IDestroy
+    [ComponentOf(typeof(Unit))]
+    public class AnimatorComponent : Entity, IAwake, IDestroy
     {
-        public Dictionary<string, AnimationClip> AnimationClips = new();
-        public HashSet<string> Parameter = new();
-
-        public MotionType MotionType;
-        public float MontionSpeed { get; set; }
-        public bool IsStop;
-        public float StopSpeed;
-        public Animator Animator;
+        public AnimancerComponent AnimancerComponent;
     }
 }
