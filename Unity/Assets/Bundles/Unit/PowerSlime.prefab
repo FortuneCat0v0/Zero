@@ -286,8 +286,6 @@ GameObject:
   m_Component:
   - component: {fileID: 300807667144473993}
   - component: {fileID: 827279220421964248}
-  - component: {fileID: -307154837999234539}
-  - component: {fileID: -5882112207344928398}
   - component: {fileID: 185944326962357314}
   m_Layer: 0
   m_Name: PowerSlime
@@ -336,33 +334,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-307154837999234539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3800877505991992661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Animator: {fileID: 827279220421964248}
-  _ActionOnDisable: 0
---- !u!114 &-5882112207344928398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3800877505991992661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3967c910cf9304a90fe607c1531405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimGroup: {fileID: 11400000, guid: 1e2287c32eb48324387f226c29263ec2, type: 2}
 --- !u!114 &185944326962357314
 MonoBehaviour:
   m_ObjectHideFlags: 0

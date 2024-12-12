@@ -1,6 +1,4 @@
-﻿using System;
-using Animancer;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ET.Client
 {
@@ -38,51 +36,51 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this AnimationComponent self)
         {
-            self.Animancer = null;
-            self.AnimGroup = null;
-            self.CurrentAnimation = null;
+            // self.Animancer = null;
+            // self.AnimGroup = null;
+            // self.CurrentAnimation = null;
         }
 
         public static void UpdateAnimData(this AnimationComponent self, GameObject go)
         {
-            self.Animancer = null;
-            self.AnimGroup = null;
-            self.CurrentAnimation = null;
-
-            // 使用Animancer的话Animator不要添加Controller
-            Animator animator = go.GetComponentInChildren<Animator>();
-            animator.runtimeAnimatorController = null;
-
-            self.Animancer = go.GetComponentInChildren<AnimancerComponent>();
-            if (self.Animancer == null)
-            {
-                Log.Error("对象未添加 mono脚本 AnimancerComponent！！！");
-                return;
-            }
-
-            AnimData animData = go.GetComponentInChildren<AnimData>();
-            if (animData == null)
-            {
-                Log.Error("对象未添加 mono脚本 AnimData！！！");
-                return;
-            }
-
-            if (animData.AnimGroup == null)
-            {
-                Log.Error("mono脚本 AnimData 没有添加AnimGroup！！！");
-                return;
-            }
-
-            if (animData.AnimGroup.AnimInfos.Count == 0)
-            {
-                Log.Error($"{animData.AnimGroup.name} 没有添加动画片段！！！");
-
-                return;
-            }
-
-            self.AnimGroup = animData.AnimGroup;
-
-            self.Play("Idle");
+            // self.Animancer = null;
+            // self.AnimGroup = null;
+            // self.CurrentAnimation = null;
+            //
+            // // 使用Animancer的话Animator不要添加Controller
+            // Animator animator = go.GetComponentInChildren<Animator>();
+            // animator.runtimeAnimatorController = null;
+            //
+            // self.Animancer = go.GetComponentInChildren<AnimancerComponent>();
+            // if (self.Animancer == null)
+            // {
+            //     Log.Error("对象未添加 mono脚本 AnimancerComponent！！！");
+            //     return;
+            // }
+            //
+            // AnimData animData = go.GetComponentInChildren<AnimData>();
+            // if (animData == null)
+            // {
+            //     Log.Error("对象未添加 mono脚本 AnimData！！！");
+            //     return;
+            // }
+            //
+            // if (animData.AnimGroup == null)
+            // {
+            //     Log.Error("mono脚本 AnimData 没有添加AnimGroup！！！");
+            //     return;
+            // }
+            //
+            // if (animData.AnimGroup.AnimInfos.Count == 0)
+            // {
+            //     Log.Error($"{animData.AnimGroup.name} 没有添加动画片段！！！");
+            //
+            //     return;
+            // }
+            //
+            // self.AnimGroup = animData.AnimGroup;
+            //
+            // self.Play("Idle");
         }
 
         /// <summary>
@@ -95,42 +93,42 @@ namespace ET.Client
         /// FadeMode.FromStart 一般用于攻击动画。当想要重复一个动作，而该动作仍在运行时使用。如平A动画未结束又重新平A。
         /// </param>
         /// <param name="speed"></param>
-        public static void Play(this AnimationComponent self, string name, FadeMode fadeMode = FadeMode.FixedDuration, float speed = 0)
+        public static void Play(this AnimationComponent self, string name)
         {
-            AnimInfo animInfo = null;
-            foreach (AnimInfo a in self.AnimGroup.AnimInfos)
-            {
-                if (a.StateName == name)
-                {
-                    animInfo = a;
-                    break;
-                }
-            }
-
-            if (animInfo == null)
-            {
-                Log.Error($"动画 {name} 未加载");
-
-                return;
-            }
-
-            self.CurrentAnimation = name;
-            self.Animancer.Playable.Speed = speed != 0 ? speed : animInfo.Speed;
-
-            Log.Debug($"播放动画 {name}");
-
-            if (!string.IsNullOrEmpty(animInfo.NextStateName))
-            {
-                self.Animancer.Play(animInfo.AnimationClip, 0.25f, fadeMode).Events.OnEnd = () =>
-                {
-                    Log.Debug($"{animInfo.StateName} 播放完毕,自动切换为 {animInfo.NextStateName}");
-                    self.Play(animInfo.NextStateName);
-                };
-            }
-            else
-            {
-                self.Animancer.Play(animInfo.AnimationClip, 0.25f, fadeMode);
-            }
+            // AnimInfo animInfo = null;
+            // foreach (AnimInfo a in self.AnimGroup.AnimInfos)
+            // {
+            //     if (a.StateName == name)
+            //     {
+            //         animInfo = a;
+            //         break;
+            //     }
+            // }
+            //
+            // if (animInfo == null)
+            // {
+            //     Log.Error($"动画 {name} 未加载");
+            //
+            //     return;
+            // }
+            //
+            // self.CurrentAnimation = name;
+            // self.Animancer.Playable.Speed = speed != 0 ? speed : animInfo.Speed;
+            //
+            // Log.Debug($"播放动画 {name}");
+            //
+            // if (!string.IsNullOrEmpty(animInfo.NextStateName))
+            // {
+            //     self.Animancer.Play(animInfo.AnimationClip, 0.25f, fadeMode).Events.OnEnd = () =>
+            //     {
+            //         Log.Debug($"{animInfo.StateName} 播放完毕,自动切换为 {animInfo.NextStateName}");
+            //         self.Play(animInfo.NextStateName);
+            //     };
+            // }
+            // else
+            // {
+            //     self.Animancer.Play(animInfo.AnimationClip, 0.25f, fadeMode);
+            // }
         }
     }
 }

@@ -130,8 +130,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6779474593163523160}
   - component: {fileID: 537921057379685312}
-  - component: {fileID: 2531857991519660992}
-  - component: {fileID: 2434949976269680186}
   - component: {fileID: 4529466450521193462}
   m_Layer: 0
   m_Name: AngelSlime
@@ -180,33 +178,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2531857991519660992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2725074267302858820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _Animator: {fileID: 537921057379685312}
-  _ActionOnDisable: 0
---- !u!114 &2434949976269680186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2725074267302858820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3967c910cf9304a90fe607c1531405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimGroup: {fileID: 11400000, guid: 1e2287c32eb48324387f226c29263ec2, type: 2}
 --- !u!114 &4529466450521193462
 MonoBehaviour:
   m_ObjectHideFlags: 0
