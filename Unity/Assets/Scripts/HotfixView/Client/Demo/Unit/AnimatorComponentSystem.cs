@@ -9,7 +9,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, MoveStart args)
         {
-            args.Unit.GetComponent<AnimatorComponent>()?.Play("Run");
+            args.Unit.GetComponent<AnimatorComponent>()?.Play(HumanoidAnimations.Run);
 
             await ETTask.CompletedTask;
         }
@@ -20,7 +20,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene scene, MoveStop args)
         {
-            args.Unit.GetComponent<AnimatorComponent>()?.Play("Idle");
+            args.Unit.GetComponent<AnimatorComponent>()?.Play(HumanoidAnimations.Idle);
 
             await ETTask.CompletedTask;
         }

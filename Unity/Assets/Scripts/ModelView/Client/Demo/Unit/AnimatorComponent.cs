@@ -8,7 +8,7 @@ namespace ET.Client
         public static readonly StringReference Idle = "Idle";
 
         [StaticField]
-        public static readonly StringReference Move = "Move";
+        public static readonly StringReference Run = "Run";
     }
 
     [ComponentOf(typeof(Unit))]
